@@ -1,0 +1,70 @@
+/*
+ Localization.strings
+ Olive-ios
+ 
+ Created by billsong on 14-9-19.
+ Copyright (c) 2014年 hongDing. All rights reserved.
+ */
+
+"finding a periheral" = "find device";
+
+"peripheral" = "peripheral";
+
+"Calendar" = "Calendar";
+
+"setting" = "Setting";
+
+"measure" = "Measure";
+
+"refresh" = "refresh";
+
+"Connected devices" = "Connected devices";
+
+"Available devices" = "Avai devices";
+
+"High temperature alarm" = "High temperature alarm";
+
+"low temperature alarm" = "low temperature alarm";
+
+"Minimum temperature" = "Min temperature";
+
+"Maximum temperature" = "Max temperature";
+
+"Name" = "Name";
+
+"Number" = "Number";
+
+"Today" = "Today";
+
+"Yesterday" = "Yesterday";
+
+"B yesterday" = "ByesterD";
+
+"Detail Info" = "Detail Info";
+
+
+"warning" = "Warning";
+
+"Jump to devices detail page or disConnect this device?" = "Jump to devices detail page or disConnect this device?";
+
+"Back" = "Back";
+
+"DisConnect" = "DisConnect";
+
+"Detail Page"= "Detail Page";
+
+
+
+"Prompt"= "Prompt";
+
+"Don't have any data on the day !" = "Don't have any data on the day !";
+
+"Done" = "Done";
+
+"Please jump to device page to connect device"= "Please jump to device page to connect device";
+
+"Jump to device page" ="Jump to device page";
+
+"Cancel" = "Cancel";
+
+

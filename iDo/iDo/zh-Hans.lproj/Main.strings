@@ -1,0 +1,66 @@
+
+/* Class = "IBUITabBarItem"; title = "measure"; ObjectID = "2ll-FJ-EII"; */
+"2ll-FJ-EII.title" = "measure";
+
+/* Class = "IBUILabel"; text = "高温报警通知"; ObjectID = "30b-PQ-Fmc"; */
+"30b-PQ-Fmc.text" = "高温报警通知";
+
+/* Class = "IBUILabel"; text = " "; ObjectID = "8wC-kw-KcM"; */
+"8wC-kw-KcM.text" = " ";
+
+/* Class = "IBUILabel"; text = "最高温值"; ObjectID = "8zT-Nq-ikT"; */
+"8zT-Nq-ikT.text" = "最高温值";
+
+/* Class = "IBUILabel"; text = "subtitle"; ObjectID = "Ens-R0-2kC"; */
+"Ens-R0-2kC.text" = "subtitle";
+
+/* Class = "IBUILabel"; text = "2014-09- 11"; ObjectID = "H4Q-9e-4qE"; */
+"H4Q-9e-4qE.text" = "2014-09- 11";
+
+/* Class = "IBUILabel"; text = "120"; ObjectID = "HMM-GE-E05"; */
+"HMM-GE-E05.text" = "120";
+
+/* Class = "IBUINavigationItem"; title = "Detail Info"; ObjectID = "LwH-RC-4Ma"; */
+"LwH-RC-4Ma.title" = "Detail Info";
+
+/* Class = "IBUILabel"; text = "-- °C"; ObjectID = "Mcz-Um-NA6"; */
+"Mcz-Um-NA6.text" = "-- °C";
+
+/* Class = "IBUIButton"; normalTitle = "Setting"; ObjectID = "OXU-it-FXy"; */
+"OXU-it-FXy.normalTitle" = "Setting";
+
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "RLC-KU-l5O"; */
+"RLC-KU-l5O.text" = "Detail";
+
+/* Class = "IBUIBarButtonItem"; title = "日历"; ObjectID = "TSW-Qn-JgD"; */
+"TSW-Qn-JgD.title" = "日历";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "Yn8-EE-DgZ"; */
+"Yn8-EE-DgZ.text" = "Title";
+
+/* Class = "IBUIBarButtonItem"; title = "设备"; ObjectID = "fBS-wO-7e1"; */
+"fBS-wO-7e1.title" = "设备";
+
+/* Class = "IBUILabel"; text = "最低温值"; ObjectID = "fNH-mA-EP9"; */
+"fNH-mA-EP9.text" = "最低温值";
+
+/* Class = "IBUILabel"; text = "低温报警通知"; ObjectID = "iJI-4f-bq3"; */
+"iJI-4f-bq3.text" = "低温报警通知";
+
+/* Class = "IBUILabel"; text = "120"; ObjectID = "loh-aU-1qB"; */
+"loh-aU-1qB.text" = "120";
+
+/* Class = "IBUILabel"; text = "120"; ObjectID = "lxk-A4-C27"; */
+"lxk-A4-C27.text" = "120";
+
+/* Class = "IBUINavigationItem"; title = "peripheral"; ObjectID = "phm-25-574"; */
+"phm-25-574.title" = "peripheral";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "sbJ-Ja-Epb"; */
+"sbJ-Ja-Epb.text" = "Title";
+
+/* Class = "IBUINavigationItem"; title = "setting"; ObjectID = "tn2-h6-Ama"; */
+"tn2-h6-Ama.title" = "setting";
+
+/* Class = "IBUIBarButtonItem"; title = "刷新"; ObjectID = "wdW-ok-ntC"; */
+"wdW-ok-ntC.title" = "刷新";
