@@ -6,13 +6,13 @@ import CoreBluetooth
 
 class DeviceDetail: UITableViewController {
 
-    let cellId = "device_detail_info"
-    var peripheral: CBPeripheral!
+    let cellId = "device_detail_cell"
+    var device: CBPeripheral!
 
     // MARK: - 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = peripheral.name
+        navigationItem.title = device.name
     }
 
     // MARK: - UITableViewDataSource
@@ -30,10 +30,10 @@ class DeviceDetail: UITableViewController {
         switch indexPath.section {
         case 0:
             cell.textLabel?.text = Util.LocalizedString("name")
-            cell.detailTextLabel?.text = peripheral.name
+            cell.detailTextLabel?.text = device.name
         case 1:
             cell.textLabel?.text = Util.LocalizedString("bluetooth")
-            cell.detailTextLabel?.text = peripheral.identifier.UUIDString
+            cell.detailTextLabel?.text = device.identifier.UUIDString
         default:
             println("error") // TODO:统一处理
         }

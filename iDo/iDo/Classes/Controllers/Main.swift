@@ -4,9 +4,9 @@
 
 import CoreBluetooth
 
-class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrticDelegate ,DeviceCentralManagerBuleToothDoNotOpenDelegate, CalendarViewDelegate, FDCaptionGraphViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
+class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrticDelegate, CalendarViewDelegate, FDCaptionGraphViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
 
-    let mSegueId = "mPeriphalSegue"
+    let segueId = "mPeriphalSegue"
     let kSCREEN_WIDTH = UIScreen.mainScreen().bounds.size.width
     let kSCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height
     let kNAVIGATIONBAR_HEIGHT: CGFloat = 64.0 //优化
@@ -52,7 +52,6 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         view.backgroundColor = IDOBLUECOLOR
         
         mDeviceCentralManger = DeviceCentralManager.instanceForCenterManager()
-        mDeviceCentralManger.blueToothDoNotOPenDelegate = self
         mDeviceCentralManger.characteristicDelegate = self
         if mDeviceCentralManger.lastConnectedPeripheralUUID().isEmpty {
             isCurrentDateHaveLineChartData = false
@@ -80,12 +79,6 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         updateCurrentDateLineChart()
-    }
-
-    // MARK: - blueTooth do not open
-    
-    func deviceCentralManagerBuleToothDoNotOpen() {
-        UIAlertView(title: "提示", message: "您iPhone的蓝牙未开启,请开启!", delegate: nil, cancelButtonTitle: "好的").show()
     }
 
     // MARK: -  didUpdateValueToCharacterisrtic Delegate
@@ -122,8 +115,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
                 var newHexStr: NSString =  NSString(format: "%x", mDateBytes[i]&0xff)
                 if newHexStr.length == 1 {
                     hexStr = NSString(format: "%@0%@", hexStr, newHexStr)
-                }
-                else {
+                } else {
                     hexStr = NSString(format: "%@%@", hexStr, newHexStr)
                 }
                 println("1 mDateBytes: \(mDateBytes[i])")
@@ -157,36 +149,32 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         if currentSelectedDateString == DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyy-MM-dd") {
             updateCurrentDateLineChart()
         }
-        //通知相关
+        // 通知相关
         if temperature < Util.lowestTemperature() {
-            //温度过低
+            // 温度过低
             if Util.isLowTNotice() {
                 println("温度过低")
                 view.backgroundColor = IDOPURPLECOLOR
                 sendTemperatureNotifition("温度过低", nowTemperature: temperature)
-            }
-            else {
+            } else {
                 println("还原颜色")
                 //还原颜色
                 view.backgroundColor = IDOGREENCOLOR
             }
-        }
-        else if temperature > Util.HighestTemperature() {
+        } else if temperature > Util.HighestTemperature() {
             //温度过高
             if Util.isHighTNotice() {
                 println("温度过高")
                 view.backgroundColor = IDOORANGECOLOR
                 sendTemperatureNotifition("温度过高", nowTemperature: temperature)
-            }
-            else {
+            } else {
                 println("还原颜色")
                 //还原颜色
                 view.backgroundColor = IDOGREENCOLOR
             }
-        }
-        else {
+        } else {
             println("还原颜色")
-            //还原颜色
+            // 还原颜色
             view.backgroundColor = IDOGREENCOLOR
         }
 
@@ -199,7 +187,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             println("进入设备页")
             mDeviceCentralManger.isShowAllCanConnectedDevices = true
             mDeviceCentralManger.startScanPeripherals()
-            performSegueWithIdentifier(mSegueId, sender: self)
+            performSegueWithIdentifier(segueId, sender: self)
         }
     }
 
@@ -214,8 +202,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             numberTaped.text = " "
             dateShow.text = dateStr
             currentSelectedDateString = dateStr
-        }
-        else {
+        } else {
             var title = Util.LocalizedString("Prompt")
             var message = Util.LocalizedString("Don't have any data on the day !")
             var cancelBtnTittle = Util.LocalizedString("Done")
@@ -244,14 +231,12 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     @IBAction func showCalenderView(sender: AnyObject) {
         if (calendarView != nil) {
             dismissCalenderAction()
-        }
-        else {
+        } else {
             var settingBtnHeight = settingBtn.frame.height
             calendarView = CalendarView(frame: CGRectMake(0, kNAVIGATIONBAR_HEIGHT, 225, kSCREEN_HEIGHT - kNAVIGATIONBAR_HEIGHT - settingBtnHeight))
             if graphChart == nil {
                 view.addSubview(calendarView!)
-            }
-            else {
+            } else {
                 view.insertSubview(calendarView!, aboveSubview: graphChart!)
             }
             calendarView?.delegate = self
@@ -311,8 +296,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         graphChart?.dataPointColorAfterTaped = UIColor.whiteColor()
         if calendarView == nil {
             view.addSubview(graphChart!)
-        }
-        else {
+        } else {
              view.insertSubview(graphChart!, belowSubview: calendarView!)
         }
     }
@@ -324,8 +308,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             //无数据
             println("无数据")
             return false
-        }
-        else {
+        } else {
             var tempChartDataArr = NSMutableArray()
             var i = 0
             for number in tempArray {
@@ -346,8 +329,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             initSubViewToView()
             graphChart?.hidden = false
             dateShow.text = dateStr
-        }
-        else {
+        } else {
             println("无历史数据")
         }
     }
@@ -367,10 +349,10 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         }
     }
 
-    /** 处理蓝牙传个来的data */
+    /** 处理蓝牙传来的data */
     func calculateTemperatureData(currrentPeripheral :CBPeripheral, forCharacteristic currentCharacteristic:CBCharacteristic, forData data: NSData?) ->Float {
         println("bytes--\(data?.length)")
-       var bytes = [UInt8](count: 5, repeatedValue: 0)
+        var bytes = [UInt8](count: 5, repeatedValue: 0)
         data?.getBytes(&bytes, length:5)
         var byte0 = bytes[0]
         println("byte0:\(bytes[0])")

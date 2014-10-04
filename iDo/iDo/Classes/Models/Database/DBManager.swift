@@ -52,8 +52,7 @@ class DBManager: NSObject {
                 if !isSuccess {
                     //fatalError("Failed to delete old database file with message")
                     println("Failed to delete old database file with message")
-                }
-                else {
+                } else {
                     isSuccess = true
                     println("删除成功")
                 }
@@ -88,8 +87,7 @@ class DBManager: NSObject {
                 let count = rs?.intForColumn("count")
                 if count == 0 {
                     return false
-                }
-                else {
+                } else {
                     return true
                 }
             }

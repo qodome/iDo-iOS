@@ -17,8 +17,7 @@ class OliveDBDao: NSObject {
             if !DBManager.isTableExist(OliveDBDaoSingleton.sTableName) {
                 let sql = "CREATE TABLE \(OliveDBDaoSingleton.sTableName)(temperature BLOB, cDate DATE)"
                 result = shareDataBase.executeUpdate(sql, withArgumentsInArray: nil)
-            }
-            else {
+            } else {
                 result = true
             }
             shareDataBase.close()
@@ -38,8 +37,7 @@ class OliveDBDao: NSObject {
                 isOK = share.executeUpdate(sql, withArgumentsInArray: [NSKeyedArchiver.archivedDataWithRootObject(temper),dateStr])
                 share.close()
             }
-        }
-        else {
+        } else {
             isOK = false
         }
         return isOK

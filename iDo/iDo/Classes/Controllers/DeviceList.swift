@@ -4,13 +4,13 @@
 
 import CoreBluetooth
 
-class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentConnectedDeviceDelegate, DeviceCentralManagerDidStartsendDataDelegate, DeviceCentralManagerBuleToothDoNotOpenDelegate, UIAlertViewDelegate {
+class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentConnectedDeviceDelegate, DeviceCentralManagerDidStartsendDataDelegate, UIAlertViewDelegate {
 
     let IDOLOGREDCOLOR = Util.ColorFromRGB(0xFB414D)
-    let cellId = "deviceCell"
+    let cellId = "device_list_cell"
 
     var devicesArrayOnSelectedStatus: NSMutableArray?
-    var devicesArrayOnNoSelectedStatus: NSMutableArray?
+    var devices: [AnyObject] = []
     var mDeviceCentralManger: DeviceCentralManager!
 
     var indicatorView: UIActivityIndicatorView!
@@ -24,12 +24,11 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         title = Util.LocalizedString("devices")
         refreshBarBtn.title = Util.LocalizedString("refresh")
         recoverTranslucentedNavigationBar()
-       
+
         mDeviceCentralManger = DeviceCentralManager.instanceForCenterManager()
-        mDeviceCentralManger.blueToothDoNotOPenDelegate = self
         mDeviceCentralManger.delegate = self
         mDeviceCentralManger.startSendingDataDelegate = self
-        devicesArrayOnNoSelectedStatus = mDeviceCentralManger.devicesArrayOnNoSelectedStatus
+        devices = mDeviceCentralManger.devicesArrayOnNoSelectedStatus
         devicesArrayOnSelectedStatus = mDeviceCentralManger.devicesArrayOnSelectedStatus
     }
 
@@ -45,7 +44,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "peripheralDetailInforimation" {
             var detailInforVC = segue.destinationViewController as DeviceDetail
-            detailInforVC.peripheral = devicesArrayOnSelectedStatus![currentIndexPathRow] as CBPeripheral
+            detailInforVC.device = devicesArrayOnSelectedStatus![currentIndexPathRow] as CBPeripheral
         }
     }
 
@@ -58,31 +57,29 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         if section == 0 {
             return devicesArrayOnSelectedStatus!.count
         }
-        return devicesArrayOnNoSelectedStatus!.count
+        return devices.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:PeripheralSelectedTableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as PeripheralSelectedTableViewCell
-        var peripheralDevice:CBPeripheral!
-        cell.sActivityIndictor?.hidden = true
-        if 0 == indexPath.section {
-            peripheralDevice = devicesArrayOnSelectedStatus![indexPath.row] as CBPeripheral
+        var cell: DeviceCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as DeviceCell
+        var device: CBPeripheral
+        cell.indicator.hidden = true
+        if indexPath.section == 0 {
+            device = devicesArrayOnSelectedStatus![indexPath.row] as CBPeripheral
             if mDeviceCentralManger.isPeripheralTryToConnect{
-                cell.sActivityIndictor?.hidden = false
-                cell.sActivityIndictor?.startAnimating()
-                cell.sImageView?.hidden = true
+                cell.indicator.hidden = false
+                cell.indicator.startAnimating()
+                cell.icon.hidden = true
+            } else {
+                cell.indicator.hidden = true
+                cell.icon.hidden = false
             }
-            else {
-                cell.sActivityIndictor?.hidden = true
-                cell.sImageView?.hidden = false
-            }
+        } else {
+            device = devices[indexPath.row] as CBPeripheral
+            cell.icon.hidden = false
         }
-        else {
-            peripheralDevice = devicesArrayOnNoSelectedStatus![indexPath.row] as CBPeripheral
-            cell.sImageView?.hidden = false
-        }
-        cell.sTextLabel?.text = "\(peripheralDevice.name)"
-        cell.sDetailTextLabel?.text = "\(peripheralDevice.identifier.UUIDString)"
+        cell.title.text = device.name
+        cell.subtitle.text = device.identifier.UUIDString
         return cell
     }
 
@@ -99,24 +96,20 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         tableHeaderView.addSubview(deviceStatusLabel)
         if section == 0 {
             deviceStatusLabel.text =  Util.LocalizedString("Connected devices")
-        }
-        else {
+        } else {
             deviceStatusLabel.text = Util.LocalizedString("Available devices")
-            indicatorView = UIActivityIndicatorView(frame: CGRectMake(90, CGPointZero.y, 20,20))
+            indicatorView = UIActivityIndicatorView(frame: CGRectMake(90, CGPointZero.y, 20, 20))
             indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
             tableHeaderView.addSubview(indicatorView)
             if mDeviceCentralManger.isShowAllCanConnectedDevices {
                 indicatorView.startAnimating()
                 indicatorView.hidden = false
-            }
-            else
-            {
+            } else {
                 indicatorView.stopAnimating()
                 indicatorView.hidden = true
             }
         }
         return tableHeaderView
-        
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
@@ -126,23 +119,17 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
             var message = Util.LocalizedString("Jump to devices detail page or disConnect this device?")
             var cancelBtnTittle = Util.LocalizedString("Back")
             var otherBtnTitle1 = Util.LocalizedString("DisConnect")
-            var otherBtnTitle2 = Util.LocalizedString("Detail Page")
+            var otherBtnTitle2 = Util.LocalizedString("details")
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle1, otherBtnTitle2).show()
+        } else {
+            mDeviceCentralManger.userConnectPeripheral(devices[indexPath.row] as CBPeripheral)
         }
-        else {
-            mDeviceCentralManger.userConnectPeripheral(devicesArrayOnNoSelectedStatus![indexPath.row] as CBPeripheral)
-        }
-    }
-
-    // MARK: - blueTooth do not open
-    func deviceCentralManagerBuleToothDoNotOpen() {
-        UIAlertView(title: "提示", message: "您iPhone的蓝牙未开启,请开启!", delegate: nil, cancelButtonTitle: "好的").show()
     }
 
     // MARK: - didChangedCurrentConnectedDevice Delegate
     func central(center: CBCentralManager, unConnectedDevices unConnectedDeviceArr: NSArray, connectedDevices connectedDeviceArr: NSArray) {
         devicesArrayOnSelectedStatus = NSMutableArray(array: connectedDeviceArr)
-        devicesArrayOnNoSelectedStatus = NSMutableArray(array: unConnectedDeviceArr)
+        devices = NSMutableArray(array: unConnectedDeviceArr)
         tableView.reloadData()
     }
 
@@ -156,14 +143,13 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 {
             mDeviceCentralManger.userCancelConnectPeripheral(devicesArrayOnSelectedStatus![currentIndexPathRow] as CBPeripheral)
-        }
-        else if buttonIndex == 2 {
+        } else if buttonIndex == 2 {
             println("设备详情")
             performSegueWithIdentifier("peripheralDetailInforimation", sender: self)
         }
     }
 
-    // MARK: - action
+    // MARK: - Action
     @IBAction func refreshPeripherals(sender: AnyObject) {
         mDeviceCentralManger.isShowAllCanConnectedDevices = true
         mDeviceCentralManger.startScanPeripherals()
@@ -171,20 +157,12 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         indicatorView.hidden = false
     }
 
-    // MARK: - custom method
+    // MARK: - Custom Method
     func recoverTranslucentedNavigationBar(){
         navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.barStyle = UIBarStyle.Default
         navigationController?.navigationBar.tintColor = IDOLOGREDCOLOR;
-    }
-
-    func recoverTranslucentedTabBar(){
-        tabBarController?.tabBar.backgroundImage = nil
-        tabBarController?.tabBar.shadowImage = nil
-        tabBarController?.tabBar.barStyle = UIBarStyle.Default
-        //        tabBarController?.tabBar.translucent = true
-        tabBarController?.tabBar.tintColor = IDOLOGREDCOLOR
     }
 
 }

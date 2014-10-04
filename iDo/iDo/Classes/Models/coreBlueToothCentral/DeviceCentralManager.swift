@@ -10,10 +10,6 @@ protocol DeviceCentralManagerDidStartsendDataDelegate {
     func  deviceCentralManagerDidStartsendData()
 }
 
-protocol DeviceCentralManagerBuleToothDoNotOpenDelegate {
-    func  deviceCentralManagerBuleToothDoNotOpen()
-}
-
 protocol DeviceCentralManagerdidUpdateValueToCharacterisrticDelegate {
    func didUpdateValueToCharacteristic(characteristic:CBCharacteristic? ,cError error:NSError?)
 }
@@ -33,11 +29,10 @@ class DeviceCentralManager: NSObject {
    // var isScanning: Bool = false //// 只有在用户点击刷新设备button后或者第一次进入appp 才为true
     
     var devicesArrayOnSelectedStatus: NSMutableArray! //放置已经连接的peripheral
-    var devicesArrayOnNoSelectedStatus: NSMutableArray! //放置可连接的(但为连接的)peripherals
+    var devicesArrayOnNoSelectedStatus: NSMutableArray! //放置可连接的(但未连接的)peripherals
     var devicesArray: NSMutableArray! //保持指向peripherals的引用,不然会peripheras会丢失
     
     var startSendingDataDelegate: DeviceCentralManagerDidStartsendDataDelegate? // 
-    var blueToothDoNotOPenDelegate: DeviceCentralManagerBuleToothDoNotOpenDelegate?
     var characteristicDelegate: DeviceCentralManagerdidUpdateValueToCharacterisrticDelegate? //温度数据发送 代理
     var delegate: DeviceCentralManagerdidChangedCurrentConnectedDeviceDelegate? //设备data变化 代理
     var devicesCentralManager: CBCentralManager!
@@ -189,8 +184,7 @@ extension DeviceCentralManager: CBCentralManagerDelegate{
         if isShowAllCanConnectedDevices {
             println("刷新")
             central.connectPeripheral(peripheral, options:nil)
-        }
-        else if peripheralId == "" {
+        } else if peripheralId == "" {
             //未绑定 连接所有
             println("未绑定")
             central.connectPeripheral(peripheral, options:nil)
@@ -240,8 +234,7 @@ extension DeviceCentralManager: CBPeripheralDelegate {
         println("3-peripheral\(peripheral.identifier) did discover services)")
         if error != nil {
            // devicesArray.removeObject(peripheral)
-        }
-        else {
+        } else {
             for (var i = 0; i<peripheral.services.count; i++){
                 var service:CBService = peripheral.services[i] as CBService
                 if CBUUID.UUIDWithString(kServiceUUID) == service.UUID {
@@ -256,9 +249,7 @@ extension DeviceCentralManager: CBPeripheralDelegate {
         println("4-check out characteristics")
         if error != nil {
           //  devicesArray.removeObject(peripheral)
-        }
-        else
-        {
+        } else {
             for(var i=0;i<service.characteristics.count;i++){
                 var characteristic:CBCharacteristic = service.characteristics[i] as CBCharacteristic
                 if CBUUID.UUIDWithString(kCharacteristicUUID) == characteristic.UUID {
@@ -271,15 +262,13 @@ extension DeviceCentralManager: CBPeripheralDelegate {
                             devicesArrayOnNoSelectedStatus .addObject(peripheral)
                         }
                         println("first comming")
-                    }
-                    else if peripheralId == peripheral.identifier.UUIDString {
+                    } else if peripheralId == peripheral.identifier.UUIDString {
                         
                         isPeripheralTryToConnect = true
                         peripheral.setNotifyValue(true, forCharacteristic: characteristic)
                         bindPeripheral(peripheral)
                         disConnectOtherPeripheralAfterBandedAConnectingPeripheral()
-                    }
-                    else{
+                    } else {
                         devicesCentralManager.cancelPeripheralConnection(peripheral)
                         if !devicesArrayOnNoSelectedStatus.containsObject(peripheral){
                             devicesArrayOnNoSelectedStatus.addObject(peripheral)

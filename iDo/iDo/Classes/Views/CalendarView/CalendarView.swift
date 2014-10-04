@@ -154,15 +154,12 @@ class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
         cell.weekLable.text = titleForWeek(enti.weektype)
         if enti.subtitule != nil && !enti.subtitule.isEmpty {
             cell.weekDateLabel.text = "\(enti.weekDate)  \(enti.subtitule)"
-        }
-        else {
+        } else {
             cell.weekDateLabel.text = enti.weekDate
         }
-        
         if enti.weekDate == defaultselectedDate {
             cell.weekDateLabel.textColor = kUIColorFromRGB(0x3399CC)
-        }
-        else {
+        } else {
             cell.weekDateLabel.textColor = UIColor.darkTextColor()
         }
         return cell

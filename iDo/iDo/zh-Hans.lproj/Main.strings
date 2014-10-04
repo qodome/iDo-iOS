@@ -59,8 +59,8 @@
 /* Class = "IBUILabel"; text = "Title"; ObjectID = "sbJ-Ja-Epb"; */
 "sbJ-Ja-Epb.text" = "Title";
 
-/* Class = "IBUINavigationItem"; title = "setting"; ObjectID = "tn2-h6-Ama"; */
-"tn2-h6-Ama.title" = "setting";
+/* Class = "IBUINavigationItem"; title = "settings"; ObjectID = "tn2-h6-Ama"; */
+"tn2-h6-Ama.title" = "settings";
 
 /* Class = "IBUIBarButtonItem"; title = "刷新"; ObjectID = "wdW-ok-ntC"; */
 "wdW-ok-ntC.title" = "刷新";

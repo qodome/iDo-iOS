@@ -113,7 +113,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="deviceCell" id="KaT-r0-VgJ" customClass="PeripheralSelectedTableViewCell" customModule="iDo" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="device_list_cell" id="KaT-r0-VgJ" customClass="DeviceCell" customModule="iDo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KaT-r0-VgJ" id="h9S-H8-Hdb">
@@ -141,10 +141,10 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="sActivityIndictor" destination="wl8-n0-74b" id="iJg-oe-q8B"/>
-                                    <outlet property="sDetailTextLabel" destination="Ens-R0-2kC" id="mRA-4c-kkJ"/>
-                                    <outlet property="sImageView" destination="RSX-B5-6bx" id="FMk-sn-a42"/>
-                                    <outlet property="sTextLabel" destination="Yn8-EE-DgZ" id="C2x-Gw-elb"/>
+                                    <outlet property="icon" destination="RSX-B5-6bx" id="wTp-1y-wM9"/>
+                                    <outlet property="indicator" destination="wl8-n0-74b" id="9RR-al-fQD"/>
+                                    <outlet property="subtitle" destination="Ens-R0-2kC" id="kQ1-Su-rVZ"/>
+                                    <outlet property="title" destination="Yn8-EE-DgZ" id="MuA-BE-ISp"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -378,7 +378,7 @@
                     <navigationItem key="navigationItem" id="tn2-h6-Ama">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="4Yy-gy-1Nk">
                             <connections>
-                                <action selector="BacktoMainVC:" destination="igj-MH-y7P" id="hlb-7p-aJX"/>
+                                <action selector="back:" destination="igj-MH-y7P" id="H8O-pz-OYd"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -424,7 +424,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="device_detail_info" textLabel="sbJ-Ja-Epb" detailTextLabel="FA4-SR-XRc" style="IBUITableViewCellStyleValue1" id="tOO-hj-hGh">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="device_detail_cell" textLabel="sbJ-Ja-Epb" detailTextLabel="FA4-SR-XRc" style="IBUITableViewCellStyleValue1" id="tOO-hj-hGh">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tOO-hj-hGh" id="I5X-W8-dA1">
                                     <autoresizingMask key="autoresizingMask"/>

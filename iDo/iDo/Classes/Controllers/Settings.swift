@@ -4,7 +4,6 @@
 
 class Settings: UITableViewController {
 
-    let IDOLOGREDCOLOR = Util.ColorFromRGB(0xFB414D)
     let minLowestTemperature: Float = 26
     let maxLowestTemperature: Float = 36
     let minHighestTemperature: Float = 37
@@ -24,41 +23,25 @@ class Settings: UITableViewController {
     // MARK: - 生命周期 (Lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        //国际化
-        title = Util.LocalizedString("setting")
+        title = Util.LocalizedString("settings")
         lowLabel.text =  Util.LocalizedString("Minimum temperature")
         highLabel.text = Util.LocalizedString("Maximum temperature")
         lAlarmLabel.text = Util.LocalizedString("low temperature alarm")
         hAlarmLabel.text = Util.LocalizedString("High temperature alarm")
-        
+
         lNoticeSwitch.on = Util.isLowTNotice()
         HNoticeSwitch.on = Util.isHighTNotice()
         lowestTemperatureSlider.tag = 0
         lowestTemperatureSlider.value = (Util.lowestTemperature() - minLowestTemperature ) / (maxLowestTemperature - minLowestTemperature)
-       lowestTemperatureLabel.text =  NSString(format: "%.1f", Util.lowestTemperature())
-        
+        lowestTemperatureLabel.text =  NSString(format: "%.1f", Util.lowestTemperature())
+
         hightestTemperatureSlider.tag = 1
         hightestTemperatureSlider.value = (Util.HighestTemperature() - minHighestTemperature) / (maxHighesTemperature - minHighestTemperature)
         highestTemperatureLabel.text = NSString(format: "%.1f", Util.HighestTemperature())
     }
 
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        recoverTranslucentedTabBar()
-       // navigationController?.navigationBar.tintColor = IDOLOGREDCOLOR
-    }
-
-    // MARK: - 自定义方法 (Custom Method)
-    func recoverTranslucentedTabBar(){
-        tabBarController?.tabBar.backgroundImage = nil
-        tabBarController?.tabBar.shadowImage = nil
-        tabBarController?.tabBar.barStyle = UIBarStyle.Default
-//        tabBarController?.tabBar.translucent = true
-        tabBarController?.tabBar.tintColor = IDOLOGREDCOLOR
-    }
-
     // MARK: - Action
-    @IBAction func BacktoMainVC(sender: AnyObject) {
+    @IBAction func back(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -77,15 +60,12 @@ class Settings: UITableViewController {
     }
 
     @IBAction func changeTemperature(sender: UISlider) {
-        if sender.tag == 0 {
-            //lowest
-            let currentLowestTemperature = minLowestTemperature +  (maxLowestTemperature - minLowestTemperature) * sender.value
+        if sender.tag == 0 { // lowest
+            let currentLowestTemperature = minLowestTemperature + (maxLowestTemperature - minLowestTemperature) * sender.value
             lowestTemperatureLabel.text = NSString(format: "%.1f", currentLowestTemperature)
             Util.setLowestTemperature(currentLowestTemperature)
-        }
-        else {
-            //highest
-            let currentHighestTemperature = minHighestTemperature +  (maxHighesTemperature - minHighestTemperature) * sender.value
+        } else { // highest
+            let currentHighestTemperature = minHighestTemperature + (maxHighesTemperature - minHighestTemperature) * sender.value
             highestTemperatureLabel.text = NSString(format: "%.1f", currentHighestTemperature)
             Util.setHighestTemperature(currentHighestTemperature)
         }
