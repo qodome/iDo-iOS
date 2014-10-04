@@ -1,10 +1,7 @@
 //
-//  WeekCell.swift
-//  Olive-ios
+//  Copyright (c) 2014年 NY. All rights reserved.
 //
-//  Created by billsong on 14-9-9.
-//  Copyright (c) 2014年 hongDing. All rights reserved.
-//
+
 class WeekCell: UITableViewCell {
     
     var weekButton: UIButton!

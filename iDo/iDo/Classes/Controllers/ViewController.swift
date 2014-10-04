@@ -1,5 +1,6 @@
-
-//  Copyright (c) 2014 hongDing. All rights reserved.
+//
+//  Copyright (c) 2014年 NY. All rights reserved.
+//
 
 import CoreBluetooth
 

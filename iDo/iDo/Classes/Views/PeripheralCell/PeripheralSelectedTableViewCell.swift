@@ -1,12 +1,6 @@
 //
-//  PeripheralSelectedTableViewCell.swift
-//  Olive-ios
+//  Copyright (c) 2014年 NY. All rights reserved.
 //
-//  Created by billsong on 14-9-18.
-//  Copyright (c) 2014年 hongDing. All rights reserved.
-//
-
-import UIKit
 
 class PeripheralSelectedTableViewCell: UITableViewCell {
 

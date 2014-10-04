@@ -319,10 +319,11 @@
 				TargetAttributes = {
 					E72F29FC19D92456009383AB = {
 						CreatedOnToolsVersion = 6.0.1;
-						DevelopmentTeam = NVWWW8V547;
+						DevelopmentTeam = UEZ7D634BB;
 					};
 					E72F2A1119D92457009383AB = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = UEZ7D634BB;
 						TestTargetID = E72F29FC19D92456009383AB;
 					};
 				};
