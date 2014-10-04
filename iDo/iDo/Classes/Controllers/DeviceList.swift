@@ -122,7 +122,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
             var otherBtnTitle2 = Util.LocalizedString("details")
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle1, otherBtnTitle2).show()
         } else {
-            mDeviceCentralManger.userConnectPeripheral(devices[indexPath.row] as CBPeripheral)
+            mDeviceCentralManger.userConnectPeripheral(indexPath.row)
         }
     }
 
