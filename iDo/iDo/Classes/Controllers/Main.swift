@@ -70,7 +70,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     }
 
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated);
+        super.viewWillAppear(animated)
         // 透明化navigationBar
         translucentNavigationBar()
         translucentTabBar()
@@ -101,7 +101,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             var bytes = [UInt8](count: mWriteData.length, repeatedValue: 0)
             mWriteData.getBytes(&bytes, length:mWriteData.length)
             var mDateBytes = [UInt8](count: mWriteData.length/2, repeatedValue: 0)
-            for var i=0; i < bytes.count; i++ {
+            for var i = 0; i < bytes.count; i++ {
                 // [NSString stringWithFormat:@"%x",bytes[i]&0xff]
                 var cData = NSString(format: "%c%c", bytes[i],bytes[i+1]).integerValue
                 i++
@@ -110,7 +110,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             }
             var hexArr:NSMutableArray = NSMutableArray()
             var writeDataString: String = ""
-            for var i=0; i < mDateBytes.count; i++ {
+            for var i = 0; i < mDateBytes.count; i++ {
                 var hexStr: NSString = ""
                 var newHexStr: NSString =  NSString(format: "%x", mDateBytes[i]&0xff)
                 if newHexStr.length == 1 {
@@ -126,7 +126,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             println("writeDataString-\(writeDataString)")
             let realWriteData = writeDataString.dataUsingEncoding(NSASCIIStringEncoding)!
             var mRealDateBytes = [UInt8](count: realWriteData.length/2, repeatedValue: 0)
-            for var i=0; i < bytes.count; i++ {
+            for var i = 0; i < bytes.count; i++ {
                 var cData = NSString(format: "%c%c", bytes[i],bytes[i+1]).integerValue
                 i++
                 mDateBytes[i/2] = UInt8(cData)
@@ -286,9 +286,9 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         graphChart?.fDGraphViewDelegate = self
         graphChart?.delegate = self // scrollViewDelegate
         // 必须现设 numberOfDataPointsInEveryPage 在设 dataPoints
-        graphChart?.numberOfDataPointsInEveryPage = 100;
+        graphChart?.numberOfDataPointsInEveryPage = 100
         var lineFloatData = NSMutableArray()
-        for var i=0;i < lineChartData.count; i++ {
+        for var i = 0; i < lineChartData.count; i++ {
             var cTemp = lineChartData[i] as Temperature
             lineFloatData.addObject(cTemp.cTemperature.floatValue)
         }
@@ -303,7 +303,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
 
     /**: generate data */
     func generateChartDataWithDateString(dateStr: String) ->Bool {
-        var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtil.dateFromString(dateStr, withFormat: "yyyy-MM-dd"));
+        var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtil.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
         if tempArray.count == 0 {
             //无数据
             println("无数据")
@@ -316,7 +316,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
                 //tempChartDataArr.addObject(mTemperature.cTemperature.floatValue)
                 tempChartDataArr.addObject(mTemperature)
             }
-            lineChartData = NSArray(array: tempChartDataArr);
+            lineChartData = NSArray(array: tempChartDataArr)
             return true
         }
     }

@@ -8,4 +8,5 @@ class DeviceCell: UITableViewCell {
     @IBOutlet var title: UILabel!
     @IBOutlet var subtitle: UILabel!
     @IBOutlet var indicator: UIActivityIndicatorView!
+
 }

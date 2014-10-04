@@ -23,12 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var devicesCentralManager =  DeviceCentralManager.instanceForCenterManager()
         for var i = 0; i < devicesCentralManager.devicesArrayOnSelectedStatus.count; i++ {
             var mPeripheral:CBPeripheral = devicesCentralManager.devicesArrayOnSelectedStatus[i] as CBPeripheral
-            devicesCentralManager.devicesCentralManager.cancelPeripheralConnection(mPeripheral)
+            devicesCentralManager.central.cancelPeripheralConnection(mPeripheral)
             devicesCentralManager.devicesArrayOnSelectedStatus.removeObject(mPeripheral)
         }
         for var i = 0; i < devicesCentralManager.devices.count; i++ {
             var mPeripheral:CBPeripheral = devicesCentralManager.devices[i] as CBPeripheral
-            devicesCentralManager.devicesCentralManager.cancelPeripheralConnection(mPeripheral)
+            devicesCentralManager.central.cancelPeripheralConnection(mPeripheral)
             devicesCentralManager.devices.removeAtIndex(i)
         }
     }

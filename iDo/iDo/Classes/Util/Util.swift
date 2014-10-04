@@ -77,7 +77,7 @@ class Util: NSObject {
     BOOL isSuccess = NO;
     NSMutableArray *arrM = [OliveDBDao queryHistoryWithDay:date];
     NSString *stringM = [[NSString alloc]init];
-    for (Temperature *temper in arrM) {
+    for Temperature *temper in arrM {
     NSString *str = [NSString stringWithFormat:@"[%@,%@],\n",temper.cDate,temper.cTemperature];
     stringM = [stringM stringByAppendingString:str];
     }

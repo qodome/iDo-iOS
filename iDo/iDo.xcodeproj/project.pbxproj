@@ -172,8 +172,8 @@
 			children = (
 				E72F2A5B19D926DA009383AB /* Controllers */,
 				E72F2A6119D926DA009383AB /* Models */,
-				E72F2A6819D926DA009383AB /* Util */,
 				E72F2A6B19D926DA009383AB /* Views */,
+				E72F2A6819D926DA009383AB /* Util */,
 			);
 			path = Classes;
 			sourceTree = "<group>";

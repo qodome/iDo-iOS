@@ -8,7 +8,7 @@ protocol CalendarViewDelegate {
 
 class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
 
-    let cellIdentity: String = "calendarViewell";
+    let cellIdentity: String = "calendarViewell"
     var dataSourceArr: NSMutableArray? = nil
     var mainTableView: UITableView? = nil
     var delegate: CalendarViewDelegate? = nil

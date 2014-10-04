@@ -9,7 +9,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
     let IDOLOGREDCOLOR = Util.ColorFromRGB(0xFB414D)
     let cellId = "device_list_cell"
 
-    var devicesArrayOnSelectedStatus: NSMutableArray?
+    var data: [AnyObject] = []
     var devices: [AnyObject] = []
     var mDeviceCentralManger: DeviceCentralManager!
 
@@ -29,7 +29,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         mDeviceCentralManger.delegate = self
         mDeviceCentralManger.startSendingDataDelegate = self
         devices = mDeviceCentralManger.devices
-        devicesArrayOnSelectedStatus = mDeviceCentralManger.devicesArrayOnSelectedStatus
+        data = mDeviceCentralManger.devicesArrayOnSelectedStatus
     }
 
     override func viewDidDisappear(animated: Bool) {
@@ -40,11 +40,11 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
             mDeviceCentralManger.isShowAllCanConnectedDevices = false
         }
     }
-
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "peripheralDetailInforimation" {
             var detailInforVC = segue.destinationViewController as DeviceDetail
-            detailInforVC.device = devicesArrayOnSelectedStatus![currentIndexPathRow] as CBPeripheral
+            detailInforVC.device = data[currentIndexPathRow] as CBPeripheral
         }
     }
 
@@ -55,7 +55,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return devicesArrayOnSelectedStatus!.count
+            return data.count
         }
         return devices.count
     }
@@ -65,8 +65,8 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         var device: CBPeripheral
         cell.indicator.hidden = true
         if indexPath.section == 0 {
-            device = devicesArrayOnSelectedStatus![indexPath.row] as CBPeripheral
-            if mDeviceCentralManger.isPeripheralTryToConnect{
+            device = data[indexPath.row] as CBPeripheral
+            if mDeviceCentralManger.isPeripheralTryToConnect {
                 cell.indicator.hidden = false
                 cell.indicator.startAnimating()
                 cell.icon.hidden = true
@@ -112,7 +112,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         return tableHeaderView
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
             currentIndexPathRow = indexPath.row
             var title = Util.LocalizedString("warning")
@@ -127,8 +127,8 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
     }
 
     // MARK: - didChangedCurrentConnectedDevice Delegate
-    func central(center: CBCentralManager, unConnectedDevices unConnectedDeviceArr: NSArray, connectedDevices connectedDeviceArr: NSArray) {
-        devicesArrayOnSelectedStatus = NSMutableArray(array: connectedDeviceArr)
+    func centralss(centeral: CBCentralManager, unConnectedDevices unConnectedDeviceArr: NSArray, connectedDevices connectedDeviceArr: NSArray) {
+        data = NSMutableArray(array: connectedDeviceArr)
         devices = NSMutableArray(array: unConnectedDeviceArr)
         tableView.reloadData()
     }
@@ -142,7 +142,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
     // MARK: - uiAlertView Delegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 {
-            mDeviceCentralManger.userCancelConnectPeripheral(devicesArrayOnSelectedStatus![currentIndexPathRow] as CBPeripheral)
+            mDeviceCentralManger.unbind(data[currentIndexPathRow] as CBPeripheral)
         } else if buttonIndex == 2 {
             println("设备详情")
             performSegueWithIdentifier("peripheralDetailInforimation", sender: self)
@@ -162,7 +162,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.barStyle = UIBarStyle.Default
-        navigationController?.navigationBar.tintColor = IDOLOGREDCOLOR;
+        navigationController?.navigationBar.tintColor = IDOLOGREDCOLOR
     }
 
 }
