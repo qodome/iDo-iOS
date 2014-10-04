@@ -4,23 +4,21 @@
 
 import CoreBluetooth
 
-class PeripheralsViewController: UITableViewController, DeviceCentralManagerdidChangedCurrentConnectedDeviceDelegate, DeviceCentralManagerDidStartsendDataDelegate, DeviceCentralManagerBuleToothDoNotOpenDelegate, UIAlertViewDelegate {
-    
+class DeviceDetail: UITableViewController, DeviceCentralManagerdidChangedCurrentConnectedDeviceDelegate, DeviceCentralManagerDidStartsendDataDelegate, DeviceCentralManagerBuleToothDoNotOpenDelegate, UIAlertViewDelegate {
+
     let IDOLOGREDCOLOR = Util.ColorFromRGB(0xFB414D)
     let deviceCellIdentity = "deviceCell"
-    
+
     var devicesArrayOnSelectedStatus: NSMutableArray?
     var devicesArrayOnNoSelectedStatus: NSMutableArray?
     var mDeviceCentralManger: DeviceCentralManager!
-    
+
     var indicatorView:UIActivityIndicatorView!
     var currentIndexPathRow:Int = -1 //不好
-    
+
     @IBOutlet weak var refreshBarBtn: UIBarButtonItem!
-    
-    
+
     //MARK: - life Cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshBarBtn.title = NSLocalizedString("refresh", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
@@ -35,7 +33,7 @@ class PeripheralsViewController: UITableViewController, DeviceCentralManagerdidC
         devicesArrayOnNoSelectedStatus = mDeviceCentralManger.devicesArrayOnNoSelectedStatus
         devicesArrayOnSelectedStatus = mDeviceCentralManger.devicesArrayOnSelectedStatus
     }
-    
+
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         mDeviceCentralManger.disConnectOtherPeripheralAfterBandedAConnectingPeripheral()
@@ -44,28 +42,27 @@ class PeripheralsViewController: UITableViewController, DeviceCentralManagerdidC
             mDeviceCentralManger.isShowAllCanConnectedDevices = false
         }
     }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "peripheralDetailInforimation" {
-            var detailInforVC = segue.destinationViewController as DetailInforimationForPeripherals
+            var detailInforVC = segue.destinationViewController as DeviceList
             detailInforVC.currentPeripheral = devicesArrayOnSelectedStatus![currentIndexPathRow] as CBPeripheral
         }
         
     }
-    
-    //MARK: - tableView DataSource
-    
+
+    // MARK: - tableView DataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
-    
+
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if 0 == section {
             return devicesArrayOnSelectedStatus!.count
         }
         return devicesArrayOnNoSelectedStatus!.count
     }
-    
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:PeripheralSelectedTableViewCell = tableView.dequeueReusableCellWithIdentifier(deviceCellIdentity , forIndexPath: indexPath) as PeripheralSelectedTableViewCell
         
@@ -91,9 +88,8 @@ class PeripheralsViewController: UITableViewController, DeviceCentralManagerdidC
         cell.sDetailTextLabel?.text = "\(peripheralDevice.identifier.UUIDString)"
         return cell
     }
-    
-    //MARK: - tableView Delegate
-    
+
+    // MARK: - tableView Delegate
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
         return 20.0
     }
@@ -140,30 +136,26 @@ class PeripheralsViewController: UITableViewController, DeviceCentralManagerdidC
             mDeviceCentralManger.userConnectPeripheral(devicesArrayOnNoSelectedStatus![indexPath.row] as CBPeripheral)
         }
     }
-    
-    //Mark: - blueTooth do not open
-    
+
+    // Mark: - blueTooth do not open
     func deviceCentralManagerBuleToothDoNotOpen() {
         UIAlertView(title: "提示", message: "您iPhone的蓝牙未开启,请开启!", delegate: nil, cancelButtonTitle: "好的").show()
     }
-    
-    //MARK: - didChangedCurrentConnectedDevice Delegate
-    
+
+    // MARK: - didChangedCurrentConnectedDevice Delegate
     func central(center: CBCentralManager, unConnectedDevices unConnectedDeviceArr: NSArray, connectedDevices connectedDeviceArr: NSArray) {
         devicesArrayOnSelectedStatus = NSMutableArray(array: connectedDeviceArr)
         devicesArrayOnNoSelectedStatus = NSMutableArray(array: unConnectedDeviceArr)
         tableView.reloadData()
     }
-    
+
     //MARK: -  DeviceCentralManager DidStartsendData Delegate
-    
     func deviceCentralManagerDidStartsendData() {
         //停止loading
         tableView.reloadData()
     }
-    
+
     //MARK: - uiAlertView Delegate
-    
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 {
             mDeviceCentralManger.userCancelConnectPeripheral(devicesArrayOnSelectedStatus![currentIndexPathRow] as CBPeripheral)
@@ -174,16 +166,15 @@ class PeripheralsViewController: UITableViewController, DeviceCentralManagerdidC
             
         }
     }
-    
+
     // MARK: - action
-    
     @IBAction func refreshPeripherals(sender: AnyObject) {
         mDeviceCentralManger.isShowAllCanConnectedDevices = true
         mDeviceCentralManger.startScanPeripherals()
         indicatorView.startAnimating()
         indicatorView.hidden = false
     }
-    
+
     //MARK: - custom method
     func recoverTranslucentedNavigationBar(){
         
@@ -192,7 +183,7 @@ class PeripheralsViewController: UITableViewController, DeviceCentralManagerdidC
         navigationController?.navigationBar.barStyle = UIBarStyle.Default
         navigationController?.navigationBar.tintColor = IDOLOGREDCOLOR;
     }
-    
+
     func recoverTranslucentedTabBar(){
         tabBarController?.tabBar.backgroundImage = nil
         tabBarController?.tabBar.shadowImage = nil
@@ -200,4 +191,5 @@ class PeripheralsViewController: UITableViewController, DeviceCentralManagerdidC
         //        tabBarController?.tabBar.translucent = true
         tabBarController?.tabBar.tintColor = IDOLOGREDCOLOR
     }
+
 }

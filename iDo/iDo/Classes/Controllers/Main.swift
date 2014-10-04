@@ -4,7 +4,7 @@
 
 import CoreBluetooth
 
-class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrticDelegate ,DeviceCentralManagerBuleToothDoNotOpenDelegate, CalendarViewDelegate, FDCaptionGraphViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
+class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrticDelegate ,DeviceCentralManagerBuleToothDoNotOpenDelegate, CalendarViewDelegate, FDCaptionGraphViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
     
     let mSegueId = "mPeriphalSegue"
     let kSCREEN_WIDTH = UIScreen.mainScreen().bounds.size.width
@@ -32,12 +32,12 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
     @IBOutlet var graphChart: FDGraphScrollView? // 折线图View
     
     var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyy-MM-dd")
-    
-    //MARK: - life Cycle
+
+    // MARK: - life Cycle
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
        // testOB()
@@ -69,27 +69,26 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
         graphChart?.hidden = true
         graphChart?.delegate = self
     }
-    
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
-        //透明化navigationBar
+        // 透明化navigationBar
         translucentNavigationBar()
         translucentTabBar()
     }
     
-    override func viewDidAppear(animated: Bool) {
+        override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         updateCurrentDateLineChart()
     }
-    
-    //Mark: - blueTooth do not open 
+
+    // Mark: - blueTooth do not open
     
     func deviceCentralManagerBuleToothDoNotOpen() {
         UIAlertView(title: "提示", message: "您iPhone的蓝牙未开启,请开启!", delegate: nil, cancelButtonTitle: "好的").show()
     }
-    
-    //MARK: -  didUpdateValueToCharacterisrtic Delegate
-    
+
+    // MARK: -  didUpdateValueToCharacterisrtic Delegate
     func didUpdateValueToCharacteristic(characteristic:CBCharacteristic? ,cError error:NSError?) {
         if characteristic == nil && error == nil {
             temperatureLabel.text = NSLocalizedString("finding a periheral", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
@@ -101,8 +100,8 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
         println("data length----\(characteristic?.value.length)")
         
         if characteristic?.value.length == 5 && error == nil {
-            //写date数据到peripheral中
-            //得到当前data的16进制
+            // 写date数据到peripheral中
+            // 得到当前data的16进制
             var dateString: NSString = DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyyMMddHHmmss")
             
             let mWriteData: NSData = (dateString.dataUsingEncoding(NSASCIIStringEncoding))!
@@ -192,9 +191,8 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
         }
 
     }
-    
+
     //MARK: - UIAlertViewDelegate
-    
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 {
             //进入设备页
@@ -204,9 +202,8 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
             performSegueWithIdentifier(mSegueId, sender: self)
         }
     }
-    
+
     //MARK: -  calendarView Delegate
-    
     func didSelectDate(dateStr: String, forDetail enty: WeekEntity) {
         println("did selected date - \(dateStr)")
         dismissCalenderAction()
@@ -228,7 +225,6 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
     }
     
     // MARK: -  fdGraphView Delegate
-    
     func tapedCloserIndex(index: Int32, withPointX PointX: CGFloat) {
         numberTaped.hidden = false
         println("tapedCloserIndex-\(lineChartData[Int(index)])")
@@ -240,7 +236,6 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
     }
     
     // MARK: - scrollView Delegate
-    
     func scrollViewDidScroll(scrollView: UIScrollView) {
         numberTaped.hidden = true
     }
@@ -272,7 +267,6 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
     }
     
     // MARK: - custom method
-    
     func dismissCalenderAction() {
         calendarView?.removeFromSuperview()
         calendarView?.delegate = nil
@@ -288,7 +282,7 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
         temperatureLabel.textColor = UIColor.whiteColor()
        // navigationController?.tabBarItem.title = NSLocalizedString("measure", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
     }
-    
+
     func translucentTabBar() {
         tabBarController?.tabBar.backgroundImage = UIImage()
         tabBarController?.tabBar.shadowImage = UIImage()
@@ -296,7 +290,7 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
         tabBarController?.tabBar.translucent = true
         tabBarController?.tabBar.tintColor = UIColor.whiteColor()
     }
-    
+
     func initSubViewToView() {
         var currentGraphChartFrame: CGRect!
         if graphChart != nil {
@@ -308,7 +302,7 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
         graphChart = FDGraphScrollView(frame: currentGraphChartFrame)
         addGraphLineChart()
     }
-    
+
     func addGraphLineChart() {
        // println("viewHeight- \(view.frame.size.height) \(graphChart?.frame)")
         graphChart?.backgroundColor = UIColor.clearColor()
@@ -330,8 +324,8 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
              view.insertSubview(graphChart!, belowSubview: calendarView!)
         }
     }
-    
-    /**: generate data*/
+
+    /**: generate data */
     func generateChartDataWithDateString(dateStr: String) ->Bool {
         var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtil.dateFromString(dateStr, withFormat: "yyyy-MM-dd"));
         if tempArray.count == 0 {
@@ -351,7 +345,7 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
             return true
         }
     }
-    
+
     func updateCurrentDateLineChart() {
         //默认 显示 lineChart
         let dateStr = DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyy-MM-dd")
@@ -366,8 +360,7 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
         }
     }
 
-    
-    /**About notifition */
+    /** About notifition */
     func sendTemperatureNotifition(notifictionMessage: String, nowTemperature temperature: Float) {
         var notification: UILocalNotification! = UILocalNotification()
         if notification != nil {
@@ -381,8 +374,8 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
     }
-    
-    /**处理蓝牙传个来的data*/
+
+    /** 处理蓝牙传个来的data */
     func calculateTemperatureData(currrentPeripheral :CBPeripheral, forCharacteristic currentCharacteristic:CBCharacteristic, forData data: NSData?) ->Float {
         println("bytes--\(data?.length)")
        var bytes = [UInt8](count: 5, repeatedValue: 0)
@@ -396,9 +389,9 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
         println("mantissa--\(mantissa)")
         let temperature = Float (mantissa) * Float(pow(10.0, fuzhiExponent))
         return temperature
-        
-}
-    //**写date数据到peripheral中*/
+    }
+
+    /** 写date数据到peripheral中 */
     func writeData(currrentPeripheral :CBPeripheral, forCharacteristic currentCharacteristic:CBCharacteristic, forData data: NSData) {
         currrentPeripheral.writeValue(data, forCharacteristic: currentCharacteristic, type:CBCharacteristicWriteType.WithResponse)
     }
@@ -406,4 +399,5 @@ class ViewController: UIViewController, DeviceCentralManagerdidUpdateValueToChar
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         (segue.destinationViewController as UIViewController).hidesBottomBarWhenPushed = true
     }
+
 }

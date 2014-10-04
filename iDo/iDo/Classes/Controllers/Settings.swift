@@ -2,7 +2,7 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-class SettingViewController: UITableViewController {
+class Settings: UITableViewController {
    
     let IDOLOGREDCOLOR = Util.ColorFromRGB(0xFB414D)
     let minLowestTemperature:Float = 26

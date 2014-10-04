@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A361c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3vB-nW-pZU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3vB-nW-pZU">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main-->
         <scene sceneID="Xeh-BQ-Pc0">
             <objects>
-                <viewController id="y4g-7r-2i1" customClass="ViewController" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="y4g-7r-2i1" customClass="Main" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="plY-Qs-8L7"/>
                         <viewControllerLayoutGuide type="bottom" id="mhW-0X-WlR"/>
@@ -107,7 +107,7 @@
         <!--peripheral-->
         <scene sceneID="6YL-oL-as5">
             <objects>
-                <tableViewController id="Ahw-Jo-Gl2" customClass="PeripheralsViewController" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Ahw-Jo-Gl2" customClass="DeviceDetail" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vjr-Qn-Ms0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -174,7 +174,7 @@
         <!--setting-->
         <scene sceneID="SSC-PH-QYY">
             <objects>
-                <tableViewController id="igj-MH-y7P" customClass="SettingViewController" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="igj-MH-y7P" customClass="Settings" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="1" id="FLN-uO-Vl5">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -413,12 +413,12 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="3510" y="83"/>
+            <point key="canvasLocation" x="3870" y="83"/>
         </scene>
         <!--Detail Info-->
         <scene sceneID="7Th-O3-S5v">
             <objects>
-                <tableViewController id="vOc-h2-5Hd" customClass="DetailInforimationForPeripherals" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="vOc-h2-5Hd" customClass="DeviceList" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Bkg-1o-5Qn">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
