@@ -26,10 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             devicesCentralManager.devicesCentralManager.cancelPeripheralConnection(mPeripheral)
             devicesCentralManager.devicesArrayOnSelectedStatus.removeObject(mPeripheral)
         }
-        for var i = 0; i < devicesCentralManager.devicesArrayOnNoSelectedStatus.count; i++ {
-            var mPeripheral:CBPeripheral = devicesCentralManager.devicesArrayOnNoSelectedStatus[i] as CBPeripheral
+        for var i = 0; i < devicesCentralManager.devices.count; i++ {
+            var mPeripheral:CBPeripheral = devicesCentralManager.devices[i] as CBPeripheral
             devicesCentralManager.devicesCentralManager.cancelPeripheralConnection(mPeripheral)
-            devicesCentralManager.devicesArrayOnNoSelectedStatus.removeObject(mPeripheral)
+            devicesCentralManager.devices.removeObject(mPeripheral)
         }
     }
 

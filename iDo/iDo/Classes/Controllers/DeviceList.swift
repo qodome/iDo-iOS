@@ -28,7 +28,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         mDeviceCentralManger = DeviceCentralManager.instanceForCenterManager()
         mDeviceCentralManger.delegate = self
         mDeviceCentralManger.startSendingDataDelegate = self
-        devices = mDeviceCentralManger.devicesArrayOnNoSelectedStatus
+        devices = mDeviceCentralManger.devices
         devicesArrayOnSelectedStatus = mDeviceCentralManger.devicesArrayOnSelectedStatus
     }
 

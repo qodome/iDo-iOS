@@ -29,7 +29,7 @@ class DeviceCentralManager: NSObject {
    // var isScanning: Bool = false //// 只有在用户点击刷新设备button后或者第一次进入appp 才为true
     
     var devicesArrayOnSelectedStatus: NSMutableArray! //放置已经连接的peripheral
-    var devicesArrayOnNoSelectedStatus: NSMutableArray! //放置可连接的(但未连接的)peripherals
+    var devices: NSMutableArray! //放置可连接的(但未连接的)peripherals
     var devicesArray: NSMutableArray! //保持指向peripherals的引用,不然会peripheras会丢失
     
     var startSendingDataDelegate: DeviceCentralManagerDidStartsendDataDelegate? // 
@@ -65,7 +65,7 @@ class DeviceCentralManager: NSObject {
         devicesCentralManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey:NSNumber.numberWithBool(true)])
         devicesArray = NSMutableArray()
         devicesArrayOnSelectedStatus = NSMutableArray()
-        devicesArrayOnNoSelectedStatus = NSMutableArray()
+        devices = NSMutableArray()
     }
 
     func userConnectPeripheral(peripheral:CBPeripheral!){
@@ -75,11 +75,11 @@ class DeviceCentralManager: NSObject {
         }
         bindPeripheral(peripheral)
         devicesCentralManager.connectPeripheral(peripheral, options: nil)
-        devicesArrayOnNoSelectedStatus.removeObject(peripheral)
+        devices.removeObject(peripheral)
         
         isPeripheralTryToConnect = true
         ////
-        delegate?.central(devicesCentralManager, unConnectedDevices: devicesArrayOnNoSelectedStatus, connectedDevices: devicesArrayOnSelectedStatus)
+        delegate?.central(devicesCentralManager, unConnectedDevices: devices, connectedDevices: devicesArrayOnSelectedStatus)
     }
     
     func userCancelConnectPeripheral(peripheral:CBPeripheral!){
@@ -87,7 +87,7 @@ class DeviceCentralManager: NSObject {
         isPeripheralTryToConnect = false
         ////
         characteristicDelegate?.didUpdateValueToCharacteristic(nil, cError: nil)
-        delegate?.central(devicesCentralManager, unConnectedDevices: devicesArrayOnNoSelectedStatus, connectedDevices: devicesArrayOnSelectedStatus)
+        delegate?.central(devicesCentralManager, unConnectedDevices: devices, connectedDevices: devicesArrayOnSelectedStatus)
     }
 
     func startScanPeripherals(){
@@ -121,13 +121,13 @@ class DeviceCentralManager: NSObject {
         isUserCancelConnectingDevices = true
         devicesCentralManager.cancelPeripheralConnection(peripheral)
         devicesArrayOnSelectedStatus.removeLastObject()
-        if !devicesArrayOnNoSelectedStatus.containsObject(peripheral) {
-            devicesArrayOnNoSelectedStatus .addObject(peripheral)
+        if !devices.containsObject(peripheral) {
+            devices .addObject(peripheral)
         }
     }
     
     func disConnectOtherPeripheralAfterBandedAConnectingPeripheral(){
-        if devicesArrayOnNoSelectedStatus.count != 0{
+        if devices.count != 0{
             for var i=0;i<devicesArray.count;i++ {
                 var mPeripheral:CBPeripheral = devicesArray[i] as CBPeripheral
                 //////
@@ -164,9 +164,9 @@ extension DeviceCentralManager: CBCentralManagerDelegate{
         central.scanForPeripheralsWithServices([CBUUID.UUIDWithString(kServiceUUID)], options: [CBCentralManagerOptionShowPowerAlertKey:NSNumber.numberWithBool(true)])
         if CBCentralManagerState.PoweredOff == central.state {
             devicesArrayOnSelectedStatus.removeAllObjects()
-            devicesArrayOnNoSelectedStatus.removeAllObjects()
+            devices.removeAllObjects()
              characteristicDelegate?.didUpdateValueToCharacteristic(nil, cError: nil)
-            delegate?.central(devicesCentralManager, unConnectedDevices: devicesArrayOnNoSelectedStatus, connectedDevices: devicesArrayOnSelectedStatus)
+            delegate?.central(devicesCentralManager, unConnectedDevices: devices, connectedDevices: devicesArrayOnSelectedStatus)
         }
     }
 
@@ -258,8 +258,8 @@ extension DeviceCentralManager: CBPeripheralDelegate {
                     if peripheralId == "" {
                         // peripheralId.isEmpty && !isUserCancelConnectingDevices 保证是首次连接设备的情况 ,如果只有 peripheralId.isEmpty的话完全可能是用户取消绑定的情况
                         devicesCentralManager.cancelPeripheralConnection(peripheral)
-                        if !devicesArrayOnNoSelectedStatus.containsObject(peripheral){
-                            devicesArrayOnNoSelectedStatus .addObject(peripheral)
+                        if !devices.containsObject(peripheral){
+                            devices .addObject(peripheral)
                         }
                         println("first comming")
                     } else if peripheralId == peripheral.identifier.UUIDString {
@@ -270,8 +270,8 @@ extension DeviceCentralManager: CBPeripheralDelegate {
                         disConnectOtherPeripheralAfterBandedAConnectingPeripheral()
                     } else {
                         devicesCentralManager.cancelPeripheralConnection(peripheral)
-                        if !devicesArrayOnNoSelectedStatus.containsObject(peripheral){
-                            devicesArrayOnNoSelectedStatus.addObject(peripheral)
+                        if !devices.containsObject(peripheral){
+                            devices.addObject(peripheral)
                         }
                     }
                     break
@@ -279,8 +279,8 @@ extension DeviceCentralManager: CBPeripheralDelegate {
             }
         }
         println("dataSelected--\(devicesArrayOnSelectedStatus.description) ")
-        println("dataNoSelected--\(devicesArrayOnNoSelectedStatus.description) ")
-        delegate?.central(devicesCentralManager, unConnectedDevices: devicesArrayOnNoSelectedStatus, connectedDevices: devicesArrayOnSelectedStatus)
+        println("dataNoSelected--\(devices.description) ")
+        delegate?.central(devicesCentralManager, unConnectedDevices: devices, connectedDevices: devicesArrayOnSelectedStatus)
     }
     
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!){
