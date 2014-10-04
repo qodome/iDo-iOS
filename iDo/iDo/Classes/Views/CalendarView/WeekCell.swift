@@ -3,11 +3,11 @@
 //
 
 class WeekCell: UITableViewCell {
-    
+
     var weekButton: UIButton!
     var weekDateLabel: UILabel!
     var weekLable: UILabel!
-    
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         weekButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
@@ -37,4 +37,5 @@ class WeekCell: UITableViewCell {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }

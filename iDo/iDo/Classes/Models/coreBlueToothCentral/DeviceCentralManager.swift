@@ -43,8 +43,7 @@ class DeviceCentralManager: NSObject {
     var devicesCentralManager: CBCentralManager!
     var currentPeripheral: CBPeripheral!
     
-    // MARK: - life Cycle
-    
+    // MARK: - 生命周期 (Lifecyle)
     class func instanceForCenterManager()->DeviceCentralManager{
         struct DeviceCentralSingleton{
             static var predicate:dispatch_once_t = 0
@@ -160,9 +159,9 @@ class DeviceCentralManager: NSObject {
     
 }
 
-// Mark: - DeviceCentralManager delegate
+// MARK: - DeviceCentralManager delegate
 
- extension DeviceCentralManager: CBCentralManagerDelegate{
+extension DeviceCentralManager: CBCentralManagerDelegate{
     
     func centralManagerDidUpdateState(central: CBCentralManager!)
     {
@@ -233,7 +232,7 @@ class DeviceCentralManager: NSObject {
     ////////////
 }
 
-// Mark: - CBPeripheralDelegate delegate
+// MARK: - CBPeripheralDelegate delegate
 
 extension DeviceCentralManager: CBPeripheralDelegate {
    

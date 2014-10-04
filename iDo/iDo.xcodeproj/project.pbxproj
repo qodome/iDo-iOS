@@ -11,8 +11,8 @@
 		E72F2A0319D92457009383AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A0219D92457009383AB /* AppDelegate.swift */; };
 		E72F2A0819D92457009383AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A0619D92457009383AB /* Main.storyboard */; };
 		E72F2A1919D92457009383AB /* iDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A1819D92457009383AB /* iDoTests.swift */; };
-		E72F2A7919D926DA009383AB /* DeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5D19D926DA009383AB /* DeviceList.swift */; };
-		E72F2A7A19D926DA009383AB /* DeviceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5E19D926DA009383AB /* DeviceDetail.swift */; };
+		E72F2A7919D926DA009383AB /* DeviceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5D19D926DA009383AB /* DeviceDetail.swift */; };
+		E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5E19D926DA009383AB /* DeviceList.swift */; };
 		E72F2A7B19D926DA009383AB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5F19D926DA009383AB /* Settings.swift */; };
 		E72F2A7C19D926DA009383AB /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6019D926DA009383AB /* Main.swift */; };
 		E72F2A7D19D926DA009383AB /* DeviceCentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6319D926DA009383AB /* DeviceCentralManager.swift */; };
@@ -54,8 +54,8 @@
 		E72F2A1719D92457009383AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E72F2A1819D92457009383AB /* iDoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iDoTests.swift; sourceTree = "<group>"; };
 		E72F2A5619D926C6009383AB /* iDo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iDo-Bridging-Header.h"; sourceTree = "<group>"; };
-		E72F2A5D19D926DA009383AB /* DeviceList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceList.swift; sourceTree = "<group>"; };
-		E72F2A5E19D926DA009383AB /* DeviceDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDetail.swift; sourceTree = "<group>"; };
+		E72F2A5D19D926DA009383AB /* DeviceDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDetail.swift; sourceTree = "<group>"; };
+		E72F2A5E19D926DA009383AB /* DeviceList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceList.swift; sourceTree = "<group>"; };
 		E72F2A5F19D926DA009383AB /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		E72F2A6019D926DA009383AB /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		E72F2A6319D926DA009383AB /* DeviceCentralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCentralManager.swift; sourceTree = "<group>"; };
@@ -183,8 +183,8 @@
 			children = (
 				E72F2A6019D926DA009383AB /* Main.swift */,
 				E72F2A5F19D926DA009383AB /* Settings.swift */,
-				E72F2A5D19D926DA009383AB /* DeviceList.swift */,
-				E72F2A5E19D926DA009383AB /* DeviceDetail.swift */,
+				E72F2A5E19D926DA009383AB /* DeviceList.swift */,
+				E72F2A5D19D926DA009383AB /* DeviceDetail.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -411,11 +411,11 @@
 				E72F2A8419D926DA009383AB /* WeekCell.swift in Sources */,
 				E72F2A8619D926DA009383AB /* FDGraphScrollView.m in Sources */,
 				E72F2A7B19D926DA009383AB /* Settings.swift in Sources */,
-				E72F2A7A19D926DA009383AB /* DeviceDetail.swift in Sources */,
+				E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */,
 				E72F2A7E19D926DA009383AB /* DBManager.swift in Sources */,
 				E72F2A8819D926DA009383AB /* PeripheralSelectedTableViewCell.swift in Sources */,
 				E72F2A8319D926DA009383AB /* CalendarView.swift in Sources */,
-				E72F2A7919D926DA009383AB /* DeviceList.swift in Sources */,
+				E72F2A7919D926DA009383AB /* DeviceDetail.swift in Sources */,
 				E72F2A8219D926DA009383AB /* Util.swift in Sources */,
 				E72F2A0319D92457009383AB /* AppDelegate.swift in Sources */,
 				E72F2A8719D926DA009383AB /* FDGraphView.m in Sources */,

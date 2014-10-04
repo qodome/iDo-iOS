@@ -7,14 +7,14 @@ protocol CalendarViewDelegate {
 }
 
 class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
-    
+
     let cellIdentity: String = "calendarViewell";
     var dataSourceArr: NSMutableArray? = nil
     var mainTableView: UITableView? = nil
     var delegate: CalendarViewDelegate? = nil
     var defaultselectedDate: String? = nil
-    
-    //MARK: - init
+
+    // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadModels()
@@ -24,7 +24,7 @@ class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func kUIColorFromRGB(rgbValue: Int) -> UIColor {
         let red = Double((rgbValue & 0xFF0000) >> 16) / 255.0
         let green = Double((rgbValue & 0xFF00) >> 8) / 255.0
@@ -33,8 +33,8 @@ class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
         var color: UIColor = UIColor( red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha:CGFloat(alpha) )
         return color
     }
-    
-    //MARK: - custom method
+
+    // MARK: - custom method
     func loadModels() {
         dataSourceArr = NSMutableArray()
         for var i = 0; i <= 30; i++ {
@@ -49,21 +49,21 @@ class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
             var we: WeekEntity = WeekEntity()
             we.weekDate = stringFromDate(preDate, withFormat: "yyyy-MM-dd")
             we.weektype = week
-            switch (i) {
-                case 0:
+            switch i {
+            case 0:
                 defaultselectedDate = we.weekDate
-                we.subtitule = NSLocalizedString("Today", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
-                case 1:
-                we.subtitule = NSLocalizedString("Yesterday", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
-                case 2:
-                we.subtitule = NSLocalizedString("B yesterday", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
-                default:
+                we.subtitule = Util.LocalizedString("Today")
+            case 1:
+                we.subtitule = Util.LocalizedString("Yesterday")
+            case 2:
+                we.subtitule = Util.LocalizedString("B yesterday")
+            default:
                 we.subtitule = ""
             }
             dataSourceArr?.addObject(we)
         }
     }
-    
+
     func buildUI() {
         //backgroundColor = UIColor(red: 209/255.0, green: 209/255.0, blue: 209/255.0, alpha: 1.0)
         backgroundColor = UIColor.clearColor()
@@ -85,13 +85,13 @@ class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
         mainTableView?.registerClass(WeekCell.self, forCellReuseIdentifier: cellIdentity)
         addSubview(mainTableView!)
     }
-    
+
     func stringFromDate(date: NSDate, withFormat format: String) -> String {
         var dateFromatter: NSDateFormatter = NSDateFormatter()
         dateFromatter.dateFormat = format
         return dateFromatter.stringFromDate(date)
     }
-    
+
     func colorForWeek(weektype:WeekType) -> UIColor {
         var color: UIColor = UIColor.grayColor()
         switch (weektype) {
@@ -113,7 +113,7 @@ class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
         }
         return color
     }
-    
+
     func titleForWeek(weektype:WeekType) -> String {
         var title:String = String()
         switch (weektype) {
@@ -135,19 +135,18 @@ class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
             title = ""
         }
         return title
-
     }
-    
+
     func setDefautSelectedDate(mDefautSelectedDate: String) {
         defaultselectedDate = mDefautSelectedDate
         mainTableView?.reloadData()
     }
-    
-    //MARK:- tableView delegate
+
+    // MARK:- tableView delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (dataSourceArr?.count)!
     }
-    
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: WeekCell = tableView.dequeueReusableCellWithIdentifier(cellIdentity, forIndexPath: indexPath) as WeekCell
         let enti: WeekEntity = dataSourceArr?.objectAtIndex(indexPath.row) as WeekEntity
@@ -168,13 +167,13 @@ class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
-    
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let enti: WeekEntity! = dataSourceArr?.objectAtIndex(indexPath.row) as WeekEntity
         defaultselectedDate = enti.weekDate
         delegate?.didSelectDate(enti.weekDate, forDetail: enti)
     }
-    
+
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60.0
     }

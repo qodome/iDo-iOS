@@ -73,6 +73,10 @@ class Util: NSObject {
         )
     }
 
+    class func LocalizedString(name: String) -> String {
+        return NSLocalizedString(name, tableName: "Localization", value: "", comment: "")
+    }
+
     /*
     + (BOOL)writeToLocalForDate:(NSDate *)date
     {

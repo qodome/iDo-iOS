@@ -104,10 +104,10 @@
             </objects>
             <point key="canvasLocation" x="2482" y="-575"/>
         </scene>
-        <!--peripheral-->
+        <!--Device List-->
         <scene sceneID="6YL-oL-as5">
             <objects>
-                <tableViewController id="Ahw-Jo-Gl2" customClass="DeviceDetail" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Ahw-Jo-Gl2" customClass="DeviceList" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vjr-Qn-Ms0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -154,7 +154,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="peripheral" id="phm-25-574">
+                    <navigationItem key="navigationItem" id="phm-25-574">
                         <barButtonItem key="rightBarButtonItem" title="刷新" id="wdW-ok-ntC">
                             <connections>
                                 <action selector="refreshPeripherals:" destination="Ahw-Jo-Gl2" id="HGm-30-NyB"/>
@@ -171,7 +171,7 @@
             </objects>
             <point key="canvasLocation" x="3477" y="-672"/>
         </scene>
-        <!--setting-->
+        <!--Settings-->
         <scene sceneID="SSC-PH-QYY">
             <objects>
                 <tableViewController id="igj-MH-y7P" customClass="Settings" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
@@ -375,7 +375,7 @@
                             <outlet property="delegate" destination="igj-MH-y7P" id="tZ5-xh-ngp"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="setting" id="tn2-h6-Ama">
+                    <navigationItem key="navigationItem" id="tn2-h6-Ama">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="4Yy-gy-1Nk">
                             <connections>
                                 <action selector="BacktoMainVC:" destination="igj-MH-y7P" id="hlb-7p-aJX"/>
@@ -415,16 +415,16 @@
             </objects>
             <point key="canvasLocation" x="3870" y="83"/>
         </scene>
-        <!--Detail Info-->
+        <!--Device Detail-->
         <scene sceneID="7Th-O3-S5v">
             <objects>
-                <tableViewController id="vOc-h2-5Hd" customClass="DeviceList" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Bkg-1o-5Qn">
+                <tableViewController id="vOc-h2-5Hd" customClass="DeviceDetail" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Bkg-1o-5Qn">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="detailInforId" textLabel="sbJ-Ja-Epb" detailTextLabel="RLC-KU-l5O" style="IBUITableViewCellStyleValue1" id="tOO-hj-hGh">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="device_detail_info" textLabel="sbJ-Ja-Epb" detailTextLabel="FA4-SR-XRc" style="IBUITableViewCellStyleValue1" id="tOO-hj-hGh">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tOO-hj-hGh" id="I5X-W8-dA1">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -435,10 +435,10 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RLC-KU-l5O">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FA4-SR-XRc">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -452,7 +452,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Detail Info" id="LwH-RC-4Ma"/>
+                    <navigationItem key="navigationItem" id="LwH-RC-4Ma"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iup-lk-IEs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

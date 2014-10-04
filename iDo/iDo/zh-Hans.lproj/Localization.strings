@@ -1,71 +1,39 @@
-/*
-  Localization.strings
-  iDo
-
-  Created by billsong on 14-9-29.
-  Copyright (c) 2014年 hongDing. All rights reserved.
-*/
-
-"finding a periheral" = "连接中";
-
-"peripheral" = "设备";
-
-"Calendar" = "日历";
-
-"setting" = "设置";
-
+"finding a device" = "连接中";
+"devices" = "设备";
+"calendar" = "日历";
+"settings" = "设置";
 "measure" = "测量";
-
 "refresh" = "刷新";
 
 "Connected devices" = "已连接设备";
-
 "Available devices" = "可选择设备";
 
 "High temperature alarm" = "高温报警通知";
-
 "low temperature alarm" = "低温报警通知";
-
 "Minimum temperature" = "最低温值";
-
 "Maximum temperature" = "最高温值";
 
-"Name" = "名称";
-
-"Number" = "序号";
+"name" = "名称";
+"bluetooth" = "蓝牙";
 
 "Today" = "今天";
-
 "Yesterday" = "昨天";
-
 "B yesterday" = "前天";
-
 "Detail Info" = "详细信息";
 
 
 
 "warning" = "警告";
-
 "Jump to devices detail page or disConnect this device?" = "进入设备详情还是取消绑定?";
-
 "Back" = "返回";
-
 "DisConnect" = "取消绑定";
-
 "Detail Page"= "设备详情";
 
 
 "Prompt"= "提示";
-
 "Don't have any data on the day !" = "无历史数据";
-
 "Done" = "确定";
 
-
-
 "Please jump to device page to connect device"= "请点击 进入设备页 选择您想要连接的设备";
-
 "Jump to device page" = "进入设备页";
-
 "Cancel" = "取消";
-

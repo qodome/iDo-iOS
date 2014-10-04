@@ -13,12 +13,12 @@ enum WeekType: Int{
 }
 
 class WeekEntity: NSObject {
-    
+
     var weektype: WeekType!
     var weekDate: String!
     var subtitule: String!
-    
+
     override init(){
-        
     }
+
 }

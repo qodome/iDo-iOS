@@ -5,7 +5,7 @@
 import CoreBluetooth
 
 class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrticDelegate ,DeviceCentralManagerBuleToothDoNotOpenDelegate, CalendarViewDelegate, FDCaptionGraphViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
-    
+
     let mSegueId = "mPeriphalSegue"
     let kSCREEN_WIDTH = UIScreen.mainScreen().bounds.size.width
     let kSCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height
@@ -16,12 +16,12 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     let IDOBLUECOLOR = Util.ColorFromRGB(0x2897C3)
     let IDOORANGECOLOR = Util.ColorFromRGB(0xE24424)
     let IDOLOGREDCOLOR = Util.ColorFromRGB(0xFB414D)
-    
+
     var mDeviceCentralManger:DeviceCentralManager!
     var lineChartData: NSArray!// 折线图数据data
-    
+
     var isCurrentDateHaveLineChartData = true
-    
+
     var calendarView: CalendarView? // 日历View
     @IBOutlet weak var settingBtn: UIButton!
     @IBOutlet weak var peripheralBarBtn: UIBarButtonItem!
@@ -30,10 +30,10 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     @IBOutlet weak var dateShow: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel! //显示折线图中当前点值的label
     @IBOutlet var graphChart: FDGraphScrollView? // 折线图View
-    
+
     var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyy-MM-dd")
 
-    // MARK: - life Cycle
+    // MARK: - 生命周期 (Lifecyle)
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -41,10 +41,10 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     override func viewDidLoad() {
         super.viewDidLoad()
        // testOB()
-        settingBtn.setTitle(NSLocalizedString("setting", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: ""), forState: UIControlState.Normal)
-        temperatureLabel.text = NSLocalizedString("finding a periheral", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
-        calenderBtn.title = NSLocalizedString("Calendar", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
-        peripheralBarBtn.title = NSLocalizedString("peripheral", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
+        settingBtn.setTitle(Util.LocalizedString("settings"), forState: UIControlState.Normal)
+        temperatureLabel.text = Util.LocalizedString("finding a device")
+        calenderBtn.title = Util.LocalizedString("calendar")
+        peripheralBarBtn.title = Util.LocalizedString("devices")
         temperatureLabel.font = UIFont(name: "Helvetica", size: 30)
         numberTaped.font = UIFont(name: "HelveticaNeue-Light", size: 20)
         dateShow.font = UIFont(name: "HelveticaNeue-Light", size: 20)
@@ -57,10 +57,10 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         if mDeviceCentralManger.lastConnectedPeripheralUUID().isEmpty {
             isCurrentDateHaveLineChartData = false
           
-            var title = NSLocalizedString("Prompt", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
-            var message = NSLocalizedString("Please jump to device page to connect device", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
-            var cancelBtnTittle = NSLocalizedString("Cancel", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
-            var otherBtnTitle = NSLocalizedString("Jump to device page", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
+            var title = Util.LocalizedString("Prompt")
+            var message = Util.LocalizedString("Please jump to device page to connect device")
+            var cancelBtnTittle = Util.LocalizedString("Cancel")
+            var otherBtnTitle = Util.LocalizedString("Jump to device page")
             
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle).show()
             
@@ -76,13 +76,13 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         translucentNavigationBar()
         translucentTabBar()
     }
-    
-        override func viewDidAppear(animated: Bool) {
+
+    override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         updateCurrentDateLineChart()
     }
 
-    // Mark: - blueTooth do not open
+    // MARK: - blueTooth do not open
     
     func deviceCentralManagerBuleToothDoNotOpen() {
         UIAlertView(title: "提示", message: "您iPhone的蓝牙未开启,请开启!", delegate: nil, cancelButtonTitle: "好的").show()
@@ -91,7 +91,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     // MARK: -  didUpdateValueToCharacterisrtic Delegate
     func didUpdateValueToCharacteristic(characteristic:CBCharacteristic? ,cError error:NSError?) {
         if characteristic == nil && error == nil {
-            temperatureLabel.text = NSLocalizedString("finding a periheral", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
+            temperatureLabel.text = Util.LocalizedString("finding a device")
             //            temperatureLabel.text = "--°C"
             view.backgroundColor = IDOBLUECOLOR
             return
@@ -192,7 +192,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
 
     }
 
-    //MARK: - UIAlertViewDelegate
+    // MARK: - UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 {
             //进入设备页
@@ -203,7 +203,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         }
     }
 
-    //MARK: -  calendarView Delegate
+    // MARK: -  calendarView Delegate
     func didSelectDate(dateStr: String, forDetail enty: WeekEntity) {
         println("did selected date - \(dateStr)")
         dismissCalenderAction()
@@ -216,14 +216,14 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             currentSelectedDateString = dateStr
         }
         else {
-            var title = NSLocalizedString("Prompt", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
-            var message = NSLocalizedString("Don't have any data on the day !", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
-            var cancelBtnTittle = NSLocalizedString("Done", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
+            var title = Util.LocalizedString("Prompt")
+            var message = Util.LocalizedString("Don't have any data on the day !")
+            var cancelBtnTittle = Util.LocalizedString("Done")
             UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: cancelBtnTittle).show()
 //            UIAlertView(title: "提示", message: "无历史数据", delegate: nil, cancelButtonTitle: "确定").show()
         }
     }
-    
+
     // MARK: -  fdGraphView Delegate
     func tapedCloserIndex(index: Int32, withPointX PointX: CGFloat) {
         numberTaped.hidden = false
@@ -234,21 +234,13 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         //numberTaped.text =  NSString(format: "%@°C  %@",tapedTemperature.cTemperature,dateStr)
         numberTaped.text =  NSString(format: "%@°C",tapedTemperature.cTemperature)
     }
-    
+
     // MARK: - scrollView Delegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         numberTaped.hidden = true
     }
-    
-    //MARK: -  action
-    
-//    @IBAction func totoalViewController(sender: AnyObject) {
-//        
-//        var ismViewC = tabBarController as ISMViewController
-//        ismViewC.handlePan(nil, withViewControllerIndex: 0, withIsCommingFromVC: true)
-//        
-//    }
-    
+
+    // MARK: -  Action
     @IBAction func showCalenderView(sender: AnyObject) {
         if (calendarView != nil) {
             dismissCalenderAction()
@@ -265,7 +257,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             calendarView?.delegate = self
         }
     }
-    
+
     // MARK: - custom method
     func dismissCalenderAction() {
         calendarView?.removeFromSuperview()
@@ -280,7 +272,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         navigationController?.navigationBar.translucent = true
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         temperatureLabel.textColor = UIColor.whiteColor()
-       // navigationController?.tabBarItem.title = NSLocalizedString("measure", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "", comment: "")
+       // navigationController?.tabBarItem.title = Util.LocalizedString("measure", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "")
     }
 
     func translucentTabBar() {
@@ -395,7 +387,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     func writeData(currrentPeripheral :CBPeripheral, forCharacteristic currentCharacteristic:CBCharacteristic, forData data: NSData) {
         currrentPeripheral.writeValue(data, forCharacteristic: currentCharacteristic, type:CBCharacteristicWriteType.WithResponse)
     }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         (segue.destinationViewController as UIViewController).hidesBottomBarWhenPushed = true
     }
