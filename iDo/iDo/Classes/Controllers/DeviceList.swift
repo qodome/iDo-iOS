@@ -34,11 +34,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
 
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        mDeviceCentralManger.disConnectOtherPeripheralAfterBandedAConnectingPeripheral()
-        if mDeviceCentralManger.isShowAllCanConnectedDevices {
-            mDeviceCentralManger.stopScanPeripherals() // TODO: 有问题
-            mDeviceCentralManger.isShowAllCanConnectedDevices = false
-        }
+        mDeviceCentralManger.stopScan() // TODO: 有问题
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -101,13 +97,13 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
             indicatorView = UIActivityIndicatorView(frame: CGRectMake(90, CGPointZero.y, 20, 20))
             indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
             tableHeaderView.addSubview(indicatorView)
-            if mDeviceCentralManger.isShowAllCanConnectedDevices {
-                indicatorView.startAnimating()
-                indicatorView.hidden = false
-            } else {
-                indicatorView.stopAnimating()
-                indicatorView.hidden = true
-            }
+//            if mDeviceCentralManger.isShowAllCanConnectedDevices {
+//                indicatorView.startAnimating()
+//                indicatorView.hidden = false
+//            } else {
+//                indicatorView.stopAnimating()
+//                indicatorView.hidden = true
+//            }
         }
         return tableHeaderView
     }
@@ -151,8 +147,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
 
     // MARK: - Action
     @IBAction func refreshPeripherals(sender: AnyObject) {
-        mDeviceCentralManger.isShowAllCanConnectedDevices = true
-        mDeviceCentralManger.startScanPeripherals()
+        mDeviceCentralManger.startScan()
         indicatorView.startAnimating()
         indicatorView.hidden = false
     }

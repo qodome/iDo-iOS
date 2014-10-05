@@ -17,8 +17,8 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     let IDOORANGECOLOR = Util.ColorFromRGB(0xE24424)
     let IDOLOGREDCOLOR = Util.ColorFromRGB(0xFB414D)
 
-    var mDeviceCentralManger:DeviceCentralManager!
-    var lineChartData: NSArray!// 折线图数据data
+    var mDeviceCentralManger: DeviceCentralManager!
+    var lineChartData: NSArray! // 折线图数据data
 
     var isCurrentDateHaveLineChartData = true
 
@@ -34,13 +34,9 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyy-MM-dd")
 
     // MARK: - 生命周期 (Lifecyle)
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-       // testOB()
+//        testOB()
         settingBtn.setTitle(Util.LocalizedString("settings"), forState: UIControlState.Normal)
         temperatureLabel.text = Util.LocalizedString("finding a device")
         calenderBtn.title = Util.LocalizedString("calendar")
@@ -53,17 +49,13 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         
         mDeviceCentralManger = DeviceCentralManager.instanceForCenterManager()
         mDeviceCentralManger.characteristicDelegate = self
-        if mDeviceCentralManger.lastConnectedPeripheralUUID().isEmpty {
+        if mDeviceCentralManger.lastConnectedPeripheralUUID().isEmpty { // 无绑定设备
             isCurrentDateHaveLineChartData = false
-          
             var title = Util.LocalizedString("Prompt")
             var message = Util.LocalizedString("Please jump to device page to connect device")
             var cancelBtnTittle = Util.LocalizedString("Cancel")
             var otherBtnTitle = Util.LocalizedString("Jump to device page")
-            
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle).show()
-            
-//            UIAlertView(title: "提示", message: "请点击 进入设备页 选择您想要连接的设备", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "进入设备页").show()
         }
         graphChart?.hidden = true
         graphChart?.delegate = self
@@ -85,7 +77,6 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     func didUpdateValueToCharacteristic(characteristic:CBCharacteristic? ,cError error:NSError?) {
         if characteristic == nil && error == nil {
             temperatureLabel.text = Util.LocalizedString("finding a device")
-            //            temperatureLabel.text = "--°C"
             view.backgroundColor = IDOBLUECOLOR
             return
         }
@@ -132,16 +123,14 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
                 mDateBytes[i/2] = UInt8(cData)
                 println("2 write data length\(cData)")
             }
-            
             let mRealWriteData = NSData(bytes: mRealDateBytes, length: mRealDateBytes.count)
-            
             //println("realWriteData--\(realWriteData.description) length--\(realWriteData.length)")
             //writeData(mDeviceCentralManger.devicesArrayOnSelectedStatus[0] as CBPeripheral, forCharacteristic:characteristic! , forData:mRealWriteData)
         }
-        //得到temperature
+        // 得到temperature
         var temperature = calculateTemperatureData(mDeviceCentralManger.devicesArrayOnSelectedStatus[0] as CBPeripheral, forCharacteristic:characteristic! , forData: characteristic?.value)
         temperatureLabel.text = NSString(format: "%.2f°C", temperature)
-        //保存temperature到数据库
+        // 保存temperature到数据库
         var temper: Temperature = Temperature()
         temper.cTemperature = NSString(format: "%.2f", temperature)
         temper.cDate = DateUtil.timestampFromDate(NSDate.date())
@@ -182,11 +171,8 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
 
     // MARK: - UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        if buttonIndex == 1 {
-            //进入设备页
-            println("进入设备页")
-            mDeviceCentralManger.isShowAllCanConnectedDevices = true
-            mDeviceCentralManger.startScanPeripherals()
+        if buttonIndex == 1 { //进入设备页
+            mDeviceCentralManger.startScan()
             performSegueWithIdentifier(segueId, sender: self)
         }
     }
@@ -207,7 +193,6 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             var message = Util.LocalizedString("Don't have any data on the day !")
             var cancelBtnTittle = Util.LocalizedString("Done")
             UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: cancelBtnTittle).show()
-//            UIAlertView(title: "提示", message: "无历史数据", delegate: nil, cancelButtonTitle: "确定").show()
         }
     }
 
@@ -243,7 +228,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         }
     }
 
-    // MARK: - custom method
+    // MARK: - Custom Method
     func dismissCalenderAction() {
         calendarView?.removeFromSuperview()
         calendarView?.delegate = nil
@@ -301,7 +286,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         }
     }
 
-    /**: generate data */
+    /** generate data */
     func generateChartDataWithDateString(dateStr: String) ->Bool {
         var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtil.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
         if tempArray.count == 0 {
