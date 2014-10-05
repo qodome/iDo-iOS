@@ -44,7 +44,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "peripheralDetailInforimation" {
             var detailInforVC = segue.destinationViewController as DeviceDetail
-            detailInforVC.device = data[currentIndexPathRow] as CBPeripheral
+            detailInforVC.data = data[currentIndexPathRow] as CBPeripheral
         }
     }
 
