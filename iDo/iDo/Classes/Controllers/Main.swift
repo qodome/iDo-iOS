@@ -239,10 +239,8 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        navigationController?.navigationBar.translucent = true
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         temperatureLabel.textColor = UIColor.whiteColor()
-       // navigationController?.tabBarItem.title = Util.LocalizedString("measure", tableName: "Localization", bundle: NSBundle.mainBundle(), value: "")
     }
 
     func translucentTabBar() {
