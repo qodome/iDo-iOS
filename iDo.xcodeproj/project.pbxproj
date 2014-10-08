@@ -317,6 +317,11 @@
 					E72F29FC19D92456009383AB = {
 						CreatedOnToolsVersion = 6.0.1;
 						DevelopmentTeam = YDMS5P8PJX;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					E72F2A1119D92457009383AB = {
 						CreatedOnToolsVersion = 6.0.1;
