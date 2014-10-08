@@ -4,7 +4,7 @@
 
 import CoreBluetooth
 
-class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentConnectedDeviceDelegate, DeviceCentralManagerDidStartsendDataDelegate, UIAlertViewDelegate {
+class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentConnectedDeviceDelegate,  UIAlertViewDelegate {
 
     let IDOLOGREDCOLOR = Util.ColorFromRGB(0xFB414D)
     let cellId = "device_list_cell"
@@ -27,7 +27,7 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
 
         mDeviceCentralManger = DeviceCentralManager.instanceForCenterManager()
         mDeviceCentralManger.delegate = self
-        mDeviceCentralManger.startSendingDataDelegate = self
+//        mDeviceCentralManger.startSendingDataDelegate = self
         devices = mDeviceCentralManger.devices
         data = mDeviceCentralManger.devicesArrayOnSelectedStatus
     }
@@ -129,11 +129,11 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         tableView.reloadData()
     }
 
-    // MARK: -  DeviceCentralManager DidStartsendData Delegate
-    func deviceCentralManagerDidStartsendData() {
-        //停止loading
-        tableView.reloadData()
-    }
+//    // MARK: -  DeviceCentralManager DidStartsendData Delegate
+//    func deviceCentralManagerDidStartsendData() {
+//        //停止loading
+//        tableView.reloadData()
+//    }
 
     // MARK: - uiAlertView Delegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {

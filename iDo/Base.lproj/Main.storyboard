@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3vB-nW-pZU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3vB-nW-pZU">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
@@ -18,6 +18,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWn-9D-rVy">
+                                <rect key="frame" x="234" y="120" width="131" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="reconnect">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="reconnectPeripheral:" destination="y4g-7r-2i1" eventType="touchUpInside" id="juk-pK-6in"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- °C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mcz-Um-NA6">
                                 <rect key="frame" x="16" y="120" width="568" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
@@ -53,6 +63,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Mcz-Um-NA6" firstAttribute="centerX" secondItem="TWn-9D-rVy" secondAttribute="centerX" constant="24" id="0Yw-Jb-s82"/>
                             <constraint firstAttribute="trailingMargin" secondItem="OXU-it-FXy" secondAttribute="trailing" constant="1" id="2u0-ER-5os"/>
                             <constraint firstItem="8wC-kw-KcM" firstAttribute="top" secondItem="Mcz-Um-NA6" secondAttribute="bottom" constant="20" id="3mx-aI-h2x"/>
                             <constraint firstItem="mhW-0X-WlR" firstAttribute="top" secondItem="QmJ-19-7Jc" secondAttribute="bottom" constant="50" id="5QS-Ie-fe7"/>
@@ -61,7 +72,9 @@
                             <constraint firstItem="H4Q-9e-4qE" firstAttribute="trailing" secondItem="Fs6-pX-uWd" secondAttribute="trailingMargin" id="95Y-5P-97E"/>
                             <constraint firstItem="mhW-0X-WlR" firstAttribute="top" secondItem="OXU-it-FXy" secondAttribute="bottom" id="AHk-sh-S0z"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QmJ-19-7Jc" secondAttribute="trailing" id="AuK-CQ-xMV"/>
+                            <constraint firstItem="TWn-9D-rVy" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="56" id="B2C-Ym-7hm"/>
                             <constraint firstItem="H4Q-9e-4qE" firstAttribute="top" secondItem="Mcz-Um-NA6" secondAttribute="bottom" constant="20" id="Dv6-RS-VsL"/>
+                            <constraint firstItem="TWn-9D-rVy" firstAttribute="top" secondItem="H4Q-9e-4qE" secondAttribute="bottom" id="LgP-Yd-pG1"/>
                             <constraint firstItem="H4Q-9e-4qE" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="MUK-4O-gzq"/>
                             <constraint firstItem="QmJ-19-7Jc" firstAttribute="top" secondItem="8wC-kw-KcM" secondAttribute="bottom" constant="20" id="MgM-Wj-cBR"/>
                             <constraint firstItem="8wC-kw-KcM" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="100" id="Nk8-h7-cxg"/>
@@ -69,12 +82,15 @@
                             <constraint firstItem="8wC-kw-KcM" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="kza-Y0-7Zm"/>
                             <constraint firstItem="Mcz-Um-NA6" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="m1Y-dT-COk"/>
                             <constraint firstItem="Mcz-Um-NA6" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="56" id="mtc-t6-kyz"/>
+                            <constraint firstAttribute="centerX" secondItem="TWn-9D-rVy" secondAttribute="centerX" id="pNK-Om-xjL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Mcz-Um-NA6" secondAttribute="trailing" id="rNW-Hi-Oyz"/>
                             <constraint firstItem="QmJ-19-7Jc" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="xV0-WR-uaB"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="0Yw-Jb-s82"/>
                                 <exclude reference="Nk8-h7-cxg"/>
+                                <exclude reference="LgP-Yd-pG1"/>
                             </mask>
                         </variation>
                     </view>
@@ -97,6 +113,7 @@
                         <outlet property="graphChart" destination="QmJ-19-7Jc" id="Ol2-z3-ofm"/>
                         <outlet property="numberTaped" destination="8wC-kw-KcM" id="EhA-0p-VZw"/>
                         <outlet property="peripheralBarBtn" destination="fBS-wO-7e1" id="Ls5-v7-bO0"/>
+                        <outlet property="reconnectBtn" destination="TWn-9D-rVy" id="j1K-zF-Ybi"/>
                         <outlet property="settingBtn" destination="OXU-it-FXy" id="BU5-IS-GWQ"/>
                         <outlet property="temperatureLabel" destination="Mcz-Um-NA6" id="f84-z5-Gej"/>
                     </connections>

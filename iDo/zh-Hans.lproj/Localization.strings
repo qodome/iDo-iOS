@@ -1,4 +1,6 @@
 "finding a device" = "连接中";
+"Connected, waiting for data" = "已连接，等待数据";
+"reconnect" = "重连";
 "devices" = "设备";
 "calendar" = "日历";
 "settings" = "设置";

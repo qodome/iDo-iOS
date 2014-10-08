@@ -4,7 +4,7 @@
 
 import CoreBluetooth
 
-class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrticDelegate, CalendarViewDelegate, FDCaptionGraphViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
+class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, CalendarViewDelegate, FDCaptionGraphViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
 
     let segueId = "mPeriphalSegue"
     let kSCREEN_WIDTH = UIScreen.mainScreen().bounds.size.width
@@ -29,6 +29,7 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     @IBOutlet weak var numberTaped: UILabel! //显示当前温度的label
     @IBOutlet weak var dateShow: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel! //显示折线图中当前点值的label
+    @IBOutlet weak var reconnectBtn: UIButton!
     @IBOutlet var graphChart: FDGraphScrollView? // 折线图View
 
     var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyy-MM-dd")
@@ -36,15 +37,17 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
     // MARK: - 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-//        testOB()
         settingBtn.setTitle(Util.LocalizedString("settings"), forState: UIControlState.Normal)
-        temperatureLabel.text = Util.LocalizedString("finding a device")
         calenderBtn.title = Util.LocalizedString("calendar")
         peripheralBarBtn.title = Util.LocalizedString("devices")
-        temperatureLabel.font = UIFont(name: "Helvetica", size: 30)
         numberTaped.font = UIFont(name: "HelveticaNeue-Light", size: 20)
+        temperatureLabel.text = Util.LocalizedString("finding a device")
+        temperatureLabel.font = UIFont(name: "Helvetica", size: 30)
         dateShow.font = UIFont(name: "HelveticaNeue-Light", size: 20)
         dateShow.text = ""
+        reconnectBtn.setTitle(Util.LocalizedString("reconnect"), forState: UIControlState.Normal)
+        reconnectBtn.titleLabel?.font = UIFont(name: "Helvetica", size: 30)
+        reconnectBtn.hidden = true
         view.backgroundColor = IDOBLUECOLOR
         
         mDeviceCentralManger = DeviceCentralManager.instanceForCenterManager()
@@ -73,16 +76,25 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
         updateCurrentDateLineChart()
     }
 
-    // MARK: -  didUpdateValueToCharacterisrtic Delegate
+    // MARK: -  DeviceCentralManagerConnectedStateChangeDelegate
+    func centralManger(centralManger: CBCentralManager, didAutoDisConnectedPeripheral connectingPeripheral: CBPeripheral) {
+        temperatureLabel.hidden = true
+        reconnectBtn.hidden = false
+    }
+    
+    func centralManger(centralManger: CBCentralManager, didConnectedPeripheral connectingPeripheral: CBPeripheral) {
+        temperatureLabel.text = Util.LocalizedString("Connected, waiting for data")
+        view.backgroundColor = IDOBLUECOLOR
+    }
+    
+    
     func didUpdateValueToCharacteristic(characteristic:CBCharacteristic? ,cError error:NSError?) {
         if characteristic == nil && error == nil {
             temperatureLabel.text = Util.LocalizedString("finding a device")
             view.backgroundColor = IDOBLUECOLOR
             return
         }
-        
         println("data length----\(characteristic?.value.length)")
-        
         if characteristic?.value.length == 5 && error == nil {
             // 写date数据到peripheral中
             // 得到当前data的16进制
@@ -226,6 +238,12 @@ class Main: UIViewController, DeviceCentralManagerdidUpdateValueToCharacterisrti
             }
             calendarView?.delegate = self
         }
+    }
+    
+    @IBAction func reconnectPeripheral(sender: AnyObject) {
+        reconnectBtn.hidden = true
+        temperatureLabel.hidden = false
+        mDeviceCentralManger.startScan()
     }
 
     // MARK: - Custom Method
