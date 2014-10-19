@@ -52,11 +52,11 @@ class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
             switch i {
             case 0:
                 defaultselectedDate = we.weekDate
-                we.subtitule = Util.LocalizedString("Today")
+                we.subtitule = LocalizedString("Today")
             case 1:
-                we.subtitule = Util.LocalizedString("Yesterday")
+                we.subtitule = LocalizedString("Yesterday")
             case 2:
-                we.subtitule = Util.LocalizedString("B yesterday")
+                we.subtitule = LocalizedString("B yesterday")
             default:
                 we.subtitule = ""
             }

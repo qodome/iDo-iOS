@@ -5,33 +5,31 @@
 import CoreBluetooth
 
 class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentConnectedDeviceDelegate,  UIAlertViewDelegate {
-
-    let IDOLOGREDCOLOR = Util.ColorFromRGB(0xFB414D)
+    
     let cellId = "device_list_cell"
-
     var data: [AnyObject] = []
     var devices: [AnyObject] = []
     var mDeviceCentralManger: DeviceCentralManager!
-
+    
     var indicatorView: UIActivityIndicatorView!
     var currentIndexPathRow: Int = -1 //不好
-
+    
     @IBOutlet weak var refreshBarBtn: UIBarButtonItem!
-
+    
     // MARK: - 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = Util.LocalizedString("devices")
-        refreshBarBtn.title = Util.LocalizedString("refresh")
+        title = LocalizedString("devices")
+        refreshBarBtn.title = LocalizedString("refresh")
         recoverTranslucentedNavigationBar()
-
+        
         mDeviceCentralManger = DeviceCentralManager.instanceForCenterManager()
         mDeviceCentralManger.delegate = self
-//        mDeviceCentralManger.startSendingDataDelegate = self
+        //        mDeviceCentralManger.startSendingDataDelegate = self
         devices = mDeviceCentralManger.devices
         data = mDeviceCentralManger.devicesArrayOnSelectedStatus
     }
-
+    
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         mDeviceCentralManger.stopScan() // TODO: 有问题
@@ -39,23 +37,20 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "peripheralDetailInforimation" {
-            var detailInforVC = segue.destinationViewController as DeviceDetail
-            detailInforVC.data = data[currentIndexPathRow] as CBPeripheral
+            let controller = segue.destinationViewController as DeviceDetail
+            controller.data = data[currentIndexPathRow] as CBPeripheral
         }
     }
-
+    
     // MARK: - UITableViewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return data.count
-        }
-        return devices.count
+        return section == 0 ? data.count : devices.count
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: DeviceCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as DeviceCell
         var device: CBPeripheral
@@ -78,12 +73,12 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         cell.subtitle.text = device.identifier.UUIDString
         return cell
     }
-
+    
     // MARK: - UITableViewDelegate
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
         return 20.0
     }
-
+    
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView {
         var tableHeaderView: UIView = UIView(frame: CGRectMake(CGPointZero.x, CGPointZero.y, 320.0, 20.0))
         tableHeaderView.backgroundColor = UIColor.whiteColor()
@@ -91,50 +86,50 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         deviceStatusLabel.font = UIFont.systemFontOfSize(12)
         tableHeaderView.addSubview(deviceStatusLabel)
         if section == 0 {
-            deviceStatusLabel.text =  Util.LocalizedString("Connected devices")
+            deviceStatusLabel.text = LocalizedString("Connected devices")
         } else {
-            deviceStatusLabel.text = Util.LocalizedString("Available devices")
+            deviceStatusLabel.text = LocalizedString("Available devices")
             indicatorView = UIActivityIndicatorView(frame: CGRectMake(90, CGPointZero.y, 20, 20))
             indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
             tableHeaderView.addSubview(indicatorView)
-//            if mDeviceCentralManger.isShowAllCanConnectedDevices {
-//                indicatorView.startAnimating()
-//                indicatorView.hidden = false
-//            } else {
-//                indicatorView.stopAnimating()
-//                indicatorView.hidden = true
-//            }
+            //            if mDeviceCentralManger.isShowAllCanConnectedDevices {
+            //                indicatorView.startAnimating()
+            //                indicatorView.hidden = false
+            //            } else {
+            //                indicatorView.stopAnimating()
+            //                indicatorView.hidden = true
+            //            }
         }
         return tableHeaderView
     }
-
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
             currentIndexPathRow = indexPath.row
-            var title = Util.LocalizedString("warning")
-            var message = Util.LocalizedString("Jump to devices detail page or disConnect this device?")
-            var cancelBtnTittle = Util.LocalizedString("Back")
-            var otherBtnTitle1 = Util.LocalizedString("DisConnect")
-            var otherBtnTitle2 = Util.LocalizedString("details")
+            var title = LocalizedString("warning")
+            var message = LocalizedString("Jump to devices detail page or disConnect this device?")
+            var cancelBtnTittle = LocalizedString("Back")
+            var otherBtnTitle1 = LocalizedString("DisConnect")
+            var otherBtnTitle2 = LocalizedString("details")
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle1, otherBtnTitle2).show()
         } else {
             mDeviceCentralManger.userConnectPeripheral(indexPath.row)
         }
     }
-
+    
     // MARK: - didChangedCurrentConnectedDevice Delegate
     func centralss(centeral: CBCentralManager, unConnectedDevices unConnectedDeviceArr: NSArray, connectedDevices connectedDeviceArr: NSArray) {
         data = NSMutableArray(array: connectedDeviceArr)
         devices = NSMutableArray(array: unConnectedDeviceArr)
         tableView.reloadData()
     }
-
-//    // MARK: -  DeviceCentralManager DidStartsendData Delegate
-//    func deviceCentralManagerDidStartsendData() {
-//        //停止loading
-//        tableView.reloadData()
-//    }
-
+    
+    //    // MARK: -  DeviceCentralManager DidStartsendData Delegate
+    //    func deviceCentralManagerDidStartsendData() {
+    //        //停止loading
+    //        tableView.reloadData()
+    //    }
+    
     // MARK: - uiAlertView Delegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 {
@@ -144,20 +139,20 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
             performSegueWithIdentifier("peripheralDetailInforimation", sender: self)
         }
     }
-
+    
     // MARK: - Action
     @IBAction func refreshPeripherals(sender: AnyObject) {
         mDeviceCentralManger.startScan()
         indicatorView.startAnimating()
         indicatorView.hidden = false
     }
-
+    
     // MARK: - Custom Method
     func recoverTranslucentedNavigationBar(){
         navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.barStyle = UIBarStyle.Default
-        navigationController?.navigationBar.tintColor = IDOLOGREDCOLOR
+        navigationController?.navigationBar.tintColor = APP_COLOR
     }
-
+    
 }

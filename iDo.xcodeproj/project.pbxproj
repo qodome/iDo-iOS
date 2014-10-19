@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DAF19F0F35700F6F403 /* Constants.swift */; };
+		0EFA2DBE19F0F9D500F6F403 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DB919F0F9D500F6F403 /* Utils.swift */; };
 		14B8F142A1164F60A8029125 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81053D327DCD46C78A44B6AC /* libPods.a */; };
 		E72F2A0319D92457009383AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A0219D92457009383AB /* AppDelegate.swift */; };
 		E72F2A0819D92457009383AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A0619D92457009383AB /* Main.storyboard */; };
@@ -44,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0EFA2DAF19F0F35700F6F403 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0EFA2DB919F0F9D500F6F403 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		6D80D7979AFB3C46B5F741DF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		81053D327DCD46C78A44B6AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A5CBB47F86481B8605E245 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -100,6 +104,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0EFA2DB119F0F9D500F6F403 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				0EFA2DB219F0F9D500F6F403 /* Taylor */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		0EFA2DB219F0F9D500F6F403 /* Taylor */ = {
+			isa = PBXGroup;
+			children = (
+				0EFA2DB319F0F9D500F6F403 /* Classes */,
+			);
+			path = Taylor;
+			sourceTree = "<group>";
+		};
+		0EFA2DB319F0F9D500F6F403 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0EFA2DB419F0F9D500F6F403 /* Controllers */,
+				0EFA2DB819F0F9D500F6F403 /* Util */,
+				0EFA2DBA19F0F9D500F6F403 /* Views */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		0EFA2DB419F0F9D500F6F403 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		0EFA2DB819F0F9D500F6F403 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				0EFA2DB919F0F9D500F6F403 /* Utils.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		0EFA2DBA19F0F9D500F6F403 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		1F0EC2FAA97F95EE8525F9E2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +192,7 @@
 		E72F29FF19D92456009383AB /* iDo */ = {
 			isa = PBXGroup;
 			children = (
+				0EFA2DB119F0F9D500F6F403 /* Library */,
 				E72F2A0219D92457009383AB /* AppDelegate.swift */,
 				E72F2A0619D92457009383AB /* Main.storyboard */,
 				E72F2A5A19D926DA009383AB /* Classes */,
@@ -180,10 +233,11 @@
 		E72F2A5A19D926DA009383AB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0EFA2DAF19F0F35700F6F403 /* Constants.swift */,
+				E72F2A6819D926DA009383AB /* Util */,
 				E72F2A5B19D926DA009383AB /* Controllers */,
 				E72F2A6119D926DA009383AB /* Models */,
 				E72F2A6B19D926DA009383AB /* Views */,
-				E72F2A6819D926DA009383AB /* Util */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -425,6 +479,7 @@
 				E72F2A7C19D926DA009383AB /* Main.swift in Sources */,
 				E72F2A8419D926DA009383AB /* WeekCell.swift in Sources */,
 				E72F2A8619D926DA009383AB /* FDGraphScrollView.m in Sources */,
+				0EFA2DBE19F0F9D500F6F403 /* Utils.swift in Sources */,
 				E72F2A7B19D926DA009383AB /* Settings.swift in Sources */,
 				E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */,
 				E72F2A7E19D926DA009383AB /* DBManager.swift in Sources */,
@@ -437,6 +492,7 @@
 				E72F2A8519D926DA009383AB /* WeekEntity.swift in Sources */,
 				E72F2A7D19D926DA009383AB /* DeviceCentralManager.swift in Sources */,
 				E72F2A8019D926DA009383AB /* Temperature.swift in Sources */,
+				0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

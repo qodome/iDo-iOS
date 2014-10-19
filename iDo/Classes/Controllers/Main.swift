@@ -10,12 +10,12 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     let kSCREEN_WIDTH = UIScreen.mainScreen().bounds.size.width
     let kSCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height
     let kNAVIGATIONBAR_HEIGHT: CGFloat = 64.0 //优化
-    //let kTABBAR_HEIGHT: CGFloat = 49.0 //优化
-    let IDOGREENCOLOR = Util.ColorFromRGB(0x17A865)
-    let IDOPURPLECOLOR = Util.ColorFromRGB(0xAA66CC)
-    let IDOBLUECOLOR = Util.ColorFromRGB(0x2897C3)
-    let IDOORANGECOLOR = Util.ColorFromRGB(0xE24424)
-    let IDOLOGREDCOLOR = Util.ColorFromRGB(0xFB414D)
+
+    let IDOGREENCOLOR = UIColor.colorWithHex(0x17A865)
+    let IDOPURPLECOLOR = UIColor.colorWithHex(0xAA66CC)
+    let IDOBLUECOLOR = UIColor.colorWithHex(0x2897C3)
+    let IDOORANGECOLOR = UIColor.colorWithHex(0xE24424)
+    let IDOLOGREDCOLOR = UIColor.colorWithHex(0xFB414D)
 
     var mDeviceCentralManger: DeviceCentralManager!
     var lineChartData: NSArray! // 折线图数据data
@@ -37,15 +37,15 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     // MARK: - 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        settingBtn.setTitle(Util.LocalizedString("settings"), forState: UIControlState.Normal)
-        calenderBtn.title = Util.LocalizedString("calendar")
-        peripheralBarBtn.title = Util.LocalizedString("devices")
+        settingBtn.setTitle(LocalizedString("settings"), forState: UIControlState.Normal)
+        calenderBtn.title = LocalizedString("calendar")
+        peripheralBarBtn.title = LocalizedString("devices")
         numberTaped.font = UIFont(name: "HelveticaNeue-Light", size: 20)
-        temperatureLabel.text = Util.LocalizedString("finding a device")
+        temperatureLabel.text = LocalizedString("finding a device")
         temperatureLabel.font = UIFont(name: "Helvetica", size: 30)
         dateShow.font = UIFont(name: "HelveticaNeue-Light", size: 20)
         dateShow.text = ""
-        reconnectBtn.setTitle(Util.LocalizedString("reconnect"), forState: UIControlState.Normal)
+        reconnectBtn.setTitle(LocalizedString("reconnect"), forState: UIControlState.Normal)
         reconnectBtn.titleLabel?.font = UIFont(name: "Helvetica", size: 30)
         reconnectBtn.hidden = true
         view.backgroundColor = IDOBLUECOLOR
@@ -54,10 +54,10 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         mDeviceCentralManger.characteristicDelegate = self
         if mDeviceCentralManger.lastConnectedPeripheralUUID().isEmpty { // 无绑定设备
             isCurrentDateHaveLineChartData = false
-            var title = Util.LocalizedString("Prompt")
-            var message = Util.LocalizedString("Please jump to device page to connect device")
-            var cancelBtnTittle = Util.LocalizedString("Cancel")
-            var otherBtnTitle = Util.LocalizedString("Jump to device page")
+            var title = LocalizedString("Prompt")
+            var message = LocalizedString("Please jump to device page to connect device")
+            var cancelBtnTittle = LocalizedString("Cancel")
+            var otherBtnTitle = LocalizedString("Jump to device page")
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle).show()
         }
         graphChart?.hidden = true
@@ -83,14 +83,14 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     }
     
     func centralManger(centralManger: CBCentralManager, didConnectedPeripheral connectingPeripheral: CBPeripheral) {
-        temperatureLabel.text = Util.LocalizedString("Connected, waiting for data")
+        temperatureLabel.text = LocalizedString("Connected, waiting for data")
         view.backgroundColor = IDOBLUECOLOR
     }
     
     
     func didUpdateValueToCharacteristic(characteristic:CBCharacteristic? ,cError error:NSError?) {
         if characteristic == nil && error == nil {
-            temperatureLabel.text = Util.LocalizedString("finding a device")
+            temperatureLabel.text = LocalizedString("finding a device")
             view.backgroundColor = IDOBLUECOLOR
             return
         }
@@ -201,9 +201,9 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             dateShow.text = dateStr
             currentSelectedDateString = dateStr
         } else {
-            var title = Util.LocalizedString("Prompt")
-            var message = Util.LocalizedString("Don't have any data on the day !")
-            var cancelBtnTittle = Util.LocalizedString("Done")
+            var title = LocalizedString("Prompt")
+            var message = LocalizedString("Don't have any data on the day !")
+            var cancelBtnTittle = LocalizedString("Done")
             UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: cancelBtnTittle).show()
         }
     }
