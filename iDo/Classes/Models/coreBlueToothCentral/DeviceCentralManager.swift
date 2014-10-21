@@ -44,7 +44,7 @@ class DeviceCentralManager: NSObject {
     override init() {
         super.init()
         println("devicesInit")
-        central = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey:NSNumber.numberWithBool(true)])
+        central = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey:NSNumber(bool: true)])
         devicesArrayOnSelectedStatus = NSMutableArray()
     }
 
@@ -90,7 +90,7 @@ class DeviceCentralManager: NSObject {
 
     func startScan() {
         isScanning = true
-        central.scanForPeripheralsWithServices([CBUUID.UUIDWithString(kServiceUUID)], options: nil)
+        central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
     }
 
     func stopScan() {
@@ -115,10 +115,10 @@ class DeviceCentralManager: NSObject {
 extension DeviceCentralManager: CBCentralManagerDelegate {
 
     func centralManagerDidUpdateState(central: CBCentralManager!) {
-        NSLog("💙 蓝牙状态更新: %i", central.state.toRaw())
+        NSLog("💙 蓝牙状态更新: %i", central.state.rawValue)
         switch central.state {
         case CBCentralManagerState.PoweredOn:
-            central.scanForPeripheralsWithServices([CBUUID.UUIDWithString(kServiceUUID)], options: nil)
+            central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
         default:
             devicesArrayOnSelectedStatus.removeAllObjects()
             devices.removeAll(keepCapacity: true)
@@ -146,7 +146,7 @@ extension DeviceCentralManager: CBCentralManagerDelegate {
         NSLog("💙 连上设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
         // TODO: 停止scan
         peripheral.delegate = self
-        peripheral.discoverServices([CBUUID.UUIDWithString(kServiceUUID)])
+        peripheral.discoverServices([CBUUID(string: kServiceUUID)])
         //设备已连接
         characteristicDelegate?.centralManger(central, didConnectedPeripheral: peripheral)
         isPeripheralTryToConnect = false
@@ -186,8 +186,8 @@ extension DeviceCentralManager: CBPeripheralDelegate {
         } else {
             for var i = 0; i < peripheral.services.count; i++ {
                 var service:CBService = peripheral.services[i] as CBService
-                if CBUUID.UUIDWithString(kServiceUUID) == service.UUID {
-                    peripheral.discoverCharacteristics([CBUUID.UUIDWithString(kCharacteristicUUID)], forService: service)
+                if CBUUID(string: kServiceUUID) == service.UUID {
+                    peripheral.discoverCharacteristics([CBUUID(string: kCharacteristicUUID)], forService: service)
                     break
                 }
             }
@@ -201,7 +201,7 @@ extension DeviceCentralManager: CBPeripheralDelegate {
         } else {
             for var i = 0; i < service.characteristics.count; i++ {
                 var characteristic:CBCharacteristic = service.characteristics[i] as CBCharacteristic
-                if CBUUID.UUIDWithString(kCharacteristicUUID) == characteristic.UUID {
+                if CBUUID(string: kCharacteristicUUID) == characteristic.UUID {
                     var peripheralId:String = lastConnectedPeripheralUUID()
                     NSLog("disCharactristicPID - %@", peripheralId)
 //                    if peripheralId == "" {

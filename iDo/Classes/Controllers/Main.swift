@@ -32,7 +32,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     @IBOutlet weak var reconnectBtn: UIButton!
     @IBOutlet var graphChart: FDGraphScrollView? // 折线图View
 
-    var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyy-MM-dd")
+    var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
 
     // MARK: - 生命周期 (Lifecyle)
     override func viewDidLoad() {
@@ -98,7 +98,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         if characteristic?.value.length == 5 && error == nil {
             // 写date数据到peripheral中
             // 得到当前data的16进制
-            var dateString: NSString = DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyyMMddHHmmss")
+            var dateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyyMMddHHmmss")
             
             let mWriteData: NSData = (dateString.dataUsingEncoding(NSASCIIStringEncoding))!
             var bytes = [UInt8](count: mWriteData.length, repeatedValue: 0)
@@ -145,9 +145,9 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         // 保存temperature到数据库
         var temper: Temperature = Temperature()
         temper.cTemperature = NSString(format: "%.2f", temperature)
-        temper.cDate = DateUtil.timestampFromDate(NSDate.date())
+        temper.cDate = DateUtil.timestampFromDate(NSDate())
         OliveDBDao.saveTemperature(temper)
-        if currentSelectedDateString == DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyy-MM-dd") {
+        if currentSelectedDateString == DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd") {
             updateCurrentDateLineChart()
         }
         // 通知相关
@@ -213,7 +213,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         numberTaped.hidden = false
         println("tapedCloserIndex-\(lineChartData[Int(index)])")
         var tapedTemperature = lineChartData[Int(index)] as Temperature
-        println("currentDate-\(NSDate.date())")
+        println("currentDate-\(NSDate())")
         let dateStr = DateUtil.stringFromDate( NSDate(timeIntervalSince1970: NSTimeInterval(tapedTemperature.cDate.doubleValue / 1000)), WithFormat:"yyyy-MM-dd HH:mm:ss ")
         //numberTaped.text =  NSString(format: "%@°C  %@",tapedTemperature.cTemperature,dateStr)
         numberTaped.text =  NSString(format: "%@°C",tapedTemperature.cTemperature)
@@ -324,7 +324,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
 
     func updateCurrentDateLineChart() {
         //默认 显示 lineChart
-        let dateStr = DateUtil.stringFromDate(NSDate.date(), WithFormat: "yyyy-MM-dd")
+        let dateStr = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
         if generateChartDataWithDateString(dateStr) {
             // 由数据源改变 eLineChart的值
             initSubViewToView()
@@ -339,7 +339,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     func sendTemperatureNotifition(notifictionMessage: String, nowTemperature temperature: Float) {
         var notification: UILocalNotification! = UILocalNotification()
         if notification != nil {
-            notification.fireDate = NSDate.date().dateByAddingTimeInterval(3)
+            notification.fireDate = NSDate().dateByAddingTimeInterval(3)
             notification.timeZone = NSTimeZone.defaultTimeZone()
             notification.alertBody = NSString(format: "请注意：%.2f,%@", temperature, notifictionMessage)
             notification.alertAction = notifictionMessage

@@ -38,14 +38,14 @@ class CalendarView:UIView, UITableViewDataSource, UITableViewDelegate {
     func loadModels() {
         dataSourceArr = NSMutableArray()
         for var i = 0; i <= 30; i++ {
-            let secondsPerDay: NSTimeInterval = (NSTimeInterval)(24 * 60 * 60.0 * i)
+            let secondsPerDay: NSTimeInterval = (NSTimeInterval)(24 * 60 * 60 * i)
             
-            let today: NSDate = NSDate.date()
+            let today: NSDate = NSDate()
             let preDate: NSDate = today.dateByAddingTimeInterval(-secondsPerDay)
             
             let cal: NSCalendar = NSCalendar.currentCalendar()
             let comp: NSDateComponents = cal.components(NSCalendarUnit.WeekdayCalendarUnit, fromDate: preDate)
-            let week: WeekType = WeekType.fromRaw(comp.weekday)!   //?
+            let week: WeekType = WeekType(rawValue: comp.weekday)!   //?
             var we: WeekEntity = WeekEntity()
             we.weekDate = stringFromDate(preDate, withFormat: "yyyy-MM-dd")
             we.weektype = week

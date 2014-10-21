@@ -29,10 +29,10 @@ class DeviceDetail: UITableViewController {
         cell.selectionStyle = UITableViewCellSelectionStyle.None // 为了灵活不要放到storyboard设置
         switch indexPath.section {
         case 0:
-            cell.textLabel?.text = LocalizedString("name")
+            cell.textLabel.text = LocalizedString("name")
             cell.detailTextLabel?.text = data.name
         case 1:
-            cell.textLabel?.text = LocalizedString("bluetooth")
+            cell.textLabel.text = LocalizedString("bluetooth")
             cell.detailTextLabel?.text = data.identifier.UUIDString
         default:
             println("error") // TODO: 统一处理

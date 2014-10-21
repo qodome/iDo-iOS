@@ -29,7 +29,7 @@ class OliveDBDao: NSObject {
     class func saveTemperature(temper:Temperature) -> Bool {
         var isOK = false
         if createTable() {
-            deleteHistoryWithDay(NSDate.date())
+            deleteHistoryWithDay(NSDate())
             let share: FMDatabase = DBManager.sharedDataBase()
             if share.open() {
                 let dateStr: String  = DateUtil.getTimeWithStamp(temper.cDate, withFormat:"yyyy-MM-dd HH:mm:ss" )
