@@ -4,6 +4,7 @@
 
 class DateUtil: NSObject {
     
+    
     // NSString 转换成 NSdate
     class func dateFromString(dateStr: NSString, withFormat format: NSString) ->NSDate {
         var dateFormatter: NSDateFormatter = NSDateFormatter()

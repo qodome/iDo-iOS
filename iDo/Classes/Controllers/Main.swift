@@ -4,13 +4,12 @@
 
 import CoreBluetooth
 
-class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, CalendarViewDelegate, FDCaptionGraphViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
+class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, CalendarViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate, ScrolledChartDelegate, ScrolledChartDataSource {
 
     let segueId = "mPeriphalSegue"
     let kSCREEN_WIDTH = UIScreen.mainScreen().bounds.size.width
     let kSCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height
     let kNAVIGATIONBAR_HEIGHT: CGFloat = 64.0 //优化
-
     let IDOGREENCOLOR = UIColor.colorWithHex(0x17A865)
     let IDOPURPLECOLOR = UIColor.colorWithHex(0xAA66CC)
     let IDOBLUECOLOR = UIColor.colorWithHex(0x2897C3)
@@ -18,10 +17,17 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     let IDOLOGREDCOLOR = UIColor.colorWithHex(0xFB414D)
 
     var mDeviceCentralManger: DeviceCentralManager!
-    var lineChartData: NSArray! // 折线图数据data
-
+    var data: [Int : CGFloat] = Dictionary()
+    var sectionsCount: Int = 5
+    var pageCount = 4
+    var pointNumberInsection = 120
+    var titleStringArrForXAXis:[String] = [] //横坐标的string
+    var titleStringArrForYMaxPoint = "max"
+    var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
     var isCurrentDateHaveLineChartData = true
 
+    var isTodayData = true // 是否为今天的数据(只记录4小时)
+    
     var calendarView: CalendarView? // 日历View
     @IBOutlet weak var settingBtn: UIButton!
     @IBOutlet weak var peripheralBarBtn: UIBarButtonItem!
@@ -30,9 +36,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     @IBOutlet weak var dateShow: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel! //显示折线图中当前点值的label
     @IBOutlet weak var reconnectBtn: UIButton!
-    @IBOutlet var graphChart: FDGraphScrollView? // 折线图View
-
-    var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
+    @IBOutlet var scrolledChart: ScrolledChart?
 
     // MARK: - 生命周期 (Lifecyle)
     override func viewDidLoad() {
@@ -60,8 +64,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             var otherBtnTitle = LocalizedString("Jump to device page")
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle).show()
         }
-        graphChart?.hidden = true
-        graphChart?.delegate = self
+        scrolledChart?.hidden = true
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -87,7 +90,6 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         view.backgroundColor = IDOBLUECOLOR
     }
     
-    
     func didUpdateValueToCharacteristic(characteristic:CBCharacteristic? ,cError error:NSError?) {
         if characteristic == nil && error == nil {
             temperatureLabel.text = LocalizedString("finding a device")
@@ -99,7 +101,6 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             // 写date数据到peripheral中
             // 得到当前data的16进制
             var dateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyyMMddHHmmss")
-            
             let mWriteData: NSData = (dateString.dataUsingEncoding(NSASCIIStringEncoding))!
             var bytes = [UInt8](count: mWriteData.length, repeatedValue: 0)
             mWriteData.getBytes(&bytes, length:mWriteData.length)
@@ -194,6 +195,19 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         println("did selected date - \(dateStr)")
         dismissCalenderAction()
         // 根据date 从数据中取出温度记录 就是eLineChart的数据源
+        if dateStr == currentSelectedDateString {
+            return
+        }
+        if dateStr == DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd") {
+            isTodayData = true
+            sectionsCount = 5
+            pointNumberInsection = 120
+        }
+        else {
+            isTodayData = false
+            sectionsCount = 24
+            pointNumberInsection = 12
+        }
         if generateChartDataWithDateString(dateStr) {
             // 由数据源改变 eLineChart的值
             initSubViewToView()
@@ -208,20 +222,46 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         }
     }
 
-    // MARK: -  fdGraphView Delegate
-    func tapedCloserIndex(index: Int32, withPointX PointX: CGFloat) {
-        numberTaped.hidden = false
-        println("tapedCloserIndex-\(lineChartData[Int(index)])")
-        var tapedTemperature = lineChartData[Int(index)] as Temperature
-        println("currentDate-\(NSDate())")
-        let dateStr = DateUtil.stringFromDate( NSDate(timeIntervalSince1970: NSTimeInterval(tapedTemperature.cDate.doubleValue / 1000)), WithFormat:"yyyy-MM-dd HH:mm:ss ")
-        //numberTaped.text =  NSString(format: "%@°C  %@",tapedTemperature.cTemperature,dateStr)
-        numberTaped.text =  NSString(format: "%@°C",tapedTemperature.cTemperature)
-    }
-
     // MARK: - scrollView Delegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         numberTaped.hidden = true
+    }
+    
+    //MARK: - ScrolledChartDataSource
+    func numberOfSectionsInScrolledChart(scrolledChart: LineChart) ->Int {
+        return sectionsCount
+    }
+    
+    func allNumberOfPointsInSection(scrolledChart: LineChart) ->Int {
+        return pointNumberInsection
+    }
+    
+    func numberOfPointsInScrolledChart(scrolledChart: LineChart) ->Int {
+        return data.values.array.count
+    }
+    
+    func scrolledChart(scrolledChart: LineChart, keyForItemAtPointNumber pointNumber: Int) ->Int {
+        var sortKeys = (data.keys).array.sorted({$0 < $1})
+        return sortKeys[pointNumber]
+    }
+    
+    func scrolledChart(scrolledChart: LineChart, valueForItemAtKey key: Int) ->CGFloat {
+        return data[key]!
+    }
+    
+    func maxDataInScrolledChart(scrolledChart: LineChart) ->CGFloat {
+        return maxValueForLineChart(data)
+    }
+    
+    func scrolledChart(scrolledChart: LineChart, titleInXAXisPointLabelInSection section: Int) ->String {
+        return titleStringArrForXAXis[section]
+    }
+    
+    // MARK: - ScrolledChartDelegate
+    func scrolledChart(scrolledChart: LineChart, didClickItemAtPointNumber pointNumber: Int) {
+        //println("data - \(data.description)")
+        println("didClickItemAtIndexPath")
+        numberTaped.text = NSString(format: "%.2f°C", Float(data[pointNumber]!))
     }
 
     // MARK: -  Action
@@ -231,10 +271,10 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         } else {
             var settingBtnHeight = settingBtn.frame.height
             calendarView = CalendarView(frame: CGRectMake(0, kNAVIGATIONBAR_HEIGHT, 225, kSCREEN_HEIGHT - kNAVIGATIONBAR_HEIGHT - settingBtnHeight))
-            if graphChart == nil {
+            if scrolledChart == nil {
                 view.addSubview(calendarView!)
             } else {
-                view.insertSubview(calendarView!, aboveSubview: graphChart!)
+                view.insertSubview(calendarView!, aboveSubview: scrolledChart!)
             }
             calendarView?.delegate = self
         }
@@ -271,37 +311,25 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
 
     func initSubViewToView() {
         var currentGraphChartFrame: CGRect!
-        if graphChart != nil {
-            currentGraphChartFrame = graphChart?.frame
-            graphChart?.removeFromSuperview()
-            graphChart?.fDGraphViewDelegate = nil
+        if scrolledChart != nil {
+            currentGraphChartFrame = scrolledChart?.frame
+            scrolledChart?.removeFromSuperview()
         }
-        println("currentFrame - \(currentGraphChartFrame)")
-        graphChart = FDGraphScrollView(frame: currentGraphChartFrame)
-        addGraphLineChart()
-    }
-
-    func addGraphLineChart() {
-       // println("viewHeight- \(view.frame.size.height) \(graphChart?.frame)")
-        graphChart?.backgroundColor = UIColor.clearColor()
-        graphChart?.fDGraphViewDelegate = self
-        graphChart?.delegate = self // scrollViewDelegate
-        // 必须现设 numberOfDataPointsInEveryPage 在设 dataPoints
-        graphChart?.numberOfDataPointsInEveryPage = 100
-        var lineFloatData = NSMutableArray()
-        for var i = 0; i < lineChartData.count; i++ {
-            var cTemp = lineChartData[i] as Temperature
-            lineFloatData.addObject(cTemp.cTemperature.floatValue)
-        }
-        graphChart?.setDataPoints(lineFloatData)
-        graphChart?.dataPointColorAfterTaped = UIColor.whiteColor()
+        titleStringArrForYMaxPoint = NSString(format: "%.2f", Float(maxValueForLineChart(data)))
+        scrolledChart = ScrolledChart(frame: currentGraphChartFrame, pageCount: Float(pageCount), titleInYAXisMax: titleStringArrForYMaxPoint)
+        scrolledChart!.scrollView.contentOffset.x =  scrolledChart!.scrollView.frame.width * CGFloat(pageCount - 1)
+        // add scrollChart
+        scrolledChart?.backgroundColor = UIColor.clearColor()
+        scrolledChart?.lineChart.dataSource = self
+        scrolledChart?.lineChart.delegate = self
         if calendarView == nil {
-            view.addSubview(graphChart!)
+            view.addSubview(scrolledChart!)
         } else {
-             view.insertSubview(graphChart!, belowSubview: calendarView!)
+            view.insertSubview(scrolledChart!, belowSubview: calendarView!)
         }
+        scrolledChart?.hidden = false
     }
-
+    
     /** generate data */
     func generateChartDataWithDateString(dateStr: String) ->Bool {
         var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtil.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
@@ -310,14 +338,13 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             println("无数据")
             return false
         } else {
-            var tempChartDataArr = NSMutableArray()
-            var i = 0
-            for number in tempArray {
-                let mTemperature = number as Temperature
-                //tempChartDataArr.addObject(mTemperature.cTemperature.floatValue)
-                tempChartDataArr.addObject(mTemperature)
+            if isTodayData {
+            data = ChartDataConverter().convertDataForToday(tempArray).0
+            titleStringArrForXAXis = ChartDataConverter().convertDataForToday(tempArray).1
+            } else {
+              data = ChartDataConverter().convertDataForHistory(tempArray).0
+                titleStringArrForXAXis = ChartDataConverter().convertDataForHistory(tempArray).1
             }
-            lineChartData = NSArray(array: tempChartDataArr)
             return true
         }
     }
@@ -328,7 +355,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         if generateChartDataWithDateString(dateStr) {
             // 由数据源改变 eLineChart的值
             initSubViewToView()
-            graphChart?.hidden = false
+            scrolledChart?.hidden = false
             dateShow.text = dateStr
         } else {
             println("无历史数据")
@@ -374,5 +401,14 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         (segue.destinationViewController as UIViewController).hidesBottomBarWhenPushed = true
     }
+    
+    func maxValueForLineChart(data: [Int : CGFloat])-> CGFloat {
+        if data.isEmpty  {
+            fatalError("data为空")
+        }
+        var sortValues = (data.values).array.sorted({$0 > $1})
+        return sortValues[0]
+    }
+
 
 }

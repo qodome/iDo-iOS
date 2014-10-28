@@ -33,6 +33,7 @@ class OliveDBDao: NSObject {
             let share: FMDatabase = DBManager.sharedDataBase()
             if share.open() {
                 let dateStr: String  = DateUtil.getTimeWithStamp(temper.cDate, withFormat:"yyyy-MM-dd HH:mm:ss" )
+                println("dateStr -- \(dateStr)")
                 let sql = "INSERT INTO \(OliveDBDaoSingleton.sTableName) (temperature,cDate) VALUES(?,?)"
                 isOK = share.executeUpdate(sql, withArgumentsInArray: [NSKeyedArchiver.archivedDataWithRootObject(temper),dateStr])
                 share.close()

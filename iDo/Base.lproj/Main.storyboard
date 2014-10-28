@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3vB-nW-pZU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3vB-nW-pZU">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -40,7 +40,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QmJ-19-7Jc" customClass="FDGraphScrollView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QmJ-19-7Jc" customClass="ScrolledChart" customModule="iDo" customModuleProvider="target">
                                 <rect key="frame" x="16" y="241" width="568" height="309"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -110,17 +110,17 @@
                     <connections>
                         <outlet property="calenderBtn" destination="TSW-Qn-JgD" id="yjd-8s-kD5"/>
                         <outlet property="dateShow" destination="H4Q-9e-4qE" id="JEX-U3-w3J"/>
-                        <outlet property="graphChart" destination="QmJ-19-7Jc" id="Ol2-z3-ofm"/>
                         <outlet property="numberTaped" destination="8wC-kw-KcM" id="EhA-0p-VZw"/>
                         <outlet property="peripheralBarBtn" destination="fBS-wO-7e1" id="Ls5-v7-bO0"/>
                         <outlet property="reconnectBtn" destination="TWn-9D-rVy" id="j1K-zF-Ybi"/>
+                        <outlet property="scrolledChart" destination="QmJ-19-7Jc" id="czc-Kv-dF9"/>
                         <outlet property="settingBtn" destination="OXU-it-FXy" id="BU5-IS-GWQ"/>
                         <outlet property="temperatureLabel" destination="Mcz-Um-NA6" id="f84-z5-Gej"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i95-lV-AMc" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2482" y="-575"/>
+            <point key="canvasLocation" x="2268" y="-607"/>
         </scene>
         <!--Device List-->
         <scene sceneID="6YL-oL-as5">
