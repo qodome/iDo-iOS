@@ -35,8 +35,6 @@ class ChartDataConverter: UIView {
     func convertDataForHistory(inputData: NSMutableArray) ->([Int : CGFloat], [String]) {
         var outPutData:[Int : CGFloat] = Dictionary()
         var titleStringArrForXAXis:[String] = []
-//        var currentDate = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd HH:mm:ss") as NSString
-//        var currentHour = (((currentDate.substringFromIndex(11) as NSString).substringWithRange(NSRange(location: 0, length: 2))) as NSString).intValue
         //生成x轴的title
         for var j = 0; j < 24; j++ {
             titleStringArrForXAXis.append("\(j)时")

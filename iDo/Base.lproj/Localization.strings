@@ -2,7 +2,8 @@
 "Connected, waiting for data" = "Connected, waiting for data";
 "reconnect" = "reconnect";
 "devices" = "Devices";
-"calendar" = "Calendar";
+"history" = "History";
+"calender" = "Calender";
 "settings" = "Settings";
 "measure" = "Measure";
 "refresh" = "Refresh";

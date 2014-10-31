@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3vB-nW-pZU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VJS-jd-511">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -29,23 +29,23 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- °C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mcz-Um-NA6">
-                                <rect key="frame" x="16" y="120" width="568" height="43"/>
+                                <rect key="frame" x="16" y="120" width="568" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8wC-kw-KcM">
-                                <rect key="frame" x="16" y="183" width="568" height="38.5"/>
+                                <rect key="frame" x="16" y="164" width="568" height="38.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                 <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QmJ-19-7Jc" customClass="ScrolledChart" customModule="iDo" customModuleProvider="target">
-                                <rect key="frame" x="16" y="241" width="568" height="309"/>
+                                <rect key="frame" x="16" y="222.5" width="568" height="327.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2014-09- 11" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4Q-9e-4qE">
-                                <rect key="frame" x="16" y="183" width="568" height="38.5"/>
+                                <rect key="frame" x="16" y="164" width="568" height="38.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                 <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <nil key="highlightedColor"/>
@@ -66,39 +66,38 @@
                             <constraint firstItem="Mcz-Um-NA6" firstAttribute="centerX" secondItem="TWn-9D-rVy" secondAttribute="centerX" constant="24" id="0Yw-Jb-s82"/>
                             <constraint firstAttribute="trailingMargin" secondItem="OXU-it-FXy" secondAttribute="trailing" constant="1" id="2u0-ER-5os"/>
                             <constraint firstItem="8wC-kw-KcM" firstAttribute="top" secondItem="Mcz-Um-NA6" secondAttribute="bottom" constant="20" id="3mx-aI-h2x"/>
-                            <constraint firstItem="mhW-0X-WlR" firstAttribute="top" secondItem="QmJ-19-7Jc" secondAttribute="bottom" constant="50" id="5QS-Ie-fe7"/>
                             <constraint firstItem="OXU-it-FXy" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="76H-xW-Wer"/>
                             <constraint firstItem="OXU-it-FXy" firstAttribute="top" secondItem="QmJ-19-7Jc" secondAttribute="bottom" constant="1" id="8kM-Gb-kPj"/>
                             <constraint firstItem="H4Q-9e-4qE" firstAttribute="trailing" secondItem="Fs6-pX-uWd" secondAttribute="trailingMargin" id="95Y-5P-97E"/>
-                            <constraint firstItem="mhW-0X-WlR" firstAttribute="top" secondItem="OXU-it-FXy" secondAttribute="bottom" id="AHk-sh-S0z"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QmJ-19-7Jc" secondAttribute="trailing" id="AuK-CQ-xMV"/>
-                            <constraint firstItem="TWn-9D-rVy" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="56" id="B2C-Ym-7hm"/>
+                            <constraint firstItem="mhW-0X-WlR" firstAttribute="top" secondItem="OXU-it-FXy" secondAttribute="bottom" id="DhG-7X-eH2"/>
                             <constraint firstItem="H4Q-9e-4qE" firstAttribute="top" secondItem="Mcz-Um-NA6" secondAttribute="bottom" constant="20" id="Dv6-RS-VsL"/>
+                            <constraint firstItem="Mcz-Um-NA6" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="56" id="Gzg-vJ-s8a"/>
                             <constraint firstItem="TWn-9D-rVy" firstAttribute="top" secondItem="H4Q-9e-4qE" secondAttribute="bottom" id="LgP-Yd-pG1"/>
                             <constraint firstItem="H4Q-9e-4qE" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="MUK-4O-gzq"/>
                             <constraint firstItem="QmJ-19-7Jc" firstAttribute="top" secondItem="8wC-kw-KcM" secondAttribute="bottom" constant="20" id="MgM-Wj-cBR"/>
-                            <constraint firstItem="8wC-kw-KcM" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="100" id="Nk8-h7-cxg"/>
+                            <constraint firstItem="TWn-9D-rVy" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="56" id="UKM-T6-tGt"/>
+                            <constraint firstItem="8wC-kw-KcM" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="100" id="cUx-x0-aN8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8wC-kw-KcM" secondAttribute="trailing" id="k1j-Bv-wFB"/>
                             <constraint firstItem="8wC-kw-KcM" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="kza-Y0-7Zm"/>
                             <constraint firstItem="Mcz-Um-NA6" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="m1Y-dT-COk"/>
-                            <constraint firstItem="Mcz-Um-NA6" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="56" id="mtc-t6-kyz"/>
                             <constraint firstAttribute="centerX" secondItem="TWn-9D-rVy" secondAttribute="centerX" id="pNK-Om-xjL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Mcz-Um-NA6" secondAttribute="trailing" id="rNW-Hi-Oyz"/>
                             <constraint firstItem="QmJ-19-7Jc" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="xV0-WR-uaB"/>
+                            <constraint firstItem="mhW-0X-WlR" firstAttribute="top" secondItem="QmJ-19-7Jc" secondAttribute="bottom" constant="50" id="xyE-bG-PMC"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="0Yw-Jb-s82"/>
-                                <exclude reference="Nk8-h7-cxg"/>
                                 <exclude reference="LgP-Yd-pG1"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="prg-vb-hck">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="日历" id="TSW-Qn-JgD">
+                        <barButtonItem key="leftBarButtonItem" title="历史" id="TSW-Qn-JgD">
                             <connections>
-                                <action selector="showCalenderView:" destination="y4g-7r-2i1" id="0UK-Eq-dck"/>
+                                <segue destination="3RK-sx-kiE" kind="show" id="WYG-jI-68h"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="设备" id="fBS-wO-7e1">
@@ -108,8 +107,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="calenderBtn" destination="TSW-Qn-JgD" id="yjd-8s-kD5"/>
                         <outlet property="dateShow" destination="H4Q-9e-4qE" id="JEX-U3-w3J"/>
+                        <outlet property="historyBtn" destination="TSW-Qn-JgD" id="Dun-Mx-f2y"/>
                         <outlet property="numberTaped" destination="8wC-kw-KcM" id="EhA-0p-VZw"/>
                         <outlet property="peripheralBarBtn" destination="fBS-wO-7e1" id="Ls5-v7-bO0"/>
                         <outlet property="reconnectBtn" destination="TWn-9D-rVy" id="j1K-zF-Ybi"/>
@@ -120,7 +119,69 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i95-lV-AMc" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2268" y="-607"/>
+            <point key="canvasLocation" x="1632" y="-1947"/>
+        </scene>
+        <!--History-->
+        <scene sceneID="4yp-eD-L2r">
+            <objects>
+                <viewController id="3RK-sx-kiE" customClass="History" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MtE-bB-vnO"/>
+                        <viewControllerLayoutGuide type="bottom" id="4O3-n1-ie4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cwB-eT-ZTy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 大师傅" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q1r-QT-0SL" userLabel="大师傅">
+                                <rect key="frame" x="16" y="114" width="568" height="38.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z4q-hk-WzU" customClass="ScrolledChart" customModule="iDo" customModuleProvider="target">
+                                <rect key="frame" x="16" y="200" width="568" height="370"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2014-09-11" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6G-IP-Qgi">
+                                <rect key="frame" x="16" y="114" width="568" height="38.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="R6G-IP-Qgi" firstAttribute="trailing" secondItem="cwB-eT-ZTy" secondAttribute="trailingMargin" id="2r9-l5-mhI"/>
+                            <constraint firstItem="q1r-QT-0SL" firstAttribute="top" secondItem="MtE-bB-vnO" secondAttribute="bottom" constant="50" id="5mM-t8-UBs"/>
+                            <constraint firstItem="Z4q-hk-WzU" firstAttribute="leading" secondItem="cwB-eT-ZTy" secondAttribute="leadingMargin" id="7K1-A6-9ue"/>
+                            <constraint firstItem="q1r-QT-0SL" firstAttribute="trailing" secondItem="cwB-eT-ZTy" secondAttribute="trailingMargin" id="83A-ZH-xep"/>
+                            <constraint firstItem="R6G-IP-Qgi" firstAttribute="leading" secondItem="cwB-eT-ZTy" secondAttribute="leadingMargin" id="8dH-8u-nCp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Z4q-hk-WzU" secondAttribute="trailing" id="Fxi-fC-aYV"/>
+                            <constraint firstItem="R6G-IP-Qgi" firstAttribute="top" secondItem="MtE-bB-vnO" secondAttribute="bottom" constant="50" id="HLs-iv-nOT"/>
+                            <constraint firstItem="q1r-QT-0SL" firstAttribute="leading" secondItem="cwB-eT-ZTy" secondAttribute="leadingMargin" id="TEg-tC-d2d"/>
+                            <constraint firstItem="Z4q-hk-WzU" firstAttribute="top" secondItem="cwB-eT-ZTy" secondAttribute="topMargin" constant="200" id="qoo-lc-1MD"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Z4q-hk-WzU" secondAttribute="bottom" constant="30" id="xhf-fy-jvO"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="68a-zY-114">
+                        <nil key="title"/>
+                        <barButtonItem key="rightBarButtonItem" title="日历" id="84a-an-XSr">
+                            <connections>
+                                <action selector="calenderBtnSelected:" destination="3RK-sx-kiE" id="IGP-eb-NHh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="calenderBtn" destination="84a-an-XSr" id="YNj-Hm-YlK"/>
+                        <outlet property="dateShow" destination="R6G-IP-Qgi" id="LC7-Nn-5e4"/>
+                        <outlet property="numberTaped" destination="q1r-QT-0SL" id="kC5-qt-Gfj"/>
+                        <outlet property="scrolledChart" destination="Z4q-hk-WzU" id="3gm-5L-bhH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lb6-mm-kRh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2363" y="-2831"/>
         </scene>
         <!--Device List-->
         <scene sceneID="6YL-oL-as5">
@@ -431,7 +492,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="3870" y="83"/>
+            <point key="canvasLocation" x="3938" y="139"/>
         </scene>
         <!--Device Detail-->
         <scene sceneID="7Th-O3-S5v">
@@ -476,25 +537,6 @@
             </objects>
             <point key="canvasLocation" x="4145" y="-702"/>
         </scene>
-        <!--measure-->
-        <scene sceneID="lNM-GT-Wfg">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3vB-nW-pZU" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="measure" image="burger" id="2ll-FJ-EII"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hLP-f6-wCJ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="y4g-7r-2i1" kind="relationship" relationship="rootViewController" id="WMA-eP-4Rs"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Afb-Kt-Uqm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1668" y="-1205"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="tBi-Ne-JsM">
             <objects>
@@ -513,9 +555,26 @@
             </objects>
             <point key="canvasLocation" x="2975" y="174"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lkG-R4-6md">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VJS-jd-511" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="exO-Ab-0yN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="y4g-7r-2i1" kind="relationship" relationship="rootViewController" id="yMM-P4-1mU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZWQ-45-FJr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="820" y="-1947"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="burger" width="19" height="17"/>
         <image name="iDoIcon" width="57" height="57"/>
     </resources>
 </document>

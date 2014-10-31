@@ -4,7 +4,7 @@
 
 import CoreBluetooth
 
-class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, CalendarViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate, ScrolledChartDelegate, ScrolledChartDataSource {
+class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, UIAlertViewDelegate, UIScrollViewDelegate, ScrolledChartDelegate, ScrolledChartDataSource {
 
     let segueId = "mPeriphalSegue"
     let kSCREEN_WIDTH = UIScreen.mainScreen().bounds.size.width
@@ -18,7 +18,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
 
     var mDeviceCentralManger: DeviceCentralManager!
     var data: [Int : CGFloat] = Dictionary()
-    var sectionsCount: Int = 5
+    var sectionsCount: Int = 5 //今天的数据(只记录4小时)
     var pageCount = 4
     var pointNumberInsection = 120
     var titleStringArrForXAXis:[String] = [] //横坐标的string
@@ -26,12 +26,9 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
     var isCurrentDateHaveLineChartData = true
 
-    var isTodayData = true // 是否为今天的数据(只记录4小时)
-    
-    var calendarView: CalendarView? // 日历View
     @IBOutlet weak var settingBtn: UIButton!
     @IBOutlet weak var peripheralBarBtn: UIBarButtonItem!
-    @IBOutlet weak var calenderBtn: UIBarButtonItem!
+    @IBOutlet weak var historyBtn: UIBarButtonItem!
     @IBOutlet weak var numberTaped: UILabel! //显示当前温度的label
     @IBOutlet weak var dateShow: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel! //显示折线图中当前点值的label
@@ -42,7 +39,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         settingBtn.setTitle(LocalizedString("settings"), forState: UIControlState.Normal)
-        calenderBtn.title = LocalizedString("calendar")
+        historyBtn.title = LocalizedString("history")
         peripheralBarBtn.title = LocalizedString("devices")
         numberTaped.font = UIFont(name: "HelveticaNeue-Light", size: 20)
         temperatureLabel.text = LocalizedString("finding a device")
@@ -64,7 +61,6 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             var otherBtnTitle = LocalizedString("Jump to device page")
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle).show()
         }
-        scrolledChart?.hidden = true
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -190,38 +186,6 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         }
     }
 
-    // MARK: -  calendarView Delegate
-    func didSelectDate(dateStr: String, forDetail enty: WeekEntity) {
-        println("did selected date - \(dateStr)")
-        dismissCalenderAction()
-        // 根据date 从数据中取出温度记录 就是eLineChart的数据源
-        if dateStr == currentSelectedDateString {
-            return
-        }
-        if dateStr == DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd") {
-            isTodayData = true
-            sectionsCount = 5
-            pointNumberInsection = 120
-        }
-        else {
-            isTodayData = false
-            sectionsCount = 24
-            pointNumberInsection = 12
-        }
-        if generateChartDataWithDateString(dateStr) {
-            // 由数据源改变 eLineChart的值
-            initSubViewToView()
-            numberTaped.text = " "
-            dateShow.text = dateStr
-            currentSelectedDateString = dateStr
-        } else {
-            var title = LocalizedString("Prompt")
-            var message = LocalizedString("Don't have any data on the day !")
-            var cancelBtnTittle = LocalizedString("Done")
-            UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: cancelBtnTittle).show()
-        }
-    }
-
     // MARK: - scrollView Delegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         numberTaped.hidden = true
@@ -263,22 +227,6 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         println("didClickItemAtIndexPath")
         numberTaped.text = NSString(format: "%.2f°C", Float(data[pointNumber]!))
     }
-
-    // MARK: -  Action
-    @IBAction func showCalenderView(sender: AnyObject) {
-        if (calendarView != nil) {
-            dismissCalenderAction()
-        } else {
-            var settingBtnHeight = settingBtn.frame.height
-            calendarView = CalendarView(frame: CGRectMake(0, kNAVIGATIONBAR_HEIGHT, 225, kSCREEN_HEIGHT - kNAVIGATIONBAR_HEIGHT - settingBtnHeight))
-            if scrolledChart == nil {
-                view.addSubview(calendarView!)
-            } else {
-                view.insertSubview(calendarView!, aboveSubview: scrolledChart!)
-            }
-            calendarView?.delegate = self
-        }
-    }
     
     @IBAction func reconnectPeripheral(sender: AnyObject) {
         reconnectBtn.hidden = true
@@ -286,13 +234,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         mDeviceCentralManger.startScan()
     }
 
-    // MARK: - Custom Method
-    func dismissCalenderAction() {
-        calendarView?.removeFromSuperview()
-        calendarView?.delegate = nil
-        calendarView = nil
-    }
-
+//    // MARK: - Custom Method
     func translucentNavigationBar() {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -322,12 +264,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         scrolledChart?.backgroundColor = UIColor.clearColor()
         scrolledChart?.lineChart.dataSource = self
         scrolledChart?.lineChart.delegate = self
-        if calendarView == nil {
-            view.addSubview(scrolledChart!)
-        } else {
-            view.insertSubview(scrolledChart!, belowSubview: calendarView!)
-        }
-        scrolledChart?.hidden = false
+        view.addSubview(scrolledChart!)
     }
     
     /** generate data */
@@ -338,13 +275,8 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             println("无数据")
             return false
         } else {
-            if isTodayData {
             data = ChartDataConverter().convertDataForToday(tempArray).0
             titleStringArrForXAXis = ChartDataConverter().convertDataForToday(tempArray).1
-            } else {
-              data = ChartDataConverter().convertDataForHistory(tempArray).0
-                titleStringArrForXAXis = ChartDataConverter().convertDataForHistory(tempArray).1
-            }
             return true
         }
     }
@@ -355,7 +287,6 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         if generateChartDataWithDateString(dateStr) {
             // 由数据源改变 eLineChart的值
             initSubViewToView()
-            scrolledChart?.hidden = false
             dateShow.text = dateStr
         } else {
             println("无历史数据")
@@ -409,6 +340,5 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         var sortValues = (data.values).array.sorted({$0 > $1})
         return sortValues[0]
     }
-
-
+    
 }

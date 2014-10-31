@@ -2,7 +2,8 @@
 "Connected, waiting for data" = "已连接，等待数据";
 "reconnect" = "重连";
 "devices" = "设备";
-"calendar" = "日历";
+"history" = "历史";
+"calender" = "日历";
 "settings" = "设置";
 "measure" = "测量";
 "refresh" = "刷新";
