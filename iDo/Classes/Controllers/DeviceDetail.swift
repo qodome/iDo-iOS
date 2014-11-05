@@ -9,13 +9,13 @@ class DeviceDetail: UITableViewController {
     let cellId = "device_detail_cell"
     var data: CBPeripheral!
     
-    // MARK: - 生命周期 (Lifecyle)
+    // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = data.name
     }
     
-    // MARK: - UITableViewDataSource
+    // MARK: - 💙 UITableViewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }

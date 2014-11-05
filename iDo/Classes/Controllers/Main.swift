@@ -3,25 +3,18 @@
 //
 
 import CoreBluetooth
+import UIKit
 
-class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, UIAlertViewDelegate, UIScrollViewDelegate, ScrolledChartDelegate, ScrolledChartDataSource {
+class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollViewDelegate, ScrolledChartDelegate, ScrolledChartDataSource {
+    // MARK: - 🍀 变量
+    let segueId = "segue_main_device_list"
     
-    let segueId = "mPeriphalSegue"
-    let kSCREEN_WIDTH = UIScreen.mainScreen().bounds.size.width
-    let kSCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height
-    let kNAVIGATIONBAR_HEIGHT: CGFloat = 64.0 //优化
-    let IDOGREENCOLOR = UIColor.colorWithHex(0x17A865)
-    let IDOPURPLECOLOR = UIColor.colorWithHex(0xAA66CC)
-    let IDOBLUECOLOR = UIColor.colorWithHex(0x2897C3)
-    let IDOORANGECOLOR = UIColor.colorWithHex(0xE24424)
-    let IDOLOGREDCOLOR = UIColor.colorWithHex(0xFB414D)
-    
-    var mDeviceCentralManger: DeviceCentralManager!
+    var deviceManager: BLEManager!
     var data: [Int : CGFloat] = Dictionary()
-    var sectionsCount: Int = 5 //今天的数据(只记录4小时)
+    var sectionsCount = 5 //今天的数据(只记录4小时)
     var pageCount = 4
     var pointNumberInsection = 120
-    var titleStringArrForXAXis:[String] = [] //横坐标的string
+    var titleStringArrForXAXis: [String] = [] //横坐标的string
     var titleStringArrForYMaxPoint = "max"
     var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
     var isCurrentDateHaveLineChartData = true
@@ -35,7 +28,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     @IBOutlet weak var reconnectBtn: UIButton!
     @IBOutlet var scrolledChart: ScrolledChart?
     
-    // MARK: - 生命周期 (Lifecyle)
+    // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
         settingBtn.setTitle(LocalizedString("settings"), forState: UIControlState.Normal)
@@ -51,9 +44,9 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         reconnectBtn.hidden = true
         view.backgroundColor = IDOBLUECOLOR
         
-        mDeviceCentralManger = DeviceCentralManager.instanceForCenterManager()
-        mDeviceCentralManger.characteristicDelegate = self
-        if mDeviceCentralManger.lastConnectedPeripheralUUID().isEmpty { // 无绑定设备
+        deviceManager = BLEManager.sharedManager()
+        deviceManager.delegate = self
+        if deviceManager.lastConnectedPeripheralUUID().isEmpty { // 无绑定设备
             isCurrentDateHaveLineChartData = false
             var title = LocalizedString("Prompt")
             var message = LocalizedString("Please jump to device page to connect device")
@@ -66,8 +59,11 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         // 透明化navigationBar
-        translucentNavigationBar()
-        translucentTabBar()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        temperatureLabel.textColor = UIColor.whiteColor()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -75,18 +71,18 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         updateCurrentDateLineChart()
     }
     
-    // MARK: -  DeviceCentralManagerConnectedStateChangeDelegate
-    func centralManger(centralManger: CBCentralManager, didAutoDisConnectedPeripheral connectingPeripheral: CBPeripheral) {
-        temperatureLabel.hidden = true
-        reconnectBtn.hidden = false
-    }
-    
-    func centralManger(centralManger: CBCentralManager, didConnectedPeripheral connectingPeripheral: CBPeripheral) {
+    // MARK: - DeviceStateDelegate
+    func didConnect(centralManger: CBCentralManager, peripheral: CBPeripheral) {
         temperatureLabel.text = LocalizedString("Connected, waiting for data")
         view.backgroundColor = IDOBLUECOLOR
     }
     
-    func didUpdateValueToCharacteristic(characteristic:CBCharacteristic? ,cError error:NSError?) {
+    func didDisconnect(centralManger: CBCentralManager, peripheral: CBPeripheral) {
+        temperatureLabel.hidden = true
+        reconnectBtn.hidden = false
+    }
+    
+    func didUpdateValue(characteristic: CBCharacteristic?, error: NSError?) {
         if characteristic == nil && error == nil {
             temperatureLabel.text = LocalizedString("finding a device")
             view.backgroundColor = IDOBLUECOLOR
@@ -110,7 +106,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             }
             var hexArr:NSMutableArray = NSMutableArray()
             var writeDataString: String = ""
-            for var i = 0; i < mDateBytes.count; i++ {
+            for i in 0..<mDateBytes.count {
                 var hexStr: NSString = ""
                 var newHexStr: NSString =  NSString(format: "%x", mDateBytes[i]&0xff)
                 if newHexStr.length == 1 {
@@ -137,7 +133,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             //writeData(mDeviceCentralManger.devicesArrayOnSelectedStatus[0] as CBPeripheral, forCharacteristic:characteristic! , forData:mRealWriteData)
         }
         // 得到temperature
-        var temperature = calculateTemperatureData(mDeviceCentralManger.devicesArrayOnSelectedStatus[0] as CBPeripheral, forCharacteristic:characteristic! , forData: characteristic?.value)
+        var temperature = calculateTemperatureData(deviceManager.connected[0], forCharacteristic:characteristic! , forData: characteristic?.value)
         temperatureLabel.text = NSString(format: "%.2f°C", temperature)
         // 保存temperature到数据库
         var temper: Temperature = Temperature()
@@ -178,20 +174,20 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         
     }
     
-    // MARK: - UIAlertViewDelegate
+    // MARK: - 💙 UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 { //进入设备页
-            mDeviceCentralManger.startScan()
+            deviceManager.startScan()
             performSegueWithIdentifier(segueId, sender: self)
         }
     }
     
-    // MARK: - scrollView Delegate
+    // MARK: - 💙 UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         numberTaped.hidden = true
     }
     
-    //MARK: - ScrolledChartDataSource
+    // MARK: - ScrolledChartDataSource
     func numberOfSectionsInScrolledChart(scrolledChart: LineChart) ->Int {
         return sectionsCount
     }
@@ -231,26 +227,10 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     @IBAction func reconnectPeripheral(sender: AnyObject) {
         reconnectBtn.hidden = true
         temperatureLabel.hidden = false
-        mDeviceCentralManger.startScan()
+        deviceManager.startScan()
     }
     
-    //    // MARK: - Custom Method
-    func translucentNavigationBar() {
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        temperatureLabel.textColor = UIColor.whiteColor()
-    }
-    
-    func translucentTabBar() {
-        tabBarController?.tabBar.backgroundImage = UIImage()
-        tabBarController?.tabBar.shadowImage = UIImage()
-        tabBarController?.tabBar.barStyle = UIBarStyle.Black
-        tabBarController?.tabBar.translucent = true
-        tabBarController?.tabBar.tintColor = UIColor.whiteColor()
-    }
-    
+    // MARK: - Custom Method
     func initSubViewToView() {
         var currentGraphChartFrame: CGRect!
         if scrolledChart != nil {

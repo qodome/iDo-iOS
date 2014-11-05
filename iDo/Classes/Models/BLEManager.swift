@@ -4,63 +4,68 @@
 
 import CoreBluetooth
 
-protocol DeviceCentralManagerConnectedStateChangeDelegate {
-    func didUpdateValueToCharacteristic(characteristic: CBCharacteristic?, cError error: NSError?) //已经收到温度数据
-    func centralManger(centralManger: CBCentralManager, didConnectedPeripheral connectingPeripheral: CBPeripheral) //设备已连接
-    func centralManger(centralManger: CBCentralManager, didAutoDisConnectedPeripheral connectingPeripheral: CBPeripheral) //设备自动断开连接
-}
-
-protocol DeviceCentralManagerdidChangedCurrentConnectedDeviceDelegate { // TODO: 重命名
-    func centralss(centeral: CBCentralManager, unConnectedDevices unConnectedDeviceArr: NSArray, connectedDevices connectedDeviceArr: NSArray)
-}
-
-class DeviceCentralManager: NSObject {
+protocol BLEManagerDelegate {
     
-    let kServiceUUID:String = "1809" // Health Thermometer
+    /** 已经收到温度数据 */
+    func didUpdateValue(characteristic: CBCharacteristic?, error: NSError?)
+    
+    /** 设备已连接 */
+    func didConnect(centralManger: CBCentralManager, peripheral: CBPeripheral)
+    
+    /** 设备自动断开连接 */
+    func didDisconnect(centralManger: CBCentralManager, peripheral: CBPeripheral)
+}
+
+protocol DeviceChangeDelegate {
+    func onDataChange(unconnected: [CBPeripheral], connected: [CBPeripheral])
+}
+
+class BLEManager: NSObject {
+    
+    let kServiceUUID = "1809" // Health Thermometer
     let kCharacteristicUUID = "2A1C" // Temperature Measurement
     //    var isUserCancelConnectingDevices: Bool = false // 用户手动取消连接是为true TODO: 是否有用
     var isPeripheralTryToConnect: Bool = false
     var isScanning: Bool = false // 只有在用户点击刷新设备button后或者第一次进入app才为true
-    var devicesArrayOnSelectedStatus: NSMutableArray! //放置已经连接的peripheral
+    var connected: [CBPeripheral] = [] //放置已经连接的peripheral
     var devices: [CBPeripheral] = [] // 放置可连接的(但未连接的)peripherals
-    var characteristicDelegate: DeviceCentralManagerConnectedStateChangeDelegate? //温度数据发送 代理
-    var delegate: DeviceCentralManagerdidChangedCurrentConnectedDeviceDelegate? //设备data变化 代理
+    var delegate: BLEManagerDelegate? //温度数据发送 代理
+    var changeDelegate: DeviceChangeDelegate? //设备data变化 代理
     var central: CBCentralManager!
-    var currentPeripheral: CBPeripheral!
     
     // MARK: - 生命周期 (Lifecyle)
-    class func instanceForCenterManager() -> DeviceCentralManager {
-        struct DeviceCentralSingleton{
+    class func sharedManager() -> BLEManager {
+        struct Singleton{
             static var predicate: dispatch_once_t = 0
-            static var instance: DeviceCentralManager? = nil
+            static var instance: BLEManager? = nil
         }
-        dispatch_once(&DeviceCentralSingleton.predicate, {
-            DeviceCentralSingleton.instance = DeviceCentralManager()
+        dispatch_once(&Singleton.predicate, {
+            Singleton.instance = BLEManager()
             println("instance")
         })
-        return DeviceCentralSingleton.instance!
+        return Singleton.instance!
     }
     
     override init() {
         super.init()
         println("devicesInit")
-        central = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey:NSNumber(bool: true)])
-        devicesArrayOnSelectedStatus = NSMutableArray()
+//        central = CBCentralManager(delegate: self, queue: nil)
+        central = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: NSNumber(bool: true)])
+        connected = []
     }
     
     func userConnectPeripheral(index: Int) {
-        var peripheral = devices[index] as CBPeripheral
-        let lastPeripheral: CBPeripheral? = devicesArrayOnSelectedStatus.lastObject as? CBPeripheral
-        if lastPeripheral != nil {
-            unbind(lastPeripheral)
+        if connected.count > 0 {
+            unbind(connected.last)
         }
+        var peripheral = devices[index]
         bind(peripheral)
         central.connectPeripheral(peripheral, options: nil) // 连接
         devices.removeAtIndex(index)
         
         isPeripheralTryToConnect = true
         ////
-        delegate?.centralss(central, unConnectedDevices: devices, connectedDevices: devicesArrayOnSelectedStatus)
+        changeDelegate?.onDataChange(devices, connected: connected)
     }
     
     /** 绑定设备 */
@@ -69,8 +74,9 @@ class DeviceCentralManager: NSObject {
         stopScan() // 停止搜寻
         setConnectingPeripheralUUID(peripheral.identifier.UUIDString)
         isPeripheralTryToConnect =  true
-        if !devicesArrayOnSelectedStatus.containsObject(peripheral) {
-            devicesArrayOnSelectedStatus.addObject(peripheral)
+        
+        if !contains(connected, peripheral) {
+            connected.append(peripheral)
         }
     }
     
@@ -78,13 +84,13 @@ class DeviceCentralManager: NSObject {
     func unbind(peripheral: CBPeripheral!) {
         NSLog("解绑设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
         setConnectingPeripheralUUID("")
-        devicesArrayOnSelectedStatus.removeLastObject()
+        connected.removeLast()
         if !contains(devices, peripheral) {
             devices.append(peripheral)
         }
         isPeripheralTryToConnect = false
-        characteristicDelegate?.didUpdateValueToCharacteristic(nil, cError: nil)
-        delegate?.centralss(central, unConnectedDevices: devices, connectedDevices: devicesArrayOnSelectedStatus) // 刷新UI
+        delegate?.didUpdateValue(nil, error: nil)
+        changeDelegate?.onDataChange(devices, connected: connected) // 刷新UI
         central.cancelPeripheralConnection(peripheral)
     }
     
@@ -112,7 +118,7 @@ class DeviceCentralManager: NSObject {
 }
 
 // MARK: - CBCentralManagerDelegate
-extension DeviceCentralManager: CBCentralManagerDelegate {
+extension BLEManager: CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(central: CBCentralManager!) {
         NSLog("💙 蓝牙状态更新: %i", central.state.rawValue)
@@ -120,10 +126,10 @@ extension DeviceCentralManager: CBCentralManagerDelegate {
         case CBCentralManagerState.PoweredOn:
             central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
         default:
-            devicesArrayOnSelectedStatus.removeAllObjects()
+            connected.removeAll(keepCapacity: true)
             devices.removeAll(keepCapacity: true)
-            characteristicDelegate?.didUpdateValueToCharacteristic(nil, cError: nil)
-            delegate?.centralss(central, unConnectedDevices: devices, connectedDevices: devicesArrayOnSelectedStatus)
+            delegate?.didUpdateValue(nil, error: nil)
+            changeDelegate?.onDataChange(devices, connected: connected)
         }
     }
     
@@ -148,9 +154,9 @@ extension DeviceCentralManager: CBCentralManagerDelegate {
         peripheral.delegate = self
         peripheral.discoverServices([CBUUID(string: kServiceUUID)])
         //设备已连接
-        characteristicDelegate?.centralManger(central, didConnectedPeripheral: peripheral)
+        delegate?.didConnect(central, peripheral: peripheral)
         isPeripheralTryToConnect = false
-        delegate?.centralss(central, unConnectedDevices: devices, connectedDevices: devicesArrayOnSelectedStatus)
+        changeDelegate?.onDataChange(devices, connected: connected)
     }
     
     // MARK: - 处理异常
@@ -161,12 +167,12 @@ extension DeviceCentralManager: CBCentralManagerDelegate {
         NSLog("disconnectedPeripheralId:%@", peripheralId)
         if peripheralId == peripheral.identifier.UUIDString {
             NSLog("autoDisConnected")
-            devicesArrayOnSelectedStatus.removeLastObject()
+            connected.removeLast()
             if !contains(devices, peripheral) {
                 devices.append(peripheral)
             }
-            delegate?.centralss(central, unConnectedDevices: devices, connectedDevices: devicesArrayOnSelectedStatus)
-            characteristicDelegate?.centralManger(central, didAutoDisConnectedPeripheral: peripheral)
+            changeDelegate?.onDataChange(devices, connected: connected)
+            delegate?.didDisconnect(central, peripheral: peripheral)
         }
     }
     
@@ -177,14 +183,14 @@ extension DeviceCentralManager: CBCentralManagerDelegate {
 }
 
 // MARK: - CBPeripheralDelegate
-extension DeviceCentralManager: CBPeripheralDelegate {
+extension BLEManager: CBPeripheralDelegate {
     
     func peripheral(peripheral: CBPeripheral!, didDiscoverServices error: NSError!) {
         println("3-peripheral\(peripheral.identifier) did discover services)")
         if error != nil {
             // devicesArray.removeObject(peripheral)
         } else {
-            for var i = 0; i < peripheral.services.count; i++ {
+            for i in 0..<peripheral.services.count {
                 var service:CBService = peripheral.services[i] as CBService
                 if CBUUID(string: kServiceUUID) == service.UUID {
                     peripheral.discoverCharacteristics([CBUUID(string: kCharacteristicUUID)], forService: service)
@@ -199,7 +205,7 @@ extension DeviceCentralManager: CBPeripheralDelegate {
         if error != nil {
             //  devicesArray.removeObject(peripheral)
         } else {
-            for var i = 0; i < service.characteristics.count; i++ {
+            for i in 0..<service.characteristics.count {
                 var characteristic:CBCharacteristic = service.characteristics[i] as CBCharacteristic
                 if CBUUID(string: kCharacteristicUUID) == characteristic.UUID {
                     var peripheralId:String = lastConnectedPeripheralUUID()
@@ -227,13 +233,13 @@ extension DeviceCentralManager: CBPeripheralDelegate {
                 //                }
             }
         }
-        println("dataSelected--\(devicesArrayOnSelectedStatus.description) ")
+        println("dataSelected--\(connected.description) ")
         println("dataNoSelected--\(devices.description) ")
-        delegate?.centralss(central, unConnectedDevices: devices, connectedDevices: devicesArrayOnSelectedStatus)
+        changeDelegate?.onDataChange(devices, connected: connected)
     }
     
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!){
         println("5--updateValue\(peripheral.identifier.UUIDString)")
-        characteristicDelegate?.didUpdateValueToCharacteristic(characteristic, cError: error)
+        delegate?.didUpdateValue(characteristic, error: error)
     }
 }

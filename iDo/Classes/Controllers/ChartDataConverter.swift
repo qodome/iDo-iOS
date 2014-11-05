@@ -36,8 +36,8 @@ class ChartDataConverter: UIView {
         var outPutData:[Int : CGFloat] = Dictionary()
         var titleStringArrForXAXis:[String] = []
         //生成x轴的title
-        for var j = 0; j < 24; j++ {
-            titleStringArrForXAXis.append("\(j)时")
+        for i in 0..<24 {
+            titleStringArrForXAXis.append("\(i)时")
         }
         for number in inputData {
             let mTemperature = number as Temperature

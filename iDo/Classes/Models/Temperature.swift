@@ -8,8 +8,8 @@ class Temperature: NSObject {
     var cTemperature: NSString!
     
     override init() {
-        
     }
+    
     init(coder aDecoder: NSCoder!) {
         super.init()
         if aDecoder != nil {

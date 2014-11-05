@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E58E6771A0A87EF00671555 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E58E6761A0A87EF00671555 /* BLEManager.swift */; };
 		0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DAF19F0F35700F6F403 /* Constants.swift */; };
 		0EFA2DBE19F0F9D500F6F403 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DB919F0F9D500F6F403 /* Utils.swift */; };
 		14B8F142A1164F60A8029125 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81053D327DCD46C78A44B6AC /* libPods.a */; };
@@ -20,7 +21,6 @@
 		E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5E19D926DA009383AB /* DeviceList.swift */; };
 		E72F2A7B19D926DA009383AB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5F19D926DA009383AB /* Settings.swift */; };
 		E72F2A7C19D926DA009383AB /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6019D926DA009383AB /* Main.swift */; };
-		E72F2A7D19D926DA009383AB /* DeviceCentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6319D926DA009383AB /* DeviceCentralManager.swift */; };
 		E72F2A7E19D926DA009383AB /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6519D926DA009383AB /* DBManager.swift */; };
 		E72F2A7F19D926DA009383AB /* OliveDBDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6619D926DA009383AB /* OliveDBDao.swift */; };
 		E72F2A8019D926DA009383AB /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6719D926DA009383AB /* Temperature.swift */; };
@@ -51,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E58E6761A0A87EF00671555 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		0EFA2DAF19F0F35700F6F403 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0EFA2DB919F0F9D500F6F403 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		6D80D7979AFB3C46B5F741DF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -73,7 +74,6 @@
 		E72F2A5E19D926DA009383AB /* DeviceList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceList.swift; sourceTree = "<group>"; };
 		E72F2A5F19D926DA009383AB /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		E72F2A6019D926DA009383AB /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
-		E72F2A6319D926DA009383AB /* DeviceCentralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCentralManager.swift; sourceTree = "<group>"; };
 		E72F2A6519D926DA009383AB /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		E72F2A6619D926DA009383AB /* OliveDBDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OliveDBDao.swift; sourceTree = "<group>"; };
 		E72F2A6719D926DA009383AB /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
@@ -208,8 +208,8 @@
 			children = (
 				0EFA2DB119F0F9D500F6F403 /* Library */,
 				E72F2A0219D92457009383AB /* AppDelegate.swift */,
-				E72F2A0619D92457009383AB /* Main.storyboard */,
 				E72F2A5A19D926DA009383AB /* Classes */,
+				E72F2A0619D92457009383AB /* Main.storyboard */,
 				E72F2A0019D92457009383AB /* Supporting Files */,
 			);
 			path = iDo;
@@ -271,19 +271,11 @@
 		E72F2A6119D926DA009383AB /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E72F2A6219D926DA009383AB /* coreBlueToothCentral */,
+				0E58E6761A0A87EF00671555 /* BLEManager.swift */,
 				E72F2A6419D926DA009383AB /* Database */,
 				E72F2A6719D926DA009383AB /* Temperature.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		E72F2A6219D926DA009383AB /* coreBlueToothCentral */ = {
-			isa = PBXGroup;
-			children = (
-				E72F2A6319D926DA009383AB /* DeviceCentralManager.swift */,
-			);
-			path = coreBlueToothCentral;
 			sourceTree = "<group>";
 		};
 		E72F2A6419D926DA009383AB /* Database */ = {
@@ -512,9 +504,9 @@
 				E72F2A7919D926DA009383AB /* DeviceDetail.swift in Sources */,
 				E72F2A8219D926DA009383AB /* Util.swift in Sources */,
 				E70F723B1A022B69005BC863 /* History.swift in Sources */,
+				0E58E6771A0A87EF00671555 /* BLEManager.swift in Sources */,
 				E72F2A0319D92457009383AB /* AppDelegate.swift in Sources */,
 				E74078CC19FE162B00B2D05A /* UICirclePoint.swift in Sources */,
-				E72F2A7D19D926DA009383AB /* DeviceCentralManager.swift in Sources */,
 				E72F2A8019D926DA009383AB /* Temperature.swift in Sources */,
 				0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */,
 				E7B9170D19FF9DA40015E3A5 /* ChartDataConverter.swift in Sources */,

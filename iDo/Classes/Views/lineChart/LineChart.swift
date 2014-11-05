@@ -28,7 +28,7 @@ class LineChart: UIView {
     var spaceWithPoints: CGFloat = 0.0 // 每个section的长度
     var dataPointsXoffset: CGFloat = 0.0//点得间隔
     var graphPoints: [CGPoint] = []
-    var dataSource: ScrolledChartDataSource?
+    var dataSource: ScrolledChartDataSource!
     var delegate: ScrolledChartDelegate?
 
     required init(coder aDecoder: NSCoder) {
@@ -44,34 +44,34 @@ class LineChart: UIView {
     
     override func drawRect(rect: CGRect) {
         var context: CGContextRef = UIGraphicsGetCurrentContext()
-        var sectionNumber = dataSource?.numberOfSectionsInScrolledChart(self)
+        var sectionNumber = dataSource.numberOfSectionsInScrolledChart(self)
         println("sectionNumber - \(sectionNumber)")
         if sectionNumber == 0 {
             return
         }
         let maxLabelHeight: CGFloat = 6.0
         //画X坐标
-        spaceWithPoints = (frame.width - edgeInsets.left - edgeInsets.right) / CGFloat(sectionNumber! - 1)
+        spaceWithPoints = (frame.width - edgeInsets.left - edgeInsets.right) / CGFloat(sectionNumber - 1)
         //画线
         var xLineFirstPoint = CGPointMake(edgeInsets.left, frame.height - edgeInsets.bottom )
         var xLineSecondPoint = CGPointMake(frame.width - edgeInsets.right, frame.height - edgeInsets.bottom )
         drawLine(xLineFirstPoint, secondPoint: xLineSecondPoint)
         //drawLine(context, withGraphPoints: xAXisPoints)
-        for var i = 0; i < sectionNumber; i++ {
+        for i in 0..<sectionNumber {
             var xValue = edgeInsets.left + CGFloat(i) * spaceWithPoints
             var yValue = frame.height - edgeInsets.bottom - CGFloat(xAxisPointSizeHeight)
             var pointSize = CGSize(width: xAxisPointSizeWidth, height: xAxisPointSizeHeight)
             //画点
             //添 label
             let spaceWithmaxLabelAndLine: CGFloat = 6.0
-            let xLabelString = dataSource?.scrolledChart(self, titleInXAXisPointLabelInSection: i) // 代理方法
-            addAXisLabel(xLabelString!, rect: CGRectMake(xValue, yValue + spaceWithmaxLabelAndLine,spaceWithPoints, maxLabelHeight))
+            let xLabelString = dataSource.scrolledChart(self, titleInXAXisPointLabelInSection: i) // 代理方法
+            addAXisLabel(xLabelString, rect: CGRectMake(xValue, yValue + spaceWithmaxLabelAndLine,spaceWithPoints, maxLabelHeight))
         }
         //画图
             var eDrawingWidth, eDrawingHeight, min, max: CGFloat!
-            max = (dataSource?.maxDataInScrolledChart(self))! // max 值 -->计算得到
+            max = (dataSource.maxDataInScrolledChart(self)) // max 值 -->计算得到
             min = constMin// 定死
-            var spacePointsCount = dataSource?.allNumberOfPointsInSection(self)
+            var spacePointsCount = dataSource.allNumberOfPointsInSection(self)
             eDrawingWidth =  spaceWithPoints
             eDrawingHeight = frame.height - edgeInsets.bottom - (CGPointZero.y + edgeInsets.top)
             if spacePointsCount == 0 {
@@ -82,25 +82,25 @@ class LineChart: UIView {
                 //TODO: - 对 spacePointsCount == 1 处理
                 return
             }
-            dataPointsXoffset = eDrawingWidth / CGFloat(spacePointsCount! - 1)
-            var numberOfData = dataSource?.numberOfPointsInScrolledChart(self)
-            for var i = 0; i < numberOfData; i++ {
-                var key = dataSource?.scrolledChart(self, keyForItemAtPointNumber: i)
-                var dataPointValues = dataSource?.scrolledChart(self, valueForItemAtKey: key!)
+            dataPointsXoffset = eDrawingWidth / CGFloat(spacePointsCount - 1)
+            var numberOfData = dataSource.numberOfPointsInScrolledChart(self)
+            for i in 0..<numberOfData {
+                var key = dataSource.scrolledChart(self, keyForItemAtPointNumber: i)
+                var dataPointValues = dataSource.scrolledChart(self, valueForItemAtKey: key)
                 var x, y: CGFloat!
-                x = edgeInsets.left + CGFloat(key!) * dataPointsXoffset
-                y = edgeInsets.top + CGFloat((max - dataPointValues!) * eDrawingHeight / (max - min))
+                x = edgeInsets.left + CGFloat(key) * dataPointsXoffset
+                y = edgeInsets.top + CGFloat((max - dataPointValues) * eDrawingHeight / (max - min))
                 graphPoints.append(CGPointMake(x, y))
             }
             //drawLine(context, withGraphPoints: graphPoints)
         //draw line
-        for var i = 0; i < numberOfData! - 1; i++ {
+        for i in 0..<(numberOfData - 1) {
             var firstPoint = graphPoints[i]
             var secondPoint = graphPoints[i + 1]
-            var firstKey = dataSource?.scrolledChart(self, keyForItemAtPointNumber: i)
-            var secondKey = dataSource?.scrolledChart(self, keyForItemAtPointNumber: i + 1)
+            var firstKey = dataSource.scrolledChart(self, keyForItemAtPointNumber: i)
+            var secondKey = dataSource.scrolledChart(self, keyForItemAtPointNumber: i + 1)
             //println("key - \(firstKey)  \(secondKey)")
-            if (secondKey! - firstKey!) < 10 {
+            if secondKey - firstKey < 10 {
                 drawLine(firstPoint, secondPoint: secondPoint)
             }
         }
@@ -128,7 +128,7 @@ class LineChart: UIView {
     }
 
     /**add label的方法 */
-    func addAXisLabel(text: String, rect:CGRect) ->UILabel {
+    func addAXisLabel(text: String, rect:CGRect) -> UILabel {
         var label = UILabel(frame:rect)
         label.font = UIFont(name: "HelveticaNeue", size: 5)
         label.text = text
@@ -142,18 +142,18 @@ class LineChart: UIView {
     func lineChartClicked(tapGestureRecongnizer: UITapGestureRecognizer) {
         let tapPoint = tapGestureRecongnizer.locationInView(self)
         var spaceList: [CGFloat] = []
-        for var i = 0; i < dataSource?.numberOfPointsInScrolledChart(self); i++ {
+        for var i = 0; i < dataSource.numberOfPointsInScrolledChart(self); i++ { // TODO: 为什么不能用for in
             spaceList.append(abs(tapPoint.x - graphPoints[i].x))
         }
         var min = CGFloat(MAXFLOAT)
         var minNumber = -1
-        for var i = 0; i < spaceList.count; i++ {
+        for i in 0..<spaceList.count {
             if spaceList[i] < min {
                 min = spaceList[i]
                 minNumber = i
             }
         }
-        var clickedPoint = dataSource?.scrolledChart(self, keyForItemAtPointNumber: minNumber)
-        delegate?.scrolledChart(self, didClickItemAtPointNumber: clickedPoint!)
+        var clickedPoint = dataSource.scrolledChart(self, keyForItemAtPointNumber: minNumber)
+        delegate?.scrolledChart(self, didClickItemAtPointNumber: clickedPoint)
     }
 }

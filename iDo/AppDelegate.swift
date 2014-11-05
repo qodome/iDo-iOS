@@ -20,17 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(application: UIApplication) {
         println("applicationWillTerminate")
-        var devicesCentralManager = DeviceCentralManager.instanceForCenterManager()
-        for var i = 0; i < devicesCentralManager.devicesArrayOnSelectedStatus.count; i++ {
-            var mPeripheral:CBPeripheral = devicesCentralManager.devicesArrayOnSelectedStatus[i] as CBPeripheral
-            devicesCentralManager.central.cancelPeripheralConnection(mPeripheral)
-            devicesCentralManager.devicesArrayOnSelectedStatus.removeObject(mPeripheral)
+        let manager = BLEManager.sharedManager()
+        for i in 0..<manager.connected.count {
+            manager.central.cancelPeripheralConnection(manager.connected[i])
+            manager.connected.removeAtIndex(i)
         }
-        for var i = 0; i < devicesCentralManager.devices.count; i++ {
-            var mPeripheral:CBPeripheral = devicesCentralManager.devices[i] as CBPeripheral
-            devicesCentralManager.central.cancelPeripheralConnection(mPeripheral)
-            devicesCentralManager.devices.removeAtIndex(i)
+        for i in 0..<manager.devices.count {
+            manager.central.cancelPeripheralConnection(manager.devices[i])
+            manager.devices.removeAtIndex(i)
         }
     }
-    
 }
