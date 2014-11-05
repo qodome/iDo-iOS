@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E58E6771A0A87EF00671555 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E58E6761A0A87EF00671555 /* BLEManager.swift */; };
+		0E58E6791A0AADB200671555 /* GATTUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E58E6781A0AADB200671555 /* GATTUtils.swift */; };
 		0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DAF19F0F35700F6F403 /* Constants.swift */; };
 		0EFA2DBE19F0F9D500F6F403 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DB919F0F9D500F6F403 /* Utils.swift */; };
 		14B8F142A1164F60A8029125 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81053D327DCD46C78A44B6AC /* libPods.a */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		0E58E6761A0A87EF00671555 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		0E58E6781A0AADB200671555 /* GATTUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATTUtils.swift; sourceTree = "<group>"; };
 		0EFA2DAF19F0F35700F6F403 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0EFA2DB919F0F9D500F6F403 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		6D80D7979AFB3C46B5F741DF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				E7B9170C19FF9DA40015E3A5 /* ChartDataConverter.swift */,
 				E72F2A6919D926DA009383AB /* DateUtil.swift */,
 				E72F2A6A19D926DA009383AB /* Util.swift */,
+				0E58E6781A0AADB200671555 /* GATTUtils.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				E74078D519FE5A3600B2D05A /* FDGraphView.m in Sources */,
 				E72F2A8119D926DA009383AB /* DateUtil.swift in Sources */,
 				E72F2A7C19D926DA009383AB /* Main.swift in Sources */,
+				0E58E6791A0AADB200671555 /* GATTUtils.swift in Sources */,
 				E74078CA19FE162B00B2D05A /* LineChart.swift in Sources */,
 				E74078CB19FE162B00B2D05A /* ScrolledChart.swift in Sources */,
 				E74078D419FE5A3600B2D05A /* FDGraphScrollView.m in Sources */,

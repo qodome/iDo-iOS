@@ -34,10 +34,10 @@
 "DisConnect" = "DisConnect";
 "Detail Page"= "Detail Page";
 
-"Prompt"= "Prompt";
+"tips"= "tips";
 "Don't have any data on the day !" = "Don't have any data on the day !";
 "Done" = "Done";
 
 "Please jump to device page to connect device"= "Please jump to device page to connect device";
 "Jump to device page" ="Jump to device page";
-"Cancel" = "Cancel";
+"cancel" = "Cancel";

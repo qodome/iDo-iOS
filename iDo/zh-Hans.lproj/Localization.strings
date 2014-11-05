@@ -33,10 +33,10 @@
 "Detail Page"= "设备详情";
 
 
-"Prompt"= "提示";
+"tips"= "提示";
 "Don't have any data on the day !" = "无历史数据";
 "Done" = "确定";
 
 "Please jump to device page to connect device"= "请点击 进入设备页 选择您想要连接的设备";
 "Jump to device page" = "进入设备页";
-"Cancel" = "取消";
+"cancel" = "取消";

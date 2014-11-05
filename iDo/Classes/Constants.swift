@@ -2,14 +2,12 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-let APP_COLOR = UIColor.colorWithHex(0xFF5A5F)
+let APP_COLOR = 0xFF5A5F
 
-let kNAVIGATIONBAR_HEIGHT: CGFloat = 64.0 //优化
-let IDOGREENCOLOR = UIColor.colorWithHex(0x17A865)
-let IDOPURPLECOLOR = UIColor.colorWithHex(0xAA66CC)
-let IDOBLUECOLOR = UIColor.colorWithHex(0x2897C3)
-let IDOORANGECOLOR = UIColor.colorWithHex(0xE24424)
-let IDOLOGREDCOLOR = UIColor.colorWithHex(0xFB414D)
+let IDO_ORANGE = 0xE24424
+let IDO_GREEN = 0x17A865
+let IDO_BLUE = 0x2897C3
+let IDO_PURPLE = 0xAA66CC
 
 func LocalizedString(name: String) -> String {
     return NSLocalizedString(name, tableName: "Localization", value: "", comment: "")

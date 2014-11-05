@@ -14,10 +14,9 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     var sectionsCount = 5 //今天的数据(只记录4小时)
     var pageCount = 4
     var pointNumberInsection = 120
-    var titleStringArrForXAXis: [String] = [] //横坐标的string
+    var titleStringArrForXAXis: [String] = [] // 横坐标的string
     var titleStringArrForYMaxPoint = "max"
     var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
-    var isCurrentDateHaveLineChartData = true
     
     @IBOutlet weak var settingBtn: UIButton!
     @IBOutlet weak var peripheralBarBtn: UIBarButtonItem!
@@ -31,6 +30,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
         settingBtn.setTitle(LocalizedString("settings"), forState: UIControlState.Normal)
         historyBtn.title = LocalizedString("history")
         peripheralBarBtn.title = LocalizedString("devices")
@@ -42,17 +42,15 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         reconnectBtn.setTitle(LocalizedString("reconnect"), forState: UIControlState.Normal)
         reconnectBtn.titleLabel?.font = UIFont(name: "Helvetica", size: 30)
         reconnectBtn.hidden = true
-        view.backgroundColor = IDOBLUECOLOR
         
         deviceManager = BLEManager.sharedManager()
         deviceManager.delegate = self
         if deviceManager.lastConnectedPeripheralUUID().isEmpty { // 无绑定设备
-            isCurrentDateHaveLineChartData = false
-            var title = LocalizedString("Prompt")
-            var message = LocalizedString("Please jump to device page to connect device")
-            var cancelBtnTittle = LocalizedString("Cancel")
-            var otherBtnTitle = LocalizedString("Jump to device page")
-            UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle).show()
+            UIAlertView(title: LocalizedString("tips"),
+                message: LocalizedString("Please jump to device page to connect device"),
+                delegate: self,
+                cancelButtonTitle: LocalizedString("cancel"),
+                otherButtonTitles: LocalizedString("Jump to device page")).show()
         }
     }
     
@@ -74,7 +72,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     // MARK: - DeviceStateDelegate
     func didConnect(centralManger: CBCentralManager, peripheral: CBPeripheral) {
         temperatureLabel.text = LocalizedString("Connected, waiting for data")
-        view.backgroundColor = IDOBLUECOLOR
+        view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
     }
     
     func didDisconnect(centralManger: CBCentralManager, peripheral: CBPeripheral) {
@@ -85,7 +83,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     func didUpdateValue(characteristic: CBCharacteristic?, error: NSError?) {
         if characteristic == nil && error == nil {
             temperatureLabel.text = LocalizedString("finding a device")
-            view.backgroundColor = IDOBLUECOLOR
+            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
             return
         }
         println("data length----\(characteristic?.value.length)")
@@ -133,7 +131,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
             //writeData(mDeviceCentralManger.devicesArrayOnSelectedStatus[0] as CBPeripheral, forCharacteristic:characteristic! , forData:mRealWriteData)
         }
         // 得到temperature
-        var temperature = calculateTemperatureData(deviceManager.connected[0], forCharacteristic:characteristic! , forData: characteristic?.value)
+        var temperature = calculateTemperature(characteristic!.value)
         temperatureLabel.text = NSString(format: "%.2f°C", temperature)
         // 保存temperature到数据库
         var temper: Temperature = Temperature()
@@ -144,34 +142,21 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
             updateCurrentDateLineChart()
         }
         // 通知相关
-        if temperature < Util.lowestTemperature() {
-            // 温度过低
+        if temperature <= Util.lowestTemperature() { // 温度过低
+            view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
             if Util.isLowTNotice() {
                 println("温度过低")
-                view.backgroundColor = IDOPURPLECOLOR
-                sendTemperatureNotifition("温度过低", nowTemperature: temperature)
-            } else {
-                println("还原颜色")
-                //还原颜色
-                view.backgroundColor = IDOGREENCOLOR
+                sendNotifition("温度过低", temperature: temperature)
             }
-        } else if temperature > Util.HighestTemperature() {
-            //温度过高
+        } else if temperature >= Util.HighestTemperature() { // 温度过高
+            view.backgroundColor = UIColor.colorWithHex(IDO_ORANGE)
             if Util.isHighTNotice() {
                 println("温度过高")
-                view.backgroundColor = IDOORANGECOLOR
-                sendTemperatureNotifition("温度过高", nowTemperature: temperature)
-            } else {
-                println("还原颜色")
-                //还原颜色
-                view.backgroundColor = IDOGREENCOLOR
+                sendNotifition("温度过高", temperature: temperature)
             }
         } else {
-            println("还原颜色")
-            // 还原颜色
-            view.backgroundColor = IDOGREENCOLOR
+            view.backgroundColor = UIColor.colorWithHex(IDO_GREEN)
         }
-        
     }
     
     // MARK: - 💙 UIAlertViewDelegate
@@ -248,7 +233,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     }
     
     /** generate data */
-    func generateChartDataWithDateString(dateStr: String) ->Bool {
+    func generateChartDataWithDateString(dateStr: String) -> Bool {
         var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtil.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
         if tempArray.count == 0 {
             //无数据
@@ -274,13 +259,13 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     }
     
     /** About notifition */
-    func sendTemperatureNotifition(notifictionMessage: String, nowTemperature temperature: Float) {
+    func sendNotifition(message: String, temperature: Float) {
         var notification: UILocalNotification! = UILocalNotification()
         if notification != nil {
             notification.fireDate = NSDate().dateByAddingTimeInterval(3)
             notification.timeZone = NSTimeZone.defaultTimeZone()
-            notification.alertBody = NSString(format: "请注意：%.2f,%@", temperature, notifictionMessage)
-            notification.alertAction = notifictionMessage
+            notification.alertBody = NSString(format: "请注意：%.2f,%@", temperature, message)
+            notification.alertAction = message
             notification.soundName = UILocalNotificationDefaultSoundName
             notification.applicationIconBadgeNumber = 1 //???
             notification.userInfo = ["key":"object"]
@@ -288,32 +273,14 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         }
     }
     
-    /** 处理蓝牙传来的data */
-    func calculateTemperatureData(currrentPeripheral :CBPeripheral, forCharacteristic currentCharacteristic:CBCharacteristic, forData data: NSData?) ->Float {
-        println("bytes--\(data?.length)")
-        var bytes = [UInt8](count: 5, repeatedValue: 0)
-        data?.getBytes(&bytes, length:5)
-        var byte0 = bytes[0]
-        println("byte0:\(bytes[0])")
-        var exponent = bytes[4] // -4
-        var fuzhiExponent = Float (-(255 - exponent)-1) //?
-        var b3 = Int32(bytes[3])
-        var mantissa = ( Int32(bytes[3]) << 16) | (Int32(bytes[2]) << 8) | Int32(bytes[1])
-        println("mantissa--\(mantissa)")
-        let temperature = Float (mantissa) * Float(pow(10.0, fuzhiExponent))
-        return temperature
-    }
+    
     
     /** 写date数据到peripheral中 */
-    func writeData(currrentPeripheral :CBPeripheral, forCharacteristic currentCharacteristic:CBCharacteristic, forData data: NSData) {
-        currrentPeripheral.writeValue(data, forCharacteristic: currentCharacteristic, type:CBCharacteristicWriteType.WithResponse)
+    func writeValue(peripheral: CBPeripheral, data: NSData, characteristic: CBCharacteristic) {
+        peripheral.writeValue(data, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithResponse)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        (segue.destinationViewController as UIViewController).hidesBottomBarWhenPushed = true
-    }
-    
-    func maxValueForLineChart(data: [Int : CGFloat])-> CGFloat {
+    func maxValueForLineChart(data: [Int : CGFloat]) -> CGFloat {
         if data.isEmpty  {
             fatalError("data为空")
         }

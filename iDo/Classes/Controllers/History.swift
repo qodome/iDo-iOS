@@ -6,7 +6,6 @@ import UIKit
 
 class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource {
     
-    let IDOBLUECOLOR = UIColor.colorWithHex(0x2897C3)
     var sectionsCount = 24
     var pointNumberInsection = 12
     var data: [Int : CGFloat] = Dictionary()
@@ -25,7 +24,7 @@ class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource 
     //MARK: - lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = IDOBLUECOLOR
+        view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
         calenderBtn.title = LocalizedString("calender")
         numberTaped.font = UIFont(name: "HelveticaNeue-Light", size: 20)
         numberTaped.text = ""

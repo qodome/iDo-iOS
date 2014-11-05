@@ -25,7 +25,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.barStyle = UIBarStyle.Default
-        navigationController?.navigationBar.tintColor = APP_COLOR
+        navigationController?.navigationBar.tintColor = UIColor.colorWithHex(APP_COLOR)
         
         deviceManager = BLEManager.sharedManager()
         deviceManager.changeDelegate = self

@@ -18,7 +18,6 @@ protocol ScrolledChartDelegate  {
     func scrolledChart(scrolledChart: LineChart, didClickItemAtPointNumber pointNumber: Int)
 }
 
-
 class LineChart: UIView {
     let constMin: CGFloat = 20.0
     var xAxisPointSizeWidth = 1.5 // 坐标点宽度
@@ -142,7 +141,7 @@ class LineChart: UIView {
     func lineChartClicked(tapGestureRecongnizer: UITapGestureRecognizer) {
         let tapPoint = tapGestureRecongnizer.locationInView(self)
         var spaceList: [CGFloat] = []
-        for var i = 0; i < dataSource.numberOfPointsInScrolledChart(self); i++ { // TODO: 为什么不能用for in
+        for i in 0..<dataSource.numberOfPointsInScrolledChart(self) {
             spaceList.append(abs(tapPoint.x - graphPoints[i].x))
         }
         var min = CGFloat(MAXFLOAT)
