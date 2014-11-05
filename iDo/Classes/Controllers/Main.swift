@@ -5,7 +5,7 @@
 import CoreBluetooth
 
 class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, UIAlertViewDelegate, UIScrollViewDelegate, ScrolledChartDelegate, ScrolledChartDataSource {
-
+    
     let segueId = "mPeriphalSegue"
     let kSCREEN_WIDTH = UIScreen.mainScreen().bounds.size.width
     let kSCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height
@@ -15,7 +15,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     let IDOBLUECOLOR = UIColor.colorWithHex(0x2897C3)
     let IDOORANGECOLOR = UIColor.colorWithHex(0xE24424)
     let IDOLOGREDCOLOR = UIColor.colorWithHex(0xFB414D)
-
+    
     var mDeviceCentralManger: DeviceCentralManager!
     var data: [Int : CGFloat] = Dictionary()
     var sectionsCount: Int = 5 //今天的数据(只记录4小时)
@@ -25,7 +25,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     var titleStringArrForYMaxPoint = "max"
     var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
     var isCurrentDateHaveLineChartData = true
-
+    
     @IBOutlet weak var settingBtn: UIButton!
     @IBOutlet weak var peripheralBarBtn: UIBarButtonItem!
     @IBOutlet weak var historyBtn: UIBarButtonItem!
@@ -34,7 +34,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
     @IBOutlet weak var temperatureLabel: UILabel! //显示折线图中当前点值的label
     @IBOutlet weak var reconnectBtn: UIButton!
     @IBOutlet var scrolledChart: ScrolledChart?
-
+    
     // MARK: - 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,19 +62,19 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle).show()
         }
     }
-
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         // 透明化navigationBar
         translucentNavigationBar()
         translucentTabBar()
     }
-
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         updateCurrentDateLineChart()
     }
-
+    
     // MARK: -  DeviceCentralManagerConnectedStateChangeDelegate
     func centralManger(centralManger: CBCentralManager, didAutoDisConnectedPeripheral connectingPeripheral: CBPeripheral) {
         temperatureLabel.hidden = true
@@ -175,9 +175,9 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             // 还原颜色
             view.backgroundColor = IDOGREENCOLOR
         }
-
+        
     }
-
+    
     // MARK: - UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 { //进入设备页
@@ -185,7 +185,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             performSegueWithIdentifier(segueId, sender: self)
         }
     }
-
+    
     // MARK: - scrollView Delegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         numberTaped.hidden = true
@@ -233,8 +233,8 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         temperatureLabel.hidden = false
         mDeviceCentralManger.startScan()
     }
-
-//    // MARK: - Custom Method
+    
+    //    // MARK: - Custom Method
     func translucentNavigationBar() {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -242,7 +242,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         temperatureLabel.textColor = UIColor.whiteColor()
     }
-
+    
     func translucentTabBar() {
         tabBarController?.tabBar.backgroundImage = UIImage()
         tabBarController?.tabBar.shadowImage = UIImage()
@@ -250,7 +250,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         tabBarController?.tabBar.translucent = true
         tabBarController?.tabBar.tintColor = UIColor.whiteColor()
     }
-
+    
     func initSubViewToView() {
         var currentGraphChartFrame: CGRect!
         if scrolledChart != nil {
@@ -280,7 +280,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             return true
         }
     }
-
+    
     func updateCurrentDateLineChart() {
         //默认 显示 lineChart
         let dateStr = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
@@ -292,7 +292,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             println("无历史数据")
         }
     }
-
+    
     /** About notifition */
     func sendTemperatureNotifition(notifictionMessage: String, nowTemperature temperature: Float) {
         var notification: UILocalNotification! = UILocalNotification()
@@ -307,7 +307,7 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
     }
-
+    
     /** 处理蓝牙传来的data */
     func calculateTemperatureData(currrentPeripheral :CBPeripheral, forCharacteristic currentCharacteristic:CBCharacteristic, forData data: NSData?) ->Float {
         println("bytes--\(data?.length)")
@@ -323,12 +323,12 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         let temperature = Float (mantissa) * Float(pow(10.0, fuzhiExponent))
         return temperature
     }
-
+    
     /** 写date数据到peripheral中 */
     func writeData(currrentPeripheral :CBPeripheral, forCharacteristic currentCharacteristic:CBCharacteristic, forData data: NSData) {
         currrentPeripheral.writeValue(data, forCharacteristic: currentCharacteristic, type:CBCharacteristicWriteType.WithResponse)
     }
-
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         (segue.destinationViewController as UIViewController).hidesBottomBarWhenPushed = true
     }
@@ -340,5 +340,4 @@ class Main: UIViewController, DeviceCentralManagerConnectedStateChangeDelegate, 
         var sortValues = (data.values).array.sorted({$0 > $1})
         return sortValues[0]
     }
-    
 }

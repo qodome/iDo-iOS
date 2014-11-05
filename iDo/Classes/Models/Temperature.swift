@@ -3,10 +3,10 @@
 //
 
 class Temperature: NSObject {
-
+    
     var cDate: NSString!
     var cTemperature: NSString!
-
+    
     override init() {
         
     }
@@ -17,10 +17,9 @@ class Temperature: NSObject {
             cTemperature = aDecoder.decodeObjectForKey("cTemperature") as String
         }
     }
-
+    
     func encodeWithCoder(aCoder: NSCoder!) {
         aCoder.encodeObject(cDate, forKey: "cDate")
         aCoder.encodeObject(cTemperature, forKey: "cTemperature")
     }
-
 }

@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2014年 hongDing. All rights reserved.
+//  Copyright (c) 2014年 NY. All rights reserved.
 //
 
 import UIKit
@@ -29,7 +29,7 @@ class ChartDataConverter: UIView {
                 outPutData[currrentNumber] = CGFloat((mTemperature.cTemperature as NSString).floatValue)
             }
         }
-         return (outPutData, titleStringArrForXAXis)
+        return (outPutData, titleStringArrForXAXis)
     }
     
     func convertDataForHistory(inputData: NSMutableArray) ->([Int : CGFloat], [String]) {
@@ -51,5 +51,4 @@ class ChartDataConverter: UIView {
         }
         return (outPutData, titleStringArrForXAXis)
     }
-
 }

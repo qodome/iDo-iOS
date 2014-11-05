@@ -1,11 +1,11 @@
 //
-//  Copyright (c) 2014年 hongDing. All rights reserved.
+//  Copyright (c) 2014年 NY. All rights reserved.
 //
 
 import UIKit
 
 class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource {
-
+    
     let IDOBLUECOLOR = UIColor.colorWithHex(0x2897C3)
     var sectionsCount = 24
     var pointNumberInsection = 12
@@ -40,7 +40,7 @@ class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource 
         println("date - \(date)  yesterday - \(frontDate)")
         initDatePicker()
     }
-
+    
     //MARK: - ScrolledChartDataSource
     func numberOfSectionsInScrolledChart(scrolledChart: LineChart) ->Int {
         return sectionsCount
@@ -119,7 +119,7 @@ class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource 
             UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: cancelBtnTittle).show()
         }
     }
-
+    
     /** generate data */
     func generateChartDataWithDateString(dateStr: String) ->Bool {
         var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtil.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
@@ -156,5 +156,4 @@ class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource 
         var sortValues = (data.values).array.sorted({$0 > $1})
         return sortValues[0]
     }
-
 }

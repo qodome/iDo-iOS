@@ -39,5 +39,4 @@ class DeviceDetail: UITableViewController {
         }
         return cell
     }
-    
 }

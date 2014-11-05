@@ -3,7 +3,7 @@
 //
 
 class Util: NSObject {
-
+    
     class func lowestTemperature () ->Float {
         if let lowestTemperature: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") {
             
@@ -12,25 +12,25 @@ class Util: NSObject {
         }
         return NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") as Float
     }
-
+    
     class func setLowestTemperature(currentLowestTemperature:Float) {
-         NSUserDefaults.standardUserDefaults().setObject(currentLowestTemperature, forKey: "lowestTemperature")
+        NSUserDefaults.standardUserDefaults().setObject(currentLowestTemperature, forKey: "lowestTemperature")
     }
-
+    
     class func HighestTemperature() ->Float {
         if let highestTemperature: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("highestTemperature") {
             
         } else {
             setHighestTemperature(38.0)
         }
-
+        
         return NSUserDefaults.standardUserDefaults().objectForKey("highestTemperature") as Float
     }
-
+    
     class func setHighestTemperature(currentHighestTemperature:Float) {
-       NSUserDefaults.standardUserDefaults().setObject(currentHighestTemperature, forKey: "highestTemperature")
+        NSUserDefaults.standardUserDefaults().setObject(currentHighestTemperature, forKey: "highestTemperature")
     }
-
+    
     // 低温报警
     class func isLowTNotice() ->Bool {
         if let isNoticeFlag: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("isLowTNotice") {
@@ -39,11 +39,11 @@ class Util: NSObject {
         }
         return NSUserDefaults.standardUserDefaults().objectForKey("isLowTNotice") as Bool
     }
-
+    
     class func setIsLowTNotice(isNotice: Bool) {
         NSUserDefaults.standardUserDefaults().setObject(isNotice, forKey: "isLowTNotice")
     }
-
+    
     // 高温报警
     class func isHighTNotice() ->Bool {
         if let isNoticeFlag: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("isHighTNotice") {
@@ -52,11 +52,11 @@ class Util: NSObject {
         }
         return NSUserDefaults.standardUserDefaults().objectForKey("isHighTNotice") as Bool
     }
-
+    
     class func setIsHighTNotice(isNotice: Bool) {
         NSUserDefaults.standardUserDefaults().setObject(isNotice, forKey: "isHighTNotice")
     }
-
+    
     /*
     + (BOOL)writeToLocalForDate:(NSDate *)date
     {
@@ -96,41 +96,40 @@ class Util: NSObject {
     
     
     //test data
-//    
-//    var arr1: Array<Int> = [1]
-//    var arr2: Array<Int> = [1, 2]
-//    var arr3: Array<Int> = [1, 2, 3, 4, 5]
-//    var arr4: Array<Int> = [1, 2, 3, 4, 5, 6]
-//    var arr5: Array<Int> = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-//    var arr6: Array<Int> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-//    var arr7: Array<Int> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-//    var arr8: Array<Int> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-//    var arr9: Array<Int> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-//    var arr10: Array<Int> =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-//    var arr11: Array<Int> =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-//    var arr12: Array<Int> =  [33.10,33.12,33.68,36,37,38,36,37,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,39]
-//    var arr13: Array<Int> = Array(count: 100, repeatedValue: 0)
-//    
-//    func testOB() {
-//        //            for var i = 0 ; i < 100 ; i++ {
-//        //                arr13[i] = 100 - i
-//        //                if i%3 == 0 {
-//        //                    arr13[i] += 10
-//        //                }
-//        //                if i%4 == 0 {
-//        //                    arr13[i] -= 20
-//        //                }
-//        //            }
-//        for (index, element) in enumerate(arr11) {
-//            var temper: Temperature = Temperature()
-//            temper.cTemperature = NSString(format: "%.2f", Float(element))
-//            var i: NSTimeInterval = NSTimeInterval(index)
-//            var date = NSDate(timeInterval: -(24*3600*1 + i), sinceDate: NSDate.date())
-//            temper.cDate = DateUtil.timestampFromDate(date)
-//            OliveDBDao.saveTemperature(temper)
-//            
-//        }
-//    }
-//    
-    
+    //
+    //    var arr1: Array<Int> = [1]
+    //    var arr2: Array<Int> = [1, 2]
+    //    var arr3: Array<Int> = [1, 2, 3, 4, 5]
+    //    var arr4: Array<Int> = [1, 2, 3, 4, 5, 6]
+    //    var arr5: Array<Int> = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    //    var arr6: Array<Int> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    //    var arr7: Array<Int> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    //    var arr8: Array<Int> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    //    var arr9: Array<Int> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    //    var arr10: Array<Int> =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    //    var arr11: Array<Int> =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    //    var arr12: Array<Int> =  [33.10,33.12,33.68,36,37,38,36,37,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,37,33,38,38,37,37,36,38,39]
+    //    var arr13: Array<Int> = Array(count: 100, repeatedValue: 0)
+    //
+    //    func testOB() {
+    //        //            for var i = 0 ; i < 100 ; i++ {
+    //        //                arr13[i] = 100 - i
+    //        //                if i%3 == 0 {
+    //        //                    arr13[i] += 10
+    //        //                }
+    //        //                if i%4 == 0 {
+    //        //                    arr13[i] -= 20
+    //        //                }
+    //        //            }
+    //        for (index, element) in enumerate(arr11) {
+    //            var temper: Temperature = Temperature()
+    //            temper.cTemperature = NSString(format: "%.2f", Float(element))
+    //            var i: NSTimeInterval = NSTimeInterval(index)
+    //            var date = NSDate(timeInterval: -(24*3600*1 + i), sinceDate: NSDate.date())
+    //            temper.cDate = DateUtil.timestampFromDate(date)
+    //            OliveDBDao.saveTemperature(temper)
+    //            
+    //        }
+    //    }
+    //
 }

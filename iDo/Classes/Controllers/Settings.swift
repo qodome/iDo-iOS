@@ -70,5 +70,4 @@ class Settings: UITableViewController {
             Util.setHighestTemperature(currentHighestTemperature)
         }
     }
-    
 }

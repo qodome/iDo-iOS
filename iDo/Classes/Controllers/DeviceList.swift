@@ -154,5 +154,4 @@ class DeviceList: UITableViewController, DeviceCentralManagerdidChangedCurrentCo
         navigationController?.navigationBar.barStyle = UIBarStyle.Default
         navigationController?.navigationBar.tintColor = APP_COLOR
     }
-    
 }

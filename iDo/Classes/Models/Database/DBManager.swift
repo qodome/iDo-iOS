@@ -3,7 +3,7 @@
 //
 
 class DBManager: NSObject {
-
+    
     struct FMDatabaseSingleton {
         static var predicate:dispatch_once_t = 0
         static var instance:FMDatabase? = nil
@@ -21,10 +21,10 @@ class DBManager: NSObject {
     
     //数据库对象单例方法
     class func sharedDataBase() -> FMDatabase {
-//        struct FMDatabaseSingleton {
-//            static var predicate:dispatch_once_t = 0
-//            static var instance:FMDatabase? = nil
-//        }
+        //        struct FMDatabaseSingleton {
+        //            static var predicate:dispatch_once_t = 0
+        //            static var instance:FMDatabase? = nil
+        //        }
         dispatch_once(&FMDatabaseSingleton.predicate,{
             FMDatabaseSingleton.instance = FMDatabase(path: DBManager.kDataBasePath())
             println("instance")
@@ -94,5 +94,4 @@ class DBManager: NSObject {
         }
         return false
     }
-    
 }

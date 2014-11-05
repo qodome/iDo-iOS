@@ -80,5 +80,4 @@ class OliveDBDao: NSObject {
         }
         return isSuccess
     }
-    
 }

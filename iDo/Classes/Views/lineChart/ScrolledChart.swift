@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2014年 hongDing. All rights reserved.
+//  Copyright (c) 2014年 NY. All rights reserved.
 //
 
 // 1 怎样写reloadGraph() -> 画布清空?
