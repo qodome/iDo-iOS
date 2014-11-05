@@ -4,7 +4,7 @@
 
 class Util: NSObject {
     
-    class func lowestTemperature () ->Float {
+    class func lowestTemperature() -> Float {
         if let lowestTemperature: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") {
             
         } else {
@@ -13,11 +13,11 @@ class Util: NSObject {
         return NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") as Float
     }
     
-    class func setLowestTemperature(currentLowestTemperature:Float) {
+    class func setLowestTemperature(currentLowestTemperature: Float) {
         NSUserDefaults.standardUserDefaults().setObject(currentLowestTemperature, forKey: "lowestTemperature")
     }
     
-    class func HighestTemperature() ->Float {
+    class func HighestTemperature() -> Float {
         if let highestTemperature: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("highestTemperature") {
             
         } else {
@@ -32,7 +32,7 @@ class Util: NSObject {
     }
     
     // 低温报警
-    class func isLowTNotice() ->Bool {
+    class func isLowTNotice() -> Bool {
         if let isNoticeFlag: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("isLowTNotice") {
         } else {
             setIsLowTNotice(false)
@@ -45,7 +45,7 @@ class Util: NSObject {
     }
     
     // 高温报警
-    class func isHighTNotice() ->Bool {
+    class func isHighTNotice() -> Bool {
         if let isNoticeFlag: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("isHighTNotice") {
         } else {
             setIsHighTNotice(true)

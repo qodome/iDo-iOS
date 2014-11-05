@@ -112,10 +112,10 @@ class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource 
             dateShow.text = dateStr
             currentSelectedDateString = dateStr
         } else {
-            var title = LocalizedString("Prompt")
-            var message = LocalizedString("Don't have any data on the day !")
-            var cancelBtnTittle = LocalizedString("Done")
-            UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: cancelBtnTittle).show()
+            UIAlertView(title: LocalizedString("tips"),
+                message: LocalizedString("Don't have any data on the day !"),
+                delegate: nil,
+                cancelButtonTitle: LocalizedString("ok")).show()
         }
     }
     
