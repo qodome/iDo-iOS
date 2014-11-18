@@ -9,7 +9,6 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
     let cellId = "device_list_cell"
     var data: [AnyObject] = []
     var devices: [AnyObject] = []
-    var deviceManager: BLEManager!
     
     var indicatorView: UIActivityIndicatorView!
     var selected: CBPeripheral!
@@ -27,15 +26,10 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         navigationController?.navigationBar.barStyle = UIBarStyle.Default
         navigationController?.navigationBar.tintColor = UIColor.colorWithHex(APP_COLOR)
         
-        deviceManager = BLEManager.sharedManager()
+        let deviceManager = BLEManager.sharedManager()
         deviceManager.changeDelegate = self
         devices = deviceManager.devices
         data = deviceManager.connected
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        deviceManager.stopScan() // TODO: 有问题
     }
     
     // MARK: - onDataChange
@@ -68,7 +62,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         cell.indicator.hidden = true
         if indexPath.section == 0 {
             device = data[indexPath.row] as CBPeripheral
-            if deviceManager.isPeripheralTryToConnect {
+            if BLEManager.sharedManager().isPeripheralTryToConnect {
                 cell.indicator.hidden = false
                 cell.indicator.startAnimating()
                 cell.icon.hidden = true
@@ -117,14 +111,14 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
             var otherBtnTitle2 = LocalizedString("details")
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle1, otherBtnTitle2).show()
         } else {
-            deviceManager.userConnectPeripheral(indexPath.row)
+            BLEManager.sharedManager().userConnectPeripheral(indexPath.row)
         }
     }
     
     // MARK: 💙 UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 {
-            deviceManager.unbind(selected)
+            BLEManager.sharedManager().unbind(selected)
         } else if buttonIndex == 2 {
             println("设备详情")
             performSegueWithIdentifier("peripheralDetailInforimation", sender: self)
@@ -133,7 +127,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
     
     // MARK: - Action
     @IBAction func refreshPeripherals(sender: AnyObject) {
-        deviceManager.startScan()
+        BLEManager.sharedManager().startScan()
         indicatorView.startAnimating()
         indicatorView.hidden = false
     }

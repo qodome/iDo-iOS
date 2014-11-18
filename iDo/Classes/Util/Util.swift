@@ -4,30 +4,30 @@
 
 class Util: NSObject {
     
-    class func lowestTemperature() -> Float {
+    class func lowTemperature() -> Float {
         if let lowestTemperature: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") {
             
         } else {
-            setLowestTemperature(36.0)
+            setLowTemperature(36.0)
         }
         return NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") as Float
     }
     
-    class func setLowestTemperature(currentLowestTemperature: Float) {
+    class func setLowTemperature(currentLowestTemperature: Float) {
         NSUserDefaults.standardUserDefaults().setObject(currentLowestTemperature, forKey: "lowestTemperature")
     }
     
-    class func HighestTemperature() -> Float {
+    class func HighTemperature() -> Float {
         if let highestTemperature: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("highestTemperature") {
             
         } else {
-            setHighestTemperature(38.0)
+            setHighTemperature(38.0)
         }
         
         return NSUserDefaults.standardUserDefaults().objectForKey("highestTemperature") as Float
     }
     
-    class func setHighestTemperature(currentHighestTemperature:Float) {
+    class func setHighTemperature(currentHighestTemperature:Float) {
         NSUserDefaults.standardUserDefaults().setObject(currentHighestTemperature, forKey: "highestTemperature")
     }
     

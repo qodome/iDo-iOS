@@ -45,7 +45,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         
         deviceManager = BLEManager.sharedManager()
         deviceManager.delegate = self
-        if deviceManager.lastConnectedPeripheralUUID().isEmpty { // 无绑定设备
+        if deviceManager.defaultDevice().isEmpty { // 无绑定设备
             UIAlertView(title: LocalizedString("tips"),
                 message: LocalizedString("Please jump to device page to connect device"),
                 delegate: self,
@@ -106,7 +106,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
             var writeDataString: String = ""
             for i in 0..<mDateBytes.count {
                 var hexStr: NSString = ""
-                var newHexStr: NSString =  NSString(format: "%x", mDateBytes[i]&0xff)
+                var newHexStr: NSString = NSString(format: "%x", mDateBytes[i]&0xff)
                 if newHexStr.length == 1 {
                     hexStr = NSString(format: "%@0%@", hexStr, newHexStr)
                 } else {
@@ -142,13 +142,13 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
             updateCurrentDateLineChart()
         }
         // 通知相关
-        if temperature <= Util.lowestTemperature() { // 温度过低
+        if temperature <= Util.lowTemperature() { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
             if Util.isLowTNotice() {
                 println("温度过低")
                 sendNotifition("温度过低", temperature: temperature)
             }
-        } else if temperature >= Util.HighestTemperature() { // 温度过高
+        } else if temperature >= Util.HighTemperature() { // 温度过高
             view.backgroundColor = UIColor.colorWithHex(IDO_ORANGE)
             if Util.isHighTNotice() {
                 println("温度过高")
@@ -224,7 +224,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         }
         titleStringArrForYMaxPoint = NSString(format: "%.2f", Float(maxValueForLineChart(data)))
         scrolledChart = ScrolledChart(frame: currentGraphChartFrame, pageCount: Float(pageCount), titleInYAXisMax: titleStringArrForYMaxPoint)
-        scrolledChart!.scrollView.contentOffset.x =  scrolledChart!.scrollView.frame.width * CGFloat(pageCount - 1)
+        scrolledChart!.scrollView.contentOffset.x = scrolledChart!.scrollView.frame.width * CGFloat(pageCount - 1)
         // add scrollChart
         scrolledChart?.backgroundColor = UIColor.clearColor()
         scrolledChart?.lineChart.dataSource = self

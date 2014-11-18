@@ -29,7 +29,7 @@
 }
 
 -(void)buildUI {
-    self.showsHorizontalScrollIndicator =  NO;
+    self.showsHorizontalScrollIndicator = NO;
     _graphView.autoresizeToFitData = YES;
     self.backgroundColor = [UIColor whiteColor];
     _graphView.dataPointsXoffset = (320 - 20) / 100.0;

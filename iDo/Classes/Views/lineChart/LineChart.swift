@@ -71,7 +71,7 @@ class LineChart: UIView {
             max = (dataSource.maxDataInScrolledChart(self)) // max 值 -->计算得到
             min = constMin// 定死
             var spacePointsCount = dataSource.allNumberOfPointsInSection(self)
-            eDrawingWidth =  spaceWithPoints
+            eDrawingWidth = spaceWithPoints
             eDrawingHeight = frame.height - edgeInsets.bottom - (CGPointZero.y + edgeInsets.top)
             if spacePointsCount == 0 {
                 //没有数据

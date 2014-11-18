@@ -4,10 +4,10 @@
 
 class Settings: UITableViewController {
     
-    let minLowestTemperature: Float = 26
-    let maxLowestTemperature: Float = 36
-    let minHighestTemperature: Float = 37
-    let maxHighesTemperature: Float = 47
+    let minLowTemperature: Float = 26
+    let maxLowTemperature: Float = 36
+    let minHighTemperature: Float = 37
+    let maxHighTemperature: Float = 47
     
     @IBOutlet weak var lowLabel: UILabel!
     @IBOutlet weak var highLabel: UILabel!
@@ -32,12 +32,12 @@ class Settings: UITableViewController {
         lNoticeSwitch.on = Util.isLowTNotice()
         HNoticeSwitch.on = Util.isHighTNotice()
         lowestTemperatureSlider.tag = 0
-        lowestTemperatureSlider.value = (Util.lowestTemperature() - minLowestTemperature ) / (maxLowestTemperature - minLowestTemperature)
-        lowestTemperatureLabel.text =  NSString(format: "%.1f", Util.lowestTemperature())
+        lowestTemperatureSlider.value = (Util.lowTemperature() - minLowTemperature ) / (maxLowTemperature - minLowTemperature)
+        lowestTemperatureLabel.text = NSString(format: "%.1f", Util.lowTemperature())
         
         hightestTemperatureSlider.tag = 1
-        hightestTemperatureSlider.value = (Util.HighestTemperature() - minHighestTemperature) / (maxHighesTemperature - minHighestTemperature)
-        highestTemperatureLabel.text = NSString(format: "%.1f", Util.HighestTemperature())
+        hightestTemperatureSlider.value = (Util.HighTemperature() - minHighTemperature) / (maxHighTemperature - minHighTemperature)
+        highestTemperatureLabel.text = NSString(format: "%.1f", Util.HighTemperature())
     }
     
     // MARK: - Action
@@ -61,13 +61,13 @@ class Settings: UITableViewController {
     
     @IBAction func changeTemperature(sender: UISlider) {
         if sender.tag == 0 { // lowest
-            let currentLowestTemperature = minLowestTemperature + (maxLowestTemperature - minLowestTemperature) * sender.value
+            let currentLowestTemperature = minLowTemperature + (maxLowTemperature - minLowTemperature) * sender.value
             lowestTemperatureLabel.text = NSString(format: "%.1f", currentLowestTemperature)
-            Util.setLowestTemperature(currentLowestTemperature)
+            Util.setLowTemperature(currentLowestTemperature)
         } else { // highest
-            let currentHighestTemperature = minHighestTemperature + (maxHighesTemperature - minHighestTemperature) * sender.value
+            let currentHighestTemperature = minHighTemperature + (maxHighTemperature - minHighTemperature) * sender.value
             highestTemperatureLabel.text = NSString(format: "%.1f", currentHighestTemperature)
-            Util.setHighestTemperature(currentHighestTemperature)
+            Util.setHighTemperature(currentHighestTemperature)
         }
     }
 }
