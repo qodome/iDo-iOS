@@ -5,8 +5,6 @@
 "history" = "历史";
 "calender" = "日历";
 "settings" = "设置";
-"measure" = "测量";
-"refresh" = "刷新";
 
 "High temperature alarm" = "高温报警通知";
 "low temperature alarm" = "低温报警通知";
@@ -21,18 +19,14 @@
 "B yesterday" = "前天";
 "details" = "详细信息";
 
-
-
 "warning" = "警告";
 "Jump to devices detail page or disConnect this device?" = "进入设备详情还是取消绑定?";
 "Back" = "返回";
 "DisConnect" = "取消绑定";
 "Detail Page"= "设备详情";
 
-
 "tips"= "提示";
 "Don't have any data on the day !" = "无历史数据";
-"Done" = "确定";
 
 "Please jump to device page to connect device"= "请点击 进入设备页 选择您想要连接的设备";
 "Jump to device page" = "进入设备页";

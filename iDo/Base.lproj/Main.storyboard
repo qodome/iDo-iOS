@@ -102,7 +102,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="设备" id="fBS-wO-7e1">
                             <connections>
-                                <segue destination="Ahw-Jo-Gl2" kind="show" identifier="segue_main_device_list" id="xcU-fn-ES4"/>
+                                <segue destination="pAJ-VJ-0jx" kind="show" identifier="segue_main_device_list" id="IAS-Yf-Vr7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -184,33 +184,31 @@
             <point key="canvasLocation" x="2399" y="-2303"/>
         </scene>
         <!--Device List-->
-        <scene sceneID="6YL-oL-as5">
+        <scene sceneID="yM8-lX-fuR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uu9-G6-iXk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="Ahw-Jo-Gl2" customClass="DeviceList" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vjr-Qn-Ms0">
+                <tableViewController id="pAJ-VJ-0jx" customClass="DeviceList" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Oka-gh-TnT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="oq8-6v-fJ5">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oq8-6v-fJ5" id="s0z-0Y-dZX">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="Ahw-Jo-Gl2" id="xTD-hY-AAM"/>
-                            <outlet property="delegate" destination="Ahw-Jo-Gl2" id="Cyf-vA-yCv"/>
+                            <outlet property="dataSource" destination="pAJ-VJ-0jx" id="fik-Wu-UYd"/>
+                            <outlet property="delegate" destination="pAJ-VJ-0jx" id="ZCo-Hb-Cov"/>
                         </connections>
                     </tableView>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="phm-25-574">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="wdW-ok-ntC">
-                            <connections>
-                                <action selector="refreshPeripherals:" destination="Ahw-Jo-Gl2" id="HGm-30-NyB"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="refreshBarBtn" destination="wdW-ok-ntC" id="fbM-ej-kJi"/>
-                        <segue destination="CWH-gE-vcA" kind="show" identifier="segue_device_list_detail" id="KvZ-QY-2cn"/>
+                        <segue destination="CWH-gE-vcA" kind="show" identifier="segue_device_list_detail" id="mZS-yS-Xq1"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ah8-LZ-Vle" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2399" y="-1564"/>
         </scene>

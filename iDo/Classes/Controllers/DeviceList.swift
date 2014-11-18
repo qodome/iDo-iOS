@@ -6,22 +6,22 @@ import CoreBluetooth
 
 class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelegate {
     
-    var cellId = "device_list_cell"
     var data = []
+    var cellId = "list_cell"
     
     var device: CBPeripheral?
     var selected: CBPeripheral?
     
     var segueId = "segue_device_list_detail"
     
-    @IBOutlet weak var refreshBarBtn: UIBarButtonItem!
+//    @IBOutlet weak var refreshBarBtn: UIBarButtonItem!
     
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
         title = LocalizedString("devices")
-        refreshBarBtn.title = LocalizedString("refresh")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh:")
         // 还原导航栏
         navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = nil
@@ -113,8 +113,8 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         }
     }
     
-    // MARK: - Action
-    @IBAction func refreshPeripherals(sender: AnyObject) {
+    // MARK: - 💛 Action
+    func refresh(sender: AnyObject) {
         BLEManager.sharedManager().startScan()
         var header: UIView = tableView.headerViewForSection(1)!
         var indicator = UIActivityIndicatorView(frame: CGRectMake(64, 22, 20, 20))

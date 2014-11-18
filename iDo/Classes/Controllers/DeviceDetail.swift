@@ -6,14 +6,14 @@ import CoreBluetooth
 
 class DeviceDetail: UITableViewController {
     
-    let cellId = "device_detail_cell"
     var data: CBPeripheral!
+    var cellId = "list_cell"
     
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
-        navigationItem.title = data.name
+        title = data.name
     }
     
     // MARK: - 💙 UITableViewDataSource
@@ -28,7 +28,7 @@ class DeviceDetail: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 //        var cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
         var cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: cellId)
-        cell.selectionStyle = UITableViewCellSelectionStyle.None // 为了灵活不要放到storyboard设置
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         switch indexPath.section {
         case 0:
             cell.textLabel.text = LocalizedString("name")

@@ -5,8 +5,6 @@
 "history" = "History";
 "calender" = "Calender";
 "settings" = "Settings";
-"measure" = "Measure";
-"refresh" = "Refresh";
 
 "High temperature alarm" = "High temperature alarm";
 "low temperature alarm" = "low temperature alarm";
@@ -26,14 +24,11 @@
 
 "Jump to devices detail page or disConnect this device?" = "Jump to devices detail page or disConnect this device?";
 
-"Back" = "Back";
-
 "DisConnect" = "DisConnect";
 "Detail Page"= "Detail Page";
 
 "tips"= "tips";
 "Don't have any data on the day !" = "Don't have any data on the day !";
-"Done" = "Done";
 
 "Please jump to device page to connect device"= "Please jump to device page to connect device";
 "Jump to device page" ="Jump to device page";
