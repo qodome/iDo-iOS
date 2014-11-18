@@ -29,12 +29,16 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         let deviceManager = BLEManager.sharedManager()
         deviceManager.changeDelegate = self
         devices = deviceManager.devices
-        data = deviceManager.connected
+        if deviceManager.connected != nil {
+            data.append(deviceManager.connected!)
+        }
     }
     
     // MARK: - onDataChange
-    func onDataChange(unconnected: [CBPeripheral], connected: [CBPeripheral]) {
-        data = connected
+    func onDataChange(unconnected: [CBPeripheral], connected: CBPeripheral?) {
+        if connected != nil {
+            data.append(connected!)
+        }
         devices = unconnected
         tableView.reloadData()
     }
@@ -111,7 +115,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
             var otherBtnTitle2 = LocalizedString("details")
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle1, otherBtnTitle2).show()
         } else {
-            BLEManager.sharedManager().userConnectPeripheral(indexPath.row)
+            BLEManager.sharedManager().connect(indexPath.row)
         }
     }
     

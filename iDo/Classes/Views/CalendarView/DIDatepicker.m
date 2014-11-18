@@ -128,8 +128,7 @@ const CGFloat kDIDatepickerSpaceBetweenItems = 15.;
     NSAssert(nextDatesCount < 1000, @"Too much dates");
 
     NSMutableArray *dates = [[NSMutableArray alloc] init];
-    for (NSInteger day = 0; day < nextDatesCount; day++)
-    {
+    for (NSInteger day = 0; day < nextDatesCount; day++) {
         [dates addObject:[fromDate dateByAddingTimeInterval:day * kSecondsInDay]];
     }
     

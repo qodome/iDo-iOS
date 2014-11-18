@@ -60,11 +60,11 @@ class Settings: UITableViewController {
     }
     
     @IBAction func changeTemperature(sender: UISlider) {
-        if sender.tag == 0 { // lowest
+        if sender.tag == 0 { // low
             let currentLowestTemperature = minLowTemperature + (maxLowTemperature - minLowTemperature) * sender.value
             lowestTemperatureLabel.text = NSString(format: "%.1f", currentLowestTemperature)
             Util.setLowTemperature(currentLowestTemperature)
-        } else { // highest
+        } else { // high
             let currentHighestTemperature = minHighTemperature + (maxHighTemperature - minHighTemperature) * sender.value
             highestTemperatureLabel.text = NSString(format: "%.1f", currentHighestTemperature)
             Util.setHighTemperature(currentHighestTemperature)

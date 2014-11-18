@@ -17,7 +17,7 @@ protocol BLEManagerDelegate {
 }
 
 protocol DeviceChangeDelegate {
-    func onDataChange(unconnected: [CBPeripheral], connected: [CBPeripheral])
+    func onDataChange(unconnected: [CBPeripheral], connected: CBPeripheral?)
 }
 
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
@@ -28,9 +28,9 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     var central: CBCentralManager!
     var isPeripheralTryToConnect = false
-    var connected: [CBPeripheral] = [] //放置已经连接的peripheral
-    var devices: [CBPeripheral] = [] // 放置可连接的(但未连接的)peripherals
-    var delegate: BLEManagerDelegate? //温度数据发送 代理
+    var connected: CBPeripheral? // 已连接设备
+    var devices: [CBPeripheral] = [] // 未连接设备
+    var delegate: BLEManagerDelegate? // 温度数据发送 代理
     var changeDelegate: DeviceChangeDelegate? //设备data变化 代理
     
     // MARK: - 💖 生命周期 (Lifecycle)
@@ -53,16 +53,19 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     // MARK: 💛 自定义方法
-    func userConnectPeripheral(index: Int) {
-        if !connected.isEmpty {
-            unbind(connected.last!)
+    func startScan() {
+        central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
+    }
+    
+    func connect(index: Int) {
+        if connected != nil {
+            unbind(connected!)
         }
         let peripheral = devices[index]
         NSUserDefaults.standardUserDefaults().setObject(peripheral.identifier.UUIDString, forKey: PREF_DEFAULT_DEVICE)
         isPeripheralTryToConnect = true
         central.connectPeripheral(peripheral, options: nil) // 连接
         devices.removeAtIndex(index)
-        isPeripheralTryToConnect = true
         changeDelegate?.onDataChange(devices, connected: connected)
     }
     
@@ -70,7 +73,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func unbind(peripheral: CBPeripheral) {
         NSLog("解绑设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
         NSUserDefaults.standardUserDefaults().setObject("", forKey: PREF_DEFAULT_DEVICE)
-        connected.removeLast()
+        connected = nil
         if !contains(devices, peripheral) {
             devices.append(peripheral)
         }
@@ -78,10 +81,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         delegate?.didUpdateValue(nil, error: nil)
         changeDelegate?.onDataChange(devices, connected: connected) // 刷新UI
         central.cancelPeripheralConnection(peripheral)
-    }
-    
-    func startScan() {
-        central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
     }
     
     func defaultDevice() -> String {
@@ -98,7 +97,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         case CBCentralManagerState.PoweredOn:
             central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
         default:
-            connected.removeAll(keepCapacity: true)
+            connected = nil
             devices.removeAll(keepCapacity: true)
             delegate?.didUpdateValue(nil, error: nil)
             changeDelegate?.onDataChange(devices, connected: connected)
@@ -107,12 +106,10 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
         if peripheral.identifier.UUIDString == defaultDevice() {
-//            NSLog("💙 发现已绑定设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
+            NSLog("💙 发现已绑定设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
             isPeripheralTryToConnect = true
+            connected = peripheral
             central.connectPeripheral(peripheral, options:nil)
-            if !contains(connected, peripheral) {
-                connected.append(peripheral)
-            }
         } else {
             NSLog("💙 发现未绑定设备: \(peripheral.name) (%@)", peripheral.identifier.UUIDString)
             if !contains(devices, peripheral) {
@@ -129,10 +126,14 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         //设备已连接
         delegate?.didConnect(central, peripheral: peripheral)
         isPeripheralTryToConnect = false
-        changeDelegate?.onDataChange(devices, connected: connected)
+        changeDelegate?.onDataChange(devices, connected: peripheral)
     }
     
     // MARK: -      处理异常
+    func centralManager(central: CBCentralManager!, didFailToConnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
+        NSLog("💙 连接失败: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
+    }
+    
     func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
         NSLog("💙 断开设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
         //NSLog("💙 error: %@", error.localizedDescription)
@@ -140,17 +141,13 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         NSLog("disconnectedPeripheralId:%@", peripheralId)
         if peripheralId == peripheral.identifier.UUIDString {
             NSLog("autoDisConnected")
-            connected.removeLast()
+            connected = nil
             if !contains(devices, peripheral) {
                 devices.append(peripheral)
             }
             changeDelegate?.onDataChange(devices, connected: connected)
             delegate?.didDisconnect(central, peripheral: peripheral)
         }
-    }
-    
-    func centralManager(central: CBCentralManager!, didFailToConnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
-        NSLog("💙 连接失败: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
     }
 
     // MARK: - 💙 CBPeripheralDelegate
@@ -202,12 +199,12 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 //                }
             }
         }
-        println("dataSelected--\(connected.description) ")
+        println("dataSelected--\(connected) ")
         println("dataNoSelected--\(devices.description) ")
         changeDelegate?.onDataChange(devices, connected: connected)
     }
     
-    func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!){
+    func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
         println("5--updateValue\(peripheral.identifier.UUIDString)")
         delegate?.didUpdateValue(characteristic, error: error)
     }

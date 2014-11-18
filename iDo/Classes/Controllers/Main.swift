@@ -9,9 +9,8 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     // MARK: - 🍀 变量
     let segueId = "segue_main_device_list"
     
-    var deviceManager: BLEManager!
     var data: [Int : CGFloat] = Dictionary()
-    var sectionsCount = 5 //今天的数据(只记录4小时)
+    var sectionsCount = 5 // 今天的数据(只记录4小时)
     var pageCount = 4
     var pointNumberInsection = 120
     var titleStringArrForXAXis: [String] = [] // 横坐标的string
@@ -43,9 +42,8 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         reconnectBtn.titleLabel?.font = UIFont(name: "Helvetica", size: 30)
         reconnectBtn.hidden = true
         
-        deviceManager = BLEManager.sharedManager()
-        deviceManager.delegate = self
-        if deviceManager.defaultDevice().isEmpty { // 无绑定设备
+        BLEManager.sharedManager().delegate = self
+        if BLEManager.sharedManager().defaultDevice().isEmpty { // 无绑定设备
             UIAlertView(title: LocalizedString("tips"),
                 message: LocalizedString("Please jump to device page to connect device"),
                 delegate: self,
@@ -67,9 +65,10 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         updateCurrentDateLineChart()
+        println("ccccccc")
     }
     
-    // MARK: - DeviceStateDelegate
+    // MARK: - 🐤 DeviceStateDelegate
     func didConnect(centralManger: CBCentralManager, peripheral: CBPeripheral) {
         temperatureLabel.text = LocalizedString("Connected, waiting for data")
         view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
@@ -161,8 +160,8 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     
     // MARK: - 💙 UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        if buttonIndex == 1 { //进入设备页
-            deviceManager.startScan()
+        if buttonIndex == 1 { // 进入设备页
+            BLEManager.sharedManager().startScan()
             performSegueWithIdentifier(segueId, sender: self)
         }
     }
@@ -172,7 +171,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         numberTaped.hidden = true
     }
     
-    // MARK: - ScrolledChartDataSource
+    // MARK: - 🐤 ScrolledChartDataSource
     func numberOfSectionsInScrolledChart(scrolledChart: LineChart) ->Int {
         return sectionsCount
     }
@@ -194,7 +193,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         return data[key]!
     }
     
-    func maxDataInScrolledChart(scrolledChart: LineChart) ->CGFloat {
+    func maxDataInScrolledChart(scrolledChart: LineChart) -> CGFloat {
         return maxValueForLineChart(data)
     }
     
@@ -212,26 +211,10 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     @IBAction func reconnectPeripheral(sender: AnyObject) {
         reconnectBtn.hidden = true
         temperatureLabel.hidden = false
-        deviceManager.startScan()
+        BLEManager.sharedManager().startScan()
     }
     
-    // MARK: - Custom Method
-    func initSubViewToView() {
-        var currentGraphChartFrame: CGRect!
-        if scrolledChart != nil {
-            currentGraphChartFrame = scrolledChart?.frame
-            scrolledChart?.removeFromSuperview()
-        }
-        titleStringArrForYMaxPoint = NSString(format: "%.2f", Float(maxValueForLineChart(data)))
-        scrolledChart = ScrolledChart(frame: currentGraphChartFrame, pageCount: Float(pageCount), titleInYAXisMax: titleStringArrForYMaxPoint)
-        scrolledChart!.scrollView.contentOffset.x = scrolledChart!.scrollView.frame.width * CGFloat(pageCount - 1)
-        // add scrollChart
-        scrolledChart?.backgroundColor = UIColor.clearColor()
-        scrolledChart?.lineChart.dataSource = self
-        scrolledChart?.lineChart.delegate = self
-        view.addSubview(scrolledChart!)
-    }
-    
+    // MARK: - 💛 Custom Method
     /** generate data */
     func generateChartDataWithDateString(dateStr: String) -> Bool {
         var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtil.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
@@ -251,7 +234,19 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         let dateStr = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
         if generateChartDataWithDateString(dateStr) {
             // 由数据源改变 eLineChart的值
-            initSubViewToView()
+            var currentGraphChartFrame: CGRect!
+            if scrolledChart != nil {
+                currentGraphChartFrame = scrolledChart?.frame
+                scrolledChart?.removeFromSuperview()
+            }
+            titleStringArrForYMaxPoint = NSString(format: "%.2f", Float(maxValueForLineChart(data)))
+            scrolledChart = ScrolledChart(frame: currentGraphChartFrame, pageCount: Float(pageCount), titleInYAXisMax: titleStringArrForYMaxPoint)
+            scrolledChart!.scrollView.contentOffset.x = scrolledChart!.scrollView.frame.width * CGFloat(pageCount - 1)
+            // add scrollChart
+            scrolledChart?.backgroundColor = UIColor.clearColor()
+            scrolledChart?.lineChart.dataSource = self
+            scrolledChart?.lineChart.delegate = self
+            view.addSubview(scrolledChart!)
             dateShow.text = dateStr
         } else {
             println("无历史数据")
@@ -273,18 +268,18 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         }
     }
     
-    
-    
     /** 写date数据到peripheral中 */
     func writeValue(peripheral: CBPeripheral, data: NSData, characteristic: CBCharacteristic) {
         peripheral.writeValue(data, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithResponse)
     }
     
     func maxValueForLineChart(data: [Int : CGFloat]) -> CGFloat {
-        if data.isEmpty  {
+        if data.isEmpty {
             fatalError("data为空")
+        } else {
+            var sortValues = (data.values).array.sorted({$0 > $1})
+            return sortValues[0]
         }
-        var sortValues = (data.values).array.sorted({$0 > $1})
-        return sortValues[0]
+        return 0
     }
 }

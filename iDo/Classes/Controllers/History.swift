@@ -149,7 +149,7 @@ class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource 
     }
     
     func maxValueForLineChart(data: [Int : CGFloat])-> CGFloat {
-        if data.isEmpty  {
+        if data.isEmpty {
             fatalError("data为空")
         }
         var sortValues = (data.values).array.sorted({$0 > $1})

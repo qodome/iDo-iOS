@@ -4,7 +4,7 @@
 
 import UIKit
 
-protocol ScrolledChartDataSource  {
+protocol ScrolledChartDataSource {
     func allNumberOfPointsInSection(scrolledChart: LineChart) ->Int // 每段的所以点数
     func numberOfSectionsInScrolledChart(scrolledChart: LineChart) ->Int // 段数
     func numberOfPointsInScrolledChart(scrolledChart: LineChart) ->Int // 数据源的点数
@@ -14,7 +14,7 @@ protocol ScrolledChartDataSource  {
     func scrolledChart(scrolledChart: LineChart, titleInXAXisPointLabelInSection section: Int) ->String
 }
 
-protocol ScrolledChartDelegate  {
+protocol ScrolledChartDelegate {
     func scrolledChart(scrolledChart: LineChart, didClickItemAtPointNumber pointNumber: Int)
 }
 
