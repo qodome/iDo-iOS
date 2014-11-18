@@ -2,8 +2,6 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-import UIKit
-
 class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource {
     
     var sectionsCount = 24

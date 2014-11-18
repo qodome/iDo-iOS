@@ -3,7 +3,6 @@
 //
 
 import CoreBluetooth
-import UIKit
 
 class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollViewDelegate, ScrolledChartDelegate, ScrolledChartDataSource {
     // MARK: - 🍀 变量

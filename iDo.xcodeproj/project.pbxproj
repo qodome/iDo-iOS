@@ -27,7 +27,6 @@
 		E72F2A8019D926DA009383AB /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6719D926DA009383AB /* Temperature.swift */; };
 		E72F2A8119D926DA009383AB /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6919D926DA009383AB /* DateUtil.swift */; };
 		E72F2A8219D926DA009383AB /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6A19D926DA009383AB /* Util.swift */; };
-		E72F2A8919D926DA009383AB /* PeripheralSelectedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A7719D926DA009383AB /* PeripheralSelectedTableViewCell.xib */; };
 		E72F2A8F19D928CC009383AB /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A9119D928CC009383AB /* Localization.strings */; };
 		E74078CA19FE162B00B2D05A /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74078C619FE162B00B2D05A /* LineChart.swift */; };
 		E74078CB19FE162B00B2D05A /* ScrolledChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74078C719FE162B00B2D05A /* ScrolledChart.swift */; };
@@ -80,7 +79,6 @@
 		E72F2A6719D926DA009383AB /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
 		E72F2A6919D926DA009383AB /* DateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		E72F2A6A19D926DA009383AB /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		E72F2A7719D926DA009383AB /* PeripheralSelectedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeripheralSelectedTableViewCell.xib; sourceTree = "<group>"; };
 		E72F2A9019D928CC009383AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localization.strings; sourceTree = "<group>"; };
 		E72F2A9219D928D0009383AB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localization.strings"; sourceTree = "<group>"; };
 		E74078C619FE162B00B2D05A /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
@@ -302,7 +300,6 @@
 			children = (
 				E72F2A6C19D926DA009383AB /* CalendarView */,
 				E72F2A7019D926DA009383AB /* lineChart */,
-				E72F2A7519D926DA009383AB /* PeripheralCell */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -331,14 +328,6 @@
 				E74078C919FE162B00B2D05A /* UILine.swift */,
 			);
 			path = lineChart;
-			sourceTree = "<group>";
-		};
-		E72F2A7519D926DA009383AB /* PeripheralCell */ = {
-			isa = PBXGroup;
-			children = (
-				E72F2A7719D926DA009383AB /* PeripheralSelectedTableViewCell.xib */,
-			);
-			path = PeripheralCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -433,7 +422,6 @@
 			files = (
 				E7E0AF9819D93B7A0000BC14 /* LaunchScreen.xib in Resources */,
 				E7E0AF9A19D93F100000BC14 /* Images.xcassets in Resources */,
-				E72F2A8919D926DA009383AB /* PeripheralSelectedTableViewCell.xib in Resources */,
 				E72F2A0819D92457009383AB /* Main.storyboard in Resources */,
 				E72F2A8F19D928CC009383AB /* Localization.strings in Resources */,
 			);

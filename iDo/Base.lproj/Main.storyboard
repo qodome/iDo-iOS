@@ -223,7 +223,7 @@
             </objects>
             <point key="canvasLocation" x="3157" y="-1564"/>
         </scene>
-        <!--Settings-->
+        <!--设置-->
         <scene sceneID="SSC-PH-QYY">
             <objects>
                 <tableViewController id="igj-MH-y7P" customClass="Settings" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
@@ -427,7 +427,7 @@
                             <outlet property="delegate" destination="igj-MH-y7P" id="tZ5-xh-ngp"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="tn2-h6-Ama">
+                    <navigationItem key="navigationItem" title="设置" id="tn2-h6-Ama">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="4Yy-gy-1Nk">
                             <connections>
                                 <action selector="back:" destination="igj-MH-y7P" id="H8O-pz-OYd"/>

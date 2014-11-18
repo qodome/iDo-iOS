@@ -2,8 +2,6 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-import CoreBluetooth
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
