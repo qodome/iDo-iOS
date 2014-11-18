@@ -12,6 +12,7 @@ class DeviceDetail: UITableViewController {
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
         navigationItem.title = data.name
     }
     
@@ -25,14 +26,15 @@ class DeviceDetail: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
+//        var cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
+        var cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: cellId)
         cell.selectionStyle = UITableViewCellSelectionStyle.None // 为了灵活不要放到storyboard设置
         switch indexPath.section {
         case 0:
             cell.textLabel.text = LocalizedString("name")
             cell.detailTextLabel?.text = data.name
         case 1:
-            cell.textLabel.text = LocalizedString("bluetooth")
+            cell.textLabel.text = LocalizedString("UUID")
             cell.detailTextLabel?.text = data.identifier.UUIDString
         default:
             println("error") // TODO: 统一处理

@@ -6,19 +6,20 @@ import CoreBluetooth
 
 class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelegate {
     
-    let cellId = "device_list_cell"
+    var cellId = "device_list_cell"
     var data = []
     
     var device: CBPeripheral?
+    var selected: CBPeripheral?
     
-    var indicatorView: UIActivityIndicatorView!
-    var selected: CBPeripheral!
+    var segueId = "segue_device_list_detail"
     
     @IBOutlet weak var refreshBarBtn: UIBarButtonItem!
     
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
         title = LocalizedString("devices")
         refreshBarBtn.title = LocalizedString("refresh")
         // 还原导航栏
@@ -42,7 +43,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
     
     // MARK: - 💙 场景切换 (Segue)
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "peripheralDetailInforimation" {
+        if segue.identifier == segueId {
             let controller = segue.destinationViewController as DeviceDetail
             controller.data = selected
         }
@@ -58,48 +59,35 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: DeviceCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as DeviceCell
+        var cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
+        cell.imageView.image = UIImage(named: "iDoIcon")
         var device: CBPeripheral
-        cell.indicator.hidden = true
+//        cell.indicator.hidden = true
         if indexPath.section == 0 {
             device = self.device!
             if BLEManager.sharedManager().state == .connecting {
-                cell.indicator.hidden = false
-                cell.indicator.startAnimating()
-                cell.icon.hidden = true
+//                cell.indicator.hidden = false
+//                cell.indicator.startAnimating()
+                cell.imageView.hidden = true
             } else {
-                cell.indicator.hidden = true
-                cell.icon.hidden = false
+//                cell.indicator.hidden = true
+                cell.imageView.hidden = false
             }
         } else {
             device = data[indexPath.row] as CBPeripheral
-            cell.icon.hidden = false
+            cell.imageView.hidden = false
         }
-        cell.title.text = device.name
-        cell.subtitle.text = device.identifier.UUIDString
+        cell.textLabel.text = device.name
+        cell.detailTextLabel?.text = device.identifier.UUIDString
         return cell
     }
     
     // MARK: 💙 UITableViewDelegate
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        return 20.0
-    }
-    
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView {
-        var tableHeaderView: UIView = UIView(frame: CGRectMake(CGPointZero.x, CGPointZero.y, 320.0, 20.0))
-        tableHeaderView.backgroundColor = UIColor.whiteColor()
-        var deviceStatusLabel: UILabel = UILabel(frame: CGRectMake(CGPointZero.x + 10, CGPointZero.y, tableHeaderView.frame.size.width - 10, tableHeaderView.frame.size.height))
-        deviceStatusLabel.font = UIFont.systemFontOfSize(12)
-        tableHeaderView.addSubview(deviceStatusLabel)
-        if section == 0 {
-            deviceStatusLabel.text = LocalizedString("Connected devices")
-        } else {
-            deviceStatusLabel.text = LocalizedString("Available devices")
-            indicatorView = UIActivityIndicatorView(frame: CGRectMake(90, CGPointZero.y, 20, 20))
-            indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-            tableHeaderView.addSubview(indicatorView)
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 {
+            return LocalizedString("devices")
         }
-        return tableHeaderView
+        return nil
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -119,16 +107,19 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
     // MARK: 💙 UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 {
-            BLEManager.sharedManager().unbind(selected)
+            BLEManager.sharedManager().unbind(selected!)
         } else if buttonIndex == 2 {
-            performSegueWithIdentifier("peripheralDetailInforimation", sender: self)
+            performSegueWithIdentifier(segueId, sender: self)
         }
     }
     
     // MARK: - Action
     @IBAction func refreshPeripherals(sender: AnyObject) {
         BLEManager.sharedManager().startScan()
-        indicatorView.startAnimating()
-        indicatorView.hidden = false
+        var header: UIView = tableView.headerViewForSection(1)!
+        var indicator = UIActivityIndicatorView(frame: CGRectMake(64, 22, 20, 20))
+        indicator.activityIndicatorViewStyle = .Gray
+        header.addSubview(indicator)
+        indicator.startAnimating()
     }
 }

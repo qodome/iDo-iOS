@@ -27,7 +27,6 @@
 		E72F2A8019D926DA009383AB /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6719D926DA009383AB /* Temperature.swift */; };
 		E72F2A8119D926DA009383AB /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6919D926DA009383AB /* DateUtil.swift */; };
 		E72F2A8219D926DA009383AB /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6A19D926DA009383AB /* Util.swift */; };
-		E72F2A8819D926DA009383AB /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A7619D926DA009383AB /* DeviceCell.swift */; };
 		E72F2A8919D926DA009383AB /* PeripheralSelectedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A7719D926DA009383AB /* PeripheralSelectedTableViewCell.xib */; };
 		E72F2A8F19D928CC009383AB /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A9119D928CC009383AB /* Localization.strings */; };
 		E74078CA19FE162B00B2D05A /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74078C619FE162B00B2D05A /* LineChart.swift */; };
@@ -81,7 +80,6 @@
 		E72F2A6719D926DA009383AB /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
 		E72F2A6919D926DA009383AB /* DateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		E72F2A6A19D926DA009383AB /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		E72F2A7619D926DA009383AB /* DeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceCell.swift; path = PeripheralCell/DeviceCell.swift; sourceTree = "<group>"; };
 		E72F2A7719D926DA009383AB /* PeripheralSelectedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeripheralSelectedTableViewCell.xib; sourceTree = "<group>"; };
 		E72F2A9019D928CC009383AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localization.strings; sourceTree = "<group>"; };
 		E72F2A9219D928D0009383AB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localization.strings"; sourceTree = "<group>"; };
@@ -302,7 +300,6 @@
 		E72F2A6B19D926DA009383AB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E72F2A7619D926DA009383AB /* DeviceCell.swift */,
 				E72F2A6C19D926DA009383AB /* CalendarView */,
 				E72F2A7019D926DA009383AB /* lineChart */,
 				E72F2A7519D926DA009383AB /* PeripheralCell */,
@@ -503,7 +500,6 @@
 				E72F2A7B19D926DA009383AB /* Settings.swift in Sources */,
 				E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */,
 				E72F2A7E19D926DA009383AB /* DBManager.swift in Sources */,
-				E72F2A8819D926DA009383AB /* DeviceCell.swift in Sources */,
 				E72F2A7919D926DA009383AB /* DeviceDetail.swift in Sources */,
 				E72F2A8219D926DA009383AB /* Util.swift in Sources */,
 				E70F723B1A022B69005BC863 /* History.swift in Sources */,

@@ -8,9 +8,6 @@
 "measure" = "测量";
 "refresh" = "刷新";
 
-"Connected devices" = "已连接设备";
-"Available devices" = "可选择设备";
-
 "High temperature alarm" = "高温报警通知";
 "low temperature alarm" = "低温报警通知";
 "Minimum temperature" = "最低温值";
