@@ -28,7 +28,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         
         let deviceManager = BLEManager.sharedManager()
         deviceManager.changeDelegate = self
-        devices = deviceManager.devices
+        devices = deviceManager.peripherals
         if deviceManager.connected != nil {
             data.append(deviceManager.connected!)
         }

@@ -69,24 +69,24 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     }
     
     // MARK: - 🐤 DeviceStateDelegate
-    func didConnect(centralManger: CBCentralManager, peripheral: CBPeripheral) {
+    func didConnect(peripheral: CBPeripheral) {
         temperatureLabel.text = LocalizedString("Connected, waiting for data")
         view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
     }
     
-    func didDisconnect(centralManger: CBCentralManager, peripheral: CBPeripheral) {
+    func didDisconnect() {
         temperatureLabel.hidden = true
         reconnectBtn.hidden = false
     }
     
-    func didUpdateValue(characteristic: CBCharacteristic?, error: NSError?) {
-        if characteristic == nil && error == nil {
+    func didUpdateValue(characteristic: CBCharacteristic?) {
+        if characteristic == nil {
             temperatureLabel.text = LocalizedString("finding a device")
             view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
             return
         }
         println("data length----\(characteristic?.value.length)")
-        if characteristic?.value.length == 5 && error == nil {
+        if characteristic?.value.length == 5 {
             // 写date数据到peripheral中
             // 得到当前data的16进制
             var dateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyyMMddHHmmss")
