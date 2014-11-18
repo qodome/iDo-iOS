@@ -12,10 +12,6 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
     var device: CBPeripheral?
     var selected: CBPeripheral?
     
-    var segueId = "segue_device_list_detail"
-    
-//    @IBOutlet weak var refreshBarBtn: UIBarButtonItem!
-    
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,12 +37,14 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         tableView.reloadData()
     }
     
-    // MARK: - 💙 场景切换 (Segue)
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == segueId {
-            let controller = segue.destinationViewController as DeviceDetail
-            controller.data = selected
-        }
+    // MARK: - 💛 Action
+    func refresh(sender: AnyObject) {
+        BLEManager.sharedManager().startScan()
+        var header: UIView = tableView.headerViewForSection(1)!
+        var indicator = UIActivityIndicatorView(frame: CGRectMake(64, 22, 20, 20))
+        indicator.activityIndicatorViewStyle = .Gray
+        header.addSubview(indicator)
+        indicator.startAnimating()
     }
     
     // MARK: - 💙 UITableViewDataSource
@@ -62,15 +60,15 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         var cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
         cell.imageView.image = UIImage(named: "iDoIcon")
         var device: CBPeripheral
-//        cell.indicator.hidden = true
+        //        cell.indicator.hidden = true
         if indexPath.section == 0 {
             device = self.device!
             if BLEManager.sharedManager().state == .connecting {
-//                cell.indicator.hidden = false
-//                cell.indicator.startAnimating()
+                //                cell.indicator.hidden = false
+                //                cell.indicator.startAnimating()
                 cell.imageView.hidden = true
             } else {
-//                cell.indicator.hidden = true
+                //                cell.indicator.hidden = true
                 cell.imageView.hidden = false
             }
         } else {
@@ -82,14 +80,11 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         return cell
     }
     
-    // MARK: 💙 UITableViewDelegate
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 {
-            return LocalizedString("devices")
-        }
-        return nil
+        return section == 1 ? LocalizedString("devices") : nil
     }
     
+    // MARK: 💙 UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
             selected = device
@@ -109,17 +104,13 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         if buttonIndex == 1 {
             BLEManager.sharedManager().unbind(selected!)
         } else if buttonIndex == 2 {
-            performSegueWithIdentifier(segueId, sender: self)
+            performSegueWithIdentifier("segue_device_list_detail", sender: self)
         }
     }
     
-    // MARK: - 💛 Action
-    func refresh(sender: AnyObject) {
-        BLEManager.sharedManager().startScan()
-        var header: UIView = tableView.headerViewForSection(1)!
-        var indicator = UIActivityIndicatorView(frame: CGRectMake(64, 22, 20, 20))
-        indicator.activityIndicatorViewStyle = .Gray
-        header.addSubview(indicator)
-        indicator.startAnimating()
+    // MARK: - 💙 场景切换 (Segue)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
+        segue.destinationViewController.setValue(selected, forKey: "data")
     }
 }
