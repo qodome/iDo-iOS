@@ -34,7 +34,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         historyBtn.title = LocalizedString("history")
         peripheralBarBtn.title = LocalizedString("devices")
         numberTaped.font = UIFont(name: "HelveticaNeue-Light", size: 20)
-        temperatureLabel.text = LocalizedString("finding a device")
+        temperatureLabel.text = LocalizedString("no_device")
         temperatureLabel.font = UIFont(name: "Helvetica", size: 30)
         dateShow.font = UIFont(name: "HelveticaNeue-Light", size: 20)
         dateShow.text = ""
@@ -75,18 +75,18 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     }
     
     func didDisconnect() {
-        temperatureLabel.hidden = true
-        reconnectBtn.hidden = false
+        if BLEManager.sharedManager().defaultDevice() != "" {
+            temperatureLabel.hidden = true
+            reconnectBtn.hidden = false
+        } else {
+            temperatureLabel.text = LocalizedString("no_device")
+            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
+        }
     }
     
-    func didUpdateValue(characteristic: CBCharacteristic?) {
-        if characteristic == nil {
-            temperatureLabel.text = LocalizedString("finding a device")
-            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
-            return
-        }
-        println("data length----\(characteristic?.value.length)")
-        if characteristic?.value.length == 5 {
+    func didUpdateValue(characteristic: CBCharacteristic) {
+        println("data length----\(characteristic.value.length)")
+        if characteristic.value.length == 5 {
             // 写date数据到peripheral中
             // 得到当前data的16进制
             var dateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyyMMddHHmmss")
@@ -130,7 +130,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
             //writeData(mDeviceCentralManger.devicesArrayOnSelectedStatus[0] as CBPeripheral, forCharacteristic:characteristic! , forData:mRealWriteData)
         }
         // 得到temperature
-        var temperature = calculateTemperature(characteristic!.value)
+        var temperature = calculateTemperature(characteristic.value)
         temperatureLabel.text = NSString(format: "%.2f°C", temperature)
         // 保存temperature到数据库
         var temper: Temperature = Temperature()

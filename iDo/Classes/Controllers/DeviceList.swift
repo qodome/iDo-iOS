@@ -7,8 +7,9 @@ import CoreBluetooth
 class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelegate {
     
     let cellId = "device_list_cell"
-    var data: [AnyObject] = []
-    var devices: [AnyObject] = []
+    var data = []
+    
+    var device: CBPeripheral?
     
     var indicatorView: UIActivityIndicatorView!
     var selected: CBPeripheral!
@@ -28,18 +29,14 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         
         let deviceManager = BLEManager.sharedManager()
         deviceManager.changeDelegate = self
-        devices = deviceManager.peripherals
-        if deviceManager.connected != nil {
-            data.append(deviceManager.connected!)
-        }
+        data = deviceManager.peripherals
+        device = deviceManager.connected
     }
     
     // MARK: - onDataChange
     func onDataChange(unconnected: [CBPeripheral], connected: CBPeripheral?) {
-        if connected != nil {
-            data.append(connected!)
-        }
-        devices = unconnected
+        data = unconnected
+        device = connected
         tableView.reloadData()
     }
     
@@ -57,7 +54,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? data.count : devices.count
+        return section == 0 ? (device == nil ? 0 : 1) : data.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -65,8 +62,8 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         var device: CBPeripheral
         cell.indicator.hidden = true
         if indexPath.section == 0 {
-            device = data[indexPath.row] as CBPeripheral
-            if BLEManager.sharedManager().isPeripheralTryToConnect {
+            device = self.device!
+            if BLEManager.sharedManager().state == .connecting {
                 cell.indicator.hidden = false
                 cell.indicator.startAnimating()
                 cell.icon.hidden = true
@@ -75,7 +72,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
                 cell.icon.hidden = false
             }
         } else {
-            device = devices[indexPath.row] as CBPeripheral
+            device = data[indexPath.row] as CBPeripheral
             cell.icon.hidden = false
         }
         cell.title.text = device.name
@@ -107,7 +104,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
-            selected = data[indexPath.row] as CBPeripheral
+            selected = device
             var title = LocalizedString("warning")
             var message = LocalizedString("Jump to devices detail page or disConnect this device?")
             var cancelBtnTittle = LocalizedString("Back")
@@ -115,7 +112,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
             var otherBtnTitle2 = LocalizedString("details")
             UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle1, otherBtnTitle2).show()
         } else {
-            BLEManager.sharedManager().connect(indexPath.row)
+            BLEManager.sharedManager().bind(indexPath.row)
         }
     }
     
@@ -124,7 +121,6 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         if buttonIndex == 1 {
             BLEManager.sharedManager().unbind(selected)
         } else if buttonIndex == 2 {
-            println("设备详情")
             performSegueWithIdentifier("peripheralDetailInforimation", sender: self)
         }
     }
