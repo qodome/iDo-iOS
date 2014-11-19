@@ -11,7 +11,7 @@ class ScrolledChart: UIView, UIScrollViewDelegate {
     var pageCountForScrollView: Float = 0
     
     var xAxisPointSizeHeight = 4.0 // 坐标点高度
-     var xAxisPointSizeWidth = 1.5 // 坐标点宽度
+    var xAxisPointSizeWidth = 1.5 // 坐标点宽度
     var edgeInsets: UIEdgeInsets = UIEdgeInsetsMake(10, 15, 15, 15) // lineChart与scrollView之间的边界
     
     var titleInYAXisMax:String = ""

@@ -29,11 +29,11 @@ class LineChart: UIView {
     var graphPoints: [CGPoint] = []
     var dataSource: ScrolledChartDataSource!
     var delegate: ScrolledChartDelegate?
-
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         var tapGestureRcongnizer = UITapGestureRecognizer(target: self, action: "lineChartClicked:")
@@ -67,31 +67,31 @@ class LineChart: UIView {
             addAXisLabel(xLabelString, rect: CGRectMake(xValue, yValue + spaceWithmaxLabelAndLine,spaceWithPoints, maxLabelHeight))
         }
         //画图
-            var eDrawingWidth, eDrawingHeight, min, max: CGFloat!
-            max = (dataSource.maxDataInScrolledChart(self)) // max 值 -->计算得到
-            min = constMin// 定死
-            var spacePointsCount = dataSource.allNumberOfPointsInSection(self)
-            eDrawingWidth = spaceWithPoints
-            eDrawingHeight = frame.height - edgeInsets.bottom - (CGPointZero.y + edgeInsets.top)
-            if spacePointsCount == 0 {
-                //没有数据
-                return
-            }
-            if spacePointsCount == 1 {
-                //TODO: - 对 spacePointsCount == 1 处理
-                return
-            }
-            dataPointsXoffset = eDrawingWidth / CGFloat(spacePointsCount - 1)
-            var numberOfData = dataSource.numberOfPointsInScrolledChart(self)
-            for i in 0..<numberOfData {
-                var key = dataSource.scrolledChart(self, keyForItemAtPointNumber: i)
-                var dataPointValues = dataSource.scrolledChart(self, valueForItemAtKey: key)
-                var x, y: CGFloat!
-                x = edgeInsets.left + CGFloat(key) * dataPointsXoffset
-                y = edgeInsets.top + CGFloat((max - dataPointValues) * eDrawingHeight / (max - min))
-                graphPoints.append(CGPointMake(x, y))
-            }
-            //drawLine(context, withGraphPoints: graphPoints)
+        var eDrawingWidth, eDrawingHeight, min, max: CGFloat!
+        max = (dataSource.maxDataInScrolledChart(self)) // max 值 -->计算得到
+        min = constMin// 定死
+        var spacePointsCount = dataSource.allNumberOfPointsInSection(self)
+        eDrawingWidth = spaceWithPoints
+        eDrawingHeight = frame.height - edgeInsets.bottom - (CGPointZero.y + edgeInsets.top)
+        if spacePointsCount == 0 {
+            //没有数据
+            return
+        }
+        if spacePointsCount == 1 {
+            //TODO: - 对 spacePointsCount == 1 处理
+            return
+        }
+        dataPointsXoffset = eDrawingWidth / CGFloat(spacePointsCount - 1)
+        var numberOfData = dataSource.numberOfPointsInScrolledChart(self)
+        for i in 0..<numberOfData {
+            var key = dataSource.scrolledChart(self, keyForItemAtPointNumber: i)
+            var dataPointValues = dataSource.scrolledChart(self, valueForItemAtKey: key)
+            var x, y: CGFloat!
+            x = edgeInsets.left + CGFloat(key) * dataPointsXoffset
+            y = edgeInsets.top + CGFloat((max - dataPointValues) * eDrawingHeight / (max - min))
+            graphPoints.append(CGPointMake(x, y))
+        }
+        //drawLine(context, withGraphPoints: graphPoints)
         //draw line
         for i in 0..<(numberOfData - 1) {
             var firstPoint = graphPoints[i]
@@ -125,11 +125,11 @@ class LineChart: UIView {
         UIColor.whiteColor().set()
         path.strokeWithBlendMode(kCGBlendModeNormal, alpha: 1.0)
     }
-
+    
     /**add label的方法 */
     func addAXisLabel(text: String, rect:CGRect) -> UILabel {
         var label = UILabel(frame:rect)
-        label.font = UIFont(name: "HelveticaNeue", size: 5)
+        label.font = UIFont(name: "HelveticaNeue", size: 12)
         label.text = text
         label.textAlignment = NSTextAlignment.Left
         label.textColor = UIColor.blackColor()

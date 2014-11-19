@@ -35,6 +35,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         numberTaped.font = UIFont(name: "HelveticaNeue-Light", size: 20)
         temperatureLabel.text = LocalizedString("no_device")
         temperatureLabel.font = UIFont(name: "Helvetica", size: 30)
+        temperatureLabel.textColor = UIColor.whiteColor()
         dateShow.font = UIFont(name: "HelveticaNeue-Light", size: 20)
         dateShow.text = ""
         reconnectBtn.setTitle(LocalizedString("reconnect"), forState: UIControlState.Normal)
@@ -58,7 +59,6 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.barStyle = UIBarStyle.Black
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        temperatureLabel.textColor = UIColor.whiteColor()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -129,7 +129,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
             //writeData(mDeviceCentralManger.devicesArrayOnSelectedStatus[0] as CBPeripheral, forCharacteristic:characteristic! , forData:mRealWriteData)
         }
         // 得到temperature
-        var temperature = calculateTemperature(characteristic.value)
+        let temperature = calculateTemperature(characteristic.value)
         temperatureLabel.text = NSString(format: "%.2f°C", temperature)
         // 保存temperature到数据库
         var temper: Temperature = Temperature()
