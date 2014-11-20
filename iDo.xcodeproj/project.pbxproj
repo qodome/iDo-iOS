@@ -8,9 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		0E58E6791A0AADB200671555 /* GATTUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E58E6781A0AADB200671555 /* GATTUtils.swift */; };
+		0E72E4C91A1DEDCF00586DAD /* BEMCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4B81A1DEDCF00586DAD /* BEMCircle.m */; };
+		0E72E4CA1A1DEDCF00586DAD /* BEMLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4BA1A1DEDCF00586DAD /* BEMLine.m */; };
+		0E72E4CB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4BC1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m */; };
+		0E72E4CC1A1DEDCF00586DAD /* BaseDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C01A1DEDCF00586DAD /* BaseDetail.swift */; };
+		0E72E4CD1A1DEDCF00586DAD /* BaseUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C11A1DEDCF00586DAD /* BaseUICollectionViewController.swift */; };
+		0E72E4CE1A1DEDCF00586DAD /* RESTUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C21A1DEDCF00586DAD /* RESTUICollectionViewController.swift */; };
+		0E72E4CF1A1DEDCF00586DAD /* RESTList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C41A1DEDCF00586DAD /* RESTList.swift */; };
+		0E72E4D01A1DEDCF00586DAD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C61A1DEDCF00586DAD /* Utils.swift */; };
+		0E72E4D11A1DEDCF00586DAD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C81A1DEDCF00586DAD /* README.md */; };
 		0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8064C81A1C829900324E71 /* BLEManager.swift */; };
 		0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DAF19F0F35700F6F403 /* Constants.swift */; };
-		0EFA2DBE19F0F9D500F6F403 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DB919F0F9D500F6F403 /* Utils.swift */; };
 		14B8F142A1164F60A8029125 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81053D327DCD46C78A44B6AC /* libPods.a */; };
 		E70F72381A0226B5005BC863 /* DIDatepicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E70F72351A0226B5005BC863 /* DIDatepicker.m */; };
 		E70F72391A0226B5005BC863 /* DIDatepickerDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = E70F72371A0226B5005BC863 /* DIDatepickerDateView.m */; };
@@ -51,9 +59,20 @@
 
 /* Begin PBXFileReference section */
 		0E58E6781A0AADB200671555 /* GATTUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATTUtils.swift; sourceTree = "<group>"; };
+		0E72E4B71A1DEDCF00586DAD /* BEMCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMCircle.h; sourceTree = "<group>"; };
+		0E72E4B81A1DEDCF00586DAD /* BEMCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMCircle.m; sourceTree = "<group>"; };
+		0E72E4B91A1DEDCF00586DAD /* BEMLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMLine.h; sourceTree = "<group>"; };
+		0E72E4BA1A1DEDCF00586DAD /* BEMLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMLine.m; sourceTree = "<group>"; };
+		0E72E4BB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMSimpleLineGraphView.h; sourceTree = "<group>"; };
+		0E72E4BC1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMSimpleLineGraphView.m; sourceTree = "<group>"; };
+		0E72E4C01A1DEDCF00586DAD /* BaseDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDetail.swift; sourceTree = "<group>"; };
+		0E72E4C11A1DEDCF00586DAD /* BaseUICollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUICollectionViewController.swift; sourceTree = "<group>"; };
+		0E72E4C21A1DEDCF00586DAD /* RESTUICollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTUICollectionViewController.swift; sourceTree = "<group>"; };
+		0E72E4C41A1DEDCF00586DAD /* RESTList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTList.swift; sourceTree = "<group>"; };
+		0E72E4C61A1DEDCF00586DAD /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		0E72E4C81A1DEDCF00586DAD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0E8064C81A1C829900324E71 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		0EFA2DAF19F0F35700F6F403 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		0EFA2DB919F0F9D500F6F403 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		6D80D7979AFB3C46B5F741DF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		81053D327DCD46C78A44B6AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A5CBB47F86481B8605E245 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -114,60 +133,95 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E72E4B41A1DEDCF00586DAD /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				0E72E4B51A1DEDCF00586DAD /* BEMSimpleLineGraph */,
+				0E72E4BD1A1DEDCF00586DAD /* Taylor */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		0E72E4B51A1DEDCF00586DAD /* BEMSimpleLineGraph */ = {
+			isa = PBXGroup;
+			children = (
+				0E72E4B61A1DEDCF00586DAD /* Classes */,
+			);
+			path = BEMSimpleLineGraph;
+			sourceTree = "<group>";
+		};
+		0E72E4B61A1DEDCF00586DAD /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0E72E4B71A1DEDCF00586DAD /* BEMCircle.h */,
+				0E72E4B81A1DEDCF00586DAD /* BEMCircle.m */,
+				0E72E4B91A1DEDCF00586DAD /* BEMLine.h */,
+				0E72E4BA1A1DEDCF00586DAD /* BEMLine.m */,
+				0E72E4BB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.h */,
+				0E72E4BC1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		0E72E4BD1A1DEDCF00586DAD /* Taylor */ = {
+			isa = PBXGroup;
+			children = (
+				0E72E4BE1A1DEDCF00586DAD /* Classes */,
+				0E72E4C81A1DEDCF00586DAD /* README.md */,
+			);
+			path = Taylor;
+			sourceTree = "<group>";
+		};
+		0E72E4BE1A1DEDCF00586DAD /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0E72E4BF1A1DEDCF00586DAD /* Controllers */,
+				0E72E4C31A1DEDCF00586DAD /* Models */,
+				0E72E4C51A1DEDCF00586DAD /* Util */,
+				0E72E4C71A1DEDCF00586DAD /* Views */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		0E72E4BF1A1DEDCF00586DAD /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0E72E4C01A1DEDCF00586DAD /* BaseDetail.swift */,
+				0E72E4C11A1DEDCF00586DAD /* BaseUICollectionViewController.swift */,
+				0E72E4C21A1DEDCF00586DAD /* RESTUICollectionViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		0E72E4C31A1DEDCF00586DAD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0E72E4C41A1DEDCF00586DAD /* RESTList.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0E72E4C51A1DEDCF00586DAD /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				0E72E4C61A1DEDCF00586DAD /* Utils.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		0E72E4C71A1DEDCF00586DAD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		0E8064C71A1C829900324E71 /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
 				0E8064C81A1C829900324E71 /* BLEManager.swift */,
 			);
 			path = Bluetooth;
-			sourceTree = "<group>";
-		};
-		0EFA2DB119F0F9D500F6F403 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				0EFA2DB219F0F9D500F6F403 /* Taylor */,
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
-		0EFA2DB219F0F9D500F6F403 /* Taylor */ = {
-			isa = PBXGroup;
-			children = (
-				0EFA2DB319F0F9D500F6F403 /* Classes */,
-			);
-			path = Taylor;
-			sourceTree = "<group>";
-		};
-		0EFA2DB319F0F9D500F6F403 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				0EFA2DB419F0F9D500F6F403 /* Controllers */,
-				0EFA2DB819F0F9D500F6F403 /* Util */,
-				0EFA2DBA19F0F9D500F6F403 /* Views */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		0EFA2DB419F0F9D500F6F403 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		0EFA2DB819F0F9D500F6F403 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				0EFA2DB919F0F9D500F6F403 /* Utils.swift */,
-			);
-			path = Util;
-			sourceTree = "<group>";
-		};
-		0EFA2DBA19F0F9D500F6F403 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		1F0EC2FAA97F95EE8525F9E2 /* Pods */ = {
@@ -191,6 +245,7 @@
 		E72F29F419D92456009383AB = {
 			isa = PBXGroup;
 			children = (
+				0E72E4B41A1DEDCF00586DAD /* Library */,
 				E72F29FF19D92456009383AB /* iDo */,
 				E72F2A1519D92457009383AB /* iDoTests */,
 				E72F29FE19D92456009383AB /* Products */,
@@ -211,7 +266,6 @@
 		E72F29FF19D92456009383AB /* iDo */ = {
 			isa = PBXGroup;
 			children = (
-				0EFA2DB119F0F9D500F6F403 /* Library */,
 				E72F2A0219D92457009383AB /* AppDelegate.swift */,
 				E72F2A5A19D926DA009383AB /* Classes */,
 				E72F2A0619D92457009383AB /* Main.storyboard */,
@@ -485,24 +539,32 @@
 				E72F2A7F19D926DA009383AB /* OliveDBDao.swift in Sources */,
 				E70F72381A0226B5005BC863 /* DIDatepicker.m in Sources */,
 				E74078D519FE5A3600B2D05A /* FDGraphView.m in Sources */,
+				0E72E4CF1A1DEDCF00586DAD /* RESTList.swift in Sources */,
 				E72F2A8119D926DA009383AB /* DateUtils.swift in Sources */,
 				E72F2A7C19D926DA009383AB /* Main.swift in Sources */,
+				0E72E4CA1A1DEDCF00586DAD /* BEMLine.m in Sources */,
+				0E72E4CB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m in Sources */,
 				0E58E6791A0AADB200671555 /* GATTUtils.swift in Sources */,
 				E74078CA19FE162B00B2D05A /* LineChart.swift in Sources */,
 				E74078CB19FE162B00B2D05A /* ScrolledChart.swift in Sources */,
 				E74078D419FE5A3600B2D05A /* FDGraphScrollView.m in Sources */,
-				0EFA2DBE19F0F9D500F6F403 /* Utils.swift in Sources */,
+				0E72E4CC1A1DEDCF00586DAD /* BaseDetail.swift in Sources */,
 				E74078CD19FE162B00B2D05A /* UILine.swift in Sources */,
 				E72F2A7B19D926DA009383AB /* Settings.swift in Sources */,
 				E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */,
+				0E72E4CD1A1DEDCF00586DAD /* BaseUICollectionViewController.swift in Sources */,
 				E72F2A7E19D926DA009383AB /* DBManager.swift in Sources */,
 				E72F2A7919D926DA009383AB /* DeviceDetail.swift in Sources */,
+				0E72E4CE1A1DEDCF00586DAD /* RESTUICollectionViewController.swift in Sources */,
 				E72F2A8219D926DA009383AB /* Util.swift in Sources */,
+				0E72E4D01A1DEDCF00586DAD /* Utils.swift in Sources */,
+				0E72E4D11A1DEDCF00586DAD /* README.md in Sources */,
 				E70F723B1A022B69005BC863 /* History.swift in Sources */,
 				0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */,
 				E72F2A0319D92457009383AB /* AppDelegate.swift in Sources */,
 				E74078CC19FE162B00B2D05A /* UICirclePoint.swift in Sources */,
 				E72F2A8019D926DA009383AB /* Temperature.swift in Sources */,
+				0E72E4C91A1DEDCF00586DAD /* BEMCircle.m in Sources */,
 				0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */,
 				E7B9170D19FF9DA40015E3A5 /* ChartDataConverter.swift in Sources */,
 				E70F72391A0226B5005BC863 /* DIDatepickerDateView.m in Sources */,
