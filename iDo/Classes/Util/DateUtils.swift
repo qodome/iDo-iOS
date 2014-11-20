@@ -2,7 +2,7 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-class DateUtil: NSObject {
+class DateUtils: NSObject {
     
     // NSString 转换成 NSdate
     class func dateFromString(dateStr: NSString, withFormat format: NSString) ->NSDate {
@@ -11,8 +11,8 @@ class DateUtil: NSObject {
         return dateFormatter.dateFromString(dateStr)!
     }
     
-    //NSString 转换成 时间戳
-    class func timestampFromDate(date: NSDate) ->NSString {
+    // NSString 转换成 时间戳
+    class func timestampFromDate(date: NSDate) -> NSString {
         let currentTimeMillis = date.timeIntervalSince1970 * 1000
         return "\(currentTimeMillis)"
     }

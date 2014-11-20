@@ -25,7 +25,7 @@
 		E72F2A7E19D926DA009383AB /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6519D926DA009383AB /* DBManager.swift */; };
 		E72F2A7F19D926DA009383AB /* OliveDBDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6619D926DA009383AB /* OliveDBDao.swift */; };
 		E72F2A8019D926DA009383AB /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6719D926DA009383AB /* Temperature.swift */; };
-		E72F2A8119D926DA009383AB /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6919D926DA009383AB /* DateUtil.swift */; };
+		E72F2A8119D926DA009383AB /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6919D926DA009383AB /* DateUtils.swift */; };
 		E72F2A8219D926DA009383AB /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6A19D926DA009383AB /* Util.swift */; };
 		E72F2A8F19D928CC009383AB /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A9119D928CC009383AB /* Localization.strings */; };
 		E74078CA19FE162B00B2D05A /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74078C619FE162B00B2D05A /* LineChart.swift */; };
@@ -77,7 +77,7 @@
 		E72F2A6519D926DA009383AB /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		E72F2A6619D926DA009383AB /* OliveDBDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OliveDBDao.swift; sourceTree = "<group>"; };
 		E72F2A6719D926DA009383AB /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
-		E72F2A6919D926DA009383AB /* DateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
+		E72F2A6919D926DA009383AB /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		E72F2A6A19D926DA009383AB /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		E72F2A9019D928CC009383AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localization.strings; sourceTree = "<group>"; };
 		E72F2A9219D928D0009383AB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localization.strings"; sourceTree = "<group>"; };
@@ -296,7 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				E7B9170C19FF9DA40015E3A5 /* ChartDataConverter.swift */,
-				E72F2A6919D926DA009383AB /* DateUtil.swift */,
+				E72F2A6919D926DA009383AB /* DateUtils.swift */,
 				E72F2A6A19D926DA009383AB /* Util.swift */,
 				0E58E6781A0AADB200671555 /* GATTUtils.swift */,
 			);
@@ -485,7 +485,7 @@
 				E72F2A7F19D926DA009383AB /* OliveDBDao.swift in Sources */,
 				E70F72381A0226B5005BC863 /* DIDatepicker.m in Sources */,
 				E74078D519FE5A3600B2D05A /* FDGraphView.m in Sources */,
-				E72F2A8119D926DA009383AB /* DateUtil.swift in Sources */,
+				E72F2A8119D926DA009383AB /* DateUtils.swift in Sources */,
 				E72F2A7C19D926DA009383AB /* Main.swift in Sources */,
 				0E58E6791A0AADB200671555 /* GATTUtils.swift in Sources */,
 				E74078CA19FE162B00B2D05A /* LineChart.swift in Sources */,

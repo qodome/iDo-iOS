@@ -13,7 +13,7 @@ class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource 
     var datepicker: DIDatepicker!
     var frontDate: NSDate!
     var numberOfDayFordatePicker = 31
-    var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
+    var currentSelectedDateString: NSString = DateUtils.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
     @IBOutlet weak var calenderBtn: UIBarButtonItem!
     @IBOutlet weak var numberTaped: UILabel! //显示当前温度的label
     @IBOutlet weak var dateShow: UILabel!
@@ -96,7 +96,7 @@ class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource 
     }
     
     func updateSelectedDate() {
-        var dateStr = DateUtil.stringFromDate((datepicker.selectedDate)!, WithFormat: "yyyy-MM-dd")
+        var dateStr = DateUtils.stringFromDate((datepicker.selectedDate)!, WithFormat: "yyyy-MM-dd")
         datepicker.removeFromSuperview()
         datepicker = nil
         // 根据date 从数据中取出温度记录 就是eLineChart的数据源
@@ -119,7 +119,7 @@ class History: UIViewController, ScrolledChartDelegate, ScrolledChartDataSource 
     
     /** generate data */
     func generateChartDataWithDateString(dateStr: String) ->Bool {
-        var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtil.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
+        var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtils.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
         if tempArray.count == 0 {
             //无数据
             println("无数据")

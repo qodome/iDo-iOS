@@ -4,8 +4,8 @@
 
 class Temperature: NSObject {
     
-    var cDate: NSString!
-    var cTemperature: NSString!
+    var timeStamp: NSString!
+    var high: NSString!
     
     override init() {
     }
@@ -13,13 +13,13 @@ class Temperature: NSObject {
     init(coder aDecoder: NSCoder!) {
         super.init()
         if aDecoder != nil {
-            cDate = aDecoder.decodeObjectForKey("cDate") as String
-            cTemperature = aDecoder.decodeObjectForKey("cTemperature") as String
+            timeStamp = aDecoder.decodeObjectForKey("time_stamp") as String
+            high = aDecoder.decodeObjectForKey("high") as String
         }
     }
     
     func encodeWithCoder(aCoder: NSCoder!) {
-        aCoder.encodeObject(cDate, forKey: "cDate")
-        aCoder.encodeObject(cTemperature, forKey: "cTemperature")
+        aCoder.encodeObject(timeStamp, forKey: "time_stamp")
+        aCoder.encodeObject(high, forKey: "high")
     }
 }

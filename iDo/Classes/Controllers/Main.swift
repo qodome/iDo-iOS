@@ -14,7 +14,6 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     var pointNumberInsection = 120
     var titleStringArrForXAXis: [String] = [] // 横坐标的string
     var titleStringArrForYMaxPoint = "max"
-    var currentSelectedDateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
     
     @IBOutlet weak var settingBtn: UIButton!
     @IBOutlet weak var peripheralBarBtn: UIBarButtonItem!
@@ -85,15 +84,16 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     
     func didUpdateValue(characteristic: CBCharacteristic) {
         let temperature = calculateTemperature(characteristic.value)
-        temperatureLabel.text = NSString(format: "%.2f°C", temperature)
+        temperatureLabel.text = NSString(format: "%.2f℃", temperature)
         // 保存temperature到数据库
         var temper: Temperature = Temperature()
-        temper.cTemperature = NSString(format: "%.2f", temperature)
-        temper.cDate = DateUtil.timestampFromDate(NSDate())
+        temper.high = NSString(format: "%.2f", temperature)
+        temper.timeStamp = DateUtils.timestampFromDate(NSDate())
         OliveDBDao.saveTemperature(temper)
-        if currentSelectedDateString == DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd") {
-            updateCurrentDateLineChart()
-        }
+        
+        
+        updateCurrentDateLineChart()
+
         // 通知
         if temperature <= Util.lowTemperature() { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
@@ -101,7 +101,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
                 sendNotifition("温度过低", temperature: temperature)
             }
         } else if temperature >= Util.HighTemperature() { // 温度过高
-            view.backgroundColor = UIColor.colorWithHex(IDO_ORANGE)
+            view.backgroundColor = UIColor.colorWithHex(IDO_RED)
             if Util.isHighTNotice() {
                 sendNotifition("温度过高", temperature: temperature)
             }
@@ -169,7 +169,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     // MARK: - 💛 Custom Method
     /** generate data */
     func generateChartDataWithDateString(dateStr: String) -> Bool {
-        var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtil.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
+        var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtils.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
         if tempArray.count == 0 {
             //无数据
             println("无数据")
@@ -183,7 +183,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     
     func updateCurrentDateLineChart() {
         //默认 显示 lineChart
-        let dateStr = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
+        let dateStr = DateUtils.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
         if generateChartDataWithDateString(dateStr) {
             // 由数据源改变 eLineChart的值
             var currentGraphChartFrame: CGRect!
@@ -205,7 +205,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         }
     }
     
-    /** About notifition */
+    /** 本地通知 */
     func sendNotifition(message: String, temperature: Float) {
         var notification: UILocalNotification! = UILocalNotification()
         if notification != nil {
@@ -213,9 +213,9 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
             notification.timeZone = NSTimeZone.defaultTimeZone()
             notification.alertBody = NSString(format: "请注意：%.2f,%@", temperature, message)
             notification.alertAction = message
-            notification.soundName = UILocalNotificationDefaultSoundName
-            notification.applicationIconBadgeNumber = 1 //???
-            notification.userInfo = ["key":"object"]
+            notification.soundName = UILocalNotificationDefaultSoundName // 声音
+            notification.applicationIconBadgeNumber = 1 // ???
+            notification.userInfo = ["key" : "object"]
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
     }
