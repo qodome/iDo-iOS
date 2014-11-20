@@ -20,7 +20,7 @@ class DBManager: NSObject {
     }
     
     //数据库对象单例方法
-    class func sharedDataBase() -> FMDatabase {
+    class func sharedManager() -> FMDatabase {
         //        struct FMDatabaseSingleton {
         //            static var predicate:dispatch_once_t = 0
         //            static var instance:FMDatabase? = nil
@@ -36,7 +36,6 @@ class DBManager: NSObject {
     class func closeDataBase() {
         if !FMDatabaseSingleton.instance!.close() {
             println("数据库关闭异常，请检查")
-            return
         }
     }
     
@@ -47,7 +46,7 @@ class DBManager: NSObject {
             var error: NSError?
             var fileManager: NSFileManager = NSFileManager.defaultManager()
             if fileManager.fileExistsAtPath(DBManager.kDataBasePath()) {
-                sharedDataBase().close()
+                sharedManager().close()
                 isSuccess = fileManager.removeItemAtPath(DBManager.kDataBasePath(), error: &error)
                 if !isSuccess {
                     //fatalError("Failed to delete old database file with message")
@@ -64,25 +63,20 @@ class DBManager: NSObject {
     //创建所有表
     class func createTable() -> Bool {
         println("\(DBManager.kDataBasePath())")
-        if(true) {
-            var shareDataBase: FMDatabase = DBManager.sharedDataBase()
-            if sharedDataBase().open() {
-                if !DBManager.isTableExist("downLoad_table") {
-                    let sql = "CREATE TABLE \"downLoad_table\" (\"newsType\" TEXT check(typeof(\"newsType\") = 'text') , \"att\" BLOB)"
-                    shareDataBase.executeUpdate(sql, withArgumentsInArray: nil)
-                }
-                shareDataBase.close()
+        if sharedManager().open() {
+            if !DBManager.isTableExist("downLoad_table") {
+                let sql = "CREATE TABLE \"downLoad_table\" (\"newsType\" TEXT check(typeof(\"newsType\") = 'text') , \"att\" BLOB)"
+                sharedManager().executeUpdate(sql, withArgumentsInArray: nil)
             }
+            sharedManager().close()
         }
         return true
     }
     
-    
     //判断表是否存在
-    class func isTableExist(tableName:String) -> Bool {
-        var shareDataBase: FMDatabase = DBManager.sharedDataBase()
-        if shareDataBase.open() {
-            let rs = shareDataBase.executeQuery("select count(*) as 'count' from sqlite_master where type ='table' and name = ?", withArgumentsInArray: [tableName])?
+    class func isTableExist(tableName: String) -> Bool {
+        if sharedManager().open() {
+            let rs = sharedManager().executeQuery("select count(*) as 'count' from sqlite_master where type ='table' and name = ?", withArgumentsInArray: [tableName])?
             while ((rs?.next()) != nil) {
                 let count = rs?.intForColumn("count")
                 if count == 0 {

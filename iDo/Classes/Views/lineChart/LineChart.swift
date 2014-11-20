@@ -105,16 +105,6 @@ class LineChart: UIView {
         }
     }
     
-    /**draw point的方法 */
-    func drawPoint(ellipseRect: CGRect, withContext context: CGContextRef) {
-        CGContextAddEllipseInRect(context, ellipseRect)
-        CGContextSetLineWidth(context, 1)
-        UIColor.whiteColor().setStroke()
-        UIColor.whiteColor().setFill()
-        CGContextFillEllipseInRect(context, ellipseRect)
-        CGContextStrokeEllipseInRect(context, ellipseRect)
-    }
-    
     /**draw line的方法 */
     func drawLine(firstPoint: CGPoint, secondPoint: CGPoint) {
         var path: UIBezierPath = UIBezierPath()

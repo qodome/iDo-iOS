@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E58E6771A0A87EF00671555 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E58E6761A0A87EF00671555 /* BLEManager.swift */; };
 		0E58E6791A0AADB200671555 /* GATTUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E58E6781A0AADB200671555 /* GATTUtils.swift */; };
+		0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8064C81A1C829900324E71 /* BLEManager.swift */; };
 		0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DAF19F0F35700F6F403 /* Constants.swift */; };
 		0EFA2DBE19F0F9D500F6F403 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DB919F0F9D500F6F403 /* Utils.swift */; };
 		14B8F142A1164F60A8029125 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81053D327DCD46C78A44B6AC /* libPods.a */; };
@@ -50,8 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0E58E6761A0A87EF00671555 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		0E58E6781A0AADB200671555 /* GATTUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATTUtils.swift; sourceTree = "<group>"; };
+		0E8064C81A1C829900324E71 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		0EFA2DAF19F0F35700F6F403 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0EFA2DB919F0F9D500F6F403 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		6D80D7979AFB3C46B5F741DF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -114,6 +114,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E8064C71A1C829900324E71 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				0E8064C81A1C829900324E71 /* BLEManager.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
 		0EFA2DB119F0F9D500F6F403 /* Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +254,7 @@
 			children = (
 				0EFA2DAF19F0F35700F6F403 /* Constants.swift */,
 				E72F2A6819D926DA009383AB /* Util */,
+				0E8064C71A1C829900324E71 /* Bluetooth */,
 				E72F2A5B19D926DA009383AB /* Controllers */,
 				E72F2A6119D926DA009383AB /* Models */,
 				E72F2A6B19D926DA009383AB /* Views */,
@@ -268,7 +277,6 @@
 		E72F2A6119D926DA009383AB /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0E58E6761A0A87EF00671555 /* BLEManager.swift */,
 				E72F2A6419D926DA009383AB /* Database */,
 				E72F2A6719D926DA009383AB /* Temperature.swift */,
 			);
@@ -491,7 +499,7 @@
 				E72F2A7919D926DA009383AB /* DeviceDetail.swift in Sources */,
 				E72F2A8219D926DA009383AB /* Util.swift in Sources */,
 				E70F723B1A022B69005BC863 /* History.swift in Sources */,
-				0E58E6771A0A87EF00671555 /* BLEManager.swift in Sources */,
+				0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */,
 				E72F2A0319D92457009383AB /* AppDelegate.swift in Sources */,
 				E74078CC19FE162B00B2D05A /* UICirclePoint.swift in Sources */,
 				E72F2A8019D926DA009383AB /* Temperature.swift in Sources */,

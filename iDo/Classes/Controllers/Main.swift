@@ -84,51 +84,6 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     }
     
     func didUpdateValue(characteristic: CBCharacteristic) {
-        println("data length----\(characteristic.value.length)")
-        if characteristic.value.length == 5 {
-            // 写date数据到peripheral中
-            // 得到当前data的16进制
-            var dateString: NSString = DateUtil.stringFromDate(NSDate(), WithFormat: "yyyyMMddHHmmss")
-            let mWriteData: NSData = (dateString.dataUsingEncoding(NSASCIIStringEncoding))!
-            var bytes = [UInt8](count: mWriteData.length, repeatedValue: 0)
-            mWriteData.getBytes(&bytes, length:mWriteData.length)
-            var mDateBytes = [UInt8](count: mWriteData.length/2, repeatedValue: 0)
-            for var i = 0; i < bytes.count; i++ {
-                // [NSString stringWithFormat:@"%x",bytes[i]&0xff]
-                var cData = NSString(format: "%c%c", bytes[i],bytes[i+1]).integerValue
-                i++
-                mDateBytes[i/2] = UInt8(cData)
-                println("write data length\(cData)")
-            }
-            var hexArr:NSMutableArray = NSMutableArray()
-            var writeDataString: String = ""
-            for i in 0..<mDateBytes.count {
-                var hexStr: NSString = ""
-                var newHexStr: NSString = NSString(format: "%x", mDateBytes[i]&0xff)
-                if newHexStr.length == 1 {
-                    hexStr = NSString(format: "%@0%@", hexStr, newHexStr)
-                } else {
-                    hexStr = NSString(format: "%@%@", hexStr, newHexStr)
-                }
-                println("1 mDateBytes: \(mDateBytes[i])")
-                hexArr[i] = hexStr
-                writeDataString += hexStr
-                println("2 mDateBytes: \(hexArr[i])")
-            }
-            println("writeDataString-\(writeDataString)")
-            let realWriteData = writeDataString.dataUsingEncoding(NSASCIIStringEncoding)!
-            var mRealDateBytes = [UInt8](count: realWriteData.length/2, repeatedValue: 0)
-            for var i = 0; i < bytes.count; i++ {
-                var cData = NSString(format: "%c%c", bytes[i],bytes[i+1]).integerValue
-                i++
-                mDateBytes[i/2] = UInt8(cData)
-                println("2 write data length\(cData)")
-            }
-            let mRealWriteData = NSData(bytes: mRealDateBytes, length: mRealDateBytes.count)
-            //println("realWriteData--\(realWriteData.description) length--\(realWriteData.length)")
-            //writeData(mDeviceCentralManger.devicesArrayOnSelectedStatus[0] as CBPeripheral, forCharacteristic:characteristic! , forData:mRealWriteData)
-        }
-        // 得到temperature
         let temperature = calculateTemperature(characteristic.value)
         temperatureLabel.text = NSString(format: "%.2f°C", temperature)
         // 保存temperature到数据库
@@ -139,17 +94,15 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         if currentSelectedDateString == DateUtil.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd") {
             updateCurrentDateLineChart()
         }
-        // 通知相关
+        // 通知
         if temperature <= Util.lowTemperature() { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
             if Util.isLowTNotice() {
-                println("温度过低")
                 sendNotifition("温度过低", temperature: temperature)
             }
         } else if temperature >= Util.HighTemperature() { // 温度过高
             view.backgroundColor = UIColor.colorWithHex(IDO_ORANGE)
             if Util.isHighTNotice() {
-                println("温度过高")
                 sendNotifition("温度过高", temperature: temperature)
             }
         } else {
@@ -265,11 +218,6 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
             notification.userInfo = ["key":"object"]
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
-    }
-    
-    /** 写date数据到peripheral中 */
-    func writeValue(peripheral: CBPeripheral, data: NSData, characteristic: CBCharacteristic) {
-        peripheral.writeValue(data, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithResponse)
     }
     
     func maxValueForLineChart(data: [Int : CGFloat]) -> CGFloat {
