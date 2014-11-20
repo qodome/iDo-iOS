@@ -20,7 +20,7 @@ class BaseDetail: UIViewController {
         super.viewDidLoad()
         // 🔹 准备数据
         RKObjectManager.setSharedManager(RKObjectManager(baseURL: NSURL(string: baseUrl)))
-        RKObjectManager.sharedManager().HTTPClient.setDefaultHeader("Authorization", value: "Token \(DEFAILT_TOKEN)")
+        RKObjectManager.sharedManager().HTTPClient.setDefaultHeader("Authorization", value: "Token \(DEFAULT_TOKEN)")
         prepareForLoadData() // 准备数据
         descriptor = RKResponseDescriptor(mapping: mapping, method: .Any, pathPattern: nil, keyPath: keyPath, statusCodes: RKStatusCodeIndexSetForClass(UInt(RKStatusCodeClassSuccessful)))
         // 🔹 错误处理

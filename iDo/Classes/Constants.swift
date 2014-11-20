@@ -9,6 +9,5 @@ let IDO_GREEN = 0x17A865
 let IDO_BLUE = 0x2897C3
 let IDO_PURPLE = 0xAA66CC
 
-func LocalizedString(name: String) -> String {
-    return NSLocalizedString(name, tableName: "Localization", value: "", comment: "")
-}
+let BASE_URL = "http://qodome.com"
+let DEFAULT_TOKEN = ""
