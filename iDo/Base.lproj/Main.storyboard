@@ -50,27 +50,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OXU-it-FXy">
-                                <rect key="frame" x="16" y="551" width="567" height="49"/>
-                                <state key="normal" title="Setting">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="asg-LH-rNf" kind="presentation" id="rHY-tJ-42n"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Mcz-Um-NA6" firstAttribute="centerX" secondItem="TWn-9D-rVy" secondAttribute="centerX" constant="24" id="0Yw-Jb-s82"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="OXU-it-FXy" secondAttribute="trailing" constant="1" id="2u0-ER-5os"/>
                             <constraint firstItem="8wC-kw-KcM" firstAttribute="top" secondItem="Mcz-Um-NA6" secondAttribute="bottom" constant="20" id="3mx-aI-h2x"/>
-                            <constraint firstItem="OXU-it-FXy" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="76H-xW-Wer"/>
-                            <constraint firstItem="OXU-it-FXy" firstAttribute="top" secondItem="QmJ-19-7Jc" secondAttribute="bottom" constant="1" id="8kM-Gb-kPj"/>
                             <constraint firstItem="H4Q-9e-4qE" firstAttribute="trailing" secondItem="Fs6-pX-uWd" secondAttribute="trailingMargin" id="95Y-5P-97E"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QmJ-19-7Jc" secondAttribute="trailing" id="AuK-CQ-xMV"/>
-                            <constraint firstItem="mhW-0X-WlR" firstAttribute="top" secondItem="OXU-it-FXy" secondAttribute="bottom" id="DhG-7X-eH2"/>
                             <constraint firstItem="H4Q-9e-4qE" firstAttribute="top" secondItem="Mcz-Um-NA6" secondAttribute="bottom" constant="20" id="Dv6-RS-VsL"/>
                             <constraint firstItem="Mcz-Um-NA6" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="56" id="Gzg-vJ-s8a"/>
                             <constraint firstItem="TWn-9D-rVy" firstAttribute="top" secondItem="H4Q-9e-4qE" secondAttribute="bottom" id="LgP-Yd-pG1"/>
@@ -113,8 +99,8 @@
                         <outlet property="peripheralBarBtn" destination="fBS-wO-7e1" id="Ls5-v7-bO0"/>
                         <outlet property="reconnectBtn" destination="TWn-9D-rVy" id="j1K-zF-Ybi"/>
                         <outlet property="scrolledChart" destination="QmJ-19-7Jc" id="czc-Kv-dF9"/>
-                        <outlet property="settingBtn" destination="OXU-it-FXy" id="BU5-IS-GWQ"/>
                         <outlet property="temperatureLabel" destination="Mcz-Um-NA6" id="f84-z5-Gej"/>
+                        <segue destination="asg-LH-rNf" kind="presentation" identifier="segue_home_settings" id="pSb-6Z-ttf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i95-lV-AMc" sceneMemberID="firstResponder"/>

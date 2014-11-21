@@ -20,12 +20,12 @@ protocol DeviceChangeDelegate {
     func onDataChange(unconnected: [CBPeripheral], connected: CBPeripheral?)
 }
 
-enum BLEManagerState : Int {
-    case idle
-    case scan
-    case connecting
-    case connected
-    case disconnected
+enum BLEManagerState: Int {
+    case Idle
+    case Scan
+    case Connecting
+    case Connected
+    case Disconnected
 }
 
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
@@ -37,7 +37,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var central: CBCentralManager!
     var connected: CBPeripheral? // 已连接设备
     var peripherals: [CBPeripheral] = [] // 未连接设备
-    var state = BLEManagerState.idle
+    var state = BLEManagerState.Idle
     var delegate: BLEManagerDelegate! // 温度数据发送 代理
     var changeDelegate: DeviceChangeDelegate? //设备data变化 代理
     
@@ -66,7 +66,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     func connect(peripheral: CBPeripheral) { // 连接
-        state = .connecting
+        state = .Connecting
         central.connectPeripheral(peripheral, options: nil)
     }
     
@@ -131,7 +131,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         peripheral.discoverServices([CBUUID(string: kServiceUUID)])
         delegate.didConnect(peripheral)
         changeDelegate?.onDataChange(peripherals, connected: peripheral)
-        state = .connected
+        state = .Connected
     }
     
     // MARK: -      处理异常
@@ -141,7 +141,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
         NSLog("💙 断开设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
-        state = .disconnected
+        state = .Disconnected
         connected = nil
         if !contains(peripherals, peripheral) {
             peripherals.append(peripheral)

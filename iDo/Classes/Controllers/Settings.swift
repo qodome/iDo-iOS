@@ -24,8 +24,8 @@ class Settings: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = LocalizedString("settings")
-        lowLabel.text = LocalizedString("Minimum temperature")
-        highLabel.text = LocalizedString("Maximum temperature")
+        lowLabel.text = LocalizedString("min_temperature")
+        highLabel.text = LocalizedString("max_temperature")
         lAlarmLabel.text = LocalizedString("low temperature alarm")
         hAlarmLabel.text = LocalizedString("High temperature alarm")
         

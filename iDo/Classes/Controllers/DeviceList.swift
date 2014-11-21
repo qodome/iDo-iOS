@@ -18,16 +18,16 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
         title = LocalizedString("devices")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh:")
-        // 还原导航栏
-        navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
-        navigationController?.navigationBar.shadowImage = nil
-        navigationController?.navigationBar.barStyle = UIBarStyle.Default
-        navigationController?.navigationBar.tintColor = UIColor.colorWithHex(APP_COLOR)
         
         let deviceManager = BLEManager.sharedManager()
         deviceManager.changeDelegate = self
         data = deviceManager.peripherals
         device = deviceManager.connected
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigationBarStyle(.Default)
     }
     
     // MARK: - onDataChange
@@ -63,7 +63,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         //        cell.indicator.hidden = true
         if indexPath.section == 0 {
             device = self.device!
-            if BLEManager.sharedManager().state == .connecting {
+            if BLEManager.sharedManager().state == .Connecting {
                 //                cell.indicator.hidden = false
                 //                cell.indicator.startAnimating()
                 cell.imageView.hidden = true

@@ -197,6 +197,11 @@
         CGContextSaveGState(ctx);
         CGContextAddPath(ctx, [fillBottom CGPath]);
         CGContextClip(ctx);
+        // NY 添加开始
+        CGFloat components[8] = {1, 1, 1, 0.8, 1, 1, 1, 0};
+        CGFloat locations[2] = {0, 0.8};
+        self.bottomGradient = CGGradientCreateWithColorComponents(CGColorSpaceCreateDeviceRGB(), components, locations, 2);
+        // NY 添加结束
         CGContextDrawLinearGradient(ctx, self.bottomGradient, CGPointZero, CGPointMake(0, CGRectGetMaxY(fillBottom.bounds)), 0);
         CGContextRestoreGState(ctx);
     }

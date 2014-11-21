@@ -18,6 +18,7 @@
 		0E72E4D01A1DEDCF00586DAD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C61A1DEDCF00586DAD /* Utils.swift */; };
 		0E72E4D11A1DEDCF00586DAD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C81A1DEDCF00586DAD /* README.md */; };
 		0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8064C81A1C829900324E71 /* BLEManager.swift */; };
+		0EB30F871A1F229D00A11A76 /* Temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB30F861A1F229D00A11A76 /* Temp.swift */; };
 		0EEF41B51A1DEF7F00D3AA4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */; };
 		0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DAF19F0F35700F6F403 /* Constants.swift */; };
 		14B8F142A1164F60A8029125 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81053D327DCD46C78A44B6AC /* libPods.a */; };
@@ -72,6 +73,7 @@
 		0E72E4C61A1DEDCF00586DAD /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		0E72E4C81A1DEDCF00586DAD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0E8064C81A1C829900324E71 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		0EB30F861A1F229D00A11A76 /* Temp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temp.swift; sourceTree = "<group>"; };
 		0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0EEF41BB1A1DF0CF00D3AA4C /* iDo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iDo-Bridging-Header.h"; sourceTree = "<group>"; };
 		0EFA2DAF19F0F35700F6F403 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -320,10 +322,10 @@
 			isa = PBXGroup;
 			children = (
 				E72F2A6019D926DA009383AB /* Main.swift */,
+				E70F723A1A022B69005BC863 /* History.swift */,
 				E72F2A5F19D926DA009383AB /* Settings.swift */,
 				E72F2A5E19D926DA009383AB /* DeviceList.swift */,
 				E72F2A5D19D926DA009383AB /* DeviceDetail.swift */,
-				E70F723A1A022B69005BC863 /* History.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -333,6 +335,7 @@
 			children = (
 				E72F2A6419D926DA009383AB /* Database */,
 				E72F2A6719D926DA009383AB /* Temperature.swift */,
+				0EB30F861A1F229D00A11A76 /* Temp.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */,
 				E7B9170D19FF9DA40015E3A5 /* ChartDataConverter.swift in Sources */,
 				E70F72391A0226B5005BC863 /* DIDatepickerDateView.m in Sources */,
+				0EB30F871A1F229D00A11A76 /* Temp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

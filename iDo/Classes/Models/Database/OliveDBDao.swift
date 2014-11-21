@@ -48,7 +48,7 @@ class OliveDBDao: NSObject {
                 let beginDateStr = DateUtils.stringFromDate(date, WithFormat: "yyyy-MM-dd 00:00:00")
                 let endDateStr = DateUtils.stringFromDate(date, WithFormat: "yyyy-MM-dd 23:59:59")
                 let sql = "SELECT * FROM \(OliveDBDaoSingleton.sTableName) WHERE time_stamp BETWEEN ? AND ?"
-                let rs: FMResultSet = DBManager.sharedManager().executeQuery(sql, withArgumentsInArray: [beginDateStr,endDateStr])
+                let rs: FMResultSet = DBManager.sharedManager().executeQuery(sql, withArgumentsInArray: [beginDateStr, endDateStr])
                 while (rs.next()) {
                     let tempData: NSData = rs.dataForColumn("high")
                     let temp: Temperature = NSKeyedUnarchiver.unarchiveObjectWithData(tempData) as Temperature

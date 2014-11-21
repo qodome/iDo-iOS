@@ -8,8 +8,8 @@
 
 "High temperature alarm" = "High temperature alarm";
 "low temperature alarm" = "low temperature alarm";
-"Minimum temperature" = "Min temperature";
-"Maximum temperature" = "Max temperature";
+"min_temperature" = "Min temperature";
+"max_temperature" = "Max temperature";
 
 "name" = "Name";
 "bluetooth" = "Bluetooth";

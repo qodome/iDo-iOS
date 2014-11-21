@@ -4,18 +4,17 @@
 
 import CoreBluetooth
 
-class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollViewDelegate, ScrolledChartDelegate, ScrolledChartDataSource {
+class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource, UIAlertViewDelegate {
     // MARK: - 🍀 变量
     let segueId = "segue_main_device_list"
-    
-    var data: [Int : CGFloat] = Dictionary()
+
+    var data: [Temp] = []
     var sectionsCount = 5 // 今天的数据(只记录4小时)
     var pageCount = 4
     var pointNumberInsection = 120
     var titleStringArrForXAXis: [String] = [] // 横坐标的string
     var titleStringArrForYMaxPoint = "max"
     
-    @IBOutlet weak var settingBtn: UIButton!
     @IBOutlet weak var peripheralBarBtn: UIBarButtonItem!
     @IBOutlet weak var historyBtn: UIBarButtonItem!
     @IBOutlet weak var numberTaped: UILabel! //显示当前温度的label
@@ -28,7 +27,15 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
-        settingBtn.setTitle(LocalizedString("settings"), forState: UIControlState.Normal)
+        navigationController?.setToolbarHidden(false, animated: false)
+        
+        setToolbarStyle(.Transparent)
+
+        
+        let settings = UIBarButtonItem(title: "settings", style: UIBarButtonItemStyle.Bordered, target: self, action: "settings:")
+        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        setToolbarItems([space, settings, space], animated: false)
+        
         historyBtn.title = LocalizedString("history")
         peripheralBarBtn.title = LocalizedString("devices")
         numberTaped.font = UIFont(name: "HelveticaNeue-Light", size: 20)
@@ -49,21 +56,48 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
                 cancelButtonTitle: LocalizedString("cancel"),
                 otherButtonTitles: LocalizedString("Jump to device page")).show()
         }
+        
+        var chart = BEMSimpleLineGraphView(frame: CGRectMake(0, 0, SCREEN_WIDTH * 2, 240))
+        chart.delegate = self
+        chart.dataSource = self
+        // ❨╯°□°❩╯︵┻━┻
+        let components: [CGFloat]  = [1, 1, 1, 0.8, 1, 1, 1, 0]
+        let locations: [CGFloat] = [0, 0.8]
+        chart.gradientBottom = CGGradientCreateWithColorComponents(CGColorSpaceCreateDeviceRGB(), components, locations, 2) // 透明化通过Swift转OC会出错
+        chart.colorTop = UIColor.clearColor() // 线上颜色
+        chart.colorBottom = UIColor.clearColor() // 线下颜色
+        chart.colorXaxisLabel = UIColor.whiteColor() // x轴标签色
+        chart.colorYaxisLabel = UIColor.whiteColor() // y轴标签色
+        chart.enableBezierCurve = true // 贝塞尔曲线
+//        chart.enableTouchReport = true
+        chart.enablePopUpReport = true // 包含enableTouchReport效果
+        chart.enableYAxisLabel = true // 显示y轴标签
+        chart.enableReferenceYAxisLines = true // 显示y轴参考线
+        chart.animationGraphStyle = BEMLineAnimation.Fade // 绘制动画关闭会造成PopUp失效
+        // ScrollView
+        var scrollView = UIScrollView(frame: CGRectMake(0, 200, SCREEN_WIDTH, chart.frame.height + 44))
+        scrollView.contentSize = CGSizeMake(chart.frame.width, chart.frame.height)
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.addSubview(chart)
+        view.addSubview(scrollView)
+        
+        for i in 0..<12 * 24 {
+            var temp = Temp()
+            temp.timeStamp = 1
+            temp.high = CGFloat(arc4random_uniform(150)) / 100 + 37
+            data.append(temp)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        // 透明化navigationBar
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        setNavigationBarStyle(.Transparent)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        updateCurrentDateLineChart()
-        println("ccccccc")
+        drawChart()
+//        updateCurrentDateLineChart()
     }
     
     // MARK: - 🐤 DeviceStateDelegate
@@ -91,8 +125,8 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         temper.timeStamp = DateUtils.timestampFromDate(NSDate())
         OliveDBDao.saveTemperature(temper)
         
-        
-        updateCurrentDateLineChart()
+        drawChart()
+//        updateCurrentDateLineChart()
 
         // 通知
         if temperature <= Util.lowTemperature() { // 温度过低
@@ -110,54 +144,21 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
         }
     }
     
+    // MARK:- 💙 BEMSimpleLineGraphDataSource
+    func numberOfPointsInLineGraph(graph: BEMSimpleLineGraphView!) -> Int {
+        return data.count
+    }
+    
+    func lineGraph(graph: BEMSimpleLineGraphView!, valueForPointAtIndex index: Int) -> CGFloat {
+        return data[index].high
+    }
+    
     // MARK: - 💙 UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 { // 进入设备页
             BLEManager.sharedManager().startScan()
             performSegueWithIdentifier(segueId, sender: self)
         }
-    }
-    
-    // MARK: - 💙 UIScrollViewDelegate
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        numberTaped.hidden = true
-    }
-    
-    // MARK: - 🐤 ScrolledChartDataSource
-    func numberOfSectionsInScrolledChart(scrolledChart: LineChart) ->Int {
-        return sectionsCount
-    }
-    
-    func allNumberOfPointsInSection(scrolledChart: LineChart) ->Int {
-        return pointNumberInsection
-    }
-    
-    func numberOfPointsInScrolledChart(scrolledChart: LineChart) ->Int {
-        return data.values.array.count
-    }
-    
-    func scrolledChart(scrolledChart: LineChart, keyForItemAtPointNumber pointNumber: Int) ->Int {
-        var sortKeys = (data.keys).array.sorted({$0 < $1})
-        return sortKeys[pointNumber]
-    }
-    
-    func scrolledChart(scrolledChart: LineChart, valueForItemAtKey key: Int) ->CGFloat {
-        return data[key]!
-    }
-    
-    func maxDataInScrolledChart(scrolledChart: LineChart) -> CGFloat {
-        return maxValueForLineChart(data)
-    }
-    
-    func scrolledChart(scrolledChart: LineChart, titleInXAXisPointLabelInSection section: Int) ->String {
-        return titleStringArrForXAXis[section]
-    }
-    
-    // MARK: - ScrolledChartDelegate
-    func scrolledChart(scrolledChart: LineChart, didClickItemAtPointNumber pointNumber: Int) {
-        //println("data - \(data.description)")
-        println("didClickItemAtIndexPath")
-        numberTaped.text = NSString(format: "%.2f°C", Float(data[pointNumber]!))
     }
     
     @IBAction func reconnectPeripheral(sender: AnyObject) {
@@ -167,6 +168,16 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
     }
     
     // MARK: - 💛 Custom Method
+    func drawChart() {
+        
+    }
+    
+    // MARK: - 💛 Action
+    func settings(sender: AnyObject) {
+        performSegueWithIdentifier("segue_home_settings", sender: self)
+    }
+    
+    
     /** generate data */
     func generateChartDataWithDateString(dateStr: String) -> Bool {
         var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtils.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
@@ -175,7 +186,7 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
             println("无数据")
             return false
         } else {
-            data = ChartDataConverter().convertDataForToday(tempArray).0
+//            data = ChartDataConverter().convertDataForToday(tempArray).0
             titleStringArrForXAXis = ChartDataConverter().convertDataForToday(tempArray).1
             return true
         }
@@ -191,13 +202,13 @@ class Main: UIViewController, BLEManagerDelegate, UIAlertViewDelegate, UIScrollV
                 currentGraphChartFrame = scrolledChart?.frame
                 scrolledChart?.removeFromSuperview()
             }
-            titleStringArrForYMaxPoint = NSString(format: "%.2f", Float(maxValueForLineChart(data)))
+//            titleStringArrForYMaxPoint = NSString(format: "%.2f", Float(maxValueForLineChart(data)))
             scrolledChart = ScrolledChart(frame: currentGraphChartFrame, pageCount: Float(pageCount), titleInYAXisMax: titleStringArrForYMaxPoint)
             scrolledChart!.scrollView.contentOffset.x = scrolledChart!.scrollView.frame.width * CGFloat(pageCount - 1)
             // add scrollChart
             scrolledChart?.backgroundColor = UIColor.clearColor()
-            scrolledChart?.lineChart.dataSource = self
-            scrolledChart?.lineChart.delegate = self
+//            scrolledChart?.lineChart.dataSource = self
+//            scrolledChart?.lineChart.delegate = self
             view.addSubview(scrolledChart!)
             dateShow.text = dateStr
         } else {

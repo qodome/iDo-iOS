@@ -2,7 +2,45 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
+let SCREEN_WIDTH = UIScreen.mainScreen().bounds.width
+let SCREEN_HEIGHT = UIScreen.mainScreen().bounds.height
 let TEMP_IMAGE = UIImage()
+
+enum MyStyle: Int {
+    case Default
+    case Transparent
+}
+
+extension UIViewController {
+    
+    func setToolbarStyle(style: MyStyle) {
+        switch style {
+        case .Transparent:
+            navigationController?.toolbar.setBackgroundImage(TEMP_IMAGE, forToolbarPosition:
+                .Any, barMetrics: .Default)
+            navigationController?.toolbar.setShadowImage(TEMP_IMAGE, forToolbarPosition: .Any)
+            navigationController?.toolbar.tintColor = UIColor.whiteColor()
+        default:
+            println("haha")
+        }
+    }
+    
+    func setNavigationBarStyle(style: MyStyle) {
+        switch style {
+        case .Transparent: // 透明导航栏
+            automaticallyAdjustsScrollViewInsets = false // 默认全屏风格
+            navigationController?.navigationBar.setBackgroundImage(TEMP_IMAGE, forBarMetrics: .Default)
+            navigationController?.navigationBar.shadowImage = TEMP_IMAGE
+            navigationController?.navigationBar.barStyle = .Black
+            navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        default: // 还原导航栏
+            navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+            navigationController?.navigationBar.shadowImage = nil
+            navigationController?.navigationBar.barStyle = .Default
+            navigationController?.navigationBar.tintColor = UIColor.colorWithHex(APP_COLOR)
+        }
+    }
+}
 
 extension UIColor {
     

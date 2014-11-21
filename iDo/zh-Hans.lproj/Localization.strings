@@ -8,8 +8,8 @@
 
 "High temperature alarm" = "高温报警通知";
 "low temperature alarm" = "低温报警通知";
-"Minimum temperature" = "最低温值";
-"Maximum temperature" = "最高温值";
+"min_temperature" = "最低温度";
+"max_temperature" = "最高温度";
 
 "name" = "名称";
 "bluetooth" = "蓝牙";
