@@ -7,7 +7,7 @@ import CoreBluetooth
 class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource, UIAlertViewDelegate {
     // MARK: - 🍀 变量
     let segueId = "segue_main_device_list"
-
+    
     var data: [Temp] = []
     var sectionsCount = 5 // 今天的数据(只记录4小时)
     var pageCount = 4
@@ -28,12 +28,9 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         super.viewDidLoad()
         view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
         navigationController?.setToolbarHidden(false, animated: false)
-        
         setToolbarStyle(.Transparent)
-
-        
-        let settings = UIBarButtonItem(title: "settings", style: UIBarButtonItemStyle.Bordered, target: self, action: "settings:")
-        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let settings = UIBarButtonItem(image: UIImage(named: "ic_action_settings"), style: .Bordered, target: self, action: "settings:")
+        let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         setToolbarItems([space, settings, space], animated: false)
         
         historyBtn.title = LocalizedString("history")
@@ -69,7 +66,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         chart.colorXaxisLabel = UIColor.whiteColor() // x轴标签色
         chart.colorYaxisLabel = UIColor.whiteColor() // y轴标签色
         chart.enableBezierCurve = true // 贝塞尔曲线
-//        chart.enableTouchReport = true
+        //        chart.enableTouchReport = true
         chart.enablePopUpReport = true // 包含enableTouchReport效果
         chart.enableYAxisLabel = true // 显示y轴标签
         chart.enableReferenceYAxisLines = true // 显示y轴参考线
@@ -97,7 +94,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         drawChart()
-//        updateCurrentDateLineChart()
+        //        updateCurrentDateLineChart()
     }
     
     // MARK: - 🐤 DeviceStateDelegate
@@ -126,8 +123,8 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         OliveDBDao.saveTemperature(temper)
         
         drawChart()
-//        updateCurrentDateLineChart()
-
+        //        updateCurrentDateLineChart()
+        
         // 通知
         if temperature <= Util.lowTemperature() { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
@@ -186,7 +183,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
             println("无数据")
             return false
         } else {
-//            data = ChartDataConverter().convertDataForToday(tempArray).0
+            //            data = ChartDataConverter().convertDataForToday(tempArray).0
             titleStringArrForXAXis = ChartDataConverter().convertDataForToday(tempArray).1
             return true
         }
@@ -202,13 +199,13 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
                 currentGraphChartFrame = scrolledChart?.frame
                 scrolledChart?.removeFromSuperview()
             }
-//            titleStringArrForYMaxPoint = NSString(format: "%.2f", Float(maxValueForLineChart(data)))
+            //            titleStringArrForYMaxPoint = NSString(format: "%.2f", Float(maxValueForLineChart(data)))
             scrolledChart = ScrolledChart(frame: currentGraphChartFrame, pageCount: Float(pageCount), titleInYAXisMax: titleStringArrForYMaxPoint)
             scrolledChart!.scrollView.contentOffset.x = scrolledChart!.scrollView.frame.width * CGFloat(pageCount - 1)
             // add scrollChart
             scrolledChart?.backgroundColor = UIColor.clearColor()
-//            scrolledChart?.lineChart.dataSource = self
-//            scrolledChart?.lineChart.delegate = self
+            //            scrolledChart?.lineChart.dataSource = self
+            //            scrolledChart?.lineChart.delegate = self
             view.addSubview(scrolledChart!)
             dateShow.text = dateStr
         } else {
