@@ -8,7 +8,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        application.applicationIconBadgeNumber = 0
+        if UIApplication.instancesRespondToSelector("registerUserNotificationSettings:") {
+            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
+        }
+        // application.applicationIconBadgeNumber = 0
         return true
     }
     

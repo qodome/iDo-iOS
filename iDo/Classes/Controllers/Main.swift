@@ -7,8 +7,11 @@ import CoreBluetooth
 class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource, UIAlertViewDelegate {
     // MARK: - 🍀 变量
     let segueId = "segue_main_device_list"
-    
     var data: [Temp] = []
+    
+    var scrollView: UIScrollView!
+    var chart: BEMSimpleLineGraphView!
+    
     var sectionsCount = 5 // 今天的数据(只记录4小时)
     var pageCount = 4
     var pointNumberInsection = 120
@@ -44,7 +47,12 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         reconnectBtn.setTitle(LocalizedString("reconnect"), forState: UIControlState.Normal)
         reconnectBtn.titleLabel?.font = UIFont(name: "Helvetica", size: 30)
         reconnectBtn.hidden = true
-        
+        // 第一次进来
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if defaults.boolForKey("inited") {
+            Util.setIsHighTNotice(true)
+            defaults.setBool(true, forKey: "inited")
+        } 
         BLEManager.sharedManager().delegate = self
         if BLEManager.sharedManager().defaultDevice().isEmpty { // 无绑定设备
             UIAlertView(title: LocalizedString("tips"),
@@ -54,7 +62,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
                 otherButtonTitles: LocalizedString("Jump to device page")).show()
         }
         
-        var chart = BEMSimpleLineGraphView(frame: CGRectMake(0, 0, SCREEN_WIDTH * 2, 240))
+        chart = BEMSimpleLineGraphView(frame: CGRectMake(0, 0, SCREEN_WIDTH * 2, 240))
         chart.delegate = self
         chart.dataSource = self
         // ❨╯°□°❩╯︵┻━┻
@@ -65,24 +73,85 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         chart.colorBottom = UIColor.clearColor() // 线下颜色
         chart.colorXaxisLabel = UIColor.whiteColor() // x轴标签色
         chart.colorYaxisLabel = UIColor.whiteColor() // y轴标签色
-        chart.enableBezierCurve = true // 贝塞尔曲线
-        //        chart.enableTouchReport = true
+        // chart.enableBezierCurve = true // 贝塞尔曲线，连续两点相同会造成误导
         chart.enablePopUpReport = true // 包含enableTouchReport效果
         chart.enableYAxisLabel = true // 显示y轴标签
         chart.enableReferenceYAxisLines = true // 显示y轴参考线
         chart.animationGraphStyle = BEMLineAnimation.Fade // 绘制动画关闭会造成PopUp失效
         // ScrollView
-        var scrollView = UIScrollView(frame: CGRectMake(0, 200, SCREEN_WIDTH, chart.frame.height + 44))
-        scrollView.contentSize = CGSizeMake(chart.frame.width, chart.frame.height)
+        scrollView = UIScrollView(frame: CGRectMake(0, 200, SCREEN_WIDTH, chart.frame.height + 44))
+        scrollView.contentSize = CGSizeMake(chart.frame.width, scrollView.frame.height)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.addSubview(chart)
         view.addSubview(scrollView)
         
-        for i in 0..<12 * 24 {
-            var temp = Temp()
-            temp.timeStamp = 1
-            temp.high = CGFloat(arc4random_uniform(150)) / 100 + 37
-            data.append(temp)
+        // 获取温度值
+        let value: CGFloat = CGFloat(arc4random_uniform(150)) / 100 + 37 // 生成假数据
+        // 比对时间
+        let now = NSDate() // 当前时间
+        let calendar = NSCalendar.autoupdatingCurrentCalendar()
+        let dateComponents = calendar.components(.YearCalendarUnit | .MonthCalendarUnit | .DayCalendarUnit, fromDate: now)
+        dateComponents.timeZone = NSTimeZone(name: "UTC")
+        let midnight = calendar.dateFromComponents(dateComponents)! // 一天的开始
+        let timeInterval = now.timeIntervalSince1970
+        let minute = NSDate(timeIntervalSince1970: timeInterval - (timeInterval - midnight.timeIntervalSince1970) % 300) // 5分钟频率
+        println("=========")
+        println(midnight)
+        println(minute)
+        println(value)
+        println("=========")
+        var temp = Temp()
+        temp.timeStamp = Int(minute.timeIntervalSince1970)
+        temp.open = value
+        temp.high = value
+        temp.low = value
+        temp.close = value
+        
+        let previous = NSUserDefaults.standardUserDefaults().objectForKey("temperature")
+        if previous != nil {
+            let p = previous as NSArray
+            let previousTime = Int(p[0] as NSNumber)
+            if (temp.timeStamp - previousTime) < 300 { // 如果不到5分钟
+                temp.timeStamp = previousTime
+                temp.open = CGFloat(p[1] as NSNumber) // open为之前存储的值
+                temp.high = max(CGFloat(p[2] as NSNumber), value)
+                temp.low = min(CGFloat(p[3] as NSNumber), value)
+            }
+        }
+        let json = "[\(temp.timeStamp),\(temp.open),\(temp.high),\(temp.low),\(temp.close)]"
+        let current = NSJSONSerialization.JSONObjectWithData(json.dataUsingEncoding(NSUTF8StringEncoding)!, options: .allZeros, error: nil) as NSArray
+        NSUserDefaults.standardUserDefaults().setObject(current, forKey: "temperature") // 写历史记录
+        // 写历史数据
+        let format = NSDateFormatter()
+        format.dateFormat = "yyyy-MM-dd"
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let path = paths[0].stringByAppendingPathComponent("temperature/\(format.stringFromDate(midnight)).json")
+        let file = NSFileHandle(forUpdatingAtPath: path)
+        if file == nil {
+            NSFileManager.defaultManager().createDirectoryAtPath(path.stringByDeletingLastPathComponent, withIntermediateDirectories: false, attributes: nil, error: nil) // 创建目录
+            NSFileManager.defaultManager().createFileAtPath(path, contents: "[\(json)]".dataUsingEncoding(NSUTF8StringEncoding), attributes: nil) // 创建文件
+        } else { // (不到5分钟，替换，超过5分钟，新增)
+            var index = file?.seekToEndOfFile()
+            file?.seekToFileOffset(index! - 1)
+            file?.writeData(",\(json)]".dataUsingEncoding(NSUTF8StringEncoding)!)
+            file?.closeFile()
+        }
+        println("==================")
+        println(current)
+        println("==================")
+        println(previous)
+        println("==================")
+        // 取历史数据
+        if file != nil {
+            let json = NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)
+            println(json)
+            let content = NSJSONSerialization.JSONObjectWithData(json!.dataUsingEncoding(NSUTF8StringEncoding)!, options: .allZeros, error: nil) as NSArray
+            for d in content {
+                var temperature = Temp()
+                temperature.timeStamp = Int(d[0] as NSNumber)
+                temperature.high = CGFloat(d[2] as NSNumber)
+                data.append(temperature)
+            }
         }
     }
     
@@ -93,7 +162,6 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        drawChart()
         //        updateCurrentDateLineChart()
     }
     
@@ -115,17 +183,18 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
     
     func didUpdateValue(characteristic: CBCharacteristic) {
         let temperature = calculateTemperature(characteristic.value)
-        temperatureLabel.text = NSString(format: "%.2f℃", temperature)
+        temperatureLabel.text = NSString(format: "%.2f°", temperature)
         // 保存temperature到数据库
         var temper: Temperature = Temperature()
         temper.high = NSString(format: "%.2f", temperature)
         temper.timeStamp = DateUtils.timestampFromDate(NSDate())
         OliveDBDao.saveTemperature(temper)
+        // 保存到本地文件
         
         drawChart()
         //        updateCurrentDateLineChart()
-        
         // 通知
+        let defautls = NSUserDefaults.standardUserDefaults()
         if temperature <= Util.lowTemperature() { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
             if Util.isLowTNotice() {
@@ -147,7 +216,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
     }
     
     func lineGraph(graph: BEMSimpleLineGraphView!, valueForPointAtIndex index: Int) -> CGFloat {
-        return data[index].high
+        return CGFloat(data[index].high)
     }
     
     // MARK: - 💙 UIAlertViewDelegate
@@ -166,7 +235,9 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
     
     // MARK: - 💛 Custom Method
     func drawChart() {
-        
+        chart.frame.size = CGSizeMake(SCREEN_WIDTH * 2, chart.frame.height)
+        scrollView.contentSize = CGSizeMake(chart.frame.width, scrollView.frame.height)
+        chart.reloadGraph()
     }
     
     // MARK: - 💛 Action
@@ -226,15 +297,5 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
             notification.userInfo = ["key" : "object"]
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
-    }
-    
-    func maxValueForLineChart(data: [Int : CGFloat]) -> CGFloat {
-        if data.isEmpty {
-            fatalError("data为空")
-        } else {
-            var sortValues = (data.values).array.sorted({$0 > $1})
-            return sortValues[0]
-        }
-        return 0
     }
 }

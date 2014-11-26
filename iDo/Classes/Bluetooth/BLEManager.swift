@@ -76,7 +76,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             central.cancelPeripheralConnection(connected) // TODO: 解绑的设备需要放到下面去
         }
         let peripheral = peripherals[index]
-        NSUserDefaults.standardUserDefaults().setObject(peripheral.identifier.UUIDString, forKey: PREF_DEFAULT_DEVICE)
+        NSUserDefaults.standardUserDefaults().setValue(peripheral.identifier.UUIDString, forKey: PREF_DEFAULT_DEVICE)
         peripherals.removeAtIndex(index)
         connected = peripheral
         changeDelegate?.onDataChange(peripherals, connected: connected)
@@ -86,15 +86,15 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     /** 解绑设备 */
     func unbind(peripheral: CBPeripheral) {
         NSLog("解绑设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
-        NSUserDefaults.standardUserDefaults().setObject("", forKey: PREF_DEFAULT_DEVICE)
+        NSUserDefaults.standardUserDefaults().setValue("", forKey: PREF_DEFAULT_DEVICE)
         central.cancelPeripheralConnection(peripheral)
     }
     
     func defaultDevice() -> String {
         if NSUserDefaults.standardUserDefaults().objectForKey(PREF_DEFAULT_DEVICE) == nil {
-            NSUserDefaults.standardUserDefaults().setObject("", forKey: PREF_DEFAULT_DEVICE)
+            NSUserDefaults.standardUserDefaults().setValue("", forKey: PREF_DEFAULT_DEVICE)
         }
-        return NSUserDefaults.standardUserDefaults().objectForKey(PREF_DEFAULT_DEVICE) as String
+        return NSUserDefaults.standardUserDefaults().valueForKey(PREF_DEFAULT_DEVICE) as String
     }
     
     // MARK: - 💙 CBCentralManagerDelegate

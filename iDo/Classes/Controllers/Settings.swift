@@ -3,7 +3,7 @@
 //
 
 class Settings: UITableViewController {
-    
+    // ℃/℉
     let minLowTemperature: Float = 26
     let maxLowTemperature: Float = 36
     let minHighTemperature: Float = 37

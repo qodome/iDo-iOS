@@ -5,7 +5,7 @@
 class DateUtils: NSObject {
     
     // NSString 转换成 NSdate
-    class func dateFromString(dateStr: NSString, withFormat format: NSString) ->NSDate {
+    class func dateFromString(dateStr: NSString, withFormat format: NSString) -> NSDate {
         var dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.dateFromString(dateStr)!
@@ -18,14 +18,14 @@ class DateUtils: NSObject {
     }
     
     //NSDate 转换成 NSString
-    class func stringFromDate(date: NSDate, WithFormat format:NSString) ->NSString {
+    class func stringFromDate(date: NSDate, WithFormat format:NSString) -> NSString {
         var dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.stringFromDate(date)
     }
     
     //NSString 转换成 时间字符串
-    class func getTimeWithStamp(timeStamp: NSString, withFormat format: NSString) ->NSString {
+    class func getTimeWithStamp(timeStamp: NSString, withFormat format: NSString) -> NSString {
         let date: NSDate = NSDate(timeIntervalSince1970: (timeStamp.doubleValue) / 1000)
         var fm: NSDateFormatter = NSDateFormatter()
         fm.dateFormat = format

@@ -6,15 +6,15 @@ class OliveDBDao: NSObject {
     //类属性不能加class 所以用结构体来保持静态对象
     struct OliveDBDaoSingleton {
         //温度表的表名
-        static let sTableName: String = "OliveTable"
+        static let tableName: String = "OliveTable"
     }
     
     //创建温度表
     class func createTable() -> Bool {
         var result = false
         if DBManager.sharedManager().open() {
-            if !DBManager.isTableExist(OliveDBDaoSingleton.sTableName) {
-                let sql = "CREATE TABLE \(OliveDBDaoSingleton.sTableName)(high BLOB, time_stamp DATE)"
+            if !DBManager.isTableExist(OliveDBDaoSingleton.tableName) {
+                let sql = "CREATE TABLE \(OliveDBDaoSingleton.tableName)(high BLOB, time_stamp DATE)"
                 result = DBManager.sharedManager().executeUpdate(sql, withArgumentsInArray: nil)
             } else {
                 result = true
@@ -31,7 +31,7 @@ class OliveDBDao: NSObject {
             if DBManager.sharedManager().open() {
                 let dateStr: String = DateUtils.getTimeWithStamp(temper.timeStamp, withFormat:"yyyy-MM-dd HH:mm:ss" )
                 println("dateStr -- \(dateStr)")
-                let sql = "INSERT INTO \(OliveDBDaoSingleton.sTableName) (high,time_stamp) VALUES(?,?)"
+                let sql = "INSERT INTO \(OliveDBDaoSingleton.tableName) (high,time_stamp) VALUES(?,?)"
                 isOK = DBManager.sharedManager().executeUpdate(sql, withArgumentsInArray: [NSKeyedArchiver.archivedDataWithRootObject(temper),dateStr])
                 DBManager.sharedManager().close()
             }
@@ -47,7 +47,7 @@ class OliveDBDao: NSObject {
             if DBManager.sharedManager().open() {
                 let beginDateStr = DateUtils.stringFromDate(date, WithFormat: "yyyy-MM-dd 00:00:00")
                 let endDateStr = DateUtils.stringFromDate(date, WithFormat: "yyyy-MM-dd 23:59:59")
-                let sql = "SELECT * FROM \(OliveDBDaoSingleton.sTableName) WHERE time_stamp BETWEEN ? AND ?"
+                let sql = "SELECT * FROM \(OliveDBDaoSingleton.tableName) WHERE time_stamp BETWEEN ? AND ?"
                 let rs: FMResultSet = DBManager.sharedManager().executeQuery(sql, withArgumentsInArray: [beginDateStr, endDateStr])
                 while (rs.next()) {
                     let tempData: NSData = rs.dataForColumn("high")
@@ -68,7 +68,7 @@ class OliveDBDao: NSObject {
                 let preDate = date.dateByAddingTimeInterval(-secondsPerDay)
                 let beginDateStr = DateUtils.stringFromDate(preDate, WithFormat: "yyyy-MM-dd 00:00:00")
                 let endDateStr = DateUtils.stringFromDate(preDate, WithFormat: "yyyy-MM-dd 23:59:59")
-                let sql = "DELETE FROM \(OliveDBDaoSingleton.sTableName) WHERE time_stamp BETWEEN ? AND ?"
+                let sql = "DELETE FROM \(OliveDBDaoSingleton.tableName) WHERE time_stamp BETWEEN ? AND ?"
                 isSuccess = DBManager.sharedManager().executeUpdate(sql, withArgumentsInArray: [beginDateStr,endDateStr])
                 DBManager.sharedManager().close()
             }
