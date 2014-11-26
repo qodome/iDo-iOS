@@ -106,7 +106,7 @@ func Log(format: String, args: CVarArgType) { // TODO: 怎样传递CVarArgType..
 
 func getExtension(path: String) -> String {
     let name = path.lastPathComponent
-    let range = name.rangeOfString(".")
+    let range = name.rangeOfString(".", options: .BackwardsSearch)
     return range == nil ? "" : name.substringFromIndex(range!.endIndex)
 }
 

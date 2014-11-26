@@ -13,7 +13,7 @@ protocol BLEManagerDelegate {
     func didDisconnect()
     
     /** 更新数据 */
-    func didUpdateValue(characteristic: CBCharacteristic)
+    func didUpdateValue(characteristic: CBCharacteristic?)
 }
 
 protocol DeviceChangeDelegate {
@@ -31,7 +31,7 @@ enum BLEManagerState: Int {
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // MARK: - 🍀 变量
     let kServiceUUID = "1809" // Health Thermometer
-    let kCharacteristicUUID = "2A1C" // Temperature Measurement
+    let kCharacteristicUUID = "2A1E" // Temperature Measurement
     let PREF_DEFAULT_DEVICE = "selectedPeripheralId"
     
     var central: CBCentralManager!

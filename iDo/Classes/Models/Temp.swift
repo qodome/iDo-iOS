@@ -4,8 +4,8 @@
 
 class Temp: NSObject {
     var timeStamp: Int = 0
-    var open: CGFloat = 0
-    var high: CGFloat = 0
-    var low: CGFloat = 0
-    var close: CGFloat = 0
+    var open: Float = 0
+    var high: Float = 0
+    var low: Float = 0
+    var close: Float = 0
 }

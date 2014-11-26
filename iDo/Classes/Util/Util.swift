@@ -5,29 +5,25 @@
 class Util: NSObject {
     
     class func lowTemperature() -> Float {
-        if let lowestTemperature: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") {
-            
-        } else {
+        if NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") == nil {
             setLowTemperature(36.0)
         }
-        return NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") as Float
+        return NSUserDefaults.standardUserDefaults().floatForKey("lowestTemperature")
     }
     
-    class func setLowTemperature(currentLowestTemperature: Float) {
-        NSUserDefaults.standardUserDefaults().setObject(currentLowestTemperature, forKey: "lowestTemperature")
+    class func setLowTemperature(value: Float) {
+        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: "lowestTemperature")
     }
     
     class func HighTemperature() -> Float {
-        if let highestTemperature: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("highestTemperature") {
-            
-        } else {
+        if NSUserDefaults.standardUserDefaults().objectForKey("highestTemperature") == nil {
             setHighTemperature(38.0)
         }
-        return NSUserDefaults.standardUserDefaults().objectForKey("highestTemperature") as Float
+        return NSUserDefaults.standardUserDefaults().floatForKey("highestTemperature")
     }
     
-    class func setHighTemperature(currentHighestTemperature:Float) {
-        NSUserDefaults.standardUserDefaults().setObject(currentHighestTemperature, forKey: "highestTemperature")
+    class func setHighTemperature(value: Float) {
+        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: "highestTemperature")
     }
     
     // 低温报警
@@ -41,6 +37,9 @@ class Util: NSObject {
     
     // 高温报警
     class func isHighTNotice() -> Bool {
+        if NSUserDefaults.standardUserDefaults().objectForKey("notification_high") == nil {
+            setIsHighTNotice(true)
+        }
         return NSUserDefaults.standardUserDefaults().boolForKey("notification_high")
     }
     

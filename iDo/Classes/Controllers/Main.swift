@@ -9,14 +9,10 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
     let segueId = "segue_main_device_list"
     var data: [Temp] = []
     
+    var json = "" // 历史数据json
+    
     var scrollView: UIScrollView!
     var chart: BEMSimpleLineGraphView!
-    
-    var sectionsCount = 5 // 今天的数据(只记录4小时)
-    var pageCount = 4
-    var pointNumberInsection = 120
-    var titleStringArrForXAXis: [String] = [] // 横坐标的string
-    var titleStringArrForYMaxPoint = "max"
     
     @IBOutlet weak var peripheralBarBtn: UIBarButtonItem!
     @IBOutlet weak var historyBtn: UIBarButtonItem!
@@ -24,7 +20,6 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
     @IBOutlet weak var dateShow: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel! //显示折线图中当前点值的label
     @IBOutlet weak var reconnectBtn: UIButton!
-    @IBOutlet var scrolledChart: ScrolledChart?
     
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
@@ -47,12 +42,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         reconnectBtn.setTitle(LocalizedString("reconnect"), forState: UIControlState.Normal)
         reconnectBtn.titleLabel?.font = UIFont(name: "Helvetica", size: 30)
         reconnectBtn.hidden = true
-        // 第一次进来
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults.boolForKey("inited") {
-            Util.setIsHighTNotice(true)
-            defaults.setBool(true, forKey: "inited")
-        } 
+        
         BLEManager.sharedManager().delegate = self
         if BLEManager.sharedManager().defaultDevice().isEmpty { // 无绑定设备
             UIAlertView(title: LocalizedString("tips"),
@@ -84,85 +74,30 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.addSubview(chart)
         view.addSubview(scrollView)
-        
-        // 获取温度值
-        let value: CGFloat = CGFloat(arc4random_uniform(150)) / 100 + 37 // 生成假数据
-        // 比对时间
-        let now = NSDate() // 当前时间
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
-        let dateComponents = calendar.components(.YearCalendarUnit | .MonthCalendarUnit | .DayCalendarUnit, fromDate: now)
-        dateComponents.timeZone = NSTimeZone(name: "UTC")
-        let midnight = calendar.dateFromComponents(dateComponents)! // 一天的开始
-        let timeInterval = now.timeIntervalSince1970
-        let minute = NSDate(timeIntervalSince1970: timeInterval - (timeInterval - midnight.timeIntervalSince1970) % 300) // 5分钟频率
-        println("=========")
-        println(midnight)
-        println(minute)
-        println(value)
-        println("=========")
-        var temp = Temp()
-        temp.timeStamp = Int(minute.timeIntervalSince1970)
-        temp.open = value
-        temp.high = value
-        temp.low = value
-        temp.close = value
-        
-        let previous = NSUserDefaults.standardUserDefaults().objectForKey("temperature")
-        if previous != nil {
-            let p = previous as NSArray
-            let previousTime = Int(p[0] as NSNumber)
-            if (temp.timeStamp - previousTime) < 300 { // 如果不到5分钟
-                temp.timeStamp = previousTime
-                temp.open = CGFloat(p[1] as NSNumber) // open为之前存储的值
-                temp.high = max(CGFloat(p[2] as NSNumber), value)
-                temp.low = min(CGFloat(p[3] as NSNumber), value)
-            }
-        }
-        let json = "[\(temp.timeStamp),\(temp.open),\(temp.high),\(temp.low),\(temp.close)]"
-        let current = NSJSONSerialization.JSONObjectWithData(json.dataUsingEncoding(NSUTF8StringEncoding)!, options: .allZeros, error: nil) as NSArray
-        NSUserDefaults.standardUserDefaults().setObject(current, forKey: "temperature") // 写历史记录
-        // 写历史数据
-        let format = NSDateFormatter()
-        format.dateFormat = "yyyy-MM-dd"
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let path = paths[0].stringByAppendingPathComponent("temperature/\(format.stringFromDate(midnight)).json")
+        // 取当天的历史数据
+        let path = getHistory(NSDate())
         let file = NSFileHandle(forUpdatingAtPath: path)
-        if file == nil {
-            NSFileManager.defaultManager().createDirectoryAtPath(path.stringByDeletingLastPathComponent, withIntermediateDirectories: false, attributes: nil, error: nil) // 创建目录
-            NSFileManager.defaultManager().createFileAtPath(path, contents: "[\(json)]".dataUsingEncoding(NSUTF8StringEncoding), attributes: nil) // 创建文件
-        } else { // (不到5分钟，替换，超过5分钟，新增)
-            var index = file?.seekToEndOfFile()
-            file?.seekToFileOffset(index! - 1)
-            file?.writeData(",\(json)]".dataUsingEncoding(NSUTF8StringEncoding)!)
-            file?.closeFile()
-        }
-        println("==================")
-        println(current)
-        println("==================")
-        println(previous)
-        println("==================")
-        // 取历史数据
+        var content: NSArray = []
         if file != nil {
-            let json = NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)
-            println(json)
-            let content = NSJSONSerialization.JSONObjectWithData(json!.dataUsingEncoding(NSUTF8StringEncoding)!, options: .allZeros, error: nil) as NSArray
+            json = NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
+            let content = NSJSONSerialization.JSONObjectWithData(json.dataUsingEncoding(NSUTF8StringEncoding)!, options: .allZeros, error: nil) as NSArray
             for d in content {
-                var temperature = Temp()
+                let temperature = Temp()
                 temperature.timeStamp = Int(d[0] as NSNumber)
-                temperature.high = CGFloat(d[2] as NSNumber)
+                temperature.open = Float(d[1] as NSNumber)
+                temperature.high = Float(d[2] as NSNumber)
+                temperature.low = Float(d[3] as NSNumber)
+                temperature.close = Float(d[3] as NSNumber)
                 data.append(temperature)
             }
         }
+        setChartSize() // 要放在加载数据之后
+//        didUpdateValue(nil)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBarStyle(.Transparent)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        //        updateCurrentDateLineChart()
     }
     
     // MARK: - 🐤 DeviceStateDelegate
@@ -181,29 +116,71 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         }
     }
     
-    func didUpdateValue(characteristic: CBCharacteristic) {
-        let temperature = calculateTemperature(characteristic.value)
-        temperatureLabel.text = NSString(format: "%.2f°", temperature)
-        // 保存temperature到数据库
-        var temper: Temperature = Temperature()
-        temper.high = NSString(format: "%.2f", temperature)
-        temper.timeStamp = DateUtils.timestampFromDate(NSDate())
-        OliveDBDao.saveTemperature(temper)
-        // 保存到本地文件
-        
-        drawChart()
-        //        updateCurrentDateLineChart()
+    func didUpdateValue(characteristic: CBCharacteristic?) {
+        // 获取温度值
+        var value: Float
+        if characteristic != nil {
+            value = Float(calculateTemperature(characteristic!.value))
+        } else {
+            value = Float(arc4random_uniform(150)) / 100 + 37 // 生成假数据
+        }
+        temperatureLabel.text = NSString(format: "%.2f°", value)
+        // 初始化一个温度对象
+        let temp = Temp()
+        temp.timeStamp = getTimeStamp(NSDate(), minute: 5) // 当前时间最接近的5分钟频率
+        temp.open = value
+        temp.high = value
+        temp.low = value
+        temp.close = value
+        // 比对历史数据
+        let last = data.last
+        if last != nil {
+            if (temp.timeStamp - last!.timeStamp) < 300 { // 如果不到5分钟
+                temp.timeStamp = last!.timeStamp
+                temp.open = last!.open // open为之前存储的值
+                temp.high = max(last!.high, value)
+                temp.low = min(last!.low, value)
+                data[data.count - 1] = temp
+                chart.animationGraphStyle = .None
+            } else {
+                data.append(temp)
+                chart.animationGraphStyle = .Fade
+            }
+        }
+        let json1 = "[\(temp.timeStamp),\(temp.open),\(temp.high),\(temp.low),\(temp.close)]"
+        println(json1)
+        // 写历史数据
+        let path = getHistory(NSDate())
+        let file = NSFileHandle(forUpdatingAtPath: path)
+        if file == nil {
+            json = "[\(json1)]"
+            NSFileManager.defaultManager().createDirectoryAtPath(path.stringByDeletingLastPathComponent, withIntermediateDirectories: false, attributes: nil, error: nil) // 创建目录
+            NSFileManager.defaultManager().createFileAtPath(path, contents: json.dataUsingEncoding(NSUTF8StringEncoding), attributes: nil) // 创建文件
+            data.append(temp) // 重要，不然新安装last会一直为nil
+        } else {
+            if (temp.timeStamp - last!.timeStamp) < 300 { // 不到5分钟，替换
+                // TODO: 待测试，这个last可能已被改变
+                let range = json.rangeOfString("[", options: .BackwardsSearch)
+                json = "\(json.substringToIndex(range!.startIndex))\(json1)]"
+            } else { // 超过5分钟，新增
+                json = "\(json.substringToIndex(advance(json.startIndex, countElements(json) - 1))),\(json1)]"
+            }
+            println(json)
+            json.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+        }
+        setChartSize()
+        chart.reloadGraph() // 重绘
         // 通知
         let defautls = NSUserDefaults.standardUserDefaults()
-        if temperature <= Util.lowTemperature() { // 温度过低
+        if value <= Util.lowTemperature() { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
             if Util.isLowTNotice() {
-                sendNotifition("温度过低", temperature: temperature)
+                sendNotifition("温度过低", temperature: value)
             }
-        } else if temperature >= Util.HighTemperature() { // 温度过高
+        } else if value >= Util.HighTemperature() { // 温度过高
             view.backgroundColor = UIColor.colorWithHex(IDO_RED)
             if Util.isHighTNotice() {
-                sendNotifition("温度过高", temperature: temperature)
+                sendNotifition("温度过高", temperature: value)
             }
         } else {
             view.backgroundColor = UIColor.colorWithHex(IDO_GREEN)
@@ -234,10 +211,9 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
     }
     
     // MARK: - 💛 Custom Method
-    func drawChart() {
-        chart.frame.size = CGSizeMake(SCREEN_WIDTH * 2, chart.frame.height)
-        scrollView.contentSize = CGSizeMake(chart.frame.width, scrollView.frame.height)
-        chart.reloadGraph()
+    func setChartSize() {
+        chart.frame.size = CGSizeMake(scrollView.frame.width * CGFloat(data.count) / 244 * 2, chart.frame.height)
+        scrollView.contentSize.width = max(chart.frame.width, scrollView.frame.width)
     }
     
     // MARK: - 💛 Action
@@ -245,43 +221,19 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         performSegueWithIdentifier("segue_home_settings", sender: self)
     }
     
-    
-    /** generate data */
-    func generateChartDataWithDateString(dateStr: String) -> Bool {
-        var tempArray: NSMutableArray = OliveDBDao.queryHistoryWithDay(DateUtils.dateFromString(dateStr, withFormat: "yyyy-MM-dd"))
-        if tempArray.count == 0 {
-            //无数据
-            println("无数据")
-            return false
-        } else {
-            //            data = ChartDataConverter().convertDataForToday(tempArray).0
-            titleStringArrForXAXis = ChartDataConverter().convertDataForToday(tempArray).1
-            return true
-        }
+    func getHistory(date: NSDate) -> String {
+        let format = NSDateFormatter()
+        format.dateFormat = "yyyy-MM-dd"
+        format.timeZone = NSTimeZone(name: "UTC")
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        return paths[0].stringByAppendingPathComponent("temperature/\(format.stringFromDate(date)).json")
     }
     
-    func updateCurrentDateLineChart() {
-        //默认 显示 lineChart
-        let dateStr = DateUtils.stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
-        if generateChartDataWithDateString(dateStr) {
-            // 由数据源改变 eLineChart的值
-            var currentGraphChartFrame: CGRect!
-            if scrolledChart != nil {
-                currentGraphChartFrame = scrolledChart?.frame
-                scrolledChart?.removeFromSuperview()
-            }
-            //            titleStringArrForYMaxPoint = NSString(format: "%.2f", Float(maxValueForLineChart(data)))
-            scrolledChart = ScrolledChart(frame: currentGraphChartFrame, pageCount: Float(pageCount), titleInYAXisMax: titleStringArrForYMaxPoint)
-            scrolledChart!.scrollView.contentOffset.x = scrolledChart!.scrollView.frame.width * CGFloat(pageCount - 1)
-            // add scrollChart
-            scrolledChart?.backgroundColor = UIColor.clearColor()
-            //            scrolledChart?.lineChart.dataSource = self
-            //            scrolledChart?.lineChart.delegate = self
-            view.addSubview(scrolledChart!)
-            dateShow.text = dateStr
-        } else {
-            println("无历史数据")
-        }
+    func getTimeStamp(date: NSDate, minute: Int) -> Int {
+        let calendar = NSCalendar.autoupdatingCurrentCalendar()
+        let components = calendar.components(.YearCalendarUnit | .MonthCalendarUnit | .DayCalendarUnit | .HourCalendarUnit | .MinuteCalendarUnit, fromDate: date)
+        components.minute = components.minute / minute * minute
+        return Int(calendar.dateFromComponents(components)!.timeIntervalSince1970)
     }
     
     /** 本地通知 */
