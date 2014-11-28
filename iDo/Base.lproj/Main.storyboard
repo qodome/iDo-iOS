@@ -109,20 +109,7 @@
                     <view key="view" contentMode="scaleToFill" id="cwB-eT-ZTy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2014-09-11" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6G-IP-Qgi">
-                                <rect key="frame" x="16" y="114" width="568" height="38.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="R6G-IP-Qgi" firstAttribute="trailing" secondItem="cwB-eT-ZTy" secondAttribute="trailingMargin" id="2r9-l5-mhI"/>
-                            <constraint firstItem="R6G-IP-Qgi" firstAttribute="leading" secondItem="cwB-eT-ZTy" secondAttribute="leadingMargin" id="8dH-8u-nCp"/>
-                            <constraint firstItem="R6G-IP-Qgi" firstAttribute="top" secondItem="MtE-bB-vnO" secondAttribute="bottom" constant="50" id="HLs-iv-nOT"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="68a-zY-114">
                         <nil key="title"/>
@@ -134,7 +121,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="calenderBtn" destination="84a-an-XSr" id="YNj-Hm-YlK"/>
-                        <outlet property="dateShow" destination="R6G-IP-Qgi" id="LC7-Nn-5e4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lb6-mm-kRh" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -2,66 +2,54 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-class History: UIViewController {
+class History: UIViewController, JTCalendarDataSource {
     
-    var datepicker: DIDatepicker!
-    var frontDate: NSDate!
-    var numberOfDayFordatePicker = 31
-    var currentSelectedDateString: NSString!
+    var calendarMenuView: JTCalendarMenuView!
+    var calendarContentView: JTCalendarContentView!
+    var calendar: JTCalendar!
+    
     @IBOutlet weak var calenderBtn: UIBarButtonItem!
-    @IBOutlet weak var dateShow: UILabel!
     
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
-        calenderBtn.title = LocalizedString("calender")
-        dateShow.font = UIFont(name: "HelveticaNeue-Light", size: 20)
-        dateShow.text = ""
-        var date:NSDate = NSDate()
-        var calendar:NSCalendar = NSCalendar.currentCalendar()
-        var components: NSDateComponents = calendar.components(
-            NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond, fromDate: date)
-        components.hour = -24 * (numberOfDayFordatePicker - 1)
-        frontDate = calendar.dateByAddingComponents(components, toDate: date, options: NSCalendarOptions.MatchLast) // 还要改时区
-        datepicker = DIDatepicker(frame: CGRectMake(0, 60, view.frame.width, 50))
-        view.addSubview(datepicker)
-        datepicker.fillDatesFromDate(frontDate, numberOfDays: (numberOfDayFordatePicker - 1))
-        datepicker.selectDateAtIndex(UInt(numberOfDayFordatePicker - 2) )
-        datepicker.addTarget(self, action: "updateSelectedDate", forControlEvents: UIControlEvents.ValueChanged)
+        calenderBtn.title = LocalizedString("today")
         
-        currentSelectedDateString = stringFromDate(NSDate(), WithFormat: "yyyy-MM-dd")
-
+        calendarMenuView = JTCalendarMenuView(frame: CGRectMake(0, 64, view.frame.width, 32))
+        calendarContentView = JTCalendarContentView(frame: CGRectMake(0, 96, view.frame.width, 64))
+        view.addSubview(calendarMenuView)
+        view.addSubview(calendarContentView)
+        calendar = JTCalendar()
+        calendar.calendarAppearance.isWeekMode = true
+        calendar.calendarAppearance.ratioContentMenu = 1
+        calendar.calendarAppearance.menuMonthTextColor = UIColor.whiteColor()
+        calendar.calendarAppearance.weekDayTextColor = UIColor.whiteColor()
+        calendar.calendarAppearance.dayCircleColorSelected = UIColor.whiteColor()
+        calendar.calendarAppearance.dayTextColor = UIColor.whiteColor()
+        calendar.calendarAppearance.dayTextColorSelected = UIColor.colorWithHex(IDO_BLUE)
+        calendar.menuMonthsView = calendarMenuView
+        calendar.contentView = calendarContentView
+        calendar.dataSource = self
     }
     
-    // MARK: - Custom Method
-    @IBAction func calenderBtnSelected(sender: AnyObject) {
-        initDatePicker()
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        calendar.reloadData()
     }
     
-    func initDatePicker() {
-        datepicker = DIDatepicker(frame: CGRectMake(0, 60, view.frame.width, 50))
-        view.addSubview(datepicker)
-        datepicker.fillDatesFromDate(frontDate, numberOfDays: (numberOfDayFordatePicker - 1))
-        datepicker.selectDateAtIndex(UInt(numberOfDayFordatePicker - 2) )
-        datepicker.addTarget(self, action: "updateSelectedDate", forControlEvents: UIControlEvents.ValueChanged)
+    // MARK: - 💙 JTCalendarDataSource
+    func calendarHaveEvent(calendar: JTCalendar!, date: NSDate!) -> Bool {
+        return false // TODO 返回是否有历史记录
     }
     
-    func updateSelectedDate() {
-        var dateStr = stringFromDate((datepicker.selectedDate)!, WithFormat: "yyyy-MM-dd")
-        // 根据date 从数据中取出温度记录 就是eLineChart的数据源
-        if dateStr == currentSelectedDateString {
-            return
-        }
+    func calendarDidDateSelected(calendar: JTCalendar!, date: NSDate!) {
         println("hahhahahhahahha")
-        dateShow.text = dateStr
-        currentSelectedDateString = dateStr
     }
     
-    // MARK: -
-    func stringFromDate(date: NSDate, WithFormat format: NSString) -> NSString {
-        var dateFormatter: NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = format
-        return dateFormatter.stringFromDate(date)
+    // MARK: 💛 自定义方法 (Custom Method)
+    @IBAction func calenderBtnSelected(sender: AnyObject) {
+        calendar.currentDate = NSDate()
+//        calendar.currentDateSelected = NSDate()
     }
 }

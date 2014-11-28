@@ -60,7 +60,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         central = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey: NSNumber(bool: true)])
     }
     
-    // MARK: 💛 自定义方法
+    // MARK: - 💛 自定义方法 (Custom Method)
     func startScan() {
         println("aaa=========================")
         central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)

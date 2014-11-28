@@ -187,7 +187,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         }
     }
     
-    // MARK:- 💙 BEMSimpleLineGraphDataSource
+    // MARK: - 💙 BEMSimpleLineGraphDataSource
     func numberOfPointsInLineGraph(graph: BEMSimpleLineGraphView!) -> Int {
         return data.count
     }
@@ -210,7 +210,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         BLEManager.sharedManager().startScan()
     }
     
-    // MARK: - 💛 Custom Method
+    // MARK: - 💛 自定义方法 (Custom Method)
     func setChartSize() {
         chart.frame.size = CGSizeMake(scrollView.frame.width * CGFloat(data.count) / 244 * 2, chart.frame.height)
         scrollView.contentSize.width = max(chart.frame.width, scrollView.frame.width)

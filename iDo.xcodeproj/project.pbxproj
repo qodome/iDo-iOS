@@ -18,8 +18,6 @@
 		0E72E4D01A1DEDCF00586DAD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C61A1DEDCF00586DAD /* Utils.swift */; };
 		0E72E4D11A1DEDCF00586DAD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C81A1DEDCF00586DAD /* README.md */; };
 		0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8064C81A1C829900324E71 /* BLEManager.swift */; };
-		0EA07A941A28C2A700CA1D4D /* DIDatepicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA07A911A28C2A700CA1D4D /* DIDatepicker.m */; };
-		0EA07A951A28C2A700CA1D4D /* DIDatepickerDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA07A931A28C2A700CA1D4D /* DIDatepickerDateView.m */; };
 		0EB30F871A1F229D00A11A76 /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB30F861A1F229D00A11A76 /* Temperature.swift */; };
 		0EEF41B51A1DEF7F00D3AA4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */; };
 		0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DAF19F0F35700F6F403 /* Constants.swift */; };
@@ -63,10 +61,6 @@
 		0E72E4C61A1DEDCF00586DAD /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		0E72E4C81A1DEDCF00586DAD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0E8064C81A1C829900324E71 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
-		0EA07A901A28C2A700CA1D4D /* DIDatepicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIDatepicker.h; sourceTree = "<group>"; };
-		0EA07A911A28C2A700CA1D4D /* DIDatepicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIDatepicker.m; sourceTree = "<group>"; };
-		0EA07A921A28C2A700CA1D4D /* DIDatepickerDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIDatepickerDateView.h; sourceTree = "<group>"; };
-		0EA07A931A28C2A700CA1D4D /* DIDatepickerDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIDatepickerDateView.m; sourceTree = "<group>"; };
 		0EB30F861A1F229D00A11A76 /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
 		0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0EEF41BB1A1DF0CF00D3AA4C /* iDo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iDo-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -117,7 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				0E72E4B51A1DEDCF00586DAD /* BEMSimpleLineGraph */,
-				0EA07A8E1A28C2A700CA1D4D /* DIDatepicker */,
 				0E72E4BD1A1DEDCF00586DAD /* Taylor */,
 			);
 			path = Library;
@@ -203,25 +196,6 @@
 				0E8064C81A1C829900324E71 /* BLEManager.swift */,
 			);
 			path = Bluetooth;
-			sourceTree = "<group>";
-		};
-		0EA07A8E1A28C2A700CA1D4D /* DIDatepicker */ = {
-			isa = PBXGroup;
-			children = (
-				0EA07A8F1A28C2A700CA1D4D /* Sources */,
-			);
-			path = DIDatepicker;
-			sourceTree = "<group>";
-		};
-		0EA07A8F1A28C2A700CA1D4D /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				0EA07A901A28C2A700CA1D4D /* DIDatepicker.h */,
-				0EA07A911A28C2A700CA1D4D /* DIDatepicker.m */,
-				0EA07A921A28C2A700CA1D4D /* DIDatepickerDateView.h */,
-				0EA07A931A28C2A700CA1D4D /* DIDatepickerDateView.m */,
-			);
-			path = Sources;
 			sourceTree = "<group>";
 		};
 		1F0EC2FAA97F95EE8525F9E2 /* Pods */ = {
@@ -499,7 +473,6 @@
 			files = (
 				0E72E4CF1A1DEDCF00586DAD /* RESTList.swift in Sources */,
 				E72F2A7C19D926DA009383AB /* Main.swift in Sources */,
-				0EA07A951A28C2A700CA1D4D /* DIDatepickerDateView.m in Sources */,
 				0E72E4CA1A1DEDCF00586DAD /* BEMLine.m in Sources */,
 				0E72E4CB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m in Sources */,
 				0EEF41B51A1DEF7F00D3AA4C /* AppDelegate.swift in Sources */,
@@ -508,7 +481,6 @@
 				E72F2A7B19D926DA009383AB /* Settings.swift in Sources */,
 				E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */,
 				0E72E4CD1A1DEDCF00586DAD /* BaseUICollectionViewController.swift in Sources */,
-				0EA07A941A28C2A700CA1D4D /* DIDatepicker.m in Sources */,
 				E72F2A7919D926DA009383AB /* DeviceDetail.swift in Sources */,
 				0E72E4CE1A1DEDCF00586DAD /* RESTUICollectionViewController.swift in Sources */,
 				E72F2A8219D926DA009383AB /* Util.swift in Sources */,

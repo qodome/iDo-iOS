@@ -17,8 +17,8 @@
 // BEMSimpleLineGraphView
 #import "BEMSimpleLineGraphView.h"
 
-// DIDIDatepicker
-#import "DIDatepicker.h"
+// JTCalendar
+#import "JTCalendar.h"
 
 #ifndef __OPTIMIZE__
 #define NSLog(...) NSLog(__VA_ARGS__)
