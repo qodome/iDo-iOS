@@ -99,18 +99,6 @@ const CGFloat kDIDatepickerSpaceBetweenItems = 15.;
 
 #pragma mark Public methods
 
-- (void)fillDatesToCurrentDate:(NSInteger)frontDatesCount
-{
-    NSAssert(frontDatesCount < 1000, @"Too much dates");
-    
-    NSMutableArray *dates = [[NSMutableArray alloc] init];
-    for (NSInteger day = 0; day < frontDatesCount; day++) {
-        [dates addObject:[NSDate dateWithTimeIntervalSinceNow:day * kSecondsInDay]];
-    }
-    
-    self.dates = dates;
-}
-
 - (void)fillDatesFromCurrentDate:(NSInteger)nextDatesCount
 {
     NSAssert(nextDatesCount < 1000, @"Too much dates");
@@ -128,7 +116,8 @@ const CGFloat kDIDatepickerSpaceBetweenItems = 15.;
     NSAssert(nextDatesCount < 1000, @"Too much dates");
 
     NSMutableArray *dates = [[NSMutableArray alloc] init];
-    for (NSInteger day = 0; day < nextDatesCount; day++) {
+    for (NSInteger day = 0; day < nextDatesCount; day++)
+    {
         [dates addObject:[fromDate dateByAddingTimeInterval:day * kSecondsInDay]];
     }
     

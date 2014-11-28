@@ -18,12 +18,12 @@
 		0E72E4D01A1DEDCF00586DAD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C61A1DEDCF00586DAD /* Utils.swift */; };
 		0E72E4D11A1DEDCF00586DAD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C81A1DEDCF00586DAD /* README.md */; };
 		0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8064C81A1C829900324E71 /* BLEManager.swift */; };
-		0EB30F871A1F229D00A11A76 /* Temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB30F861A1F229D00A11A76 /* Temp.swift */; };
+		0EA07A941A28C2A700CA1D4D /* DIDatepicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA07A911A28C2A700CA1D4D /* DIDatepicker.m */; };
+		0EA07A951A28C2A700CA1D4D /* DIDatepickerDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA07A931A28C2A700CA1D4D /* DIDatepickerDateView.m */; };
+		0EB30F871A1F229D00A11A76 /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB30F861A1F229D00A11A76 /* Temperature.swift */; };
 		0EEF41B51A1DEF7F00D3AA4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */; };
 		0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DAF19F0F35700F6F403 /* Constants.swift */; };
 		14B8F142A1164F60A8029125 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81053D327DCD46C78A44B6AC /* libPods.a */; };
-		E70F72381A0226B5005BC863 /* DIDatepicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E70F72351A0226B5005BC863 /* DIDatepicker.m */; };
-		E70F72391A0226B5005BC863 /* DIDatepickerDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = E70F72371A0226B5005BC863 /* DIDatepickerDateView.m */; };
 		E70F723B1A022B69005BC863 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70F723A1A022B69005BC863 /* History.swift */; };
 		E72F2A0819D92457009383AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A0619D92457009383AB /* Main.storyboard */; };
 		E72F2A1919D92457009383AB /* iDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A1819D92457009383AB /* iDoTests.swift */; };
@@ -31,19 +31,9 @@
 		E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5E19D926DA009383AB /* DeviceList.swift */; };
 		E72F2A7B19D926DA009383AB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5F19D926DA009383AB /* Settings.swift */; };
 		E72F2A7C19D926DA009383AB /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6019D926DA009383AB /* Main.swift */; };
-		E72F2A7E19D926DA009383AB /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6519D926DA009383AB /* DBManager.swift */; };
-		E72F2A7F19D926DA009383AB /* OliveDBDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6619D926DA009383AB /* OliveDBDao.swift */; };
-		E72F2A8019D926DA009383AB /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6719D926DA009383AB /* Temperature.swift */; };
-		E72F2A8119D926DA009383AB /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6919D926DA009383AB /* DateUtils.swift */; };
+		E72F2A8019D926DA009383AB /* TemperatureOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6719D926DA009383AB /* TemperatureOld.swift */; };
 		E72F2A8219D926DA009383AB /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6A19D926DA009383AB /* Util.swift */; };
 		E72F2A8F19D928CC009383AB /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A9119D928CC009383AB /* Localization.strings */; };
-		E74078CA19FE162B00B2D05A /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74078C619FE162B00B2D05A /* LineChart.swift */; };
-		E74078CB19FE162B00B2D05A /* ScrolledChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74078C719FE162B00B2D05A /* ScrolledChart.swift */; };
-		E74078CC19FE162B00B2D05A /* UICirclePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74078C819FE162B00B2D05A /* UICirclePoint.swift */; };
-		E74078CD19FE162B00B2D05A /* UILine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74078C919FE162B00B2D05A /* UILine.swift */; };
-		E74078D419FE5A3600B2D05A /* FDGraphScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E74078D119FE5A3600B2D05A /* FDGraphScrollView.m */; };
-		E74078D519FE5A3600B2D05A /* FDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = E74078D319FE5A3600B2D05A /* FDGraphView.m */; };
-		E7B9170D19FF9DA40015E3A5 /* ChartDataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B9170C19FF9DA40015E3A5 /* ChartDataConverter.swift */; };
 		E7E0AF9819D93B7A0000BC14 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7E0AF9619D93B7A0000BC14 /* LaunchScreen.xib */; };
 		E7E0AF9A19D93F100000BC14 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7E0AF9919D93F100000BC14 /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -73,17 +63,17 @@
 		0E72E4C61A1DEDCF00586DAD /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		0E72E4C81A1DEDCF00586DAD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0E8064C81A1C829900324E71 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
-		0EB30F861A1F229D00A11A76 /* Temp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temp.swift; sourceTree = "<group>"; };
+		0EA07A901A28C2A700CA1D4D /* DIDatepicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIDatepicker.h; sourceTree = "<group>"; };
+		0EA07A911A28C2A700CA1D4D /* DIDatepicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIDatepicker.m; sourceTree = "<group>"; };
+		0EA07A921A28C2A700CA1D4D /* DIDatepickerDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIDatepickerDateView.h; sourceTree = "<group>"; };
+		0EA07A931A28C2A700CA1D4D /* DIDatepickerDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIDatepickerDateView.m; sourceTree = "<group>"; };
+		0EB30F861A1F229D00A11A76 /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
 		0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0EEF41BB1A1DF0CF00D3AA4C /* iDo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iDo-Bridging-Header.h"; sourceTree = "<group>"; };
 		0EFA2DAF19F0F35700F6F403 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6D80D7979AFB3C46B5F741DF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		81053D327DCD46C78A44B6AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A5CBB47F86481B8605E245 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		E70F72341A0226B5005BC863 /* DIDatepicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIDatepicker.h; sourceTree = "<group>"; };
-		E70F72351A0226B5005BC863 /* DIDatepicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIDatepicker.m; sourceTree = "<group>"; };
-		E70F72361A0226B5005BC863 /* DIDatepickerDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIDatepickerDateView.h; sourceTree = "<group>"; };
-		E70F72371A0226B5005BC863 /* DIDatepickerDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIDatepickerDateView.m; sourceTree = "<group>"; };
 		E70F723A1A022B69005BC863 /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		E72F29FD19D92456009383AB /* iDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E72F2A0119D92457009383AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -95,23 +85,11 @@
 		E72F2A5E19D926DA009383AB /* DeviceList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceList.swift; sourceTree = "<group>"; };
 		E72F2A5F19D926DA009383AB /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		E72F2A6019D926DA009383AB /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
-		E72F2A6519D926DA009383AB /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
-		E72F2A6619D926DA009383AB /* OliveDBDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OliveDBDao.swift; sourceTree = "<group>"; };
-		E72F2A6719D926DA009383AB /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
-		E72F2A6919D926DA009383AB /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
+		E72F2A6719D926DA009383AB /* TemperatureOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureOld.swift; sourceTree = "<group>"; };
 		E72F2A6A19D926DA009383AB /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		E72F2A9019D928CC009383AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localization.strings; sourceTree = "<group>"; };
 		E72F2A9219D928D0009383AB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localization.strings"; sourceTree = "<group>"; };
-		E74078C619FE162B00B2D05A /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
-		E74078C719FE162B00B2D05A /* ScrolledChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrolledChart.swift; sourceTree = "<group>"; };
-		E74078C819FE162B00B2D05A /* UICirclePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICirclePoint.swift; sourceTree = "<group>"; };
-		E74078C919FE162B00B2D05A /* UILine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILine.swift; sourceTree = "<group>"; };
 		E74078CE19FE26C300B2D05A /* libPods-FMDB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FMDB.a"; path = "Pods/build/Debug-iphoneos/libPods-FMDB.a"; sourceTree = "<group>"; };
-		E74078D019FE5A3600B2D05A /* FDGraphScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDGraphScrollView.h; sourceTree = "<group>"; };
-		E74078D119FE5A3600B2D05A /* FDGraphScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDGraphScrollView.m; sourceTree = "<group>"; };
-		E74078D219FE5A3600B2D05A /* FDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDGraphView.h; sourceTree = "<group>"; };
-		E74078D319FE5A3600B2D05A /* FDGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDGraphView.m; sourceTree = "<group>"; };
-		E7B9170C19FF9DA40015E3A5 /* ChartDataConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartDataConverter.swift; path = ../Controllers/ChartDataConverter.swift; sourceTree = "<group>"; };
 		E7E0AF9719D93B7A0000BC14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iDo/Base.lproj/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
 		E7E0AF9919D93F100000BC14 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				0E72E4B51A1DEDCF00586DAD /* BEMSimpleLineGraph */,
+				0EA07A8E1A28C2A700CA1D4D /* DIDatepicker */,
 				0E72E4BD1A1DEDCF00586DAD /* Taylor */,
 			);
 			path = Library;
@@ -224,6 +203,25 @@
 				0E8064C81A1C829900324E71 /* BLEManager.swift */,
 			);
 			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		0EA07A8E1A28C2A700CA1D4D /* DIDatepicker */ = {
+			isa = PBXGroup;
+			children = (
+				0EA07A8F1A28C2A700CA1D4D /* Sources */,
+			);
+			path = DIDatepicker;
+			sourceTree = "<group>";
+		};
+		0EA07A8F1A28C2A700CA1D4D /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0EA07A901A28C2A700CA1D4D /* DIDatepicker.h */,
+				0EA07A911A28C2A700CA1D4D /* DIDatepicker.m */,
+				0EA07A921A28C2A700CA1D4D /* DIDatepickerDateView.h */,
+				0EA07A931A28C2A700CA1D4D /* DIDatepickerDateView.m */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		1F0EC2FAA97F95EE8525F9E2 /* Pods */ = {
@@ -333,27 +331,15 @@
 		E72F2A6119D926DA009383AB /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E72F2A6419D926DA009383AB /* Database */,
-				E72F2A6719D926DA009383AB /* Temperature.swift */,
-				0EB30F861A1F229D00A11A76 /* Temp.swift */,
+				0EB30F861A1F229D00A11A76 /* Temperature.swift */,
+				E72F2A6719D926DA009383AB /* TemperatureOld.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		E72F2A6419D926DA009383AB /* Database */ = {
-			isa = PBXGroup;
-			children = (
-				E72F2A6519D926DA009383AB /* DBManager.swift */,
-				E72F2A6619D926DA009383AB /* OliveDBDao.swift */,
-			);
-			path = Database;
 			sourceTree = "<group>";
 		};
 		E72F2A6819D926DA009383AB /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				E7B9170C19FF9DA40015E3A5 /* ChartDataConverter.swift */,
-				E72F2A6919D926DA009383AB /* DateUtils.swift */,
 				E72F2A6A19D926DA009383AB /* Util.swift */,
 				0E58E6781A0AADB200671555 /* GATTUtils.swift */,
 			);
@@ -363,36 +349,8 @@
 		E72F2A6B19D926DA009383AB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E72F2A6C19D926DA009383AB /* CalendarView */,
-				E72F2A7019D926DA009383AB /* lineChart */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		E72F2A6C19D926DA009383AB /* CalendarView */ = {
-			isa = PBXGroup;
-			children = (
-				E70F72341A0226B5005BC863 /* DIDatepicker.h */,
-				E70F72351A0226B5005BC863 /* DIDatepicker.m */,
-				E70F72361A0226B5005BC863 /* DIDatepickerDateView.h */,
-				E70F72371A0226B5005BC863 /* DIDatepickerDateView.m */,
-			);
-			path = CalendarView;
-			sourceTree = "<group>";
-		};
-		E72F2A7019D926DA009383AB /* lineChart */ = {
-			isa = PBXGroup;
-			children = (
-				E74078D019FE5A3600B2D05A /* FDGraphScrollView.h */,
-				E74078D119FE5A3600B2D05A /* FDGraphScrollView.m */,
-				E74078D219FE5A3600B2D05A /* FDGraphView.h */,
-				E74078D319FE5A3600B2D05A /* FDGraphView.m */,
-				E74078C619FE162B00B2D05A /* LineChart.swift */,
-				E74078C719FE162B00B2D05A /* ScrolledChart.swift */,
-				E74078C819FE162B00B2D05A /* UICirclePoint.swift */,
-				E74078C919FE162B00B2D05A /* UILine.swift */,
-			);
-			path = lineChart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -539,25 +497,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E72F2A7F19D926DA009383AB /* OliveDBDao.swift in Sources */,
-				E70F72381A0226B5005BC863 /* DIDatepicker.m in Sources */,
-				E74078D519FE5A3600B2D05A /* FDGraphView.m in Sources */,
 				0E72E4CF1A1DEDCF00586DAD /* RESTList.swift in Sources */,
-				E72F2A8119D926DA009383AB /* DateUtils.swift in Sources */,
 				E72F2A7C19D926DA009383AB /* Main.swift in Sources */,
+				0EA07A951A28C2A700CA1D4D /* DIDatepickerDateView.m in Sources */,
 				0E72E4CA1A1DEDCF00586DAD /* BEMLine.m in Sources */,
 				0E72E4CB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m in Sources */,
 				0EEF41B51A1DEF7F00D3AA4C /* AppDelegate.swift in Sources */,
 				0E58E6791A0AADB200671555 /* GATTUtils.swift in Sources */,
-				E74078CA19FE162B00B2D05A /* LineChart.swift in Sources */,
-				E74078CB19FE162B00B2D05A /* ScrolledChart.swift in Sources */,
-				E74078D419FE5A3600B2D05A /* FDGraphScrollView.m in Sources */,
 				0E72E4CC1A1DEDCF00586DAD /* BaseDetail.swift in Sources */,
-				E74078CD19FE162B00B2D05A /* UILine.swift in Sources */,
 				E72F2A7B19D926DA009383AB /* Settings.swift in Sources */,
 				E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */,
 				0E72E4CD1A1DEDCF00586DAD /* BaseUICollectionViewController.swift in Sources */,
-				E72F2A7E19D926DA009383AB /* DBManager.swift in Sources */,
+				0EA07A941A28C2A700CA1D4D /* DIDatepicker.m in Sources */,
 				E72F2A7919D926DA009383AB /* DeviceDetail.swift in Sources */,
 				0E72E4CE1A1DEDCF00586DAD /* RESTUICollectionViewController.swift in Sources */,
 				E72F2A8219D926DA009383AB /* Util.swift in Sources */,
@@ -565,13 +516,10 @@
 				0E72E4D11A1DEDCF00586DAD /* README.md in Sources */,
 				E70F723B1A022B69005BC863 /* History.swift in Sources */,
 				0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */,
-				E74078CC19FE162B00B2D05A /* UICirclePoint.swift in Sources */,
-				E72F2A8019D926DA009383AB /* Temperature.swift in Sources */,
+				E72F2A8019D926DA009383AB /* TemperatureOld.swift in Sources */,
 				0E72E4C91A1DEDCF00586DAD /* BEMCircle.m in Sources */,
 				0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */,
-				E7B9170D19FF9DA40015E3A5 /* ChartDataConverter.swift in Sources */,
-				E70F72391A0226B5005BC863 /* DIDatepickerDateView.m in Sources */,
-				0EB30F871A1F229D00A11A76 /* Temp.swift in Sources */,
+				0EB30F871A1F229D00A11A76 /* Temperature.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

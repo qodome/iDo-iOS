@@ -17,9 +17,7 @@
 // BEMSimpleLineGraphView
 #import "BEMSimpleLineGraphView.h"
 
-
-#import "FMDatabase.h"
-#import "FDGraphScrollView.h"
+// DIDIDatepicker
 #import "DIDatepicker.h"
 
 #ifndef __OPTIMIZE__

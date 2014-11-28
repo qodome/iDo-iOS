@@ -7,7 +7,7 @@ import CoreBluetooth
 class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource, UIAlertViewDelegate {
     // MARK: - 🍀 变量
     let segueId = "segue_main_device_list"
-    var data: [Temp] = []
+    var data: [Temperature] = []
     
     var json = "" // 历史数据json
     
@@ -82,7 +82,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
             json = NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
             let content = NSJSONSerialization.JSONObjectWithData(json.dataUsingEncoding(NSUTF8StringEncoding)!, options: .allZeros, error: nil) as NSArray
             for d in content {
-                let temperature = Temp()
+                let temperature = Temperature()
                 temperature.timeStamp = Int(d[0] as NSNumber)
                 temperature.open = Float(d[1] as NSNumber)
                 temperature.high = Float(d[2] as NSNumber)
@@ -126,7 +126,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         }
         temperatureLabel.text = NSString(format: "%.2f°", value)
         // 初始化一个温度对象
-        let temp = Temp()
+        let temp = Temperature()
         temp.timeStamp = getTimeStamp(NSDate(), minute: 5) // 当前时间最接近的5分钟频率
         temp.open = value
         temp.high = value
@@ -230,9 +230,10 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
     }
     
     func getTimeStamp(date: NSDate, minute: Int) -> Int {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
-        let components = calendar.components(.YearCalendarUnit | .MonthCalendarUnit | .DayCalendarUnit | .HourCalendarUnit | .MinuteCalendarUnit, fromDate: date)
+        let calendar = NSCalendar.autoupdatingCurrentCalendar() // TODO: 用这个日历是否总是对
+        let components = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay | .CalendarUnitHour | .CalendarUnitMinute, fromDate: date)
         components.minute = components.minute / minute * minute
+        println(calendar.dateFromComponents(components))
         return Int(calendar.dateFromComponents(components)!.timeIntervalSince1970)
     }
     

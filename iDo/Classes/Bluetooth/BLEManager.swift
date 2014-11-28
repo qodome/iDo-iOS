@@ -30,8 +30,6 @@ enum BLEManagerState: Int {
 
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // MARK: - 🍀 变量
-    let kServiceUUID = "1809" // Health Thermometer
-    let kCharacteristicUUID = "2A1E" // Temperature Measurement
     let PREF_DEFAULT_DEVICE = "selectedPeripheralId"
     
     var central: CBCentralManager!
@@ -40,6 +38,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var state = BLEManagerState.Idle
     var delegate: BLEManagerDelegate! // 温度数据发送 代理
     var changeDelegate: DeviceChangeDelegate? //设备data变化 代理
+    
+    var reconnectCount = 0
     
     // MARK: - 💖 生命周期 (Lifecycle)
     class func sharedManager() -> BLEManager {
@@ -62,6 +62,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     // MARK: 💛 自定义方法
     func startScan() {
+        println("aaa=========================")
         central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
     }
     
@@ -99,7 +100,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     // MARK: - 💙 CBCentralManagerDelegate
     func centralManagerDidUpdateState(central: CBCentralManager!) {
-        NSLog("💙 蓝牙状态更新: %i", central.state.rawValue)
+        NSLog("🔵 蓝牙状态更新: %i", central.state.rawValue)
         switch central.state {
         case CBCentralManagerState.PoweredOn:
             central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
@@ -112,11 +113,27 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
         if peripheral.identifier.UUIDString == defaultDevice() {
-            NSLog("💙 发现已绑定设备: \(peripheral.name) (%@)", peripheral.identifier.UUIDString)
+            NSLog("🔵 发现已绑定设备: \(peripheral.name) (%@)", peripheral.identifier.UUIDString)
             connected = peripheral
             connect(peripheral)
+            println("重连次数 \(reconnectCount)")
+            if reconnectCount > 0 {
+                reconnectCount = 0
+                //                println(advertisementData)
+                //                var d: NSDictionary = advertisementData as NSDictionary
+                //                var srvdata: NSDictionary? = d.objectForKey("kCBAdvData?ServiceData") as? NSDictionary
+                //                if srvdata != nil {
+                //                    for key in srvdata.allKeys {
+                //                        var b: NSData = srvdata.objectForKey(key)
+                //                        if b != nil {
+                //                            var ptr = (int *)[b bytes]
+                //                            NSLog(@"%d", *ptr & 0xFFFFFF)
+                //                        }
+                //                    }
+                //                }
+            }
         } else {
-            NSLog("💙 发现未绑定设备: \(peripheral.name) (%@)", peripheral.identifier.UUIDString)
+            NSLog("🔵 发现未绑定设备: \(peripheral.name) (%@)", peripheral.identifier.UUIDString)
             if !contains(peripherals, peripheral) {
                 peripherals.append(peripheral)
                 changeDelegate?.onDataChange(peripherals, connected: connected)
@@ -125,10 +142,10 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
-        NSLog("💙 连上设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
+        NSLog("🔵 连上设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
         central.stopScan() // 停止搜寻
         peripheral.delegate = self
-        peripheral.discoverServices([CBUUID(string: kServiceUUID)])
+        peripheral.discoverServices([CBUUID(string: kServiceUUID), CBUUID(string: BLE_UUID_DATE)])
         delegate.didConnect(peripheral)
         changeDelegate?.onDataChange(peripherals, connected: peripheral)
         state = .Connected
@@ -136,11 +153,11 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     // MARK: -      处理异常
     func centralManager(central: CBCentralManager!, didFailToConnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
-        NSLog("💙 连接失败: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
+        NSLog("🔵 连接失败: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
     }
     
     func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
-        NSLog("💙 断开设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
+        NSLog("🔵 断开设备: %@ (%@)", peripheral.name, peripheral.identifier.UUIDString)
         state = .Disconnected
         connected = nil
         if !contains(peripherals, peripheral) {
@@ -149,32 +166,61 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         changeDelegate?.onDataChange(peripherals, connected: connected) // 刷新UI
         delegate.didDisconnect() // TODO: 状态有错
         if defaultDevice() != "" { // 无限次自动重连
-            connect(peripheral)
+            if reconnectCount > 0 {
+                startScan()
+            } else {
+                reconnectCount++
+                connect(peripheral)
+            }
         }
     }
     
     // MARK: - 💙 CBPeripheralDelegate
     func peripheral(peripheral: CBPeripheral!, didDiscoverServices error: NSError!) {
         if error == nil {
-            for service in peripheral.services {
-                if CBUUID(string: kServiceUUID) == service.UUID {
-                    peripheral.discoverCharacteristics([CBUUID(string: kCharacteristicUUID)], forService: service as CBService)
-                    break
+            for service in peripheral.services as [CBService] {
+                println("🔵 发现服务 \(service.UUID)")
+                switch service.UUID {
+                case CBUUID(string: kServiceUUID):
+                    peripheral.discoverCharacteristics([CBUUID(string: kCharacteristicUUID)], forService: service)
+                case CBUUID(string: BLE_UUID_DATE):
+                    peripheral.discoverCharacteristics([CBUUID(string: BLE_UUID_DATE_TIME_CHAR)], forService: service)
+                default:
+                    println("🔵 unknown service")
                 }
             }
         } else {
             central.cancelPeripheralConnection(peripheral)
-            // devicesArray.removeObject(peripheral)
         }
     }
     
     func peripheral(peripheral: CBPeripheral!, didDiscoverCharacteristicsForService service: CBService!, error: NSError!) {
         if error == nil {
-            for characteristic in service.characteristics {
-                if CBUUID(string: kCharacteristicUUID) == characteristic.UUID {
-                    peripheral.setNotifyValue(true, forCharacteristic: characteristic as CBCharacteristic)
-                    break
+            switch service.UUID {
+            case CBUUID(string: kServiceUUID):
+                for characteristic in service.characteristics as [CBCharacteristic] {
+                    if CBUUID(string: kCharacteristicUUID) == characteristic.UUID {
+                        peripheral.setNotifyValue(true, forCharacteristic: characteristic)
+                        break
+                    }
                 }
+            case CBUUID(string: BLE_UUID_DATE):
+                for characteristic in service.characteristics as [CBCharacteristic] {
+                    println("🔵 发现特性 \(characteristic.UUID)")
+                    if CBUUID(string: BLE_UUID_DATE_TIME_CHAR) == characteristic.UUID {
+                        let calendar = NSCalendar.autoupdatingCurrentCalendar() // TODO: 用这个日历是否总是对
+                        calendar.timeZone = NSTimeZone(name: "UTC")!
+                        let components = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay | .CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitSecond, fromDate: NSDate())
+                        let bytes: [UInt8] = [UInt8(components.year & 0xFF), UInt8((components.year & 0xFF00) >> 8), UInt8(components.month), UInt8(components.day), UInt8(components.hour), UInt8(components.minute), UInt8(components.second)]
+                        println(bytes)
+                        println(bytes.count)
+                        println("=======fsdfasfsdfa=====")
+                        peripheral.writeValue(NSData(bytes: bytes, length: bytes.count), forCharacteristic: characteristic, type: .WithResponse)
+                        peripheral.readValueForCharacteristic(characteristic)
+                    }
+                }
+            default:
+                println("🔵 unknown service")
             }
         } else {
             central.cancelPeripheralConnection(peripheral)
@@ -183,7 +229,15 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
         if error == nil {
-            delegate.didUpdateValue(characteristic)
+            switch characteristic.UUID {
+            case CBUUID(string: kCharacteristicUUID):
+                delegate.didUpdateValue(characteristic)
+            case CBUUID(string: BLE_UUID_DATE_TIME_CHAR):
+                println("🔵 usdfsadfasdfasdfsdf")
+                NSLog("%@", characteristic)
+            default:
+                println("🔵 unknown characteristic")
+            }
         } else {
             central.cancelPeripheralConnection(peripheral)
         }
