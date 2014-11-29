@@ -16,7 +16,6 @@
 		0E72E4CE1A1DEDCF00586DAD /* RESTUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C21A1DEDCF00586DAD /* RESTUICollectionViewController.swift */; };
 		0E72E4CF1A1DEDCF00586DAD /* RESTList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C41A1DEDCF00586DAD /* RESTList.swift */; };
 		0E72E4D01A1DEDCF00586DAD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C61A1DEDCF00586DAD /* Utils.swift */; };
-		0E72E4D11A1DEDCF00586DAD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C81A1DEDCF00586DAD /* README.md */; };
 		0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8064C81A1C829900324E71 /* BLEManager.swift */; };
 		0EB30F871A1F229D00A11A76 /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB30F861A1F229D00A11A76 /* Temperature.swift */; };
 		0EEF41B51A1DEF7F00D3AA4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */; };
@@ -29,9 +28,8 @@
 		E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5E19D926DA009383AB /* DeviceList.swift */; };
 		E72F2A7B19D926DA009383AB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A5F19D926DA009383AB /* Settings.swift */; };
 		E72F2A7C19D926DA009383AB /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6019D926DA009383AB /* Main.swift */; };
-		E72F2A8019D926DA009383AB /* TemperatureOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6719D926DA009383AB /* TemperatureOld.swift */; };
 		E72F2A8219D926DA009383AB /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F2A6A19D926DA009383AB /* Util.swift */; };
-		E72F2A8F19D928CC009383AB /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A9119D928CC009383AB /* Localization.strings */; };
+		E72F2A8F19D928CC009383AB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E72F2A9119D928CC009383AB /* Localizable.strings */; };
 		E7E0AF9819D93B7A0000BC14 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7E0AF9619D93B7A0000BC14 /* LaunchScreen.xib */; };
 		E7E0AF9A19D93F100000BC14 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7E0AF9919D93F100000BC14 /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -79,10 +77,9 @@
 		E72F2A5E19D926DA009383AB /* DeviceList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceList.swift; sourceTree = "<group>"; };
 		E72F2A5F19D926DA009383AB /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		E72F2A6019D926DA009383AB /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
-		E72F2A6719D926DA009383AB /* TemperatureOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureOld.swift; sourceTree = "<group>"; };
 		E72F2A6A19D926DA009383AB /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		E72F2A9019D928CC009383AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localization.strings; sourceTree = "<group>"; };
-		E72F2A9219D928D0009383AB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localization.strings"; sourceTree = "<group>"; };
+		E72F2A9019D928CC009383AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E72F2A9219D928D0009383AB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E74078CE19FE26C300B2D05A /* libPods-FMDB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FMDB.a"; path = "Pods/build/Debug-iphoneos/libPods-FMDB.a"; sourceTree = "<group>"; };
 		E7E0AF9719D93B7A0000BC14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iDo/Base.lproj/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
 		E7E0AF9919D93F100000BC14 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -253,7 +250,7 @@
 				E7E0AF9619D93B7A0000BC14 /* LaunchScreen.xib */,
 				E7E0AF9919D93F100000BC14 /* Images.xcassets */,
 				E72F2A0119D92457009383AB /* Info.plist */,
-				E72F2A9119D928CC009383AB /* Localization.strings */,
+				E72F2A9119D928CC009383AB /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -306,7 +303,6 @@
 			isa = PBXGroup;
 			children = (
 				0EB30F861A1F229D00A11A76 /* Temperature.swift */,
-				E72F2A6719D926DA009383AB /* TemperatureOld.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -420,7 +416,7 @@
 				E7E0AF9819D93B7A0000BC14 /* LaunchScreen.xib in Resources */,
 				E7E0AF9A19D93F100000BC14 /* Images.xcassets in Resources */,
 				E72F2A0819D92457009383AB /* Main.storyboard in Resources */,
-				E72F2A8F19D928CC009383AB /* Localization.strings in Resources */,
+				E72F2A8F19D928CC009383AB /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,10 +481,8 @@
 				0E72E4CE1A1DEDCF00586DAD /* RESTUICollectionViewController.swift in Sources */,
 				E72F2A8219D926DA009383AB /* Util.swift in Sources */,
 				0E72E4D01A1DEDCF00586DAD /* Utils.swift in Sources */,
-				0E72E4D11A1DEDCF00586DAD /* README.md in Sources */,
 				E70F723B1A022B69005BC863 /* History.swift in Sources */,
 				0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */,
-				E72F2A8019D926DA009383AB /* TemperatureOld.swift in Sources */,
 				0E72E4C91A1DEDCF00586DAD /* BEMCircle.m in Sources */,
 				0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */,
 				0EB30F871A1F229D00A11A76 /* Temperature.swift in Sources */,
@@ -522,13 +516,13 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		E72F2A9119D928CC009383AB /* Localization.strings */ = {
+		E72F2A9119D928CC009383AB /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E72F2A9019D928CC009383AB /* Base */,
 				E72F2A9219D928D0009383AB /* zh-Hans */,
 			);
-			name = Localization.strings;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		E7E0AF9619D93B7A0000BC14 /* LaunchScreen.xib */ = {

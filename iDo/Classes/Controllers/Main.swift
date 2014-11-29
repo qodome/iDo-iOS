@@ -52,7 +52,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
                 otherButtonTitles: LocalizedString("Jump to device page")).show()
         }
         
-        chart = BEMSimpleLineGraphView(frame: CGRectMake(0, 0, SCREEN_WIDTH * 2, 240))
+        chart = BEMSimpleLineGraphView(frame: CGRectMake(0, 0, view.frame.width * 2, 240))
         chart.delegate = self
         chart.dataSource = self
         // ❨╯°□°❩╯︵┻━┻
@@ -67,9 +67,9 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         chart.enablePopUpReport = true // 包含enableTouchReport效果
         chart.enableYAxisLabel = true // 显示y轴标签
         chart.enableReferenceYAxisLines = true // 显示y轴参考线
-        chart.animationGraphStyle = BEMLineAnimation.Fade // 绘制动画关闭会造成PopUp失效
+//        chart.animationGraphStyle = .Fade // 绘制动画关闭会造成PopUp失效
         // ScrollView
-        scrollView = UIScrollView(frame: CGRectMake(0, 200, SCREEN_WIDTH, chart.frame.height + 44))
+        scrollView = UIScrollView(frame: CGRectMake(0, 200, view.frame.width, chart.frame.height + 44))
         scrollView.contentSize = CGSizeMake(chart.frame.width, scrollView.frame.height)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.addSubview(chart)
