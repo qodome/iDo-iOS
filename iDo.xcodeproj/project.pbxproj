@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E1D46671A29D259005755F7 /* BaseDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D465A1A29D259005755F7 /* BaseDetail.swift */; };
+		0E1D46681A29D259005755F7 /* BaseUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D465B1A29D259005755F7 /* BaseUICollectionViewController.swift */; };
+		0E1D46691A29D259005755F7 /* RESTUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D465C1A29D259005755F7 /* RESTUICollectionViewController.swift */; };
+		0E1D466A1A29D259005755F7 /* RESTList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D465E1A29D259005755F7 /* RESTList.swift */; };
+		0E1D466B1A29D259005755F7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D46611A29D259005755F7 /* Utils.swift */; };
 		0E58E6791A0AADB200671555 /* GATTUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E58E6781A0AADB200671555 /* GATTUtils.swift */; };
 		0E72E4C91A1DEDCF00586DAD /* BEMCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4B81A1DEDCF00586DAD /* BEMCircle.m */; };
 		0E72E4CA1A1DEDCF00586DAD /* BEMLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4BA1A1DEDCF00586DAD /* BEMLine.m */; };
 		0E72E4CB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4BC1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m */; };
-		0E72E4CC1A1DEDCF00586DAD /* BaseDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C01A1DEDCF00586DAD /* BaseDetail.swift */; };
-		0E72E4CD1A1DEDCF00586DAD /* BaseUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C11A1DEDCF00586DAD /* BaseUICollectionViewController.swift */; };
-		0E72E4CE1A1DEDCF00586DAD /* RESTUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C21A1DEDCF00586DAD /* RESTUICollectionViewController.swift */; };
-		0E72E4CF1A1DEDCF00586DAD /* RESTList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C41A1DEDCF00586DAD /* RESTList.swift */; };
-		0E72E4D01A1DEDCF00586DAD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4C61A1DEDCF00586DAD /* Utils.swift */; };
 		0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8064C81A1C829900324E71 /* BLEManager.swift */; };
 		0EB30F871A1F229D00A11A76 /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB30F861A1F229D00A11A76 /* Temperature.swift */; };
 		0EEF41B51A1DEF7F00D3AA4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */; };
@@ -45,6 +45,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E1D465A1A29D259005755F7 /* BaseDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDetail.swift; sourceTree = "<group>"; };
+		0E1D465B1A29D259005755F7 /* BaseUICollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUICollectionViewController.swift; sourceTree = "<group>"; };
+		0E1D465C1A29D259005755F7 /* RESTUICollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTUICollectionViewController.swift; sourceTree = "<group>"; };
+		0E1D465E1A29D259005755F7 /* RESTList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTList.swift; sourceTree = "<group>"; };
+		0E1D46611A29D259005755F7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		0E58E6781A0AADB200671555 /* GATTUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATTUtils.swift; sourceTree = "<group>"; };
 		0E72E4B71A1DEDCF00586DAD /* BEMCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMCircle.h; sourceTree = "<group>"; };
 		0E72E4B81A1DEDCF00586DAD /* BEMCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMCircle.m; sourceTree = "<group>"; };
@@ -52,12 +57,6 @@
 		0E72E4BA1A1DEDCF00586DAD /* BEMLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMLine.m; sourceTree = "<group>"; };
 		0E72E4BB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMSimpleLineGraphView.h; sourceTree = "<group>"; };
 		0E72E4BC1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMSimpleLineGraphView.m; sourceTree = "<group>"; };
-		0E72E4C01A1DEDCF00586DAD /* BaseDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDetail.swift; sourceTree = "<group>"; };
-		0E72E4C11A1DEDCF00586DAD /* BaseUICollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUICollectionViewController.swift; sourceTree = "<group>"; };
-		0E72E4C21A1DEDCF00586DAD /* RESTUICollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTUICollectionViewController.swift; sourceTree = "<group>"; };
-		0E72E4C41A1DEDCF00586DAD /* RESTList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTList.swift; sourceTree = "<group>"; };
-		0E72E4C61A1DEDCF00586DAD /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		0E72E4C81A1DEDCF00586DAD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0E8064C81A1C829900324E71 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		0EB30F861A1F229D00A11A76 /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
 		0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,7 +79,6 @@
 		E72F2A6A19D926DA009383AB /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		E72F2A9019D928CC009383AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E72F2A9219D928D0009383AB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		E74078CE19FE26C300B2D05A /* libPods-FMDB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FMDB.a"; path = "Pods/build/Debug-iphoneos/libPods-FMDB.a"; sourceTree = "<group>"; };
 		E7E0AF9719D93B7A0000BC14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iDo/Base.lproj/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
 		E7E0AF9919D93F100000BC14 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,11 +102,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E1D46541A29D259005755F7 /* Taylor */ = {
+			isa = PBXGroup;
+			children = (
+				0E1D46571A29D259005755F7 /* Classes */,
+			);
+			name = Taylor;
+			path = ../../Taylor/Taylor;
+			sourceTree = "<group>";
+		};
+		0E1D46571A29D259005755F7 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0E1D46601A29D259005755F7 /* Util */,
+				0E1D46591A29D259005755F7 /* Controllers */,
+				0E1D465D1A29D259005755F7 /* Models */,
+				0E1D46621A29D259005755F7 /* Views */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		0E1D46591A29D259005755F7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0E1D465A1A29D259005755F7 /* BaseDetail.swift */,
+				0E1D465B1A29D259005755F7 /* BaseUICollectionViewController.swift */,
+				0E1D465C1A29D259005755F7 /* RESTUICollectionViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		0E1D465D1A29D259005755F7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0E1D465E1A29D259005755F7 /* RESTList.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0E1D46601A29D259005755F7 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				0E1D46611A29D259005755F7 /* Utils.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		0E1D46621A29D259005755F7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		0E72E4B41A1DEDCF00586DAD /* Library */ = {
 			isa = PBXGroup;
 			children = (
 				0E72E4B51A1DEDCF00586DAD /* BEMSimpleLineGraph */,
-				0E72E4BD1A1DEDCF00586DAD /* Taylor */,
+				0E1D46541A29D259005755F7 /* Taylor */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -134,59 +185,6 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		0E72E4BD1A1DEDCF00586DAD /* Taylor */ = {
-			isa = PBXGroup;
-			children = (
-				0E72E4BE1A1DEDCF00586DAD /* Classes */,
-				0E72E4C81A1DEDCF00586DAD /* README.md */,
-			);
-			path = Taylor;
-			sourceTree = "<group>";
-		};
-		0E72E4BE1A1DEDCF00586DAD /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				0E72E4BF1A1DEDCF00586DAD /* Controllers */,
-				0E72E4C31A1DEDCF00586DAD /* Models */,
-				0E72E4C51A1DEDCF00586DAD /* Util */,
-				0E72E4C71A1DEDCF00586DAD /* Views */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		0E72E4BF1A1DEDCF00586DAD /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				0E72E4C01A1DEDCF00586DAD /* BaseDetail.swift */,
-				0E72E4C11A1DEDCF00586DAD /* BaseUICollectionViewController.swift */,
-				0E72E4C21A1DEDCF00586DAD /* RESTUICollectionViewController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		0E72E4C31A1DEDCF00586DAD /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				0E72E4C41A1DEDCF00586DAD /* RESTList.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		0E72E4C51A1DEDCF00586DAD /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				0E72E4C61A1DEDCF00586DAD /* Utils.swift */,
-			);
-			path = Util;
-			sourceTree = "<group>";
-		};
-		0E72E4C71A1DEDCF00586DAD /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		0E8064C71A1C829900324E71 /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,7 +205,6 @@
 		CB97347503B144E28DD0E4B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E74078CE19FE26C300B2D05A /* libPods-FMDB.a */,
 				81053D327DCD46C78A44B6AC /* libPods.a */,
 			);
 			name = Frameworks;
@@ -467,22 +464,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E72E4CF1A1DEDCF00586DAD /* RESTList.swift in Sources */,
 				E72F2A7C19D926DA009383AB /* Main.swift in Sources */,
 				0E72E4CA1A1DEDCF00586DAD /* BEMLine.m in Sources */,
 				0E72E4CB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m in Sources */,
+				0E1D46681A29D259005755F7 /* BaseUICollectionViewController.swift in Sources */,
 				0EEF41B51A1DEF7F00D3AA4C /* AppDelegate.swift in Sources */,
 				0E58E6791A0AADB200671555 /* GATTUtils.swift in Sources */,
-				0E72E4CC1A1DEDCF00586DAD /* BaseDetail.swift in Sources */,
 				E72F2A7B19D926DA009383AB /* Settings.swift in Sources */,
+				0E1D46691A29D259005755F7 /* RESTUICollectionViewController.swift in Sources */,
 				E72F2A7A19D926DA009383AB /* DeviceList.swift in Sources */,
-				0E72E4CD1A1DEDCF00586DAD /* BaseUICollectionViewController.swift in Sources */,
 				E72F2A7919D926DA009383AB /* DeviceDetail.swift in Sources */,
-				0E72E4CE1A1DEDCF00586DAD /* RESTUICollectionViewController.swift in Sources */,
+				0E1D46671A29D259005755F7 /* BaseDetail.swift in Sources */,
 				E72F2A8219D926DA009383AB /* Util.swift in Sources */,
-				0E72E4D01A1DEDCF00586DAD /* Utils.swift in Sources */,
 				E70F723B1A022B69005BC863 /* History.swift in Sources */,
 				0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */,
+				0E1D466B1A29D259005755F7 /* Utils.swift in Sources */,
+				0E1D466A1A29D259005755F7 /* RESTList.swift in Sources */,
 				0E72E4C91A1DEDCF00586DAD /* BEMCircle.m in Sources */,
 				0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */,
 				0EB30F871A1F229D00A11A76 /* Temperature.swift in Sources */,
