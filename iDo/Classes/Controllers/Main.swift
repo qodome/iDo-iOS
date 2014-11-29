@@ -44,13 +44,6 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         reconnectBtn.hidden = true
         
         BLEManager.sharedManager().delegate = self
-        if BLEManager.sharedManager().defaultDevice().isEmpty { // 无绑定设备
-            UIAlertView(title: LocalizedString("tips"),
-                message: LocalizedString("Please jump to device page to connect device"),
-                delegate: self,
-                cancelButtonTitle: LocalizedString("cancel"),
-                otherButtonTitles: LocalizedString("Jump to device page")).show()
-        }
         
         chart = BEMSimpleLineGraphView(frame: CGRectMake(0, 0, view.frame.width * 2, 240))
         chart.delegate = self
@@ -67,7 +60,6 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         chart.enablePopUpReport = true // 包含enableTouchReport效果
         chart.enableYAxisLabel = true // 显示y轴标签
         chart.enableReferenceYAxisLines = true // 显示y轴参考线
-//        chart.animationGraphStyle = .Fade // 绘制动画关闭会造成PopUp失效
         // ScrollView
         scrollView = UIScrollView(frame: CGRectMake(0, 200, view.frame.width, chart.frame.height + 44))
         scrollView.contentSize = CGSizeMake(chart.frame.width, scrollView.frame.height)
@@ -100,6 +92,17 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         setNavigationBarStyle(.Transparent)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if BLEManager.sharedManager().defaultDevice() == nil { // 无绑定设备
+            UIAlertView(title: LocalizedString("tips"),
+                message: LocalizedString("Please jump to device page to connect device"),
+                delegate: self,
+                cancelButtonTitle: LocalizedString("cancel"),
+                otherButtonTitles: LocalizedString("Jump to device page")).show()
+        }
+    }
+    
     // MARK: - 🐤 DeviceStateDelegate
     func didConnect(peripheral: CBPeripheral) {
         temperatureLabel.text = LocalizedString("Connected, waiting for data")
@@ -107,12 +110,12 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
     }
     
     func didDisconnect() {
-        if BLEManager.sharedManager().defaultDevice() != "" {
-            temperatureLabel.hidden = true
-            reconnectBtn.hidden = false
-        } else {
+        if BLEManager.sharedManager().defaultDevice() == nil {
             temperatureLabel.text = LocalizedString("no_device")
             view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
+        } else {
+            temperatureLabel.hidden = true
+            reconnectBtn.hidden = false
         }
     }
     

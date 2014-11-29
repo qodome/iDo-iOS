@@ -2,6 +2,18 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
+let BLE_UUID_DATE = "1805" // Current Time
+let BLE_UUID_DATE_TIME_CHAR = "2A08"     /**< Date Time characteristic UUID. */
+
+let BLE_UUID_INFO = "180A"
+let BLE_UUID_FIRMWARE_REVISION_STRING_CHAR = "2A26" /**< Firmware Revision String characteristic UUID. */
+let BLE_UUID_MODEL_NUMBER_STRING_CHAR = "2A24" /**< Model Number String characteristic UUID. */
+let BLE_UUID_MANUFACTURER_NAME_STRING_CHAR = "2A29" /**< Manufacturer Name String characteristic UUID. */
+
+let kServiceUUID = "1809" // Health Thermometer
+let BLE_UUID_TEMPERATURE_MEASUREMENT = "2A1C" // Temperature Measurement
+let kCharacteristicUUID = "2A1E"
+
 /** 处理蓝牙传来的data */
 func calculateTemperature(data: NSData) -> Float {
     var bytes = [UInt8](count: 5, repeatedValue: 0)

@@ -17,7 +17,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         super.viewDidLoad()
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
         title = LocalizedString("devices")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh:")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
         
         let deviceManager = BLEManager.sharedManager()
         deviceManager.changeDelegate = self

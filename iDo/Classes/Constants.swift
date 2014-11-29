@@ -13,14 +13,3 @@ let IDO_PURPLE = 0xAA66CC
 
 let BASE_URL = "http://qodome.com"
 let DEFAULT_TOKEN = ""
-
-let BLE_UUID_DATE = "1805"
-let BLE_UUID_DATE_TIME_CHAR = "2A08"     /**< Date Time characteristic UUID. */
-
-let BLE_UUID_INFo = "180A"
-let BLE_UUID_FIRMWARE_REVISION_STRING_CHAR = "2A26" /**< Firmware Revision String characteristic UUID. */
-let BLE_UUID_MODEL_NUMBER_STRING_CHAR = "2A24" /**< Model Number String characteristic UUID. */
-let BLE_UUID_MANUFACTURER_NAME_STRING_CHAR = "2A29" /**< Manufacturer Name String characteristic UUID. */
-
-let kServiceUUID = "1809" // Health Thermometer
-let kCharacteristicUUID = "2A1E" // Temperature Measurement
