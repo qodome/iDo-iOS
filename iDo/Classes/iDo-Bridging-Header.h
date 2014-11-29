@@ -1,5 +1,8 @@
 #import <UIKit/UIKit.h>
 
+// CoreBluetooth
+#import <CoreBluetooth/CoreBluetooth.h>
+
 // RestKit
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <SystemConfiguration/SystemConfiguration.h>

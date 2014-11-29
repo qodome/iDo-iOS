@@ -17,6 +17,8 @@
 		0E72E4CA1A1DEDCF00586DAD /* BEMLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4BA1A1DEDCF00586DAD /* BEMLine.m */; };
 		0E72E4CB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E4BC1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m */; };
 		0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8064C81A1C829900324E71 /* BLEManager.swift */; };
+		0EB0BFBE1A2A54CA0044CA8D /* RightDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB0BFBD1A2A54CA0044CA8D /* RightDetailCell.swift */; };
+		0EB0BFC01A2A59540044CA8D /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB0BFBF1A2A59540044CA8D /* SubtitleCell.swift */; };
 		0EB30F871A1F229D00A11A76 /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB30F861A1F229D00A11A76 /* Temperature.swift */; };
 		0EEF41B51A1DEF7F00D3AA4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */; };
 		0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFA2DAF19F0F35700F6F403 /* Constants.swift */; };
@@ -58,6 +60,8 @@
 		0E72E4BB1A1DEDCF00586DAD /* BEMSimpleLineGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMSimpleLineGraphView.h; sourceTree = "<group>"; };
 		0E72E4BC1A1DEDCF00586DAD /* BEMSimpleLineGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMSimpleLineGraphView.m; sourceTree = "<group>"; };
 		0E8064C81A1C829900324E71 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		0EB0BFBD1A2A54CA0044CA8D /* RightDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightDetailCell.swift; sourceTree = "<group>"; };
+		0EB0BFBF1A2A59540044CA8D /* SubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		0EB30F861A1F229D00A11A76 /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
 		0EEF41B41A1DEF7F00D3AA4C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0EEF41BB1A1DF0CF00D3AA4C /* iDo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iDo-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 		0E1D46621A29D259005755F7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0EB0BFBD1A2A54CA0044CA8D /* RightDetailCell.swift */,
+				0EB0BFBF1A2A59540044CA8D /* SubtitleCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -476,11 +482,13 @@
 				E72F2A7919D926DA009383AB /* DeviceDetail.swift in Sources */,
 				0E1D46671A29D259005755F7 /* BaseDetail.swift in Sources */,
 				E72F2A8219D926DA009383AB /* Util.swift in Sources */,
+				0EB0BFC01A2A59540044CA8D /* SubtitleCell.swift in Sources */,
 				E70F723B1A022B69005BC863 /* History.swift in Sources */,
 				0E8064C91A1C829900324E71 /* BLEManager.swift in Sources */,
 				0E1D466B1A29D259005755F7 /* Utils.swift in Sources */,
 				0E1D466A1A29D259005755F7 /* RESTList.swift in Sources */,
 				0E72E4C91A1DEDCF00586DAD /* BEMCircle.m in Sources */,
+				0EB0BFBE1A2A54CA0044CA8D /* RightDetailCell.swift in Sources */,
 				0EFA2DB019F0F35700F6F403 /* Constants.swift in Sources */,
 				0EB30F871A1F229D00A11A76 /* Temperature.swift in Sources */,
 			);

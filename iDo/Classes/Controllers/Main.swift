@@ -2,9 +2,7 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-import CoreBluetooth
-
-class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource, UIAlertViewDelegate {
+class Main: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource, UIAlertViewDelegate {
     // MARK: - 🍀 变量
     let segueId = "segue_main_device_list"
     var data: [Temperature] = []
@@ -44,6 +42,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         reconnectBtn.hidden = true
         
         BLEManager.sharedManager().delegate = self
+        BLEManager.sharedManager().dataSource = self
         
         chart = BEMSimpleLineGraphView(frame: CGRectMake(0, 0, view.frame.width * 2, 240))
         chart.delegate = self
@@ -84,7 +83,6 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
             }
         }
         setChartSize() // 要放在加载数据之后
-//        didUpdateValue(nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -103,23 +101,37 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         }
     }
     
-    // MARK: - 🐤 DeviceStateDelegate
-    func didConnect(peripheral: CBPeripheral) {
-        temperatureLabel.text = LocalizedString("Connected, waiting for data")
-        view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
-    }
-    
-    func didDisconnect() {
-        if BLEManager.sharedManager().defaultDevice() == nil {
-            temperatureLabel.text = LocalizedString("no_device")
+    // MARK: - 🐤 BLEManagerDelegate
+    func onStateChanged(state: BLEManagerState, peripheral: CBPeripheral?) {
+        switch state {
+        case .PowerOff:
+            println()
+        case .Idle:
+            println()
+        case .Scan, .Discovered:
+            println()
+        case .Connecting, .Connected:
+            println()
+        case .ServiceDiscovered:
+            temperatureLabel.text = LocalizedString("Connected, waiting for data")
             view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
-        } else {
-            temperatureLabel.hidden = true
-            reconnectBtn.hidden = false
+        case .Disconnected:
+            if BLEManager.sharedManager().defaultDevice() == nil {
+                temperatureLabel.text = LocalizedString("no_device")
+                view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
+            } else {
+                temperatureLabel.hidden = true
+                reconnectBtn.hidden = false
+            }
+        case .Fail:
+            println()
+        default:
+            Log("Unknown State: \(state.rawValue)")
         }
     }
     
-    func didUpdateValue(characteristic: CBCharacteristic?) {
+    // MARK: - 🐤 BLEManagerDataSource
+    func onUpdateValue(characteristic: CBCharacteristic?) {
         // 获取温度值
         var value: Float
         if characteristic != nil {
@@ -151,7 +163,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
             }
         }
         let json1 = "[\(temp.timeStamp),\(temp.open),\(temp.high),\(temp.low),\(temp.close)]"
-        println(json1)
+//        println(json1)
         // 写历史数据
         let path = getHistory(NSDate())
         let file = NSFileHandle(forUpdatingAtPath: path)
@@ -168,7 +180,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
             } else { // 超过5分钟，新增
                 json = "\(json.substringToIndex(advance(json.startIndex, countElements(json) - 1))),\(json1)]"
             }
-            println(json)
+//            println(json)
             json.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
         }
         setChartSize()
@@ -236,7 +248,7 @@ class Main: UIViewController, BLEManagerDelegate, BEMSimpleLineGraphDelegate, BE
         let calendar = NSCalendar.autoupdatingCurrentCalendar() // TODO: 用这个日历是否总是对
         let components = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay | .CalendarUnitHour | .CalendarUnitMinute, fromDate: date)
         components.minute = components.minute / minute * minute
-        println(calendar.dateFromComponents(components))
+//        println(calendar.dateFromComponents(components))
         return Int(calendar.dateFromComponents(components)!.timeIntervalSince1970)
     }
     

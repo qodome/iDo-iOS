@@ -2,27 +2,27 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-import CoreBluetooth
-
-class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelegate {
+class DeviceList: UITableViewController, BLEManagerDelegate, UIAlertViewDelegate {
     
     var data = []
     var cellId = "list_cell"
     
-    var device: CBPeripheral?
+    var connected = []
     var selected: CBPeripheral?
+    
+    var state: BLEManagerState!
     
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
         title = LocalizedString("devices")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
         
         let deviceManager = BLEManager.sharedManager()
-        deviceManager.changeDelegate = self
+        deviceManager.delegate = self
         data = deviceManager.peripherals
-        device = deviceManager.connected
+        connected = BLEManager.sharedManager().central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUID)])
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -30,10 +30,13 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
         setNavigationBarStyle(.Default)
     }
     
-    // MARK: - onDataChange
-    func onDataChange(unconnected: [CBPeripheral], connected: CBPeripheral?) {
-        data = unconnected
-        device = connected
+    // MARK: - 🐤 BLEManagerDelegate
+    func onStateChanged(state: BLEManagerState, peripheral: CBPeripheral?) {
+        self.state = state
+        Log("状态更新: \(peripheral?.name) \(state.rawValue)")
+        data = BLEManager.sharedManager().peripherals
+        connected = BLEManager.sharedManager().central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUID)])
+        Log("连接数: \(connected.count)")
         tableView.reloadData()
     }
     
@@ -53,17 +56,17 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? (device == nil ? 0 : 1) : data.count
+        return section == 0 ? connected.count : data.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
         cell.imageView.image = UIImage(named: "iDoIcon")
         var device: CBPeripheral
         //        cell.indicator.hidden = true
         if indexPath.section == 0 {
-            device = self.device!
-            if BLEManager.sharedManager().state == .Connecting {
+            device = connected[indexPath.row] as CBPeripheral
+            if state == BLEManagerState.Connecting {
                 //                cell.indicator.hidden = false
                 //                cell.indicator.startAnimating()
                 cell.imageView.hidden = true
@@ -87,7 +90,7 @@ class DeviceList: UITableViewController, DeviceChangeDelegate, UIAlertViewDelega
     // MARK: 💙 UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
-            selected = device
+            selected = connected[indexPath.row] as? CBPeripheral
             var title = LocalizedString("warning")
             var message = LocalizedString("Jump to devices detail page or disConnect this device?")
             var cancelBtnTittle = LocalizedString("Back")
