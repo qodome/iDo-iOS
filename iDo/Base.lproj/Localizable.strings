@@ -13,10 +13,13 @@
 "disconnect" = "Disconnect";
 "reconnect" = "reconnect";
 
+"temperature" = "Temperature";
 "High temperature alarm" = "High temperature alarm";
 "low temperature alarm" = "low temperature alarm";
-"min_temperature" = "Min temperature";
-"max_temperature" = "Max temperature";
+"min" = "Min";
+"max" = "Max";
+"high" = "high";
+"low" = "low";
 
 "name" = "Name";
 "bluetooth" = "Bluetooth";

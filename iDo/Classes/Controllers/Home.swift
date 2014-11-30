@@ -2,9 +2,9 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-class Main: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource, UIAlertViewDelegate {
+class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource, UIAlertViewDelegate {
     // MARK: - 🍀 变量
-    let segueId = "segue_main_device_list"
+    let segueId = "segue_home_device_list"
     var data: [Temperature] = []
     
     var json = "" // 历史数据json
@@ -186,14 +186,14 @@ class Main: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         chart.reloadGraph() // 重绘
         // 通知
         let defautls = NSUserDefaults.standardUserDefaults()
-        if value <= Util.lowTemperature() { // 温度过低
+        if value <= Settings.lowTemperature() { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
-            if Util.isLowTNotice() {
+            if Settings.isLowTNotice() {
                 sendNotifition("温度过低", temperature: value)
             }
-        } else if value >= Util.HighTemperature() { // 温度过高
+        } else if value >= Settings.HighTemperature() { // 温度过高
             view.backgroundColor = UIColor.colorWithHex(IDO_RED)
-            if Util.isHighTNotice() {
+            if Settings.isHighTNotice() {
                 sendNotifition("温度过高", temperature: value)
             }
         } else {

@@ -13,8 +13,8 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
         title = LocalizedString("devices")
+        tableView.registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
         BLEManager.sharedManager().delegate = self
     }

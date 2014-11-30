@@ -13,10 +13,13 @@
 "disconnect" = "断开";
 "reconnect" = "重连";
 
+"temperature" = "温度";
 "High temperature alarm" = "高温报警通知";
 "low temperature alarm" = "低温报警通知";
-"min_temperature" = "最低温度";
-"max_temperature" = "最高温度";
+"min" = "最小";
+"max" = "最大";
+"high" = "最高";
+"low" = "最低";
 
 "name" = "名称";
 "bluetooth" = "蓝牙";

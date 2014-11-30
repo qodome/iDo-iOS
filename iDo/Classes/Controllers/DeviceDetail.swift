@@ -10,8 +10,8 @@ class DeviceDetail: UITableViewController {
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerClass(RightDetailCell.self, forCellReuseIdentifier: cellId)
         title = data?.name
+        tableView.registerClass(RightDetailCell.self, forCellReuseIdentifier: cellId)
     }
     
     // MARK: - 💙 UITableViewDataSource

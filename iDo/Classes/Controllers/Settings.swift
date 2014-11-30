@@ -5,56 +5,28 @@
 class Settings: UITableViewController {
     
     var cellId = "list_cell"
-    // ℃/℉
-    let minLow: Float = 26
-    let maxLow: Float = 36
-    let minHigh: Float = 37
-    let maxHigh: Float = 47
-    
-    @IBOutlet weak var lowLabel: UILabel!
-    @IBOutlet weak var highLabel: UILabel!
-    @IBOutlet weak var lAlarmLabel: UILabel!
-    @IBOutlet weak var lNoticeSwitch: UISwitch!
-    @IBOutlet weak var hAlarmLabel: UILabel!
-    @IBOutlet weak var HNoticeSwitch: UISwitch!
-    @IBOutlet weak var lowestTemperatureSlider: UISlider!
-    @IBOutlet weak var lowestTemperatureLabel: UILabel!
-    @IBOutlet weak var hightestTemperatureSlider: UISlider!
-    @IBOutlet weak var highestTemperatureLabel: UILabel!
     
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "back:")
         title = LocalizedString("settings")
-        lowLabel.text = LocalizedString("min_temperature")
-        highLabel.text = LocalizedString("max_temperature")
-        lAlarmLabel.text = LocalizedString("low temperature alarm")
-        hAlarmLabel.text = LocalizedString("High temperature alarm")
-        
-        lNoticeSwitch.on = Util.isLowTNotice()
-        HNoticeSwitch.on = Util.isHighTNotice()
-        lowestTemperatureSlider.tag = 0
-        lowestTemperatureSlider.value = (Util.lowTemperature() - minLow) / (maxLow - minLow)
-        lowestTemperatureLabel.text = NSString(format: "%.1f", Util.lowTemperature())
-        
-        hightestTemperatureSlider.tag = 1
-        hightestTemperatureSlider.value = (Util.HighTemperature() - minHigh) / (maxHigh - minHigh)
-        highestTemperatureLabel.text = NSString(format: "%.1f", Util.HighTemperature())
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "back:")
     }
     
     // MARK: - 💙 UITableViewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 4
+            return 2
+        case 1:
+            return 2
         default:
-            return 0
+            return 1
         }
     }
     
@@ -62,52 +34,97 @@ class Settings: UITableViewController {
         switch section {
         case 0:
             return LocalizedString("notifications")
+        case 1:
+            return LocalizedString("temperature")
         default:
             return nil
         }
     }
     
-//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId) as UITableViewCell
-//        if indexPath.section = 0 {
-//            
-//        }
-//        return cell
-//    }
-    
-    // MARK: 💙 UITableViewDelegate
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        
-//    }
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId) as UITableViewCell
+        cell.selectionStyle = .None
+        switch indexPath.section {
+        case 0:
+            cell.textLabel.text = indexPath.row == 0 ? LocalizedString("low temperature alarm") : LocalizedString("high temperature alarm")
+            let switchView = UISwitch(frame: CGRectZero)
+            switchView.on = indexPath.row == 0 ? Settings.isLowTNotice() : Settings.isHighTNotice()
+            switchView.addTarget(self, action: indexPath.row == 0 ? "switchLowTNotice:" : "switchHighTNotice:", forControlEvents: .ValueChanged)
+            cell.accessoryView = switchView
+        case 1:
+            let slider = UISlider(frame: CGRectMake(0, 0, 200, 20))
+            slider.minimumValue = indexPath.row == 0 ? 26 : 36
+            slider.maximumValue = indexPath.row == 0 ? 36 : 47
+            slider.continuous = true
+            slider.value = indexPath.row == 0 ? Settings.lowTemperature() : Settings.HighTemperature()
+            slider.tag = indexPath.row
+            slider.addTarget(self, action: "changeTemperature:", forControlEvents: .ValueChanged)
+            cell.accessoryView = slider
+            let label = indexPath.row == 0 ? LocalizedString("low") : LocalizedString("high")
+            cell.textLabel.text = "\(label) \(slider.value)"
+        case 2:
+            cell.textLabel.text = "℃ / ℉"
+            let switchView = UISwitch(frame: CGRectZero)
+            switchView.on = false
+            cell.accessoryView = switchView
+        default:
+            cell.textLabel.text = LocalizedString("unknown")
+        }
+        return cell
+    }
     
     // MARK: - 💛 Action
     func back(sender: AnyObject?) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func switchLowTNotice(sender: UISwitch) {
-        let isLowTNotice = Util.isLowTNotice()
-        if sender.on != isLowTNotice {
-            Util.setIsLowTNotice(sender.on)
-        }
+    func switchLowTNotice(sender: UISwitch) {
+        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: "notification_low")
     }
     
-    @IBAction func switchHighTNotice(sender: UISwitch) {
-        let isHighTNotice = Util.isHighTNotice()
-        if sender.on != isHighTNotice {
-            Util.setIsHighTNotice(sender.on)
-        }
+    func switchHighTNotice(sender: UISwitch) {
+        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: "notification_high")
     }
     
-    @IBAction func changeTemperature(sender: UISlider) {
-        if sender.tag == 0 { // low
-            let currentLowestTemperature = minLow + (maxLow - minLow) * sender.value
-            lowestTemperatureLabel.text = NSString(format: "%.1f", currentLowestTemperature)
-            Util.setLowTemperature(currentLowestTemperature)
-        } else { // high
-            let currentHighestTemperature = minHigh + (maxHigh - minHigh) * sender.value
-            highestTemperatureLabel.text = NSString(format: "%.1f", currentHighestTemperature)
-            Util.setHighTemperature(currentHighestTemperature)
+    func changeTemperature(sender: UISlider) {
+        let temperature = roundf(sender.value / 0.1) * 0.1
+        sender.tag == 0 ? Settings.setLowTemperature(temperature) : Settings.setHighTemperature(temperature)
+        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: sender.tag, inSection: 0))?.textLabel.text = "\(temperature)"
+    }
+    
+    // MARK: - 💛 自定义方法 (Custom Method)
+    class func lowTemperature() -> Float {
+        if NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") == nil {
+            setLowTemperature(36.0)
         }
+        return NSUserDefaults.standardUserDefaults().floatForKey("lowestTemperature")
+    }
+    
+    class func setLowTemperature(value: Float) {
+        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: "lowestTemperature")
+    }
+    
+    class func HighTemperature() -> Float {
+        if NSUserDefaults.standardUserDefaults().objectForKey("highestTemperature") == nil {
+            setHighTemperature(38.0)
+        }
+        return NSUserDefaults.standardUserDefaults().floatForKey("highestTemperature")
+    }
+    
+    class func setHighTemperature(value: Float) {
+        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: "highestTemperature")
+    }
+    
+    // 低温报警
+    class func isLowTNotice() -> Bool {
+        return NSUserDefaults.standardUserDefaults().boolForKey("notification_low")
+    }
+    
+    // 高温报警
+    class func isHighTNotice() -> Bool {
+        if NSUserDefaults.standardUserDefaults().objectForKey("notification_high") == nil {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "notification_high")
+        }
+        return NSUserDefaults.standardUserDefaults().boolForKey("notification_high")
     }
 }
