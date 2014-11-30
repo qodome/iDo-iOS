@@ -73,25 +73,15 @@
                     </view>
                     <navigationItem key="navigationItem" id="prg-vb-hck">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="历史" id="TSW-Qn-JgD">
-                            <connections>
-                                <segue destination="3RK-sx-kiE" kind="show" id="WYG-jI-68h"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="设备" id="fBS-wO-7e1">
-                            <connections>
-                                <segue destination="pAJ-VJ-0jx" kind="show" identifier="segue_main_device_list" id="IAS-Yf-Vr7"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="dateShow" destination="H4Q-9e-4qE" id="JEX-U3-w3J"/>
-                        <outlet property="historyBtn" destination="TSW-Qn-JgD" id="Dun-Mx-f2y"/>
                         <outlet property="numberTaped" destination="8wC-kw-KcM" id="EhA-0p-VZw"/>
-                        <outlet property="peripheralBarBtn" destination="fBS-wO-7e1" id="Ls5-v7-bO0"/>
                         <outlet property="reconnectBtn" destination="TWn-9D-rVy" id="j1K-zF-Ybi"/>
                         <outlet property="temperatureLabel" destination="Mcz-Um-NA6" id="f84-z5-Gej"/>
                         <segue destination="asg-LH-rNf" kind="presentation" identifier="segue_home_settings" id="pSb-6Z-ttf"/>
+                        <segue destination="pAJ-VJ-0jx" kind="show" identifier="segue_main_device_list" id="EXQ-2k-1wR"/>
+                        <segue destination="3RK-sx-kiE" kind="show" identifier="segue_home_history" id="reA-7d-0VI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i95-lV-AMc" sceneMemberID="firstResponder"/>

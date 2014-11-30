@@ -12,8 +12,6 @@ class Main: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
     var scrollView: UIScrollView!
     var chart: BEMSimpleLineGraphView!
     
-    @IBOutlet weak var peripheralBarBtn: UIBarButtonItem!
-    @IBOutlet weak var historyBtn: UIBarButtonItem!
     @IBOutlet weak var numberTaped: UILabel! //显示当前温度的label
     @IBOutlet weak var dateShow: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel! //显示折线图中当前点值的label
@@ -23,14 +21,14 @@ class Main: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: LocalizedString("history"), style: .Bordered, target: self, action: "history:")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: LocalizedString("devices"), style: .Bordered, target: self, action: "devices:")
         navigationController?.setToolbarHidden(false, animated: false)
         setToolbarStyle(.Transparent)
         let settings = UIBarButtonItem(image: UIImage(named: "ic_action_settings"), style: .Bordered, target: self, action: "settings:")
         let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         setToolbarItems([space, settings, space], animated: false)
-        
-        historyBtn.title = LocalizedString("history")
-        peripheralBarBtn.title = LocalizedString("devices")
+
         numberTaped.font = UIFont(name: "HelveticaNeue-Light", size: 20)
         temperatureLabel.text = LocalizedString("no_device")
         temperatureLabel.font = UIFont(name: "Helvetica", size: 30)
@@ -219,7 +217,20 @@ class Main: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         }
     }
     
-    @IBAction func reconnectPeripheral(sender: AnyObject) {
+    // MARK: - 💛 Action
+    func devices(sender: AnyObject?) {
+        performSegueWithIdentifier(segueId, sender: self)
+    }
+    
+    func settings(sender: AnyObject?) {
+        performSegueWithIdentifier("segue_home_settings", sender: self)
+    }
+    
+    func history(sender: AnyObject?) {
+        performSegueWithIdentifier("segue_home_history", sender: self)
+    }
+    
+    @IBAction func reconnectPeripheral(sender: AnyObject?) {
         reconnectBtn.hidden = true
         temperatureLabel.hidden = false
         BLEManager.sharedManager().startScan()
@@ -229,11 +240,6 @@ class Main: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
     func setChartSize() {
         chart.frame.size = CGSizeMake(scrollView.frame.width * CGFloat(data.count) / 244 * 2, chart.frame.height)
         scrollView.contentSize.width = max(chart.frame.width, scrollView.frame.width)
-    }
-    
-    // MARK: - 💛 Action
-    func settings(sender: AnyObject) {
-        performSegueWithIdentifier("segue_home_settings", sender: self)
     }
     
     func getHistory(date: NSDate) -> String {
