@@ -1,10 +1,17 @@
-"no_device" = "没有设备";
-"Connected, waiting for data" = "已连接，等待数据";
-"reconnect" = "重连";
+/* 通用 */
+"ok" = "好";
+"cancel" = "取消";
+"unknown" = "未知";
+"settings" = "设置";
+"notifications" = "通知";
+
 "devices" = "设备";
 "history" = "历史";
-"calender" = "日历";
-"settings" = "设置";
+
+"no_device" = "没有设备";
+"connected" = "已连接";
+"disconnect" = "断开";
+"reconnect" = "重连";
 
 "High temperature alarm" = "高温报警通知";
 "low temperature alarm" = "低温报警通知";
@@ -13,21 +20,8 @@
 
 "name" = "名称";
 "bluetooth" = "蓝牙";
+/* 日期 */
+"today" = "今天";
+"yesterday" = "昨天";
 
-"Today" = "今天";
-"Yesterday" = "昨天";
-"B yesterday" = "前天";
-"details" = "详细信息";
-
-"warning" = "警告";
-"Jump to devices detail page or disConnect this device?" = "进入设备详情还是取消绑定?";
-"Back" = "返回";
-"DisConnect" = "取消绑定";
-"Detail Page"= "设备详情";
-
-"tips"= "提示";
-"Don't have any data on the day !" = "无历史数据";
-
-"Please jump to device page to connect device"= "请点击 进入设备页 选择您想要连接的设备";
-"Jump to device page" = "进入设备页";
-"cancel" = "取消";
+"choose_device"= "选择一个 iDo";

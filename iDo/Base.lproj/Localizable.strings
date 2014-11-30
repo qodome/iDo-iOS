@@ -1,10 +1,17 @@
-"no_device" = "No device";
-"Connected, waiting for data" = "Connected, waiting for data";
-"reconnect" = "reconnect";
+/* 通用 */
+"ok" = "OK";
+"cancel" = "Cancel";
+"unknown" = "Unknown";
+"settings" = "Settings";
+"notifications" = "Notifications";
+
 "devices" = "Devices";
 "history" = "History";
-"calender" = "Calender";
-"settings" = "Settings";
+
+"no_device" = "No device";
+"connected" = "Connected";
+"disconnect" = "Disconnect";
+"reconnect" = "reconnect";
 
 "High temperature alarm" = "High temperature alarm";
 "low temperature alarm" = "low temperature alarm";
@@ -13,23 +20,8 @@
 
 "name" = "Name";
 "bluetooth" = "Bluetooth";
+/* 日期 */
+"today" = "Today";
+"yesterday" = "Yesterday";
 
-"Today" = "Today";
-"Yesterday" = "Yesterday";
-"B yesterday" = "ByesterD";
-
-"details" = "Details";
-
-"warning" = "Warning";
-
-"Jump to devices detail page or disConnect this device?" = "Jump to devices detail page or disConnect this device?";
-
-"DisConnect" = "DisConnect";
-"Detail Page"= "Detail Page";
-
-"tips"= "tips";
-"Don't have any data on the day !" = "Don't have any data on the day !";
-
-"Please jump to device page to connect device"= "Please jump to device page to connect device";
-"Jump to device page" ="Jump to device page";
-"cancel" = "Cancel";
+"choose_device"= "Choose an iDo";

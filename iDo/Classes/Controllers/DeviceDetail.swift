@@ -34,7 +34,7 @@ class DeviceDetail: UITableViewController {
             cell.textLabel.text = "UUID"
             cell.detailTextLabel?.text = data?.identifier.UUIDString
         default:
-            println("error") // TODO: 统一处理
+            cell.textLabel.text = LocalizedString("unknown")
         }
         return cell
     }

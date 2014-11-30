@@ -8,14 +8,11 @@ class History: UIViewController, JTCalendarDataSource {
     var calendarContentView: JTCalendarContentView!
     var calendar: JTCalendar!
     
-    @IBOutlet weak var calenderBtn: UIBarButtonItem!
-    
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
-        calenderBtn.title = LocalizedString("today")
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: LocalizedString("today"), style: .Bordered, target: self, action: "today:")
         calendarMenuView = JTCalendarMenuView(frame: CGRectMake(0, 64, view.frame.width, 32))
         calendarContentView = JTCalendarContentView(frame: CGRectMake(0, 96, view.frame.width, 88))
         view.addSubview(calendarMenuView)
@@ -34,6 +31,7 @@ class History: UIViewController, JTCalendarDataSource {
         calendar.menuMonthsView = calendarMenuView
         calendar.contentView = calendarContentView
         calendar.dataSource = self
+        calendar.currentDateSelected = NSDate()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -50,9 +48,9 @@ class History: UIViewController, JTCalendarDataSource {
         println("hahhahahhahahha")
     }
     
-    // MARK: 💛 自定义方法 (Custom Method)
-    @IBAction func calenderBtnSelected(sender: AnyObject) {
+    // MARK: 💛 Action
+    func today(sender: AnyObject?) {
+        calendar.currentDateSelected = NSDate() // 这句必须放在前面，否则同屏会不选中
         calendar.currentDate = NSDate()
-//        calendar.currentDateSelected = NSDate()
     }
 }

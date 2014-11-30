@@ -2,14 +2,12 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-class DeviceList: UITableViewController, BLEManagerDelegate, UIAlertViewDelegate {
+class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelegate {
     
     var data = []
     var cellId = "list_cell"
-    
-    var connected = []
+    var connected: [CBPeripheral] = []
     var selected: CBPeripheral?
-    
     var state: BLEManagerState!
     
     // MARK: - 💖 生命周期 (Lifecyle)
@@ -18,16 +16,14 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIAlertViewDelegate
         tableView.registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
         title = LocalizedString("devices")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
-        
-        let deviceManager = BLEManager.sharedManager()
-        deviceManager.delegate = self
-        data = deviceManager.peripherals
-        connected = BLEManager.sharedManager().central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUID)])
+        BLEManager.sharedManager().delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBarStyle(.Default)
+        data = BLEManager.sharedManager().peripherals
+        connected = BLEManager.sharedManager().central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUID)]) as [CBPeripheral]
     }
     
     // MARK: - 🐤 BLEManagerDelegate
@@ -35,7 +31,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIAlertViewDelegate
         self.state = state
         Log("状态更新: \(peripheral?.name) \(state.rawValue)")
         data = BLEManager.sharedManager().peripherals
-        connected = BLEManager.sharedManager().central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUID)])
+        connected = BLEManager.sharedManager().central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUID)]) as [CBPeripheral]
         Log("连接数: \(connected.count)")
         tableView.reloadData()
     }
@@ -65,7 +61,8 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIAlertViewDelegate
         var device: CBPeripheral
         //        cell.indicator.hidden = true
         if indexPath.section == 0 {
-            device = connected[indexPath.row] as CBPeripheral
+            device = connected[indexPath.row]
+            cell.accessoryType = .DetailButton
             if state == BLEManagerState.Connecting {
                 //                cell.indicator.hidden = false
                 //                cell.indicator.startAnimating()
@@ -76,6 +73,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIAlertViewDelegate
             }
         } else {
             device = data[indexPath.row] as CBPeripheral
+            cell.accessoryType = .None            
             cell.imageView.hidden = false
         }
         cell.textLabel.text = device.name
@@ -84,30 +82,30 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIAlertViewDelegate
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 1 ? LocalizedString("devices") : nil
+        return section == 0 ? nil : LocalizedString("devices")
     }
     
     // MARK: 💙 UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0 {
-            selected = connected[indexPath.row] as? CBPeripheral
-            var title = LocalizedString("warning")
-            var message = LocalizedString("Jump to devices detail page or disConnect this device?")
-            var cancelBtnTittle = LocalizedString("Back")
-            var otherBtnTitle1 = LocalizedString("DisConnect")
-            var otherBtnTitle2 = LocalizedString("details")
-            UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: cancelBtnTittle, otherButtonTitles: otherBtnTitle1, otherBtnTitle2).show()
-        } else {
+        if indexPath.section == 0 { // 询问是否断开
+            selected = connected[indexPath.row]
+            UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect")).showInView(view)
+        } else { // 直接绑定
             BLEManager.sharedManager().bind(indexPath.row)
         }
     }
     
-    // MARK: 💙 UIAlertViewDelegate
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        if buttonIndex == 1 {
-            BLEManager.sharedManager().unbind(selected!)
-        } else if buttonIndex == 2 {
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 0 { // 已连接设备可点击进入详情页
+            selected = connected[indexPath.row]
             performSegueWithIdentifier("segue_device_list_detail", sender: self)
+        }
+    }
+    
+    // MARK: 💙 UIActionSheetDelegate
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex == actionSheet.destructiveButtonIndex {
+            BLEManager.sharedManager().unbind(selected!)
         }
     }
     

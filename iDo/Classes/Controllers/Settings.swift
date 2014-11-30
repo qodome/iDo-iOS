@@ -3,6 +3,8 @@
 //
 
 class Settings: UITableViewController {
+    
+    var cellId = "list_cell"
     // ℃/℉
     let minLow: Float = 26
     let maxLow: Float = 36
@@ -20,9 +22,11 @@ class Settings: UITableViewController {
     @IBOutlet weak var hightestTemperatureSlider: UISlider!
     @IBOutlet weak var highestTemperatureLabel: UILabel!
     
-    // MARK: - 生命周期 (Lifecycle)
+    // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
+//        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "back:")
         title = LocalizedString("settings")
         lowLabel.text = LocalizedString("min_temperature")
         highLabel.text = LocalizedString("max_temperature")
@@ -40,8 +44,44 @@ class Settings: UITableViewController {
         highestTemperatureLabel.text = NSString(format: "%.1f", Util.HighTemperature())
     }
     
-    // MARK: - Action
-    @IBAction func back(sender: AnyObject) {
+    // MARK: - 💙 UITableViewDataSource
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 4
+        default:
+            return 0
+        }
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return LocalizedString("notifications")
+        default:
+            return nil
+        }
+    }
+    
+//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId) as UITableViewCell
+//        if indexPath.section = 0 {
+//            
+//        }
+//        return cell
+//    }
+    
+    // MARK: 💙 UITableViewDelegate
+//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        
+//    }
+    
+    // MARK: - 💛 Action
+    func back(sender: AnyObject?) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     

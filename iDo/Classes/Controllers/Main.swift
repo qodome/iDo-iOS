@@ -86,16 +86,17 @@ class Main: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBarStyle(.Transparent)
+        // TODO: 在设置中断开连接后，回这个界面，需要更新状态
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if BLEManager.sharedManager().defaultDevice() == nil { // 无绑定设备
-            UIAlertView(title: LocalizedString("tips"),
-                message: LocalizedString("Please jump to device page to connect device"),
-                delegate: self,
-                cancelButtonTitle: LocalizedString("cancel"),
-                otherButtonTitles: LocalizedString("Jump to device page")).show()
+//            UIAlertView(title: "",
+//                message: LocalizedString("choose_device"),
+//                delegate: self,
+//                cancelButtonTitle: LocalizedString("cancel"),
+//                otherButtonTitles: LocalizedString("ok")).show()
         }
     }
     
@@ -111,7 +112,7 @@ class Main: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         case .Connecting, .Connected:
             println()
         case .ServiceDiscovered:
-            temperatureLabel.text = LocalizedString("Connected, waiting for data")
+            temperatureLabel.text = LocalizedString("connected")
             view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
         case .Disconnected:
             if BLEManager.sharedManager().defaultDevice() == nil {

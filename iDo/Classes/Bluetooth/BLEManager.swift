@@ -69,7 +69,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     /** 绑定设备 */
     func bind(index: Int) {
         if connected != nil {
-            central.cancelPeripheralConnection(connected) // TODO: 解绑的设备需要放到下面去
+            central.cancelPeripheralConnection(connected)
             peripherals.append(connected!)
         }
         let peripheral = peripherals[index]

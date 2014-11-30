@@ -103,15 +103,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="68a-zY-114">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" title="日历" id="84a-an-XSr">
-                            <connections>
-                                <action selector="calenderBtnSelected:" destination="3RK-sx-kiE" id="IGP-eb-NHh"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="calenderBtn" destination="84a-an-XSr" id="YNj-Hm-YlK"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lb6-mm-kRh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -157,14 +149,14 @@
             </objects>
             <point key="canvasLocation" x="3157" y="-1564"/>
         </scene>
-        <!--设置-->
+        <!--Settings-->
         <scene sceneID="SSC-PH-QYY">
             <objects>
                 <tableViewController id="igj-MH-y7P" customClass="Settings" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="1" id="FLN-uO-Vl5">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="FLN-uO-Vl5">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
                             <tableViewSection id="y9G-74-5rm">
                                 <cells>
@@ -361,13 +353,7 @@
                             <outlet property="delegate" destination="igj-MH-y7P" id="tZ5-xh-ngp"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="设置" id="tn2-h6-Ama">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="4Yy-gy-1Nk">
-                            <connections>
-                                <action selector="back:" destination="igj-MH-y7P" id="H8O-pz-OYd"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="tn2-h6-Ama"/>
                     <connections>
                         <outlet property="HNoticeSwitch" destination="7Eq-af-OHR" id="lsv-7a-NHi"/>
                         <outlet property="hAlarmLabel" destination="30b-PQ-Fmc" id="q77-Gf-srX"/>
