@@ -9,7 +9,8 @@ protocol BLEManagerDelegate {
 }
 
 protocol BLEManagerDataSource {
-    func onUpdateValue(characteristic: CBCharacteristic?)
+    /** 更新温度值 */
+    func onUpdateTemperature(value: Float)
 }
 
 enum BLEManagerState: Int {
@@ -139,8 +140,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         Log("连上设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         central.stopScan() // 停止搜寻
         peripheral.delegate = self
-//        peripheral.discoverServices([CBUUID(string: kServiceUUID), CBUUID(string: BLE_UUID_DATE)])
-        peripheral.discoverServices([CBUUID(string: kServiceUUID)])
+        peripheral.discoverServices([CBUUID(string: kServiceUUID), CBUUID(string: BLE_UUID_DATE)])
+//        peripheral.discoverServices([CBUUID(string: kServiceUUID)])
         delegate?.onStateChanged(.Connected, peripheral: peripheral)
     }
     
@@ -226,7 +227,11 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if error == nil {
             switch characteristic.UUID {
             case CBUUID(string: kCharacteristicUUID):
-                dataSource?.onUpdateValue(characteristic)
+                if peripheral.identifier.UUIDString != defaultDevice() { // 强退 TODO: 待优化
+                    central.cancelPeripheralConnection(peripheral)
+                    return
+                }
+                dataSource?.onUpdateTemperature(calculateTemperature(characteristic.value))
             case CBUUID(string: BLE_UUID_DATE_TIME_CHAR):
                 println("🔵 usdfsadfasdfasdfsdf")
                 println("\(characteristic)")

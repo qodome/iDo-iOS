@@ -14,7 +14,7 @@
 "reconnect" = "重连";
 
 "temperature" = "温度";
-"High temperature alarm" = "高温报警通知";
+"high temperature alarm" = "高温报警通知";
 "low temperature alarm" = "低温报警通知";
 "min" = "最小";
 "max" = "最大";

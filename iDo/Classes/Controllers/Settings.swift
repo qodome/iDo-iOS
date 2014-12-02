@@ -2,6 +2,11 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
+let PREF_LOW_TEMPERATURE = "low_temperature"
+let PREF_HIGH_TEMPERATURE = "high_temperature"
+let PREF_NOTIFICATION_LOW = "notification_low"
+let PREF_NOTIFICATION_HIGH = "notification_high"
+
 class Settings: UITableViewController {
     
     var cellId = "list_cell"
@@ -55,7 +60,6 @@ class Settings: UITableViewController {
             let slider = UISlider(frame: CGRectMake(0, 0, 200, 20))
             slider.minimumValue = indexPath.row == 0 ? 26 : 36
             slider.maximumValue = indexPath.row == 0 ? 36 : 47
-            slider.continuous = true
             slider.value = indexPath.row == 0 ? Settings.lowTemperature() : Settings.HighTemperature()
             slider.tag = indexPath.row
             slider.addTarget(self, action: "changeTemperature:", forControlEvents: .ValueChanged)
@@ -74,16 +78,16 @@ class Settings: UITableViewController {
     }
     
     // MARK: - 💛 Action
-    func back(sender: AnyObject?) {
+    func back(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     func switchLowTNotice(sender: UISwitch) {
-        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: "notification_low")
+        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: PREF_NOTIFICATION_LOW)
     }
     
     func switchHighTNotice(sender: UISwitch) {
-        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: "notification_high")
+        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: PREF_NOTIFICATION_HIGH)
     }
     
     func changeTemperature(sender: UISlider) {
@@ -94,37 +98,37 @@ class Settings: UITableViewController {
     
     // MARK: - 💛 自定义方法 (Custom Method)
     class func lowTemperature() -> Float {
-        if NSUserDefaults.standardUserDefaults().objectForKey("lowestTemperature") == nil {
+        if NSUserDefaults.standardUserDefaults().objectForKey(PREF_LOW_TEMPERATURE) == nil {
             setLowTemperature(36.0)
         }
-        return NSUserDefaults.standardUserDefaults().floatForKey("lowestTemperature")
+        return NSUserDefaults.standardUserDefaults().floatForKey(PREF_LOW_TEMPERATURE)
     }
     
     class func setLowTemperature(value: Float) {
-        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: "lowestTemperature")
+        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: PREF_LOW_TEMPERATURE)
     }
     
     class func HighTemperature() -> Float {
-        if NSUserDefaults.standardUserDefaults().objectForKey("highestTemperature") == nil {
+        if NSUserDefaults.standardUserDefaults().objectForKey(PREF_HIGH_TEMPERATURE) == nil {
             setHighTemperature(38.0)
         }
-        return NSUserDefaults.standardUserDefaults().floatForKey("highestTemperature")
+        return NSUserDefaults.standardUserDefaults().floatForKey(PREF_HIGH_TEMPERATURE)
     }
     
     class func setHighTemperature(value: Float) {
-        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: "highestTemperature")
+        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: PREF_HIGH_TEMPERATURE)
     }
     
     // 低温报警
     class func isLowTNotice() -> Bool {
-        return NSUserDefaults.standardUserDefaults().boolForKey("notification_low")
+        return NSUserDefaults.standardUserDefaults().boolForKey(PREF_NOTIFICATION_LOW)
     }
     
     // 高温报警
     class func isHighTNotice() -> Bool {
-        if NSUserDefaults.standardUserDefaults().objectForKey("notification_high") == nil {
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "notification_high")
+        if NSUserDefaults.standardUserDefaults().objectForKey(PREF_NOTIFICATION_HIGH) == nil {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: PREF_NOTIFICATION_HIGH)
         }
-        return NSUserDefaults.standardUserDefaults().boolForKey("notification_high")
+        return NSUserDefaults.standardUserDefaults().boolForKey(PREF_NOTIFICATION_HIGH)
     }
 }

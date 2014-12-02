@@ -14,7 +14,7 @@
 "reconnect" = "reconnect";
 
 "temperature" = "Temperature";
-"High temperature alarm" = "High temperature alarm";
+"high temperature alarm" = "High temperature alarm";
 "low temperature alarm" = "low temperature alarm";
 "min" = "Min";
 "max" = "Max";

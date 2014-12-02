@@ -93,12 +93,6 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
 /// Find which point is currently the closest to the vertical line
 - (BEMCircle *)closestDotFromtouchInputLine:(UIView *)touchInputLine;
 
-/// Determines the biggest Y-axis value from all the points
-- (CGFloat)maxValue;
-
-/// Determines the smallest Y-axis value from all the points
-- (CGFloat)minValue;
-
 @end
 
 @implementation BEMSimpleLineGraphView
@@ -278,21 +272,11 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
         [self.panView addGestureRecognizer:self.panGesture];
         
         if (self.enablePopUpReport == YES && self.alwaysDisplayPopUpLabels == NO) {
-            NSDictionary *labelAttributes = @{NSFontAttributeName: self.labelFont};
-            NSString *maxValueString = [NSString stringWithFormat:@"%li",
-                                        (long)[self calculateMaximumPointValue].integerValue];
-            NSString *minValueString = [NSString stringWithFormat:@"%li",
-                                        (long)[self calculateMinimumPointValue].integerValue];
-            NSString *longestString = nil;
-            if ([minValueString sizeWithAttributes:labelAttributes].width >
-                [maxValueString sizeWithAttributes:labelAttributes].width)
-                longestString = minValueString;
-            else longestString = maxValueString;
-
-            self.popUpLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
+            
+            self.popUpLabel = [[UILabel alloc] initWithFrame:CGRectZero];
             if ([self.delegate respondsToSelector:@selector(popUpSuffixForlineGraph:)])
-                self.popUpLabel.text = [NSString stringWithFormat:@"%@%@", longestString, [self.delegate popUpSuffixForlineGraph:self]];
-            else self.popUpLabel.text = longestString;
+                self.popUpLabel.text = [NSString stringWithFormat:@"%@%@", [self longestString], [self.delegate popUpSuffixForlineGraph:self]];
+            else self.popUpLabel.text = [self longestString];
             self.popUpLabel.textAlignment = 1;
             self.popUpLabel.numberOfLines = 1;
             self.popUpLabel.font = self.labelFont;
@@ -324,15 +308,12 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     if (self.enableYAxisLabel) {
         NSDictionary *attributes = @{NSFontAttributeName: self.labelFont};
         if (self.autoScaleYAxis == YES){
-            NSString *maxValueString = [NSString stringWithFormat:@"%i", (int)self.maxValue];
-            NSString *minValueString = [NSString stringWithFormat:@"%i", (int)self.minValue];
-
-            self.YAxisLabelXOffset = MAX([maxValueString sizeWithAttributes:attributes].width,
-                                         [minValueString sizeWithAttributes:attributes].width) + 5;
+            self.YAxisLabelXOffset = [[self longestString] sizeWithAttributes:attributes].width + 5;
         }
         else {
-            NSString *longestString = [NSString stringWithFormat:@"%i", (int)self.frame.size.height];
-            self.YAxisLabelXOffset = [longestString sizeWithAttributes:attributes].width + 5;
+            CGFloat longestDataString = [[self longestString] sizeWithAttributes:attributes].width;
+            CGFloat longestFramString = [[NSString stringWithFormat:@"%f", self.frame.size.height] sizeWithAttributes:attributes].width;
+            self.YAxisLabelXOffset = MAX(longestDataString, longestFramString) + 5;
         }
     } else self.YAxisLabelXOffset = 0;
 
@@ -661,8 +642,8 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     
     if (self.autoScaleYAxis) {
         // Plot according to min-max range
-        NSNumber *minimumValue = [NSNumber numberWithInteger:[self calculateMinimumPointValue].integerValue];
-        NSNumber *maximumValue = [NSNumber numberWithInteger:[self calculateMaximumPointValue].integerValue];
+        NSNumber *minimumValue = [NSNumber numberWithFloat:[self calculateMinimumPointValue].floatValue];
+        NSNumber *maximumValue = [NSNumber numberWithFloat:[self calculateMaximumPointValue].floatValue];
         
         CGFloat numberOfLabels;
         if ([self.delegate respondsToSelector:@selector(numberOfYAxisLabelsOnLineGraph:)]) numberOfLabels = [self.delegate numberOfYAxisLabelsOnLineGraph:self];
@@ -1014,9 +995,9 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     self.popUpLabel.center = self.popUpView.center;
     
     if ([self.delegate respondsToSelector:@selector(popUpSuffixForlineGraph:)])
-        self.popUpLabel.text = [NSString stringWithFormat:@"%li%@", (long)[dataPoints[(NSInteger) closestDot.tag - DotFirstTag100] integerValue], [self.delegate popUpSuffixForlineGraph:self]];
+        self.popUpLabel.text = [NSString stringWithFormat:@"%@%@", dataPoints[(NSInteger) closestDot.tag - DotFirstTag100], [self.delegate popUpSuffixForlineGraph:self]];
     else
-        self.popUpLabel.text = [NSString stringWithFormat:@"%li", (long)[dataPoints[(NSInteger) closestDot.tag - DotFirstTag100] integerValue]];
+        self.popUpLabel.text = [NSString stringWithFormat:@"%@", dataPoints[(NSInteger) closestDot.tag - DotFirstTag100]];
     if (self.enableYAxisLabel == YES && self.popUpView.frame.origin.x <= self.YAxisLabelXOffset) {
         self.xCenterLabel = self.popUpView.frame.size.width/2;
         self.popUpView.center = CGPointMake(self.xCenterLabel + self.YAxisLabelXOffset + 1, self.yCenterLabel);
@@ -1051,6 +1032,40 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
         }
     }
     return closestDot;
+}
+
+/// Determines the longest string out of all of the data points. Used to calculate the width of the Y-Axis Offset and the width of the popupLabels.
+- (NSString *)longestString {
+    CGFloat dotValue;
+    NSString *longestString = @"";
+    @autoreleasepool {
+        for (int i = 0; i < numberOfPoints; i++) {
+            if ([self.dataSource respondsToSelector:@selector(lineGraph:valueForPointAtIndex:)]) {
+                dotValue = [self.dataSource lineGraph:self valueForPointAtIndex:i];
+                
+            } else if ([self.delegate respondsToSelector:@selector(valueForIndex:)]) {
+                [self printDeprecationWarningForOldMethod:@"valueForIndex:" andReplacementMethod:@"lineGraph:valueForPointAtIndex:"];
+                
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+                dotValue = [self.delegate valueForIndex:i];
+#pragma clang diagnostic pop
+                
+            } else if ([self.delegate respondsToSelector:@selector(lineGraph:valueForPointAtIndex:)]) {
+                [self printDeprecationAndUnavailableWarningForOldMethod:@"lineGraph:valueForPointAtIndex:"];
+                NSException *exception = [NSException exceptionWithName:@"Implementing Unavailable Delegate Method" reason:@"lineGraph:valueForPointAtIndex: is no longer available on the delegate. It must be implemented on the data source." userInfo:nil];
+                [exception raise];
+                
+            } else dotValue = 0;
+            
+            NSDictionary *attributes = @{NSFontAttributeName: self.labelFont};
+            NSString *dotValueString = [NSString stringWithFormat:@"%g\n", dotValue];
+            if ([dotValueString sizeWithAttributes:attributes].width > [longestString sizeWithAttributes:attributes].width) {
+                longestString = dotValueString;
+            }
+        }
+    }
+    return longestString;
 }
 
 - (CGFloat)getMaximumValue {
