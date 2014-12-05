@@ -30,3 +30,7 @@ func calculateAdvTemperature(data: NSData) -> Float {
     let mantissa = Int32(bytes[2]) << 16 | Int32(bytes[1]) << 8 | Int32(bytes[0])
     return Float(mantissa) * pow(10.0, exponent)
 }
+
+func transformTemperature(value: Float) -> Float {
+    return Float(32) + value * 1.8
+}

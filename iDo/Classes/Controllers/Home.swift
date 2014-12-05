@@ -61,6 +61,10 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         scrollView.contentSize = CGSizeMake(chart.frame.width, scrollView.frame.height)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.addSubview(chart)
+        // 滚动区域
+        let touch = UIView(frame: CGRectMake(0, chart.frame.height, chart.frame.width, 44))
+        touch.backgroundColor = UIColor.colorWithHex(0xFFFFFF, alpha: 0.1)
+        scrollView.addSubview(touch)
         view.addSubview(scrollView)
         // 取当天的历史数据
         json = History.getJson(NSDate())
@@ -117,9 +121,9 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
     // MARK: - 🐤 BLEManagerDataSource
     func onUpdateTemperature(var value: Float) {
 //        value = Float(arc4random_uniform(150)) / 100 + 37 // 生成假数据
-        value = roundf(value / 0.01) * 0.01 // 保留两位小数
+        value = roundf(value / 0.1) * 0.1 // 保留一位小数
         let date = NSDate()
-        temperatureLabel.text = NSString(format: "%.2f°", value)
+        temperatureLabel.text = NSString(format: "%.1f°", value)
         // 初始化一个温度对象，当前时间最接近的5分钟频率
         let temp = Temperature(timeStamp: History.getTimeStamp(date, minute: 5), value: value)
         // 比对历史数据
@@ -203,6 +207,21 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         return value == nil ? 0 : CGFloat(value!)
     }
     
+    func lineGraph(graph: BEMSimpleLineGraphView!, labelOnXAxisForIndex index: Int) -> String! {
+        let date = NSDate(timeIntervalSince1970: Double(data[index].timeStamp))
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "HH:mm" // "hh:mm a"
+        // TODO: 用这个日历是否总是对
+        let components = NSCalendar.autoupdatingCurrentCalendar().components(.CalendarUnitMinute, fromDate: date)
+//        return components.minute == 0 ? format.stringFromDate(date) : ""
+        return formatter.stringFromDate(date)
+    }
+    
+    // MARK:- 💙 BEMSimpleLineGraphDelegate
+//    func popUpSuffixForlineGraph(graph: BEMSimpleLineGraphView!) -> String! {
+//        return "°"
+//    }
+    
     // MARK: - 💙 UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 { // 进入设备页
@@ -242,7 +261,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         if notification != nil {
             notification.fireDate = NSDate().dateByAddingTimeInterval(3)
             notification.timeZone = NSTimeZone.defaultTimeZone()
-            notification.alertBody = NSString(format: "请注意：%.2f,%@", temperature, message)
+            notification.alertBody = NSString(format: "请注意：%.1f, %@", temperature, message)
             notification.alertAction = message
             notification.soundName = UILocalNotificationDefaultSoundName // 声音
             notification.applicationIconBadgeNumber = 1 // ???

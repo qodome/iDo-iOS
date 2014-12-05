@@ -3,7 +3,7 @@ PODS:
   - EAIntroView (2.6.4)
   - ISO8601DateFormatterValueTransformer (0.6.0):
     - RKValueTransformers (~> 1.1.0)
-  - JTCalendar (1.1.5)
+  - JTCalendar (1.1.8)
   - RestKit (0.24.0):
     - RestKit/Core (= 0.24.0)
   - RestKit/Core (0.24.0):
@@ -42,7 +42,7 @@ SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
   EAIntroView: 8f66dc6b79f2d52db26af8fc5476a05ffc549d4c
   ISO8601DateFormatterValueTransformer: a705384ea6531255258e25b6480ba1180db703a0
-  JTCalendar: 47789b51c07b4d98e9e64966469a4424435c90d6
+  JTCalendar: 705b2f3f64a9ef8845b1165dc61064cca723f12c
   RestKit: 8e301e50e1d25ce427215539f4fd72463f4a2a58
   RKValueTransformers: 67b4ea3eb6a1c1a0b8c3c37eb4e4c05e4febeba2
   SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d

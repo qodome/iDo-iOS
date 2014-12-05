@@ -11,6 +11,8 @@
 		0E435F1F1A2AE233007951B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F1E1A2AE233007951B1 /* Images.xcassets */; };
 		0E435F221A2AE233007951B1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F201A2AE233007951B1 /* LaunchScreen.xib */; };
 		0E435F2E1A2AE233007951B1 /* iDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E435F2D1A2AE233007951B1 /* iDoTests.swift */; };
+		0E876FB31A31F7E100ED75F1 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E876FB21A31F7E100ED75F1 /* UIColor+Extension.swift */; };
+		0E876FB51A320ACA00ED75F1 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E876FB41A320ACA00ED75F1 /* UIImage+Extension.swift */; };
 		0ED67E4B1A2AFA3400CA35BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E4D1A2AFA3400CA35BE /* Localizable.strings */; };
 		0ED67E8B1A2B0F5C00CA35BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E8D1A2B0F5C00CA35BE /* InfoPlist.strings */; };
 		0EE565441A2AE656003E9331 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE565341A2AE656003E9331 /* AppDelegate.swift */; };
@@ -55,6 +57,8 @@
 		0E435F271A2AE233007951B1 /* iDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E435F2C1A2AE233007951B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E435F2D1A2AE233007951B1 /* iDoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iDoTests.swift; sourceTree = "<group>"; };
+		0E876FB21A31F7E100ED75F1 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		0E876FB41A320ACA00ED75F1 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		0ED67E4C1A2AFA3400CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0ED67E8A1A2B0CDA00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0ED67E8E1A2B0F9B00CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -289,6 +293,8 @@
 			isa = PBXGroup;
 			children = (
 				0EE565811A2AE6E9003E9331 /* Utils.swift */,
+				0E876FB21A31F7E100ED75F1 /* UIColor+Extension.swift */,
+				0E876FB41A320ACA00ED75F1 /* UIImage+Extension.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -470,6 +476,7 @@
 				0EE5654C1A2AE656003E9331 /* Temperature.swift in Sources */,
 				0EE5654B1A2AE656003E9331 /* Settings.swift in Sources */,
 				0EE5658B1A2AE6E9003E9331 /* RESTUICollectionViewController.swift in Sources */,
+				0E876FB31A31F7E100ED75F1 /* UIColor+Extension.swift in Sources */,
 				0EE565471A2AE656003E9331 /* DeviceDetail.swift in Sources */,
 				0EE5654D1A2AE656003E9331 /* GATTUtils.swift in Sources */,
 				0EE565891A2AE6E9003E9331 /* BaseDetail.swift in Sources */,
@@ -477,6 +484,7 @@
 				0EE565441A2AE656003E9331 /* AppDelegate.swift in Sources */,
 				0EE565711A2AE6CD003E9331 /* BEMCircle.m in Sources */,
 				0EE5658D1A2AE6E9003E9331 /* Utils.swift in Sources */,
+				0E876FB51A320ACA00ED75F1 /* UIImage+Extension.swift in Sources */,
 				0EE5658C1A2AE6E9003E9331 /* RESTList.swift in Sources */,
 				0EE565451A2AE656003E9331 /* BLEManager.swift in Sources */,
 				0EE5654A1A2AE656003E9331 /* Home.swift in Sources */,

@@ -57,7 +57,8 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
-        cell.imageView.image = UIImage(named: "iDoIcon")
+        cell.imageView.image = UIImage(named: "ic_settings_ido")
+        UIImageView.roundedView(cell.imageView, cornerRadius: 6, borderColor: UIColor.blackColor(), borderWidth: 0.5)
         var device: CBPeripheral
         //        cell.indicator.hidden = true
         if indexPath.section == 0 {

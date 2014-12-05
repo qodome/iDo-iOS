@@ -16,7 +16,8 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
+        let color = UIColor.colorWithHex(IDO_BLUE)
+        view.backgroundColor = color
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: LocalizedString("today"), style: .Bordered, target: self, action: "today:")
         calendarMenuView = JTCalendarMenuView(frame: CGRectMake(0, 64, view.frame.width, 32))
         calendarContentView = JTCalendarContentView(frame: CGRectMake(0, 96, view.frame.width, 88))
@@ -30,9 +31,9 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         calendar.calendarAppearance.weekDayFormat = .Single // 星期格式
         calendar.calendarAppearance.dayCircleColorSelected = UIColor.whiteColor()
         calendar.calendarAppearance.dayTextColor = UIColor.whiteColor()
-        calendar.calendarAppearance.dayTextColorSelected = UIColor.colorWithHex(IDO_BLUE)
+        calendar.calendarAppearance.dayTextColorSelected = color
         calendar.calendarAppearance.dayDotColor = UIColor.whiteColor()
-        calendar.calendarAppearance.dayDotColorSelected = UIColor.colorWithHex(IDO_BLUE)
+        calendar.calendarAppearance.dayDotColorSelected = color
         calendar.menuMonthsView = calendarMenuView
         calendar.contentView = calendarContentView
         calendar.dataSource = self
@@ -58,6 +59,10 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         scrollView.contentSize = CGSizeMake(chart.frame.width, scrollView.frame.height)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.addSubview(chart)
+        // 滚动区域
+        let touch = UIView(frame: CGRectMake(0, chart.frame.height, chart.frame.width, 44))
+        touch.backgroundColor = UIColor.colorWithHex(0xFFFFFF, alpha: 0.1)
+        scrollView.addSubview(touch)
         view.addSubview(scrollView)
         // 取当天的历史数据
         data = History.getData(calendar.currentDateSelected)
@@ -92,6 +97,13 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     func lineGraph(graph: BEMSimpleLineGraphView!, valueForPointAtIndex index: Int) -> CGFloat {
         let value = data[index].high
         return value == nil ? 0 : CGFloat(value!)
+    }
+    
+    func lineGraph(graph: BEMSimpleLineGraphView!, labelOnXAxisForIndex index: Int) -> String! {
+        let date = NSDate(timeIntervalSince1970: Double(data[index].timeStamp))
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.stringFromDate(date)
     }
     
     // MARK: - 💛 Action
@@ -138,11 +150,12 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     }
     
     class func getHistory(date: NSDate) -> String {
-        let format = NSDateFormatter()
-        format.dateFormat = "yyyy-MM-dd"
-        format.timeZone = NSTimeZone(name: "UTC")
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let timeZone = formatter.timeZone.secondsFromGMT / 3600
+        let timeZoneString = timeZone >= 0 ? String(format: "+%02d", timeZone) : String(format: "%02d", timeZone)
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        return paths[0].stringByAppendingPathComponent("temperature/\(format.stringFromDate(date)).json")
+        return paths[0].stringByAppendingPathComponent("temperature/\(formatter.stringFromDate(date))\(timeZoneString).json")
     }
     
     class func getTimeStamp(date: NSDate, minute: Int) -> Int {
