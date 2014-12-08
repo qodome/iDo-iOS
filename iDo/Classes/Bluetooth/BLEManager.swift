@@ -30,8 +30,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     let PREF_DEFAULT_DEVICE = "default_device"
     
     var central: CBCentralManager!
-    var connected: CBPeripheral? // 已连接设备
-    var peripherals: [CBPeripheral] = [] // 未连接设备
+    var peripherals: [CBPeripheral] = [] // 所有设备
     var delegate: BLEManagerDelegate?
     var dataSource: BLEManagerDataSource?
     
@@ -68,15 +67,11 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     /** 绑定设备 */
-    func bind(index: Int) {
-        if connected != nil {
-            central.cancelPeripheralConnection(connected)
-            peripherals.append(connected!)
+    func bind(peripheral: CBPeripheral) {
+        for peripheral in central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUID)]) as [CBPeripheral] {
+            central.cancelPeripheralConnection(peripheral)
         }
-        let peripheral = peripherals[index]
         NSUserDefaults.standardUserDefaults().setObject(peripheral.identifier.UUIDString, forKey: PREF_DEFAULT_DEVICE)
-        peripherals.removeAtIndex(index)
-        connected = peripheral
         connect(peripheral)
     }
     
@@ -100,16 +95,18 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             state = .Idle
             central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
         default:
-            connected = nil
             peripherals.removeAll(keepCapacity: false)
         }
         delegate?.onStateChanged(state, peripheral: nil)
     }
     
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
+        delegate?.onStateChanged(.Discovered, peripheral: peripheral)
+        if !contains(peripherals, peripheral) {
+            peripherals.append(peripheral)
+        }
         if peripheral.identifier.UUIDString == defaultDevice() {
             Log("发现已绑定设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
-            connected = peripheral
             connect(peripheral)
             println("重连次数 \(reconnectCount)")
             if reconnectCount > 0 {
@@ -129,20 +126,15 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             }
         } else {
             Log("发现未绑定设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
-            if !contains(peripherals, peripheral) {
-                peripherals.append(peripheral)
-            }
         }
-        delegate?.onStateChanged(.Discovered, peripheral: peripheral)
     }
     
     func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
         Log("连上设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
+        delegate?.onStateChanged(.Connected, peripheral: peripheral)
         central.stopScan() // 停止搜寻
         peripheral.delegate = self
         peripheral.discoverServices([CBUUID(string: kServiceUUID), CBUUID(string: BLE_UUID_DATE)])
-//        peripheral.discoverServices([CBUUID(string: kServiceUUID)])
-        delegate?.onStateChanged(.Connected, peripheral: peripheral)
     }
     
     // MARK: -      处理异常
@@ -151,18 +143,15 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         delegate?.onStateChanged(.Fail, peripheral: peripheral)
     }
     
-    func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
+    func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) { // 这里不是真的断开，会有延时
         Log("断开设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
-        connected = nil
-        if !contains(peripherals, peripheral) {
-            peripherals.append(peripheral)
-        }
         delegate?.onStateChanged(.Disconnected, peripheral: peripheral)
-        if defaultDevice() != nil { // 无限次自动重连
+        if peripheral.identifier.UUIDString == defaultDevice() { // 无限次自动重连
             if reconnectCount > 0 {
                 startScan()
             } else {
                 reconnectCount++
+                println("重连")
                 connect(peripheral)
             }
         }

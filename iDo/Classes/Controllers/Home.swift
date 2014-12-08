@@ -193,7 +193,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         }
         let range = json.rangeOfString(",", options: .BackwardsSearch)
         json.replaceRange(range!, with: "]")
-        println(json)
+//        println(json)
         return json
     }
     

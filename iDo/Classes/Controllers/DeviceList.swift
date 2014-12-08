@@ -4,11 +4,10 @@
 
 class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelegate {
     
-    var data = []
+    var data: [AnyObject] = []
     var cellId = "list_cell"
     var connected: [CBPeripheral] = []
     var selected: CBPeripheral?
-    var state: BLEManagerState!
     
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
@@ -22,27 +21,36 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBarStyle(.Default)
-        data = BLEManager.sharedManager().peripherals
-        connected = BLEManager.sharedManager().central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUID)]) as [CBPeripheral]
+        loadData()
+    }
+    
+    func loadData() {
+        data.removeAll(keepCapacity: true)
+        connected.removeAll(keepCapacity: true)
+        for peripheral in BLEManager.sharedManager().peripherals {
+            if peripheral.state == .Connected {
+                connected.append(peripheral)
+            } else {
+                data.append(peripheral)
+            }
+        }
+        tableView.reloadData()
     }
     
     // MARK: - 🐤 BLEManagerDelegate
     func onStateChanged(state: BLEManagerState, peripheral: CBPeripheral?) {
-        self.state = state
         Log("状态更新: \(peripheral?.name) \(state.rawValue)")
-        data = BLEManager.sharedManager().peripherals
-        connected = BLEManager.sharedManager().central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUID)]) as [CBPeripheral]
-        Log("连接数: \(connected.count)")
-        tableView.reloadData()
+        loadData()
     }
     
     // MARK: - 💛 Action
     func refresh(sender: AnyObject) {
         BLEManager.sharedManager().startScan()
-        var header: UIView = tableView.headerViewForSection(1)!
-        var indicator = UIActivityIndicatorView(frame: CGRectMake(64, 22, 20, 20))
+        let header: UIView = tableView.headerViewForSection(1)!
+        let indicator = UIActivityIndicatorView(frame: CGRectMake(view.frame.width - 35, 22, 20, 20))
         indicator.activityIndicatorViewStyle = .Gray
         header.addSubview(indicator)
+        indicator.hidden = false
         indicator.startAnimating()
     }
     
@@ -60,22 +68,25 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
         cell.imageView?.image = UIImage(named: "ic_settings_ido")
         UIImageView.roundedView(cell.imageView, cornerRadius: 6, borderColor: UIColor.blackColor(), borderWidth: 0.5)
         var device: CBPeripheral
-        //        cell.indicator.hidden = true
         if indexPath.section == 0 {
             device = connected[indexPath.row]
+            cell.imageView?.hidden = false
             cell.accessoryType = .DetailButton
-            if state == BLEManagerState.Connecting {
-                //                cell.indicator.hidden = false
-                //                cell.indicator.startAnimating()
-                cell.imageView?.hidden = true
-            } else {
-                //                cell.indicator.hidden = true
-                cell.imageView?.hidden = false
-            }
         } else {
             device = data[indexPath.row] as CBPeripheral
-            cell.accessoryType = .None            
-            cell.imageView?.hidden = false
+            switch device.state {
+            case .Connecting:
+                cell.imageView?.hidden = true
+                let indicator = UIActivityIndicatorView(frame: CGRectMake(20.5, cell.frame.height / 2 - 10, 20, 20))
+                indicator.activityIndicatorViewStyle = .Gray
+                indicator.startAnimating()
+                cell.addSubview(indicator)
+            case .Disconnected:
+                cell.imageView?.hidden = false
+            default:
+                println("**********************************************************")
+            }
+            cell.accessoryType = .None
         }
         cell.textLabel?.text = device.name
         cell.detailTextLabel?.text = device.identifier.UUIDString
@@ -92,7 +103,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
             selected = connected[indexPath.row]
             UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect")).showInView(view)
         } else { // 直接绑定
-            BLEManager.sharedManager().bind(indexPath.row)
+            BLEManager.sharedManager().bind(data[indexPath.row] as CBPeripheral)
         }
     }
     

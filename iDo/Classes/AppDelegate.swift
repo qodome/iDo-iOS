@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         println("applicationWillTerminate")
         let manager = BLEManager.sharedManager()
-        manager.central.cancelPeripheralConnection(manager.connected)
+//        manager.central.cancelPeripheralConnection(manager.connected)
         for peripheral in manager.peripherals {
             manager.central.cancelPeripheralConnection(peripheral)
         }

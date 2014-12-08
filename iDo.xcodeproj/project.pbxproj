@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E02FC271A35E7A800CB6EF3 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E02FC261A35E7A800CB6EF3 /* Array+Extension.swift */; };
 		0E435F1D1A2AE233007951B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F1B1A2AE233007951B1 /* Main.storyboard */; };
 		0E435F1F1A2AE233007951B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F1E1A2AE233007951B1 /* Images.xcassets */; };
 		0E435F221A2AE233007951B1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F201A2AE233007951B1 /* LaunchScreen.xib */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E02FC261A35E7A800CB6EF3 /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		0E435F121A2AE233007951B1 /* iDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E435F161A2AE233007951B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E435F1C1A2AE233007951B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				0EE565811A2AE6E9003E9331 /* Utils.swift */,
+				0E02FC261A35E7A800CB6EF3 /* Array+Extension.swift */,
 				0E876FB21A31F7E100ED75F1 /* UIColor+Extension.swift */,
 				0E876FB41A320ACA00ED75F1 /* UIImage+Extension.swift */,
 			);
@@ -481,6 +484,7 @@
 				0EE5654D1A2AE656003E9331 /* GATTUtils.swift in Sources */,
 				0EE565891A2AE6E9003E9331 /* BaseDetail.swift in Sources */,
 				0EE565721A2AE6CD003E9331 /* BEMLine.m in Sources */,
+				0E02FC271A35E7A800CB6EF3 /* Array+Extension.swift in Sources */,
 				0EE565441A2AE656003E9331 /* AppDelegate.swift in Sources */,
 				0EE565711A2AE6CD003E9331 /* BEMCircle.m in Sources */,
 				0EE5658D1A2AE6E9003E9331 /* Utils.swift in Sources */,
