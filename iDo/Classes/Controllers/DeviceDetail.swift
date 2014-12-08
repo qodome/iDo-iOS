@@ -28,13 +28,13 @@ class DeviceDetail: UITableViewController {
         cell.selectionStyle = .None
         switch indexPath.section {
         case 0:
-            cell.textLabel.text = LocalizedString("name")
+            cell.textLabel?.text = LocalizedString("name")
             cell.detailTextLabel?.text = data?.name
         case 1:
-            cell.textLabel.text = "UUID"
+            cell.textLabel?.text = "UUID"
             cell.detailTextLabel?.text = data?.identifier.UUIDString
         default:
-            cell.textLabel.text = LocalizedString("unknown")
+            cell.textLabel?.text = LocalizedString("unknown")
         }
         return cell
     }

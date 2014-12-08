@@ -17,7 +17,7 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ic_launch" translatesAutoresizingMaskIntoConstraints="NO" id="gX2-G7-myJ">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_launch" translatesAutoresizingMaskIntoConstraints="NO" id="gX2-G7-myJ">
                     <rect key="frame" x="210" y="210" width="60" height="60"/>
                 </imageView>
             </subviews>
@@ -27,7 +27,7 @@
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
-                <constraint firstItem="gX2-G7-myJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="250" id="mWw-vA-8KX"/>
+                <constraint firstItem="gX2-G7-myJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="210" id="mWw-vA-8KX"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

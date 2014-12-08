@@ -57,7 +57,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
-        cell.imageView.image = UIImage(named: "ic_settings_ido")
+        cell.imageView?.image = UIImage(named: "ic_settings_ido")
         UIImageView.roundedView(cell.imageView, cornerRadius: 6, borderColor: UIColor.blackColor(), borderWidth: 0.5)
         var device: CBPeripheral
         //        cell.indicator.hidden = true
@@ -67,17 +67,17 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
             if state == BLEManagerState.Connecting {
                 //                cell.indicator.hidden = false
                 //                cell.indicator.startAnimating()
-                cell.imageView.hidden = true
+                cell.imageView?.hidden = true
             } else {
                 //                cell.indicator.hidden = true
-                cell.imageView.hidden = false
+                cell.imageView?.hidden = false
             }
         } else {
             device = data[indexPath.row] as CBPeripheral
             cell.accessoryType = .None            
-            cell.imageView.hidden = false
+            cell.imageView?.hidden = false
         }
-        cell.textLabel.text = device.name
+        cell.textLabel?.text = device.name
         cell.detailTextLabel?.text = device.identifier.UUIDString
         return cell
     }
