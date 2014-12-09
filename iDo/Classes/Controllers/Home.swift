@@ -2,16 +2,11 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource, UIAlertViewDelegate {
+class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertViewDelegate {
     // MARK: - 🍀 变量
     let segueId = "segue_home_device_list"
     var data: [Temperature] = []
-    var integerLabel: UILabel!
-    var decimalLabel: UILabel!
-    var symbolLabel: UILabel!
     var numberView: NumberView!
-    var scrollView: UIScrollView!
-    var chart: BEMSimpleLineGraphView!
     
     var json = "" // 历史数据json
     
@@ -27,43 +22,15 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         setToolbarItems([space, settings, space], animated: false)
         // 温度值
-        numberView = NumberView(frame: CGRectMake(0, 100, SCREEN_WIDTH, 100))
+        numberView = NumberView(frame: CGRectMake(0, 200, SCREEN_WIDTH, 100))
         numberView.textColor = UIColor.whiteColor()
         view.addSubview(numberView)
         // 蓝牙
         BLEManager.sharedManager().dataSource = self
-        // 图表
-        chart = BEMSimpleLineGraphView(frame: CGRectMake(0, 0, view.frame.width * 2, 240))
-        // ❨╯°□°❩╯︵┻━┻
-        let components: [CGFloat]  = [1, 1, 1, 0.8, 1, 1, 1, 0]
-        let locations: [CGFloat] = [0, 0.8]
-        chart.gradientBottom = CGGradientCreateWithColorComponents(CGColorSpaceCreateDeviceRGB(), components, locations, 2) // 透明化通过Swift转OC会出错
-        chart.colorTop = UIColor.clearColor() // 线上颜色
-        chart.colorBottom = UIColor.clearColor() // 线下颜色
-        chart.colorXaxisLabel = UIColor.whiteColor() // x轴标签色
-        chart.colorYaxisLabel = UIColor.whiteColor() // y轴标签色
-        // chart.enableBezierCurve = true // 贝塞尔曲线，连续两点相同会造成误导
-        chart.enablePopUpReport = true // 包含enableTouchReport效果
-        chart.enableYAxisLabel = true // 显示y轴标签
-        chart.enableReferenceYAxisLines = true // 显示y轴参考线
-        chart.delegate = self
-        chart.dataSource = self
-        // ScrollView
-        scrollView = UIScrollView(frame: CGRectMake(0, 200, view.frame.width, chart.frame.height + 44))
-        scrollView.contentSize = CGSizeMake(chart.frame.width, scrollView.frame.height)
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.addSubview(chart)
-        // 滚动区域
-        let touch = UIView(frame: CGRectMake(0, chart.frame.height, chart.frame.width, 44))
-        touch.backgroundColor = UIColor.colorWithHex(0xFFFFFF, alpha: 0.1)
-        scrollView.addSubview(touch)
-        view.addSubview(scrollView)
         // 取当天的历史数据
         json = History.getJson(NSDate())
         data = History.getData(NSDate())
-        setChartSize() // 要放在加载数据之后
-        
-//        onUpdateTemperature(-15.04)
+//        onUpdateTemperature(15.15)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -136,7 +103,6 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
                 temp.high = max(last!.high!, value)
                 temp.low = min(last!.low!, value)
                 data[data.count - 1] = temp
-                chart.animationGraphStyle = .None
             } else {
                 for i in 1..<cycle { // 补空
                     let t = last!.timeStamp + 300 * i
@@ -144,7 +110,6 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
                     json1 += getJsonData(t, nil, nil, nil, nil) + ","
                 }
                 data.append(temp)
-                chart.animationGraphStyle = .Fade
             }
         }
         json1 += getJsonData(temp.timeStamp, temp.open, temp.high, temp.low, temp.close)
@@ -166,8 +131,6 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
             }
             json.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
         }
-        setChartSize()
-        chart.reloadGraph() // 重绘
         // 通知
         if value <= Settings.lowTemperature() { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
@@ -195,31 +158,6 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         return json
     }
     
-    // MARK: - 💙 BEMSimpleLineGraphDataSource
-    func numberOfPointsInLineGraph(graph: BEMSimpleLineGraphView!) -> Int {
-        return data.count
-    }
-    
-    func lineGraph(graph: BEMSimpleLineGraphView!, valueForPointAtIndex index: Int) -> CGFloat {
-        let value = data[index].high
-        return value == nil ? 0 : CGFloat(value!)
-    }
-    
-    func lineGraph(graph: BEMSimpleLineGraphView!, labelOnXAxisForIndex index: Int) -> String! {
-        let date = NSDate(timeIntervalSince1970: Double(data[index].timeStamp))
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "HH:mm" // "hh:mm a"
-        // TODO: 用这个日历是否总是对
-        let components = NSCalendar.autoupdatingCurrentCalendar().components(.CalendarUnitMinute, fromDate: date)
-        //        return components.minute == 0 ? format.stringFromDate(date) : ""
-        return formatter.stringFromDate(date)
-    }
-    
-    // MARK:- 💙 BEMSimpleLineGraphDelegate
-    //    func popUpSuffixForlineGraph(graph: BEMSimpleLineGraphView!) -> String! {
-    //        return "°"
-    //    }
-    
     // MARK: - 💙 UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 { // 进入设备页
@@ -239,12 +177,6 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
     
     func history(sender: AnyObject) {
         performSegueWithIdentifier("segue_home_history", sender: self)
-    }
-    
-    // MARK: - 💛 自定义方法 (Custom Method)
-    func setChartSize() {
-        chart.frame.size = CGSizeMake(scrollView.frame.width * CGFloat(data.count) / 244 * 2, chart.frame.height)
-        scrollView.contentSize.width = max(chart.frame.width, scrollView.frame.width)
     }
     
     /** 本地通知 */

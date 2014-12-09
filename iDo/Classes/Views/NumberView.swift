@@ -48,11 +48,9 @@ class NumberView: UIView {
     }
     
     func setValue(value: Double) {
-        let integerValue = abs(Int(value))
-        let decimalValue = Int((abs(value) - Double(integerValue)) * 10)
-        
-        println(integerValue)
-        println(decimalValue)
+        var a: Double = 0
+        let decimalValue = abs(Int(modf(value, &a) * 10))
+        let integerValue = abs(Int(a))
         let s = "\(integerValue)"
         var kerning: CGFloat = 0
         if integerValue >= 100 || (integerValue >= 10 && integerValue < 20) { // 减小字间距
