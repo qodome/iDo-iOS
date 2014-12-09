@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14C68k" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VJS-jd-511">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C78c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VJS-jd-511">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Home-->
@@ -17,68 +16,12 @@
                     <view key="view" contentMode="scaleToFill" id="Fs6-pX-uWd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWn-9D-rVy">
-                                <rect key="frame" x="234" y="120" width="131" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="reconnect">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="reconnectPeripheral:" destination="y4g-7r-2i1" eventType="touchUpInside" id="juk-pK-6in"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- °C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mcz-Um-NA6">
-                                <rect key="frame" x="16" y="120" width="568" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8wC-kw-KcM">
-                                <rect key="frame" x="16" y="164" width="568" height="38.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2014-09- 11" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4Q-9e-4qE">
-                                <rect key="frame" x="16" y="164" width="568" height="38.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Mcz-Um-NA6" firstAttribute="centerX" secondItem="TWn-9D-rVy" secondAttribute="centerX" constant="24" id="0Yw-Jb-s82"/>
-                            <constraint firstItem="8wC-kw-KcM" firstAttribute="top" secondItem="Mcz-Um-NA6" secondAttribute="bottom" constant="20" id="3mx-aI-h2x"/>
-                            <constraint firstItem="H4Q-9e-4qE" firstAttribute="trailing" secondItem="Fs6-pX-uWd" secondAttribute="trailingMargin" id="95Y-5P-97E"/>
-                            <constraint firstItem="H4Q-9e-4qE" firstAttribute="top" secondItem="Mcz-Um-NA6" secondAttribute="bottom" constant="20" id="Dv6-RS-VsL"/>
-                            <constraint firstItem="Mcz-Um-NA6" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="56" id="Gzg-vJ-s8a"/>
-                            <constraint firstItem="TWn-9D-rVy" firstAttribute="top" secondItem="H4Q-9e-4qE" secondAttribute="bottom" id="LgP-Yd-pG1"/>
-                            <constraint firstItem="H4Q-9e-4qE" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="MUK-4O-gzq"/>
-                            <constraint firstItem="TWn-9D-rVy" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="56" id="UKM-T6-tGt"/>
-                            <constraint firstItem="8wC-kw-KcM" firstAttribute="top" secondItem="plY-Qs-8L7" secondAttribute="bottom" constant="100" id="cUx-x0-aN8"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="8wC-kw-KcM" secondAttribute="trailing" id="k1j-Bv-wFB"/>
-                            <constraint firstItem="8wC-kw-KcM" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="kza-Y0-7Zm"/>
-                            <constraint firstItem="Mcz-Um-NA6" firstAttribute="leading" secondItem="Fs6-pX-uWd" secondAttribute="leadingMargin" id="m1Y-dT-COk"/>
-                            <constraint firstAttribute="centerX" secondItem="TWn-9D-rVy" secondAttribute="centerX" id="pNK-Om-xjL"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Mcz-Um-NA6" secondAttribute="trailing" id="rNW-Hi-Oyz"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="0Yw-Jb-s82"/>
-                                <exclude reference="LgP-Yd-pG1"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="prg-vb-hck">
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="dateShow" destination="H4Q-9e-4qE" id="JEX-U3-w3J"/>
-                        <outlet property="numberTaped" destination="8wC-kw-KcM" id="EhA-0p-VZw"/>
-                        <outlet property="reconnectBtn" destination="TWn-9D-rVy" id="j1K-zF-Ybi"/>
-                        <outlet property="temperatureLabel" destination="Mcz-Um-NA6" id="f84-z5-Gej"/>
                         <segue destination="pAJ-VJ-0jx" kind="show" identifier="segue_home_device_list" id="EXQ-2k-1wR"/>
                         <segue destination="QQI-Gr-IGG" kind="presentation" identifier="segue_home_settings" id="HyH-qo-jeO"/>
                         <segue destination="yht-9O-HIa" kind="show" identifier="segue_home_history" id="8Ud-c0-lnF"/>

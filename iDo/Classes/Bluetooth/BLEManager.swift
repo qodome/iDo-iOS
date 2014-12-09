@@ -10,7 +10,7 @@ protocol BLEManagerDelegate {
 
 protocol BLEManagerDataSource {
     /** 更新温度值 */
-    func onUpdateTemperature(value: Float)
+    func onUpdateTemperature(value: Double)
 }
 
 enum BLEManagerState: Int {

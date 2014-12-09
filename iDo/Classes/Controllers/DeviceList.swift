@@ -13,14 +13,15 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         title = LocalizedString("devices")
-        tableView.registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -64), forBarMetrics: .Default)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
-        BLEManager.sharedManager().delegate = self
+        tableView.registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBarStyle(.Default)
+        BLEManager.sharedManager().delegate = self
         loadData()
     }
     
@@ -102,6 +103,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
         if indexPath.section == 0 { // 询问是否断开
             selected = connected[indexPath.row]
             UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect")).showInView(view)
+            tableView.deselectRowAtIndexPath(indexPath, animated: false) // 手动取消选中状态
         } else { // 直接绑定
             BLEManager.sharedManager().bind(data[indexPath.row] as CBPeripheral)
         }

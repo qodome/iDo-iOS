@@ -4,10 +4,10 @@
 
 class Temperature: NSObject {
     var timeStamp: Int = 0
-    var open: Float?
-    var high: Float?
-    var low: Float?
-    var close: Float?
+    var open: Double?
+    var high: Double?
+    var low: Double?
+    var close: Double?
     
     override init() {
         super.init()
@@ -18,7 +18,7 @@ class Temperature: NSObject {
         self.timeStamp = timeStamp
     }
     
-    convenience init(timeStamp: Int, value: Float) {
+    convenience init(timeStamp: Int, value: Double) {
         self.init(timeStamp: timeStamp)
         open = value
         high = value

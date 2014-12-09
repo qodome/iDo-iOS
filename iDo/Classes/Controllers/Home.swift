@@ -6,15 +6,14 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
     // MARK: - 🍀 变量
     let segueId = "segue_home_device_list"
     var data: [Temperature] = []
+    var integerLabel: UILabel!
+    var decimalLabel: UILabel!
+    var symbolLabel: UILabel!
+    var numberView: NumberView!
     var scrollView: UIScrollView!
     var chart: BEMSimpleLineGraphView!
     
     var json = "" // 历史数据json
-    
-    @IBOutlet weak var numberTaped: UILabel! //显示当前温度的label
-    @IBOutlet weak var dateShow: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel! //显示折线图中当前点值的label
-    @IBOutlet weak var reconnectBtn: UIButton!
     
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
@@ -27,18 +26,11 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         let settings = UIBarButtonItem(image: UIImage(named: "ic_action_settings"), style: .Bordered, target: self, action: "settings:")
         let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         setToolbarItems([space, settings, space], animated: false)
-        
-        numberTaped.font = UIFont(name: "HelveticaNeue-Light", size: 20)
-        temperatureLabel.text = LocalizedString("no_device")
-        temperatureLabel.font = UIFont(name: "Helvetica", size: 30)
-        temperatureLabel.textColor = UIColor.whiteColor()
-        dateShow.font = UIFont(name: "HelveticaNeue-Light", size: 20)
-        dateShow.text = ""
-        reconnectBtn.setTitle(LocalizedString("reconnect"), forState: UIControlState.Normal)
-        reconnectBtn.titleLabel?.font = UIFont(name: "Helvetica", size: 30)
-        reconnectBtn.hidden = true
+        // 温度值
+        numberView = NumberView(frame: CGRectMake(0, 100, SCREEN_WIDTH, 100))
+        numberView.textColor = UIColor.whiteColor()
+        view.addSubview(numberView)
         // 蓝牙
-        BLEManager.sharedManager().delegate = self
         BLEManager.sharedManager().dataSource = self
         // 图表
         chart = BEMSimpleLineGraphView(frame: CGRectMake(0, 0, view.frame.width * 2, 240))
@@ -70,11 +62,14 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         json = History.getJson(NSDate())
         data = History.getData(NSDate())
         setChartSize() // 要放在加载数据之后
+        
+//        onUpdateTemperature(-15.04)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBarStyle(.Transparent)
+        BLEManager.sharedManager().delegate = self
         // TODO: 在设置中断开连接后，回这个界面，需要更新状态
     }
     
@@ -94,37 +89,41 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         switch state {
         case .PowerOff:
             println()
+//            view.backgroundColor = UIColor.whiteColor()
         case .Idle:
-            println()
+            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
         case .Scan, .Discovered:
-            println()
+            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
         case .Connecting, .Connected:
-            println()
+            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
         case .ServiceDiscovered:
-            temperatureLabel.text = LocalizedString("connected")
+            title = LocalizedString("connected")
             view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
         case .Disconnected:
+            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
             if BLEManager.sharedManager().defaultDevice() == nil {
-                temperatureLabel.text = LocalizedString("no_device")
-                view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
+                title = LocalizedString("no_device")
             } else {
-                temperatureLabel.hidden = true
-                reconnectBtn.hidden = false
+                title = LocalizedString("reconnecting")
             }
         case .Fail:
-            println()
+            view.backgroundColor = UIColor.whiteColor()
         default:
             Log("Unknown State: \(state.rawValue)")
         }
     }
     
     // MARK: - 🐤 BLEManagerDataSource
-    func onUpdateTemperature(var value: Float) {
-//        value = Float(arc4random_uniform(150)) / 100 + 37 // 生成假数据
-        value = roundf(value / 0.1) * 0.1 // 保留一位小数
-        let date = NSDate()
-        temperatureLabel.text = NSString(format: "%.1f°", value)
+    func onUpdateTemperature(var value: Double) {
+        //        value = Double(arc4random_uniform(150)) / 100 + 37 // 生成假数据
+        value = round(value / 0.1) * 0.1 // 四舍五入保留一位小数
+        println(value)
+//        let a: AnyObject = value
+//        let s = "\(value)" // 这样转换一下可以去除0
+        numberView.setValue(value)
+        numberView.frame.origin.x = (view.frame.width - numberView.frame.width) / 2
         // 初始化一个温度对象，当前时间最接近的5分钟频率
+        let date = NSDate()
         let temp = Temperature(timeStamp: History.getTimeStamp(date, minute: 5), value: value)
         // 比对历史数据
         var json1 = ""
@@ -165,7 +164,6 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
             } else { // 超过5分钟，新增
                 json = "\(json.substringToIndex(advance(json.startIndex, countElements(json) - 1))),\(json1)]"
             }
-            //            println(json)
             json.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
         }
         setChartSize()
@@ -189,11 +187,11 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
     func getJsonData(values: NSObject?...) -> String { // TODO: 是否用AnyObject更安全
         var json = "["
         for value in values {
-            json = NSString(format: "\(json)%@,", value == nil ? "null" : value!)
+            json = String(format: "\(json)%@,", value == nil ? "null" : value!)
         }
         let range = json.rangeOfString(",", options: .BackwardsSearch)
         json.replaceRange(range!, with: "]")
-//        println(json)
+//                println(json)
         return json
     }
     
@@ -213,19 +211,19 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         formatter.dateFormat = "HH:mm" // "hh:mm a"
         // TODO: 用这个日历是否总是对
         let components = NSCalendar.autoupdatingCurrentCalendar().components(.CalendarUnitMinute, fromDate: date)
-//        return components.minute == 0 ? format.stringFromDate(date) : ""
+        //        return components.minute == 0 ? format.stringFromDate(date) : ""
         return formatter.stringFromDate(date)
     }
     
     // MARK:- 💙 BEMSimpleLineGraphDelegate
-//    func popUpSuffixForlineGraph(graph: BEMSimpleLineGraphView!) -> String! {
-//        return "°"
-//    }
+    //    func popUpSuffixForlineGraph(graph: BEMSimpleLineGraphView!) -> String! {
+    //        return "°"
+    //    }
     
     // MARK: - 💙 UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 { // 进入设备页
-            BLEManager.sharedManager().startScan()
+            BLEManager.sharedManager().startScan() // TODO: 是否要放在这里做
             performSegueWithIdentifier(segueId, sender: self)
         }
     }
@@ -243,12 +241,6 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
         performSegueWithIdentifier("segue_home_history", sender: self)
     }
     
-    @IBAction func reconnectPeripheral(sender: AnyObject) {
-        reconnectBtn.hidden = true
-        temperatureLabel.hidden = false
-        BLEManager.sharedManager().startScan()
-    }
-    
     // MARK: - 💛 自定义方法 (Custom Method)
     func setChartSize() {
         chart.frame.size = CGSizeMake(scrollView.frame.width * CGFloat(data.count) / 244 * 2, chart.frame.height)
@@ -256,12 +248,12 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, BEMSimpl
     }
     
     /** 本地通知 */
-    func sendNotifition(message: String, temperature: Float) {
+    func sendNotifition(message: String, temperature: Double) {
         var notification: UILocalNotification! = UILocalNotification()
         if notification != nil {
             notification.fireDate = NSDate().dateByAddingTimeInterval(3)
             notification.timeZone = NSTimeZone.defaultTimeZone()
-            notification.alertBody = NSString(format: "请注意：%.1f, %@", temperature, message)
+            notification.alertBody = String(format: "请注意：%.1f, %@", temperature, message)
             notification.alertAction = message
             notification.soundName = UILocalNotificationDefaultSoundName // 声音
             notification.applicationIconBadgeNumber = 1 // ???

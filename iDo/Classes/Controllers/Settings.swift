@@ -52,9 +52,8 @@ class Settings: UITableViewController {
         switch indexPath.section {
         case 0:
             cell.imageView?.image = UIImage.imageWithColor(indexPath.row == 0 ? UIColor.colorWithHex(IDO_PURPLE) : UIColor.colorWithHex(IDO_RED), size: CGSizeMake(29, 29))
-            UIImageView.roundedView(cell.imageView, cornerRadius: 14.5)
             cell.textLabel?.text = indexPath.row == 0 ? LocalizedString("low temperature alarm") : LocalizedString("high temperature alarm")
-            let switchView = UISwitch(frame: CGRectZero)
+            let switchView = UISwitch()
             switchView.on = indexPath.row == 0 ? Settings.isLowTNotice() : Settings.isHighTNotice()
             switchView.addTarget(self, action: indexPath.row == 0 ? "switchLowTNotice:" : "switchHighTNotice:", forControlEvents: .ValueChanged)
             cell.accessoryView = switchView
@@ -64,7 +63,7 @@ class Settings: UITableViewController {
             let slider = UISlider(frame: CGRectMake(0, 0, 150, 20))
             slider.minimumValue = indexPath.row == 0 ? 26 : 36
             slider.maximumValue = indexPath.row == 0 ? 36 : 47
-            slider.value = indexPath.row == 0 ? Settings.lowTemperature() : Settings.HighTemperature()
+            slider.value = Float(indexPath.row == 0 ? Settings.lowTemperature() : Settings.HighTemperature())
             slider.tag = indexPath.row
             slider.addTarget(self, action: "changeTemperature:", forControlEvents: .ValueChanged)
             cell.accessoryView = slider
@@ -72,7 +71,7 @@ class Settings: UITableViewController {
             cell.textLabel?.text = "\(label) \(slider.value)"
         case 2:
             cell.textLabel?.text = "℃ / ℉"
-            let switchView = UISwitch(frame: CGRectZero)
+            let switchView = UISwitch()
             switchView.on = false
             cell.accessoryView = switchView
         default:
@@ -95,32 +94,32 @@ class Settings: UITableViewController {
     }
     
     func changeTemperature(sender: UISlider) {
-        let temperature = roundf(sender.value / 0.1) * 0.1
+        let temperature = round(Double(sender.value) / 0.1) * 0.1
         sender.tag == 0 ? Settings.setLowTemperature(temperature) : Settings.setHighTemperature(temperature)        
         tableView.cellForRowAtIndexPath(NSIndexPath(forRow: sender.tag, inSection: 1))?.textLabel?.text = (sender.tag == 0 ? LocalizedString("low") : LocalizedString("high")) + " \(temperature)"
     }
     
     // MARK: - 💛 自定义方法 (Custom Method)
-    class func lowTemperature() -> Float {
+    class func lowTemperature() -> Double {
         if NSUserDefaults.standardUserDefaults().objectForKey(PREF_LOW_TEMPERATURE) == nil {
             setLowTemperature(36.0)
         }
-        return NSUserDefaults.standardUserDefaults().floatForKey(PREF_LOW_TEMPERATURE)
+        return NSUserDefaults.standardUserDefaults().doubleForKey(PREF_LOW_TEMPERATURE)
     }
     
-    class func setLowTemperature(value: Float) {
-        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: PREF_LOW_TEMPERATURE)
+    class func setLowTemperature(value: Double) {
+        NSUserDefaults.standardUserDefaults().setDouble(value, forKey: PREF_LOW_TEMPERATURE)
     }
     
-    class func HighTemperature() -> Float {
+    class func HighTemperature() -> Double {
         if NSUserDefaults.standardUserDefaults().objectForKey(PREF_HIGH_TEMPERATURE) == nil {
             setHighTemperature(38.0)
         }
-        return NSUserDefaults.standardUserDefaults().floatForKey(PREF_HIGH_TEMPERATURE)
+        return NSUserDefaults.standardUserDefaults().doubleForKey(PREF_HIGH_TEMPERATURE)
     }
     
-    class func setHighTemperature(value: Float) {
-        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: PREF_HIGH_TEMPERATURE)
+    class func setHighTemperature(value: Double) {
+        NSUserDefaults.standardUserDefaults().setDouble(value, forKey: PREF_HIGH_TEMPERATURE)
     }
     
     // 低温报警

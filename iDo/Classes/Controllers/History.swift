@@ -102,9 +102,17 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     func lineGraph(graph: BEMSimpleLineGraphView!, labelOnXAxisForIndex index: Int) -> String! {
         let date = NSDate(timeIntervalSince1970: Double(data[index].timeStamp))
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = "HH:mm" // "hh:mm a"
+        // TODO: 用这个日历是否总是对
+        let components = NSCalendar.autoupdatingCurrentCalendar().components(.CalendarUnitMinute, fromDate: date)
+        //        return components.minute == 0 ? format.stringFromDate(date) : ""
         return formatter.stringFromDate(date)
     }
+    
+    // MARK:- 💙 BEMSimpleLineGraphDelegate
+    //    func popUpSuffixForlineGraph(graph: BEMSimpleLineGraphView!) -> String! {
+    //        return "°"
+    //    }
     
     // MARK: - 💛 Action
     func today(sender: AnyObject) {
@@ -126,14 +134,14 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         let file = NSFileHandle(forUpdatingAtPath: path)
         var content: NSArray = []
         if file != nil {
-            let json = NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
+            let json = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
             let content = NSJSONSerialization.JSONObjectWithData(json.dataUsingEncoding(NSUTF8StringEncoding)!, options: .allZeros, error: nil) as NSArray
             for d in content {
                 let temperature = Temperature(timeStamp: Int(d[0] as NSNumber))
-                temperature.open = d[1].isEqual(NSNull()) ? nil : Float(d[1] as NSNumber)
-                temperature.high = d[2].isEqual(NSNull()) ? nil : Float(d[2] as NSNumber)
-                temperature.low = d[3].isEqual(NSNull()) ? nil : Float(d[3] as NSNumber)
-                temperature.close = d[4].isEqual(NSNull()) ? nil : Float(d[4] as NSNumber)
+                temperature.open = d[1].isEqual(NSNull()) ? nil : Double(d[1] as NSNumber)
+                temperature.high = d[2].isEqual(NSNull()) ? nil : Double(d[2] as NSNumber)
+                temperature.low = d[3].isEqual(NSNull()) ? nil : Double(d[3] as NSNumber)
+                temperature.close = d[4].isEqual(NSNull()) ? nil : Double(d[4] as NSNumber)
                 data.append(temperature)
             }
         }
@@ -144,7 +152,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         let path = getHistory(date)
         let file = NSFileHandle(forReadingAtPath: path)
         if file != nil {
-            return NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
+            return String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
         }
         return ""
     }
