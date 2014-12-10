@@ -2,17 +2,31 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-let BLE_UUID_DATE = "1805" // Current Time
-let BLE_UUID_DATE_TIME_CHAR = "2A08"     /**< Date Time characteristic UUID. */
+// https://developer.bluetooth.org/gatt/services/Pages/ServicesHome.aspx
+// https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicsHome.aspx
+// https://developer.bluetooth.org/gatt/profiles/Pages/ProfilesHome.aspx // 定义了产品必须实现的规范
+// http://developer.bluetooth.cn/libs/Cn/Specifi/GATT/2014/0117/54.html 中文
+let BLE_BATTERY_SERVICE = "180F" // Battery Service
+let BLE_BATTERY_LEVEL = "2A19" // Battery Level 必须 (Mandatory)
 
-let BLE_UUID_INFO = "180A"
-let BLE_UUID_FIRMWARE_REVISION_STRING_CHAR = "2A26" /**< Firmware Revision String characteristic UUID. */
-let BLE_UUID_MODEL_NUMBER_STRING_CHAR = "2A24" /**< Model Number String characteristic UUID. */
-let BLE_UUID_MANUFACTURER_NAME_STRING_CHAR = "2A29" /**< Manufacturer Name String characteristic UUID. */
+let BLE_CURRENT_TIME_SERVICE = "1805" // Current Time Service
+let BLE_CURRENT_TIME = "2A2B" // Current Time 必须 (Mandatory)
+let BLE_DATE_TIME = "2A08" // Date Time
 
-let kServiceUUID = "1809" // Health Thermometer
-let BLE_UUID_TEMPERATURE_MEASUREMENT = "2A1C" // Temperature Measurement
-let kCharacteristicUUID = "2A1E"
+let BLE_DEVICE_INFORMATION = "180A" // Device Information
+let BLE_FIRMWARE_REVISION_STRING = "2A26" // Firmware Revision String
+let BLE_MANUFACTURER_NAME_STRING = "2A29" // Manufacturer Name String
+let BLE_MODEL_NUMBER_STRING = "2A24" // Model Number String
+
+let BLE_HEALTH_THERMOMETER = "1809" // Health Thermometer
+let BLE_TEMPERATURE_MEASUREMENT = "2A1C" // Temperature Measurement 必须 (Mandatory)
+let BLE_INTERMEDIATE_TEMPERATURE = "2A1E" // Intermediate Temperature
+
+// https://developer.bluetooth.org/gatt/profiles/Pages/ProfileViewer.aspx?u=org.bluetooth.profile.find_me.xml 防丢器的话必须要有的Service
+let BLE_IMMEDIATE_ALERT = "1802" // Immediate Alert
+let BLE_ALERT_LEVEL = "2A06" // Alert Level 必须 (Mandatory)
+// https://developer.bluetooth.org/gatt/profiles/Pages/ProfileViewer.aspx?u=org.bluetooth.profile.proximity.xml 灯必须有的Service
+// https://developer.bluetooth.org/gatt/profiles/Pages/ProfileViewer.aspx?u=org.bluetooth.profile.running_speed_and_cadence.xml 手环必须有的Service
 
 /** 处理蓝牙传来的data */
 func calculateTemperature(data: NSData) -> Double {

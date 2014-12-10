@@ -30,6 +30,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         // 取当天的历史数据
         json = History.getJson(NSDate())
         data = History.getData(NSDate())
+//        value = Double(arc4random_uniform(150)) / 100 + 37 // 生成假数据
 //        onUpdateTemperature(15.15)
     }
     
@@ -55,17 +56,18 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     func onStateChanged(state: BLEManagerState, peripheral: CBPeripheral?) {
         switch state {
         case .PowerOff:
-            println()
 //            view.backgroundColor = UIColor.whiteColor()
+            title = ("bluetooth closed")
         case .Idle:
             view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
-        case .Scan, .Discovered:
-            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
-        case .Connecting, .Connected:
-            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
-        case .ServiceDiscovered:
+        case .Scan:
+            title = LocalizedString("scan") // Scan不要加颜色，有广播信息的时候会乱
+        case .Discovered:
+            title = LocalizedString("discovered")
+        case .Connecting:
+            title = LocalizedString("connecting")
+        case .Connected:
             title = LocalizedString("connected")
-            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
         case .Disconnected:
             view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
             if BLEManager.sharedManager().defaultDevice() == nil {
@@ -74,19 +76,18 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
                 title = LocalizedString("reconnecting")
             }
         case .Fail:
-            view.backgroundColor = UIColor.whiteColor()
+            title = "Fail"
+            view.backgroundColor = UIColor.blackColor()
+        case .ServiceDiscovered:
+            title = peripheral?.name
         default:
-            Log("Unknown State: \(state.rawValue)")
+            title = "Unknown State: \(state.rawValue)"
         }
     }
     
     // MARK: - 🐤 BLEManagerDataSource
     func onUpdateTemperature(var value: Double) {
-        //        value = Double(arc4random_uniform(150)) / 100 + 37 // 生成假数据
         value = round(value / 0.1) * 0.1 // 四舍五入保留一位小数
-        println(value)
-//        let a: AnyObject = value
-//        let s = "\(value)" // 这样转换一下可以去除0
         numberView.setValue(value)
         numberView.frame.origin.x = (view.frame.width - numberView.frame.width) / 2
         // 初始化一个温度对象，当前时间最接近的5分钟频率
@@ -135,12 +136,12 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         if value <= Settings.lowTemperature() { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
             if Settings.isLowTNotice() {
-                sendNotifition("温度过低", temperature: value)
+                sendNotifition("温度过低 \(value)")
             }
         } else if value >= Settings.HighTemperature() { // 温度过高
             view.backgroundColor = UIColor.colorWithHex(IDO_RED)
             if Settings.isHighTNotice() {
-                sendNotifition("温度过高", temperature: value)
+                sendNotifition("温度过高 \(value)")
             }
         } else {
             view.backgroundColor = UIColor.colorWithHex(IDO_GREEN)
@@ -180,16 +181,14 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     }
     
     /** 本地通知 */
-    func sendNotifition(message: String, temperature: Double) {
-        var notification: UILocalNotification! = UILocalNotification()
-        if notification != nil {
+    func sendNotifition(message: String) {
+        if UIApplication.sharedApplication().applicationState == .Background {
+            let notification = UILocalNotification()
             notification.fireDate = NSDate().dateByAddingTimeInterval(3)
-            notification.timeZone = NSTimeZone.defaultTimeZone()
-            notification.alertBody = String(format: "请注意：%.1f, %@", temperature, message)
-            notification.alertAction = message
-            notification.soundName = UILocalNotificationDefaultSoundName // 声音
-            notification.applicationIconBadgeNumber = 1 // ???
-            notification.userInfo = ["key" : "object"]
+            notification.alertBody = message
+            notification.soundName = UILocalNotificationDefaultSoundName
+//            notification.applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
+            notification.applicationIconBadgeNumber = 1
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
     }

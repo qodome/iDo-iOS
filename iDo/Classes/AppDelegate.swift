@@ -11,18 +11,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UIApplication.instancesRespondToSelector("registerUserNotificationSettings:") {
             application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
         }
-        // application.applicationIconBadgeNumber = 0
         return true
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
         application.applicationIconBadgeNumber = 0
+        application.cancelAllLocalNotifications()
     }
     
     func applicationWillTerminate(application: UIApplication) {
         println("applicationWillTerminate")
+        application.applicationIconBadgeNumber = 0
+        application.cancelAllLocalNotifications()
         let manager = BLEManager.sharedManager()
-//        manager.central.cancelPeripheralConnection(manager.connected)
         for peripheral in manager.peripherals {
             manager.central.cancelPeripheralConnection(peripheral)
         }
