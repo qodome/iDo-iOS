@@ -124,7 +124,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     
     // MARK: - 💛 自定义方法 (Custom Method)
     func setChartSize() {
-        chart.frame.size = CGSizeMake(scrollView.frame.width * CGFloat(data.count) / 244 * 2, chart.frame.height)
+        chart.frame.size.width = scrollView.frame.width * CGFloat(data.count) / 244 * 2
         scrollView.contentSize.width = max(chart.frame.width, scrollView.frame.width)
     }
     

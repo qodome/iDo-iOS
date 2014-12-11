@@ -27,24 +27,30 @@ class NumberView: UIView {
         integerLabel.font = UIFont(name: "HelveticaNeue-UltraLight", size: 100)
         integerLabel.text = "--"
         integerLabel.sizeToFit()
-        integerLabel.frame.origin.x = (frame.width - integerLabel.frame.width) / 2
+        integerLabel.frame.origin = CGPointMake((frame.width - integerLabel.frame.width) / 2, (frame.height - integerLabel.frame.height) / 2) // 居中
         addSubview(integerLabel) // 整数
+        let x = integerLabel.frame.origin.x
+        let y = integerLabel.frame.origin.y
         decimalLabel = UILabel()
         decimalLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 50)
-        decimalLabel.frame.origin.y = integerLabel.frame.origin.y + integerLabel.frame.height / 2
+        decimalLabel.text = ".-"
+        decimalLabel.sizeToFit()
+        decimalLabel.frame.origin = CGPointMake(x + integerLabel.frame.width, y + integerLabel.frame.height - decimalLabel.frame.height - 10)
         addSubview(decimalLabel) // 小数，下标(subscript)
         superscript = UILabel()
         superscript.font = UIFont(name: "HelveticaNeue-Thin", size: 46)
         superscript.text = "°"
         superscript.sizeToFit()
-        superscript.frame.origin = CGPointMake(integerLabel.frame.origin.x + integerLabel.frame.width, integerLabel.frame.origin.y + 12)
+        superscript.frame.origin = CGPointMake(x + integerLabel.frame.width, y + 12)
         addSubview(superscript) // 上标
         minusLabel = UILabel()
         minusLabel.font = UIFont(name: "HelveticaNeue-UltraLight", size: 100)
         minusLabel.text = "-"
         minusLabel.sizeToFit()
-        minusLabel.hidden = true
+        minusLabel.frame.origin = CGPointMake(x - minusLabel.frame.width, y)
         addSubview(minusLabel) // 符号
+        decimalLabel.hidden = true
+        minusLabel.hidden = true
     }
     
     func setValue(value: Double) {
@@ -62,17 +68,16 @@ class NumberView: UIView {
             integerLabel.text = s
         }
         integerLabel.sizeToFit()
-        integerLabel.frame.size = CGSizeMake(integerLabel.frame.width + kerning, integerLabel.frame.height) // 宽度补10防止切边，不要用居中对齐，减小的时候会偏
-        frame.size = CGSizeMake(integerLabel.frame.width * 2, integerLabel.frame.height)
+        integerLabel.frame.size.width = integerLabel.frame.width + kerning // 宽度补10防止切边，不要用居中对齐，减小的时候会偏
         integerLabel.frame.origin.x = (frame.width - integerLabel.frame.width) / 2
+        let x = integerLabel.frame.origin.x
         decimalLabel.text = ".\(decimalValue)"
         decimalLabel.sizeToFit()
-        decimalLabel.frame.origin = CGPointMake(integerLabel.frame.origin.x + integerLabel.frame.width, integerLabel.frame.origin.y + integerLabel.frame.height - decimalLabel.frame.height - 10)
-        let x = integerLabel.frame.origin.x
         decimalLabel.frame.origin.x = x + integerLabel.frame.width
-        decimalLabel.hidden = decimalValue == 0
         superscript.frame.origin.x = x + integerLabel.frame.width
         minusLabel.frame.origin.x = x - minusLabel.frame.width
+        // 隐藏
+        decimalLabel.hidden = decimalValue == 0
         minusLabel.hidden = value >= 0
     }
 }

@@ -10,7 +10,7 @@ protocol BLEManagerDelegate {
 
 protocol BLEManagerDataSource {
     /** 更新温度值 */
-    func onUpdateTemperature(value: Double)
+    func onUpdateTemperature(value: Double, peripheral: CBPeripheral?)
 }
 
 enum BLEManagerState: Int {
@@ -111,16 +111,15 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if peripheral.identifier.UUIDString == defaultDevice() {
             Log("发现已绑定设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
             println("重连次数 \(reconnectCount)")
-            if reconnectCount == 0 { // 第一次进来
-                connect(peripheral)
-            } else { // 从广播信息取数据
-//                reconnectCount = 0 
+            if reconnectCount > 0 { // 信号不好，从广播信息取数据
+                //                reconnectCount = 0
                 let serviceData: NSDictionary? = advertisementData["kCBAdvDataServiceData"] as? NSDictionary
                 let data: NSData? = serviceData?[CBUUID(string: kServiceUUID)] as? NSData
                 if data != nil {
-                    dataSource?.onUpdateTemperature(calculateAdvTemperature(data!))
+                    dataSource?.onUpdateTemperature(calculateAdvTemperature(data!), peripheral: peripheral)
                 }
             }
+            connect(peripheral) // 连接
         }
         let s = peripheral.identifier.UUIDString == defaultDevice() ? "" : "未"
         Log("发现\(s)绑定设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
@@ -215,7 +214,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                     return
                 }
                 reconnectCount = 0 // 取到数据才算一次完整的重连成功
-                dataSource?.onUpdateTemperature(calculateTemperature(characteristic.value))
+                dataSource?.onUpdateTemperature(calculateTemperature(characteristic.value), peripheral: peripheral)
             case CBUUID(string: BLE_DATE_TIME):
                 println("\(characteristic.UUID)")
             default:

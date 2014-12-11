@@ -22,8 +22,11 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         setToolbarItems([space, settings, space], animated: false)
         // 温度值
-        numberView = NumberView(frame: CGRectMake(0, 200, SCREEN_WIDTH, 100))
+        let width = SCREEN_WIDTH - 30
+        numberView = NumberView(frame: CGRectMake((SCREEN_WIDTH - width) / 2, (SCREEN_HEIGHT - width) / 2, width, width))
         numberView.textColor = UIColor.whiteColor()
+//        numberView.backgroundColor = UIColor.blackColor()
+        numberView.layer.cornerRadius = width / 2
         view.addSubview(numberView)
         // 蓝牙
         BLEManager.sharedManager().dataSource = self
@@ -31,7 +34,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         json = History.getJson(NSDate())
         data = History.getData(NSDate())
 //        value = Double(arc4random_uniform(150)) / 100 + 37 // 生成假数据
-//        onUpdateTemperature(15.15)
+//        onUpdateTemperature(15.15, nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -79,17 +82,17 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
             title = "Fail"
             view.backgroundColor = UIColor.blackColor()
         case .ServiceDiscovered:
-            title = peripheral?.name
+            title = LocalizedString("service discovered")
         default:
             title = "Unknown State: \(state.rawValue)"
         }
     }
     
     // MARK: - 🐤 BLEManagerDataSource
-    func onUpdateTemperature(var value: Double) {
+    func onUpdateTemperature(var value: Double, peripheral: CBPeripheral?) {
         value = round(value / 0.1) * 0.1 // 四舍五入保留一位小数
         numberView.setValue(value)
-        numberView.frame.origin.x = (view.frame.width - numberView.frame.width) / 2
+        title = peripheral?.name
         // 初始化一个温度对象，当前时间最接近的5分钟频率
         let date = NSDate()
         let temp = Temperature(timeStamp: History.getTimeStamp(date, minute: 5), value: value)

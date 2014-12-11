@@ -40,19 +40,19 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     
     // MARK: - 🐤 BLEManagerDelegate
     func onStateChanged(state: BLEManagerState, peripheral: CBPeripheral?) {
-        Log("状态更新: \(peripheral?.name) \(state.rawValue)")
+        Log("设备列表界面状态更新: \(peripheral?.name) \(state.rawValue)")
         loadData()
     }
     
     // MARK: - 💛 Action
     func refresh(sender: AnyObject) {
-        BLEManager.sharedManager().startScan()
-        let header: UIView = tableView.headerViewForSection(1)!
+        let header: UIView? = tableView.headerViewForSection(1)
         let indicator = UIActivityIndicatorView(frame: CGRectMake(view.frame.width - 35, 22, 20, 20))
         indicator.activityIndicatorViewStyle = .Gray
-        header.addSubview(indicator)
+        header?.addSubview(indicator)
         indicator.hidden = false
         indicator.startAnimating()
+        BLEManager.sharedManager().startScan() // 重新刷新界面时header会变成nil
     }
     
     // MARK: - 💙 UITableViewDataSource
@@ -67,7 +67,9 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
         cell.imageView?.image = UIImage(named: "ic_settings_ido")
-        UIImageView.roundedView(cell.imageView, cornerRadius: 6, borderColor: UIColor.blackColor(), borderWidth: 0.5)
+        cell.imageView?.layer.cornerRadius = 6
+        cell.imageView?.layer.borderColor = UIColor.blackColor().CGColor
+        cell.imageView?.layer.borderWidth = 0.5
         var device: CBPeripheral
         if indexPath.section == 0 {
             device = connected[indexPath.row]

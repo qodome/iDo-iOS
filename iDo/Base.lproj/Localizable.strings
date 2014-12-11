@@ -11,7 +11,7 @@
 "no_device" = "No device";
 "connected" = "Connected";
 "disconnect" = "Disconnect";
-"reconnect" = "reconnect";
+"reconnect" = "Reconnect";
 
 "temperature" = "Temperature";
 "high temperature alarm" = "High temperature alarm";

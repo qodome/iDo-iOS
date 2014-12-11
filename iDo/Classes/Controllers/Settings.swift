@@ -51,18 +51,16 @@ class Settings: UITableViewController {
         cell.selectionStyle = .None
         switch indexPath.section {
         case 0:
-            cell.imageView?.image = UIImage.imageWithColor(indexPath.row == 0 ? UIColor.colorWithHex(IDO_PURPLE) : UIColor.colorWithHex(IDO_RED), size: CGSizeMake(29, 29))
+            cell.imageView?.image = UIImage.imageWithColor(indexPath.row == 0 ? UIColor.colorWithHex(IDO_PURPLE) : UIColor.colorWithHex(IDO_RED), size: CGSizeMake(22, 22))
             cell.textLabel?.text = indexPath.row == 0 ? LocalizedString("low temperature alarm") : LocalizedString("high temperature alarm")
             let switchView = UISwitch()
             switchView.on = indexPath.row == 0 ? Settings.isLowTNotice() : Settings.isHighTNotice()
             switchView.addTarget(self, action: indexPath.row == 0 ? "switchLowTNotice:" : "switchHighTNotice:", forControlEvents: .ValueChanged)
             cell.accessoryView = switchView
         case 1:
-            cell.imageView?.image = UIImage(named: "ic_settings_temperature")?.imageWithRenderingMode(.AlwaysTemplate)
-            cell.imageView?.tintColor = indexPath.row == 0 ? UIColor.colorWithHex(IDO_PURPLE) : UIColor.colorWithHex(IDO_RED)
-            let slider = UISlider(frame: CGRectMake(0, 0, 150, 20))
+            let slider = UISlider(frame: CGRectMake(0, 0, 160, 20))
             slider.minimumValue = indexPath.row == 0 ? 26 : 36
-            slider.maximumValue = indexPath.row == 0 ? 36 : 47
+            slider.maximumValue = indexPath.row == 0 ? 36 : 46
             slider.value = Float(indexPath.row == 0 ? Settings.lowTemperature() : Settings.HighTemperature())
             slider.tag = indexPath.row
             slider.addTarget(self, action: "changeTemperature:", forControlEvents: .ValueChanged)

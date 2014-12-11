@@ -12,6 +12,7 @@
 		0E435F1F1A2AE233007951B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F1E1A2AE233007951B1 /* Images.xcassets */; };
 		0E435F221A2AE233007951B1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F201A2AE233007951B1 /* LaunchScreen.xib */; };
 		0E435F2E1A2AE233007951B1 /* iDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E435F2D1A2AE233007951B1 /* iDoTests.swift */; };
+		0E83D53E1A3948D700313C02 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E83D53D1A3948D700313C02 /* UIViewController+Extension.swift */; };
 		0E876FB31A31F7E100ED75F1 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E876FB21A31F7E100ED75F1 /* UIColor+Extension.swift */; };
 		0E876FB51A320ACA00ED75F1 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E876FB41A320ACA00ED75F1 /* UIImage+Extension.swift */; };
 		0E9C9FAD1A3750BC00BB9DC6 /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9C9FAC1A3750BC00BB9DC6 /* NumberView.swift */; };
@@ -60,6 +61,7 @@
 		0E435F271A2AE233007951B1 /* iDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E435F2C1A2AE233007951B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E435F2D1A2AE233007951B1 /* iDoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iDoTests.swift; sourceTree = "<group>"; };
+		0E83D53D1A3948D700313C02 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		0E876FB21A31F7E100ED75F1 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		0E876FB41A320ACA00ED75F1 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		0E9C9FAC1A3750BC00BB9DC6 /* NumberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberView.swift; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				0E02FC261A35E7A800CB6EF3 /* Array+Extension.swift */,
 				0E876FB21A31F7E100ED75F1 /* UIColor+Extension.swift */,
 				0E876FB41A320ACA00ED75F1 /* UIImage+Extension.swift */,
+				0E83D53D1A3948D700313C02 /* UIViewController+Extension.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -482,6 +485,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E83D53E1A3948D700313C02 /* UIViewController+Extension.swift in Sources */,
 				0EE565731A2AE6CD003E9331 /* BEMSimpleLineGraphView.m in Sources */,
 				0EE565491A2AE656003E9331 /* History.swift in Sources */,
 				0EE5658E1A2AE6E9003E9331 /* RightDetailCell.swift in Sources */,
