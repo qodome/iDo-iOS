@@ -72,6 +72,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         calendar.reloadData()
+        // TODO: 当天数据是否需要重载
     }
     
     // MARK: - 💙 JTCalendarDataSource

@@ -21,7 +21,7 @@ class Settings: UITableViewController {
     
     // MARK: - 💙 UITableViewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -29,6 +29,8 @@ class Settings: UITableViewController {
         case 0:
             return 2
         case 1:
+            return 2
+        case 3:
             return 2
         default:
             return 1
@@ -72,10 +74,33 @@ class Settings: UITableViewController {
             let switchView = UISwitch()
             switchView.on = false
             cell.accessoryView = switchView
+        case 3:
+            let bundle = NSBundle.mainBundle()
+            switch indexPath.row {
+            case 0:
+                cell.selectionStyle = .Default
+                cell.textLabel?.text = bundle.objectForInfoDictionaryKey("CFBundleDisplayName") as? String
+                cell.accessoryType = .DisclosureIndicator
+            case 1:
+                let version: AnyObject = bundle.objectForInfoDictionaryKey("CFBundleShortVersionString")!
+                let build: AnyObject = bundle.objectForInfoDictionaryKey("CFBundleVersion")!
+                cell.textLabel?.text = "\(version) (\(build))"
+                //            cell.textLabel?.text = String(format: "%@ (%@)", bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as String, bundle.objectForInfoDictionaryKey("CFBundleVersion") as String)
+            default:
+                println()
+            }
         default:
             cell.textLabel?.text = LocalizedString("unknown")
         }
         return cell
+    }
+    
+    // MARK: - 💙 UITableViewDelegate
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 3 && indexPath.row == 0 {
+            openAppReviews(APP_ID)
+            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        }
     }
     
     // MARK: - 💛 Action

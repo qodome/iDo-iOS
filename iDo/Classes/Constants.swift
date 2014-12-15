@@ -2,6 +2,7 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
+let APP_ID = "923307110" // "https://itunes.apple.com/cn/app/id923307110"
 let APP_COLOR = 0xFF5A5F
 
 let IDO_RED = 0xE24424
