@@ -11,6 +11,22 @@ class DeviceDetail: TableDetail {
         tableView.registerClass(RightDetailCell.self, forCellReuseIdentifier: cellId)
     }
     
+    override func getItemView<T : CBPeripheral, C : RightDetailCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
+        cell.selectionStyle = .None
+        switch indexPath.section {
+        case 0:
+            cell.textLabel?.text = LocalizedString("name")
+            cell.detailTextLabel?.text = data?.name
+        case 1:
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "UUID"
+                cell.detailTextLabel?.text = data?.identifier.UUIDString
+            }
+        default: break
+        }
+        return cell
+    }
+    
     // MARK: - 💙 UITableViewDataSource    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
@@ -18,22 +34,5 @@ class DeviceDetail: TableDetail {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section == 0 ? 1 : 3
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
-        cell.selectionStyle = .None
-        switch indexPath.section {
-        case 0:
-            cell.textLabel?.text = LocalizedString("name")
-            cell.detailTextLabel?.text = (data as CBPeripheral).name
-        case 1:
-            if indexPath.row == 0 {
-                cell.textLabel?.text = "UUID"
-                cell.detailTextLabel?.text = (data as CBPeripheral).identifier.UUIDString
-            }
-        default: break
-        }
-        return cell
     }
 }

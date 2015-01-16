@@ -103,7 +103,8 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 { // 询问是否断开
             selected = connected[indexPath.row]
-            UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect")).showInView(view)
+//            UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect")).showInView(view)
+            UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect"), otherButtonTitles: LocalizedString("check")).showInView(view)
             tableView.deselectRowAtIndexPath(indexPath, animated: false) // 手动取消选中状态
         } else { // 直接绑定
             BLEManager.sharedManager().bind(data[indexPath.row] as CBPeripheral)
@@ -121,12 +122,19 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == actionSheet.destructiveButtonIndex {
             BLEManager.sharedManager().unbind(selected!)
+        } else if buttonIndex == 2 {
+            performSegueWithIdentifier("segue.device_list-oad_detail", sender: self)
         }
     }
     
     // MARK: - 💙 场景切换 (Segue)
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         super.prepareForSegue(segue, sender: sender)
-        segue.destinationViewController.setValue(selected, forKey: "data")
+        if segue.identifier == "segue.device_list-detail" {
+            segue.destinationViewController.setValue(selected, forKey: "data")
+        } else if segue.identifier == "segue.device_list-oad_detail" {
+            segue.destinationViewController.setValue(selected, forKey: "data")
+            BLEManager.sharedManager().oadInit()
+        }
     }
 }

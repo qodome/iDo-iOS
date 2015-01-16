@@ -36,6 +36,10 @@
 		0EABC36F1A53D34D00F8A004 /* HttpLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC36D1A53D34D00F8A004 /* HttpLoader.swift */; };
 		0ED67E4B1A2AFA3400CA35BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E4D1A2AFA3400CA35BE /* Localizable.strings */; };
 		0ED67E8B1A2B0F5C00CA35BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E8D1A2B0F5C00CA35BE /* InfoPlist.strings */; };
+		0EE2ADEB1A68F5590084DC24 /* BLEUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */; };
+		0EE2ADEE1A68F5E10084DC24 /* iDo1OADHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */; };
+		0EE2ADEF1A68F5E10084DC24 /* OADHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */; };
+		0EE2ADF11A68F6090084DC24 /* OADDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADF01A68F6090084DC24 /* OADDetail.swift */; };
 		0EE565441A2AE656003E9331 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE565341A2AE656003E9331 /* AppDelegate.swift */; };
 		0EE565451A2AE656003E9331 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE565361A2AE656003E9331 /* BLEManager.swift */; };
 		0EE565461A2AE656003E9331 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE565371A2AE656003E9331 /* Constants.swift */; };
@@ -98,6 +102,10 @@
 		0ED67E8A1A2B0CDA00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0ED67E8E1A2B0F9B00CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0ED67E8F1A2B0FBB00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEUtils.swift; sourceTree = "<group>"; };
+		0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iDo1OADHandler.swift; sourceTree = "<group>"; };
+		0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OADHandler.swift; sourceTree = "<group>"; };
+		0EE2ADF01A68F6090084DC24 /* OADDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OADDetail.swift; sourceTree = "<group>"; };
 		0EE565341A2AE656003E9331 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0EE565361A2AE656003E9331 /* BLEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		0EE565371A2AE656003E9331 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -233,10 +241,10 @@
 			isa = PBXGroup;
 			children = (
 				0EABC3591A53D31900F8A004 /* BaseController.swift */,
-				0EABC35A1A53D31900F8A004 /* CollectionList.swift */,
 				0EABC35B1A53D31900F8A004 /* ListController.swift */,
-				0EABC35C1A53D31900F8A004 /* TableDetail.swift */,
+				0EABC35A1A53D31900F8A004 /* CollectionList.swift */,
 				0EABC35D1A53D31900F8A004 /* TableList.swift */,
+				0EABC35C1A53D31900F8A004 /* TableDetail.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -315,6 +323,7 @@
 				0EE5653D1A2AE656003E9331 /* Settings.swift */,
 				0EE5653A1A2AE656003E9331 /* DeviceList.swift */,
 				0EE565391A2AE656003E9331 /* DeviceDetail.swift */,
+				0EE2ADF01A68F6090084DC24 /* OADDetail.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -330,6 +339,9 @@
 		0EE565411A2AE656003E9331 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */,
+				0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */,
+				0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */,
 				0EE565421A2AE656003E9331 /* GATTUtils.swift */,
 			);
 			path = Util;
@@ -543,6 +555,7 @@
 				0EE5654B1A2AE656003E9331 /* Settings.swift in Sources */,
 				0EABC3671A53D32A00F8A004 /* ListModel.swift in Sources */,
 				0E9F5B001A407828003BB8AD /* UIImage+Extension.swift in Sources */,
+				0EE2ADF11A68F6090084DC24 /* OADDetail.swift in Sources */,
 				0EABC36F1A53D34D00F8A004 /* HttpLoader.swift in Sources */,
 				0E5D10231A68E25400B5CED2 /* R.swift in Sources */,
 				0E9F5B031A407828003BB8AD /* Utils.swift in Sources */,
@@ -561,8 +574,11 @@
 				0EABC3661A53D32A00F8A004 /* BaseModel.swift in Sources */,
 				0EE565711A2AE6CD003E9331 /* BEMCircle.m in Sources */,
 				0EABC35E1A53D31900F8A004 /* BaseController.swift in Sources */,
+				0EE2ADEF1A68F5E10084DC24 /* OADHandler.swift in Sources */,
 				0EABC3581A53D30600F8A004 /* SocialUtils.swift in Sources */,
+				0EE2ADEE1A68F5E10084DC24 /* iDo1OADHandler.swift in Sources */,
 				0E9F5AFF1A407828003BB8AD /* UIColor+Extension.swift in Sources */,
+				0EE2ADEB1A68F5590084DC24 /* BLEUtils.swift in Sources */,
 				0EE565451A2AE656003E9331 /* BLEManager.swift in Sources */,
 				0EE5654A1A2AE656003E9331 /* Home.swift in Sources */,
 				0EE565461A2AE656003E9331 /* Constants.swift in Sources */,

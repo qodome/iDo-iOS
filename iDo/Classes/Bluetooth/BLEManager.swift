@@ -13,6 +13,10 @@ protocol BLEManagerDataSource {
     func onUpdateTemperature(value: Double, peripheral: CBPeripheral?)
 }
 
+protocol BLEManagerOADSource {
+    func onUpdateOADInfo(status: OADStatus, info: String?, progress: UInt8)
+}
+
 enum BLEManagerState: Int {
     case PowerOff
     case Idle
@@ -23,9 +27,11 @@ enum BLEManagerState: Int {
     case Disconnected
     case Fail
     case ServiceDiscovered
+    case CharacteristicDiscovered
+    case DataReceived
 }
 
-class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADHandlerDelegate {
     // MARK: - 🍀 变量
     let PREF_DEFAULT_DEVICE = "default_device"
     
@@ -33,6 +39,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var peripherals: [CBPeripheral] = [] // 所有设备
     var delegate: BLEManagerDelegate?
     var dataSource: BLEManagerDataSource?
+    var oadHelper: OADHandler?
+    var oadSource: BLEManagerOADSource?
     
     var kServiceUUID = BLE_HEALTH_THERMOMETER
     var kCharacteristicUUID = BLE_INTERMEDIATE_TEMPERATURE
@@ -148,6 +156,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             }
             connect(peripheral)
         }
+        oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.Disconnected, eventData: nil, error: nil)
     }
     
     // MARK: - 💙 CBPeripheralDelegate
@@ -168,6 +177,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         } else {
             central.cancelPeripheralConnection(peripheral)
         }
+        oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.ServiceDiscovered, eventData: nil, error: error)
     }
     
     func peripheral(peripheral: CBPeripheral!, didDiscoverCharacteristicsForService service: CBService!, error: NSError!) {
@@ -199,6 +209,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         } else {
             central.cancelPeripheralConnection(peripheral)
         }
+        oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.CharacteristicDiscovered, eventData: service, error: error)
     }
     
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
@@ -219,5 +230,28 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         } else {
             central.cancelPeripheralConnection(peripheral)
         }
+        oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.DataReceived, eventData: characteristic, error: error)
+    }
+    
+    ///////////////////////////////////////
+    //           OAD support             //
+    ///////////////////////////////////////
+    func oadStatusUpdate(status: OADStatus, info: String?, progress: UInt8, peripheral: CBPeripheral?) {
+        // FIXME: multiple OADHandlers support
+        oadSource?.onUpdateOADInfo(status, info: info, progress: progress)
+    }
+    
+    func oadInit() {
+        // FIXME: multiple OADHandlers support
+        oadHelper = iDo1OADHandler.sharedManager()
+        oadHelper?.delegate = self
+    }
+    
+    func oadPrepare(peripheral: CBPeripheral) {
+        oadHelper?.oadPrepare(peripheral)
+    }
+    
+    func oadDoUpdate(peripheral: CBPeripheral) {
+        oadHelper?.oadDoUpdate(peripheral)
     }
 }

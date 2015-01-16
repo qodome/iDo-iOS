@@ -2,6 +2,10 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
+let IDO1_OAD_SERVICE = "f000ffc0-0451-4000-b000-000000000000"
+let IDO1_OAD_IDENTIFY = "f000ffc1-0451-4000-b000-000000000000"
+let IDO1_OAD_BLOCK = "f000ffc2-0451-4000-b000-000000000000"
+
 // https://developer.bluetooth.org/gatt/services/Pages/ServicesHome.aspx
 // https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicsHome.aspx
 // https://developer.bluetooth.org/gatt/profiles/Pages/ProfilesHome.aspx // 定义了产品必须实现的规范
