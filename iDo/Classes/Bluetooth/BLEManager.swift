@@ -154,7 +154,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func peripheral(peripheral: CBPeripheral!, didDiscoverServices error: NSError!) {
         if error == nil {
             for service in peripheral.services as [CBService] {
-                println("🔵 发现服务 \(service.UUID)")
+                Log("🔵 发现服务 \(service.UUID)")
                 switch service.UUID {
                 case CBUUID(string: kServiceUUID):
                     delegate?.onStateChanged(.ServiceDiscovered, peripheral: peripheral)

@@ -13,4 +13,7 @@ let IDO_PURPLE = 0xAA66CC
 
 
 let BASE_URL = "http://qodome.com"
+let API_VERSION = "api/v1"
 let DEFAULT_TOKEN = ""
+
+var token: String?

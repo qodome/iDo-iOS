@@ -2,11 +2,6 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-let PREF_LOW_TEMPERATURE = "low_temperature"
-let PREF_HIGH_TEMPERATURE = "high_temperature"
-let PREF_NOTIFICATION_LOW = "notification_low"
-let PREF_NOTIFICATION_HIGH = "notification_high"
-
 class Settings: UITableViewController {
     
     var cellId = "list_cell"
@@ -49,7 +44,7 @@ class Settings: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellId) as UITableViewCell
         cell.selectionStyle = .None
         switch indexPath.section {
         case 0:
@@ -86,11 +81,9 @@ class Settings: UITableViewController {
                 let build: AnyObject = bundle.objectForInfoDictionaryKey("CFBundleVersion")!
                 cell.textLabel?.text = "\(version) (\(build))"
                 //            cell.textLabel?.text = String(format: "%@ (%@)", bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as String, bundle.objectForInfoDictionaryKey("CFBundleVersion") as String)
-            default:
-                println()
+            default: break
             }
-        default:
-            cell.textLabel?.text = LocalizedString("unknown")
+        default: break
         }
         return cell
     }
@@ -109,11 +102,11 @@ class Settings: UITableViewController {
     }
     
     func switchLowTNotice(sender: UISwitch) {
-        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: PREF_NOTIFICATION_LOW)
+        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: R.Pref.NotificationLow.rawValue)
     }
     
     func switchHighTNotice(sender: UISwitch) {
-        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: PREF_NOTIFICATION_HIGH)
+        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: R.Pref.NotificationHigh.rawValue)
     }
     
     func changeTemperature(sender: UISlider) {
@@ -124,37 +117,37 @@ class Settings: UITableViewController {
     
     // MARK: - 💛 自定义方法 (Custom Method)
     class func lowTemperature() -> Double {
-        if NSUserDefaults.standardUserDefaults().objectForKey(PREF_LOW_TEMPERATURE) == nil {
+        if NSUserDefaults.standardUserDefaults().objectForKey(R.Pref.LowTemperature.rawValue) == nil {
             setLowTemperature(36.0)
         }
-        return NSUserDefaults.standardUserDefaults().doubleForKey(PREF_LOW_TEMPERATURE)
+        return NSUserDefaults.standardUserDefaults().doubleForKey(R.Pref.LowTemperature.rawValue)
     }
     
     class func setLowTemperature(value: Double) {
-        NSUserDefaults.standardUserDefaults().setDouble(value, forKey: PREF_LOW_TEMPERATURE)
+        NSUserDefaults.standardUserDefaults().setDouble(value, forKey: R.Pref.LowTemperature.rawValue)
     }
     
     class func HighTemperature() -> Double {
-        if NSUserDefaults.standardUserDefaults().objectForKey(PREF_HIGH_TEMPERATURE) == nil {
+        if NSUserDefaults.standardUserDefaults().objectForKey(R.Pref.HighTemperature.rawValue) == nil {
             setHighTemperature(38.0)
         }
-        return NSUserDefaults.standardUserDefaults().doubleForKey(PREF_HIGH_TEMPERATURE)
+        return NSUserDefaults.standardUserDefaults().doubleForKey(R.Pref.HighTemperature.rawValue)
     }
     
     class func setHighTemperature(value: Double) {
-        NSUserDefaults.standardUserDefaults().setDouble(value, forKey: PREF_HIGH_TEMPERATURE)
+        NSUserDefaults.standardUserDefaults().setDouble(value, forKey: R.Pref.HighTemperature.rawValue)
     }
     
     // 低温报警
     class func isLowTNotice() -> Bool {
-        return NSUserDefaults.standardUserDefaults().boolForKey(PREF_NOTIFICATION_LOW)
+        return NSUserDefaults.standardUserDefaults().boolForKey(R.Pref.NotificationLow.rawValue)
     }
     
     // 高温报警
     class func isHighTNotice() -> Bool {
-        if NSUserDefaults.standardUserDefaults().objectForKey(PREF_NOTIFICATION_HIGH) == nil {
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: PREF_NOTIFICATION_HIGH)
+        if NSUserDefaults.standardUserDefaults().objectForKey(R.Pref.NotificationHigh.rawValue) == nil {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: R.Pref.NotificationHigh.rawValue)
         }
-        return NSUserDefaults.standardUserDefaults().boolForKey(PREF_NOTIFICATION_HIGH)
+        return NSUserDefaults.standardUserDefaults().boolForKey(R.Pref.NotificationHigh.rawValue)
     }
 }

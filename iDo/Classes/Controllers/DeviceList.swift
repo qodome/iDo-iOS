@@ -65,7 +65,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
         cell.imageView?.image = UIImage(named: "ic_settings_ido")
         cell.imageView?.layer.cornerRadius = 6
         cell.imageView?.layer.borderColor = UIColor.blackColor().CGColor
@@ -86,8 +86,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
                 cell.addSubview(indicator)
             case .Disconnected:
                 cell.imageView?.hidden = false
-            default:
-                println("**********************************************************")
+            default: break
             }
             cell.accessoryType = .None
         }

@@ -32,19 +32,23 @@ let BLE_ALERT_LEVEL = "2A06" // Alert Level 必须 (Mandatory)
 func calculateTemperature(data: NSData) -> Double {
     var bytes = [UInt8](count: 5, repeatedValue: 0)
     data.getBytes(&bytes, length: 5)
-    let exponent = Double(-(255 - bytes[4]) - 1) // 我自己都忘了为什么这么写，总之很对就是了
-    let mantissa = Int32(bytes[3]) << 16 | Int32(bytes[2]) << 8 | Int32(bytes[1])
-    return Double(mantissa) * pow(10.0, exponent)
+    let exponent = Double(getInt8(bytes[4])) // 永远小于0
+    let mantissa = Int32(getInt8(bytes[3])) << 16 | Int32(bytes[2]) << 8 | Int32(bytes[1])
+    return Double(mantissa) * pow(10, exponent)
 }
 
 func calculateAdvTemperature(data: NSData) -> Double {
     var bytes = [UInt8](count: 4, repeatedValue: 0)
     data.getBytes(&bytes, length: 4)
-    let exponent = Double(-(255 - bytes[3]) - 1) // 我自己都忘了为什么这么写，总之很对就是了
-    let mantissa = Int32(bytes[2]) << 16 | Int32(bytes[1]) << 8 | Int32(bytes[0])
-    return Double(mantissa) * pow(10.0, exponent)
+    let exponent = Double(getInt8(bytes[3]))
+    let mantissa = Int32(getInt8(bytes[2])) << 16 | Int32(bytes[1]) << 8 | Int32(bytes[0])
+    return Double(mantissa) * pow(10, exponent)
 }
 
 func transformTemperature(value: Double) -> Double {
     return Double(32) + value * 1.8
+}
+
+func getInt8(byte: UInt8) -> Int8 {
+    return byte < 128 ? Int8(byte) : Int8(byte - 255 - 1) // -(255 - byte) - 1
 }
