@@ -2,25 +2,22 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-class DeviceDetail: UITableViewController {
+class DeviceDetail: TableDetail {
     
-    var data: CBPeripheral?
-    var cellId = "list_cell"
-    
-    // MARK: - 💖 生命周期 (Lifecyle)
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = data?.name
+    // MARK: - 🐤 继承 Taylor
+    override func onPrepare() {
+        super.onPrepare()
+        title = (data as CBPeripheral).name
         tableView.registerClass(RightDetailCell.self, forCellReuseIdentifier: cellId)
     }
     
-    // MARK: - 💙 UITableViewDataSource
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    // MARK: - 💙 UITableViewDataSource    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return section == 0 ? 1 : 3
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -29,10 +26,12 @@ class DeviceDetail: UITableViewController {
         switch indexPath.section {
         case 0:
             cell.textLabel?.text = LocalizedString("name")
-            cell.detailTextLabel?.text = data?.name
+            cell.detailTextLabel?.text = (data as CBPeripheral).name
         case 1:
-            cell.textLabel?.text = "UUID"
-            cell.detailTextLabel?.text = data?.identifier.UUIDString
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "UUID"
+                cell.detailTextLabel?.text = (data as CBPeripheral).identifier.UUIDString
+            }
         default: break
         }
         return cell

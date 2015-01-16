@@ -4,7 +4,7 @@
 
 class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertViewDelegate {
     // MARK: - 🍀 变量
-    let segueId = "segue_home_device_list"
+    let segueId = "segue.home-device_list"
     var data: [Temperature] = []
     var numberView: NumberView!
     
@@ -182,11 +182,11 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     }
     
     func settings(sender: AnyObject) {
-        performSegueWithIdentifier("segue_home_settings", sender: self)
+        performSegueWithIdentifier("segue.home-settings", sender: self)
     }
     
     func history(sender: AnyObject) {
-        performSegueWithIdentifier("segue_home_history", sender: self)
+        performSegueWithIdentifier("segue.home-history", sender: self)
     }
     
     /** 本地通知 */

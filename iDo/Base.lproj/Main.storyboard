@@ -22,9 +22,9 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
-                        <segue destination="pAJ-VJ-0jx" kind="show" identifier="segue_home_device_list" id="EXQ-2k-1wR"/>
-                        <segue destination="QQI-Gr-IGG" kind="presentation" identifier="segue_home_settings" id="HyH-qo-jeO"/>
-                        <segue destination="yht-9O-HIa" kind="show" identifier="segue_home_history" id="8Ud-c0-lnF"/>
+                        <segue destination="pAJ-VJ-0jx" kind="show" identifier="segue.home-device_list" id="EXQ-2k-1wR"/>
+                        <segue destination="QQI-Gr-IGG" kind="presentation" identifier="segue.home-settings" id="HyH-qo-jeO"/>
+                        <segue destination="yht-9O-HIa" kind="show" identifier="segue.home-history" id="8Ud-c0-lnF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i95-lV-AMc" sceneMemberID="firstResponder"/>
@@ -63,12 +63,30 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="CWH-gE-vcA" kind="show" identifier="segue_device_list_detail" id="mZS-yS-Xq1"/>
+                        <segue destination="kXl-X6-9kB" kind="show" identifier="segue.device_list-detail" id="rW0-6c-KKR"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ah8-LZ-Vle" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2399" y="-1564"/>
+        </scene>
+        <!--Device Detail-->
+        <scene sceneID="YeP-MX-6yU">
+            <objects>
+                <viewController id="kXl-X6-9kB" customClass="DeviceDetail" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="os3-5g-Ro9"/>
+                        <viewControllerLayoutGuide type="bottom" id="iPj-YA-Bls"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iLO-gp-LiO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CCD-jj-Irh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3211" y="-1564"/>
         </scene>
         <!--Settings-->
         <scene sceneID="QEa-jh-MYO">
@@ -89,25 +107,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wgb-sv-WdP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3211" y="-810"/>
-        </scene>
-        <!--Device Detail-->
-        <scene sceneID="hiF-ZB-gt8">
-            <objects>
-                <tableViewController id="CWH-gE-vcA" customClass="DeviceDetail" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="dNB-dx-sf5">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="CWH-gE-vcA" id="Jri-oA-aeQ"/>
-                            <outlet property="delegate" destination="CWH-gE-vcA" id="Opf-lr-mjg"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0sB-8B-iO4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3211" y="-1564"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lkG-R4-6md">

@@ -113,7 +113,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 { // 已连接设备可点击进入详情页
             selected = connected[indexPath.row]
-            performSegueWithIdentifier("segue_device_list_detail", sender: self)
+            performSegueWithIdentifier("segue.device_list-detail", sender: self)
         }
     }
     
