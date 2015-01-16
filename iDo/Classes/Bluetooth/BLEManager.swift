@@ -117,13 +117,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
             peripherals.append(peripheral)
         }
         if peripheral.identifier.UUIDString == defaultDevice() {
-            if reconnectCount > 0 { // 信号不好，从广播信息取数据
-                let serviceData: NSDictionary? = advertisementData[CBAdvertisementDataServiceDataKey] as? NSDictionary // "kCBAdvDataServiceData"
+            if reconnectCount > 0 { // 信号不好
                 println("信号不好 \(serviceData)")
-                let data: NSData? = serviceData?[CBUUID(string: kServiceUUID)] as? NSData
-                if data != nil {
-                    dataSource?.onUpdateTemperature(calculateAdvTemperature(data!), peripheral: peripheral)
-                }
             }
             connect(peripheral) // 连接
             central.stopScan() // 停止搜寻
@@ -151,9 +146,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
         delegate?.onStateChanged(.Disconnected, peripheral: peripheral)
         if peripheral.identifier.UUIDString == defaultDevice() { // 无限次自动重连
             reconnectCount++
-            if reconnectCount > 0 { // 信号不好，扫描
-                startScan()
-            }
             connect(peripheral)
         }
         oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.Disconnected, eventData: nil, error: nil)
