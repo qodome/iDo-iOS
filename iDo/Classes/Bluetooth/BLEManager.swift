@@ -18,17 +18,7 @@ protocol BLEManagerOADSource {
 }
 
 enum BLEManagerState: Int {
-    case PowerOff
-    case Idle
-    case Scan
-    case Discovered
-    case Connecting
-    case Connected
-    case Disconnected
-    case Fail
-    case ServiceDiscovered
-    case CharacteristicDiscovered
-    case DataReceived
+    case PowerOff, Idle, Scan, Discovered, Connecting, Connected, Disconnected, Fail,ServiceDiscovered, CharacteristicDiscovered, DataReceived
 }
 
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADHandlerDelegate {
@@ -118,7 +108,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
         }
         if peripheral.identifier.UUIDString == defaultDevice() {
             if reconnectCount > 0 { // 信号不好
-                println("信号不好 \(serviceData)")
+                println("信号不好")
             }
             connect(peripheral) // 连接
             central.stopScan() // 停止搜寻

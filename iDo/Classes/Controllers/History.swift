@@ -41,7 +41,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         // 图表
         chart = BEMSimpleLineGraphView(frame: CGRectMake(0, 0, view.frame.width * 2, 240))
         // ❨╯°□°❩╯︵┻━┻
-        let components: [CGFloat]  = [1, 1, 1, 0.8, 1, 1, 1, 0]
+        let components: [CGFloat] = [1, 1, 1, 0.8, 1, 1, 1, 0]
         let locations: [CGFloat] = [0, 0.8]
         chart.gradientBottom = CGGradientCreateWithColorComponents(CGColorSpaceCreateDeviceRGB(), components, locations, 2) // 透明化通过Swift转OC会出错
         chart.colorTop = UIColor.clearColor() // 线上颜色

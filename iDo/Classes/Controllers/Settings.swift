@@ -2,49 +2,16 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-class Settings: UITableViewController {
+class Settings: TableDetail {
     
-    var cellId = "list_cell"
-    
-    // MARK: - 💖 生命周期 (Lifecyle)
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // MARK: - 🐤 继承 Taylor
+    override func onPrepare() {
+        super.onPrepare()
         title = LocalizedString("settings")
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "back:")
     }
     
-    // MARK: - 💙 UITableViewDataSource
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 2
-        case 1:
-            return 2
-        case 3:
-            return 2
-        default:
-            return 1
-        }
-    }
-    
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return LocalizedString("notifications")
-        case 1:
-            return LocalizedString("temperature")
-        default:
-            return nil
-        }
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellId) as UITableViewCell
+    override func getItemView<T : NSObject, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
         cell.selectionStyle = .None
         switch indexPath.section {
         case 0:
@@ -70,27 +37,53 @@ class Settings: UITableViewController {
             switchView.on = false
             cell.accessoryView = switchView
         case 3:
-            let bundle = NSBundle.mainBundle()
-            switch indexPath.row {
-            case 0:
-                cell.selectionStyle = .Default
-                cell.textLabel?.text = bundle.objectForInfoDictionaryKey("CFBundleDisplayName") as? String
-                cell.accessoryType = .DisclosureIndicator
-            case 1:
-                let version: AnyObject = bundle.objectForInfoDictionaryKey("CFBundleShortVersionString")!
-                let build: AnyObject = bundle.objectForInfoDictionaryKey("CFBundleVersion")!
-                cell.textLabel?.text = "\(version) (\(build))"
-                //            cell.textLabel?.text = String(format: "%@ (%@)", bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as String, bundle.objectForInfoDictionaryKey("CFBundleVersion") as String)
-            default: break
-            }
+            cell.selectionStyle = .Default
+            cell.textLabel?.text = LocalizedString("review")
+            cell.accessoryType = .DisclosureIndicator
         default: break
         }
         return cell
     }
     
+    // MARK: - 💙 UITableViewDataSource
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 4
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0, 1:
+            return 2
+        default:
+            return 1
+        }
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return LocalizedString("notifications")
+        case 1:
+            return LocalizedString("temperature")
+        default:
+            return nil
+        }
+    }
+    
+    func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 3 {
+            let bundle = NSBundle.mainBundle()
+            let name = bundle.objectForInfoDictionaryKey("CFBundleDisplayName") as String
+            let version = bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as String
+            let build = bundle.objectForInfoDictionaryKey("CFBundleVersion") as String
+            return "\(name) \(version) (\(build))"
+        }
+        return nil
+    }
+    
     // MARK: - 💙 UITableViewDelegate
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 3 && indexPath.row == 0 {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 3 {
             openAppReviews(APP_ID)
             tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }

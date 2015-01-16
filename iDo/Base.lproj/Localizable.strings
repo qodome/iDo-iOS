@@ -21,6 +21,8 @@
 "high" = "high";
 "low" = "low";
 
+"review" = "Review";
+
 "name" = "Name";
 "bluetooth" = "Bluetooth";
 /* 日期 */

@@ -2,22 +2,11 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelegate {
+class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     
-    var data: [AnyObject] = []
-    var cellId = "list_cell"
     var connected: [CBPeripheral] = []
-    var selected: CBPeripheral?
     
     // MARK: - 💖 生命周期 (Lifecyle)
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = LocalizedString("devices")
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -64), forBarMetrics: .Default)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
-        tableView.registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
-    }
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBarStyle(.Default)
@@ -26,16 +15,29 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     }
     
     func loadData() {
-        data.removeAll(keepCapacity: true)
+        listData.removeAll(keepCapacity: true)
         connected.removeAll(keepCapacity: true)
         for peripheral in BLEManager.sharedManager().peripherals {
             if peripheral.state == .Connected {
                 connected.append(peripheral)
             } else {
-                data.append(peripheral)
+                listData.append(peripheral)
             }
         }
-        tableView.reloadData()
+        (listView as UITableView).reloadData()
+    }
+    
+    // MARK: - 🐤 继承 Taylor
+    override func setTableViewStyle() -> UITableViewStyle {
+        return .Grouped
+    }
+    
+    override func onPrepare() {
+        super.onPrepare()
+        title = LocalizedString("devices")
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -64), forBarMetrics: .Default)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
+        (listView as UITableView).registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
     }
     
     // MARK: - 🐤 BLEManagerDelegate
@@ -46,7 +48,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     
     // MARK: - 💛 Action
     func refresh(sender: AnyObject) {
-        let header: UIView? = tableView.headerViewForSection(1)
+        let header: UIView? = (listView as UITableView).headerViewForSection(1)
         let indicator = UIActivityIndicatorView(frame: CGRectMake(view.frame.width - 35, 22, 20, 20))
         indicator.activityIndicatorViewStyle = .Gray
         header?.addSubview(indicator)
@@ -56,15 +58,15 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     }
     
     // MARK: - 💙 UITableViewDataSource
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? connected.count : data.count
+        return section == 0 ? connected.count : getCount()
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell { // section为2所以不继承getItemView直接重写tableView
         let cell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
         cell.imageView?.image = UIImage(named: "ic_settings_ido")
         cell.imageView?.layer.cornerRadius = 6
@@ -76,7 +78,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
             cell.imageView?.hidden = false
             cell.accessoryType = .DetailButton
         } else {
-            device = data[indexPath.row] as CBPeripheral
+            device = getItem(indexPath.row) as CBPeripheral
             switch device.state {
             case .Connecting:
                 cell.imageView?.hidden = true
@@ -95,23 +97,23 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
         return cell
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return section == 0 ? nil : LocalizedString("devices")
     }
     
     // MARK: 💙 UITableViewDelegate
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 { // 询问是否断开
             selected = connected[indexPath.row]
 //            UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect")).showInView(view)
             UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect"), otherButtonTitles: LocalizedString("check")).showInView(view)
             tableView.deselectRowAtIndexPath(indexPath, animated: false) // 手动取消选中状态
         } else { // 直接绑定
-            BLEManager.sharedManager().bind(data[indexPath.row] as CBPeripheral)
+            BLEManager.sharedManager().bind(getItem(indexPath.row) as CBPeripheral)
         }
     }
     
-    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 { // 已连接设备可点击进入详情页
             selected = connected[indexPath.row]
             performSegueWithIdentifier("segue.device_list-detail", sender: self)
@@ -121,7 +123,7 @@ class DeviceList: UITableViewController, BLEManagerDelegate, UIActionSheetDelega
     // MARK: 💙 UIActionSheetDelegate
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == actionSheet.destructiveButtonIndex {
-            BLEManager.sharedManager().unbind(selected!)
+            BLEManager.sharedManager().unbind(selected as CBPeripheral)
         } else if buttonIndex == 2 {
             performSegueWithIdentifier("segue.device_list-oad_detail", sender: self)
         }
