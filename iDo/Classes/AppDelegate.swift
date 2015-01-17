@@ -8,6 +8,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+        setTheme()
+        window?.backgroundColor = UIColor.whiteColor()
         if UIApplication.instancesRespondToSelector("registerUserNotificationSettings:") {
             application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
         }

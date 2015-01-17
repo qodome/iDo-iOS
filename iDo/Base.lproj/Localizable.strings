@@ -24,7 +24,10 @@
 "review" = "Review";
 
 "name" = "Name";
+"version" = "Version";
+"model" = "Model";
 "bluetooth" = "Bluetooth";
+"manufacturer" = "Manufacturer";
 /* 日期 */
 "today" = "Today";
 "yesterday" = "Yesterday";

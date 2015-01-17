@@ -32,9 +32,9 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
     var oadHelper: OADHandler?
     var oadSource: BLEManagerOADSource?
     
-    var kServiceUUID = BLE_HEALTH_THERMOMETER
-    var kCharacteristicUUID = BLE_INTERMEDIATE_TEMPERATURE
-    
+    var kServiceUUIDString = BLE_HEALTH_THERMOMETER
+    var kCharacteristicUUIDString = BLE_INTERMEDIATE_TEMPERATURE
+    var serviceUUIDs: [CBUUID] = []
     var reconnectCount = 0
     
     // MARK: - 💖 生命周期 (Lifecycle)
@@ -54,12 +54,18 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
         super.init()
         central = CBCentralManager(delegate: self, queue: nil)
 //        central = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey : NSNumber(bool: true)])
+        serviceUUIDs = [
+            CBUUID(string: kServiceUUIDString),
+            CBUUID(string: BLE_CURRENT_TIME_SERVICE),
+            CBUUID(string: BLE_DEVICE_INFORMATION),
+//            CBUUID(string: IDO1_OAD_SERVICE)
+        ]
     }
     
     // MARK: - 💛 自定义方法 (Custom Method)
     func startScan() {
         delegate?.onStateChanged(.Scan, peripheral: nil)
-        central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
+        central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUIDString)], options: nil)
     }
     
     func connect(peripheral: CBPeripheral) { // 连接
@@ -69,7 +75,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
     
     /** 绑定设备 */
     func bind(peripheral: CBPeripheral) {
-        for peripheral in central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUID)]) as [CBPeripheral] {
+        for peripheral in central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUIDString)]) as [CBPeripheral] {
             central.cancelPeripheralConnection(peripheral)
         }
         NSUserDefaults.standardUserDefaults().setObject(peripheral.identifier.UUIDString, forKey: PREF_DEFAULT_DEVICE)
@@ -78,7 +84,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
     
     /** 解绑设备 */
     func unbind(peripheral: CBPeripheral) {
-        Log("解绑设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
+        Log("解绑 设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         NSUserDefaults.standardUserDefaults().removeObjectForKey(PREF_DEFAULT_DEVICE)
         central.cancelPeripheralConnection(peripheral)
     }
@@ -94,7 +100,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
         switch central.state {
         case .PoweredOn:
             state = .Idle
-            central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUID)], options: nil)
+            central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUIDString)], options: nil)
         default:
             peripherals.removeAll(keepCapacity: false)
         }
@@ -114,15 +120,15 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
             central.stopScan() // 停止搜寻
         }
         let s = peripheral.identifier.UUIDString == defaultDevice() ? "" : "未"
-        Log("发现\(s)绑定设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
+        Log("发现 \(s)绑定设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
     }
     
     func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
-        Log("连上设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
+        Log("💟 连上 设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onStateChanged(.Connected, peripheral: peripheral)
 //        central.stopScan() // 停止搜寻
         peripheral.delegate = self
-        peripheral.discoverServices([CBUUID(string: kServiceUUID), CBUUID(string: BLE_CURRENT_TIME_SERVICE)])
+        peripheral.discoverServices(serviceUUIDs)
     }
     
     // MARK: -      处理异常
@@ -132,7 +138,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
     }
     
     func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) { // 这里不是真的断开，会有延时
-        Log("断开设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
+        Log("断开 设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onStateChanged(.Disconnected, peripheral: peripheral)
         if peripheral.identifier.UUIDString == defaultDevice() { // 无限次自动重连
             reconnectCount++
@@ -145,15 +151,16 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
     func peripheral(peripheral: CBPeripheral!, didDiscoverServices error: NSError!) {
         if error == nil {
             for service in peripheral.services as [CBService] {
-                Log("🔵 发现服务 \(service.UUID)")
-                switch service.UUID {
-                case CBUUID(string: kServiceUUID):
+                Log("✴️ 发现 服务 \(service.UUID)")
+                switch service.UUID.UUIDString {
+                case kServiceUUIDString:
                     delegate?.onStateChanged(.ServiceDiscovered, peripheral: peripheral)
-                    peripheral.discoverCharacteristics([CBUUID(string: kCharacteristicUUID)], forService: service)
-                case CBUUID(string: BLE_CURRENT_TIME_SERVICE):
+                    peripheral.discoverCharacteristics([CBUUID(string: kCharacteristicUUIDString)], forService: service)
+                case BLE_CURRENT_TIME_SERVICE:
                     peripheral.discoverCharacteristics([CBUUID(string: BLE_DATE_TIME)], forService: service)
-                default:
-                    Log("🔵 未知服务 \(service.UUID)")
+                case BLE_DEVICE_INFORMATION:
+                    peripheral.discoverCharacteristics([CBUUID(string: BLE_MODEL_NUMBER_STRING), CBUUID(string: BLE_SERIAL_NUMBER_STRING), CBUUID(string: BLE_FIRMWARE_REVISION_STRING), CBUUID(string: BLE_SOFTWARE_REVISION_STRING), CBUUID(string: BLE_MANUFACTURER_NAME_STRING)], forService: service)
+                default: break
                 }
             }
         } else {
@@ -164,18 +171,18 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
     
     func peripheral(peripheral: CBPeripheral!, didDiscoverCharacteristicsForService service: CBService!, error: NSError!) {
         if error == nil {
-            switch service.UUID {
-            case CBUUID(string: kServiceUUID):
+            switch service.UUID.UUIDString {
+            case kServiceUUIDString:
                 for characteristic in service.characteristics as [CBCharacteristic] {
-                    if CBUUID(string: kCharacteristicUUID) == characteristic.UUID {
+                    if kCharacteristicUUIDString == characteristic.UUID.UUIDString {
                         peripheral.setNotifyValue(true, forCharacteristic: characteristic)
                         break
                     }
                 }
-            case CBUUID(string: BLE_CURRENT_TIME_SERVICE):
+            case BLE_CURRENT_TIME_SERVICE:
                 for characteristic in service.characteristics as [CBCharacteristic] {
-                    println("🔵 发现特性 \(characteristic.UUID)")
-                    if CBUUID(string: BLE_DATE_TIME) == characteristic.UUID {
+                    Log("✳️ 发现 特性 \(characteristic.UUID)")
+                    if BLE_DATE_TIME == characteristic.UUID.UUIDString {
                         let calendar = NSCalendar.autoupdatingCurrentCalendar() // TODO: 用这个日历是否总是对
                         calendar.timeZone = NSTimeZone(name: "UTC")!
                         let components = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay | .CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitSecond, fromDate: NSDate())
@@ -185,8 +192,13 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
                         peripheral.readValueForCharacteristic(characteristic)
                     }
                 }
+            case BLE_DEVICE_INFORMATION:
+                for characteristic in service.characteristics as [CBCharacteristic] {
+                    Log("✳️ 发现 特性 \(characteristic.UUID)")
+                    peripheral.readValueForCharacteristic(characteristic)
+                }
             default:
-                Log("🔵 未知服务 \(service.UUID)")
+                Log("✴️ 未知服务 \(service.UUID) ⁉️ ")
             }
         } else {
             central.cancelPeripheralConnection(peripheral)
@@ -196,18 +208,38 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
     
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
         if error == nil {
-            switch characteristic.UUID {
-            case CBUUID(string: kCharacteristicUUID):
+            // Log("❇️ 更新 特性值 \(characteristic.UUID)")
+            switch characteristic.UUID.UUIDString {
+            case kCharacteristicUUIDString:
                 if peripheral.identifier.UUIDString != defaultDevice() { // 强退 TODO: 待优化
                     central.cancelPeripheralConnection(peripheral)
                     return
                 }
                 reconnectCount = 0 // 取到数据才算一次完整的重连成功
                 dataSource?.onUpdateTemperature(calculateTemperature(characteristic.value), peripheral: peripheral)
-            case CBUUID(string: BLE_DATE_TIME):
-                println("\(characteristic.UUID)")
-            default:
-                Log("🔵 未知特性 \(characteristic.UUID)")
+            case BLE_DATE_TIME:
+                break
+            case BLE_MODEL_NUMBER_STRING:
+                let info = peripheral.deviceInfo == nil ? DeviceInfo() : peripheral.deviceInfo
+                info?.modelNumber = getString(characteristic.value)
+                peripheral.deviceInfo = info
+            case BLE_SERIAL_NUMBER_STRING:
+                let info = peripheral.deviceInfo == nil ? DeviceInfo() : peripheral.deviceInfo
+                info?.serialNumber = getString(characteristic.value)
+                peripheral.deviceInfo = info
+            case BLE_FIRMWARE_REVISION_STRING:
+                let info = peripheral.deviceInfo == nil ? DeviceInfo() : peripheral.deviceInfo
+                info?.firmwareRevision = getString(characteristic.value)
+                peripheral.deviceInfo = info
+            case BLE_SOFTWARE_REVISION_STRING:
+                let info = peripheral.deviceInfo == nil ? DeviceInfo() : peripheral.deviceInfo
+                info?.softwareRevision = getString(characteristic.value)
+                peripheral.deviceInfo = info
+            case BLE_MANUFACTURER_NAME_STRING:
+                let info = peripheral.deviceInfo == nil ? DeviceInfo() : peripheral.deviceInfo
+                info?.manufacturerName = getString(characteristic.value)
+                peripheral.deviceInfo = info
+            default: break
             }
         } else {
             central.cancelPeripheralConnection(peripheral)

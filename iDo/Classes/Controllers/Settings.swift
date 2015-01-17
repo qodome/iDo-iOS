@@ -71,7 +71,7 @@ class Settings: TableDetail {
     }
     
     func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        if section == 3 {
+        if section == tableView.numberOfSections() - 1 {
             let bundle = NSBundle.mainBundle()
             let name = bundle.objectForInfoDictionaryKey("CFBundleDisplayName") as String
             let version = bundle.objectForInfoDictionaryKey("CFBundleShortVersionString") as String

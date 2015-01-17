@@ -68,18 +68,14 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell { // section为2所以不继承getItemView直接重写tableView
         let cell = tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as UITableViewCell
-        cell.imageView?.image = UIImage(named: "ic_settings_ido")
-        cell.imageView?.layer.cornerRadius = 6
-        cell.imageView?.layer.borderColor = UIColor.blackColor().CGColor
-        cell.imageView?.layer.borderWidth = 0.5
-        var device: CBPeripheral
+        var item: CBPeripheral
         if indexPath.section == 0 {
-            device = connected[indexPath.row]
+            item = connected[indexPath.row]
             cell.imageView?.hidden = false
             cell.accessoryType = .DetailButton
         } else {
-            device = getItem(indexPath.row) as CBPeripheral
-            switch device.state {
+            item = getItem(indexPath.row) as CBPeripheral
+            switch item.state {
             case .Connecting:
                 cell.imageView?.hidden = true
                 let indicator = UIActivityIndicatorView(frame: CGRectMake(20.5, cell.frame.height / 2 - 10, 20, 20))
@@ -92,8 +88,17 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
             }
             cell.accessoryType = .None
         }
-        cell.textLabel?.text = device.name
-        cell.detailTextLabel?.text = device.identifier.UUIDString
+        if item.deviceInfo?.modelNumber != nil && contains(PRODUCTS.keys, item.deviceInfo!.modelNumber!) {
+            cell.imageView?.image = UIImage(named: "ic_settings_ido")
+        } else {
+            cell.imageView?.image = UIImage.imageWithColor(UIColor.whiteColor(), size: CGSizeSettingsIcon)
+        }
+        cell.imageView?.image = UIImage(named: "ic_settings_ido")
+        cell.imageView?.layer.cornerRadius = 6
+        cell.imageView?.layer.borderColor = UIColor.blackColor().CGColor
+        cell.imageView?.layer.borderWidth = 0.5
+        cell.textLabel?.text = item.name
+        cell.detailTextLabel?.text = item.identifier.UUIDString
         return cell
     }
     

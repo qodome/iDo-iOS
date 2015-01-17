@@ -18,9 +18,11 @@ let BLE_CURRENT_TIME = "2A2B" // Current Time 必须 (Mandatory)
 let BLE_DATE_TIME = "2A08" // Date Time
 
 let BLE_DEVICE_INFORMATION = "180A" // Device Information
-let BLE_FIRMWARE_REVISION_STRING = "2A26" // Firmware Revision String
-let BLE_MANUFACTURER_NAME_STRING = "2A29" // Manufacturer Name String
 let BLE_MODEL_NUMBER_STRING = "2A24" // Model Number String
+let BLE_SERIAL_NUMBER_STRING = "2A25" // Serial Number
+let BLE_FIRMWARE_REVISION_STRING = "2A26" // Firmware Revision String
+let BLE_SOFTWARE_REVISION_STRING = "2A28" // Software Revision String
+let BLE_MANUFACTURER_NAME_STRING = "2A29" // Manufacturer Name String
 
 let BLE_HEALTH_THERMOMETER = "1809" // Health Thermometer
 let BLE_TEMPERATURE_MEASUREMENT = "2A1C" // Temperature Measurement 必须 (Mandatory)
@@ -34,11 +36,18 @@ let BLE_ALERT_LEVEL = "2A06" // Alert Level 必须 (Mandatory)
 
 /** 处理蓝牙传来的data */
 func calculateTemperature(data: NSData) -> Double {
-    var bytes = [UInt8](count: 5, repeatedValue: 0)
-    data.getBytes(&bytes, length: 5)
+    var bytes = [UInt8](count: data.length, repeatedValue: 0)
+    data.getBytes(&bytes, length: bytes.count)
+    // TODO: 目前只处理长度为5的, 未来需要支持第三方设备可能不为5
     let exponent = Double(getInt8(bytes[4])) // 永远小于0
     let mantissa = Int32(getInt8(bytes[3])) << 16 | Int32(bytes[2]) << 8 | Int32(bytes[1])
     return Double(mantissa) * pow(10, exponent)
+}
+
+func getString(data: NSData) -> String? {
+    var bytes = [UInt8](count: data.length, repeatedValue: 0)
+    data.getBytes(&bytes, length: bytes.count)
+    return String(bytes: bytes, encoding: NSUTF8StringEncoding)
 }
 
 func transformTemperature(value: Double) -> Double {

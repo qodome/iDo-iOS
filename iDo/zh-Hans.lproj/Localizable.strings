@@ -24,7 +24,10 @@
 "review" = "评分";
 
 "name" = "名称";
+"version" = "版本";
+"model" = "型号";
 "bluetooth" = "蓝牙";
+"manufacturer" = "制造商";
 /* 日期 */
 "today" = "今天";
 "yesterday" = "昨天";

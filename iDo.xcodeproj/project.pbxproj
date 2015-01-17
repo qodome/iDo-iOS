@@ -36,6 +36,8 @@
 		0EABC36F1A53D34D00F8A004 /* HttpLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC36D1A53D34D00F8A004 /* HttpLoader.swift */; };
 		0ED67E4B1A2AFA3400CA35BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E4D1A2AFA3400CA35BE /* Localizable.strings */; };
 		0ED67E8B1A2B0F5C00CA35BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E8D1A2B0F5C00CA35BE /* InfoPlist.strings */; };
+		0EDE483B1A6A65CC002CAE64 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */; };
+		0EDE483D1A6A662D002CAE64 /* CBPeripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE483C1A6A662D002CAE64 /* CBPeripheral+Extension.swift */; };
 		0EE2ADEB1A68F5590084DC24 /* BLEUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */; };
 		0EE2ADEE1A68F5E10084DC24 /* iDo1OADHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */; };
 		0EE2ADEF1A68F5E10084DC24 /* OADHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */; };
@@ -102,6 +104,8 @@
 		0ED67E8A1A2B0CDA00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0ED67E8E1A2B0F9B00CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0ED67E8F1A2B0FBB00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
+		0EDE483C1A6A662D002CAE64 /* CBPeripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CBPeripheral+Extension.swift"; sourceTree = "<group>"; };
 		0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEUtils.swift; sourceTree = "<group>"; };
 		0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iDo1OADHandler.swift; sourceTree = "<group>"; };
 		0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OADHandler.swift; sourceTree = "<group>"; };
@@ -311,6 +315,8 @@
 			isa = PBXGroup;
 			children = (
 				0EE565361A2AE656003E9331 /* BLEManager.swift */,
+				0EDE483C1A6A662D002CAE64 /* CBPeripheral+Extension.swift */,
+				0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -560,6 +566,7 @@
 				0E5D10231A68E25400B5CED2 /* R.swift in Sources */,
 				0E9F5B031A407828003BB8AD /* Utils.swift in Sources */,
 				0E9F5AFE1A407828003BB8AD /* Array+Extension.swift in Sources */,
+				0EDE483D1A6A662D002CAE64 /* CBPeripheral+Extension.swift in Sources */,
 				0EABC3611A53D31900F8A004 /* TableDetail.swift in Sources */,
 				0EE565471A2AE656003E9331 /* DeviceDetail.swift in Sources */,
 				0EE5654D1A2AE656003E9331 /* GATTUtils.swift in Sources */,
@@ -585,6 +592,7 @@
 				0EABC36E1A53D34D00F8A004 /* BaseLoader.swift in Sources */,
 				0E9C9FAD1A3750BC00BB9DC6 /* NumberView.swift in Sources */,
 				0E9F5B051A407828003BB8AD /* SubtitleCell.swift in Sources */,
+				0EDE483B1A6A65CC002CAE64 /* DeviceInfo.swift in Sources */,
 				0E5D10281A68E3FD00B5CED2 /* TagsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
