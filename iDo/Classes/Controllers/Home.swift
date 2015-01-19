@@ -40,8 +40,10 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         super.viewWillAppear(animated)
         setNavigationBarStyle(.Transparent)
         BLEManager.sharedManager().delegate = self
+        if data.last?.close != nil { // 从Settings回来重算背景色
+            updateUI(data.last!.close!)
+        }
         // TODO: 在设置中断开连接后，回这个界面，需要更新状态
-        // 从Settings回来需要重算背景色
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -91,7 +93,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     // MARK: - 🐤 BLEManagerDataSource
     func onUpdateTemperature(var value: Double, peripheral: CBPeripheral?) {
         value = round(value / 0.1) * 0.1 // 四舍五入保留一位小数
-        numberView.setValue(value)
+        updateUI(value)
         title = peripheral?.name
         // 初始化一个温度对象，当前时间最接近的5分钟频率
         let date = NSDate()
@@ -141,20 +143,6 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
             }
             json.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
         }
-        // 通知
-        if value <= Settings.lowTemperature() { // 温度过低
-            view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
-            if Settings.isLowTNotice() {
-                sendNotifition("温度过低 \(value)")
-            }
-        } else if value >= Settings.HighTemperature() { // 温度过高
-            view.backgroundColor = UIColor.colorWithHex(IDO_RED)
-            if Settings.isHighTNotice() {
-                sendNotifition("温度过高 \(value)")
-            }
-        } else {
-            view.backgroundColor = UIColor.colorWithHex(IDO_GREEN)
-        }
     }
     
     func getJsonData(values: NSObject?...) -> String { // TODO: 是否用AnyObject更安全
@@ -187,6 +175,27 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     
     func history(sender: AnyObject) {
         performSegueWithIdentifier("segue.home-history", sender: self)
+    }
+    
+    // MARK: - 💛 自定义方法 (Custom Method)
+    func updateUI(var value: Double) {
+        let displayValue = transformTemperature(value, isFahrenheit)
+        let symbol = isFahrenheit ? "℉" : "℃"
+        numberView.setValue(displayValue)
+        if value <= Settings.getTemperature(R.Pref.LowTemperature) { // 温度过低
+            view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
+            if lowAlert {
+//            if Settings.isLowTNotice() {
+                sendNotifition("💧温度过低 \(displayValue) \(symbol)")
+            }
+        } else if value >= Settings.getTemperature(R.Pref.HighTemperature) { // 温度过高
+            view.backgroundColor = UIColor.colorWithHex(IDO_RED)
+            if highAlert {
+                sendNotifition("🔥温度过高 \(displayValue) \(symbol)")
+            }
+        } else {
+            view.backgroundColor = UIColor.colorWithHex(IDO_GREEN)
+        }
     }
     
     /** 本地通知 */

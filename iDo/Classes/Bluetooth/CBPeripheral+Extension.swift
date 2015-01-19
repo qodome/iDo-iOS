@@ -2,8 +2,6 @@
 //  Copyright (c) 2015年 NY. All rights reserved.
 //
 
-import ObjectiveC
-
 private var info: DeviceInfo?
 
 extension CBPeripheral {

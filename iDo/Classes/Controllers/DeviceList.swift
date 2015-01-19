@@ -109,10 +109,10 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     // MARK: 💙 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 { // 询问是否断开
+            tableView.deselectRowAtIndexPath(indexPath, animated: false) // 手动取消选中状态
             selected = connected[indexPath.row]
 //            UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect")).showInView(view)
-            UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect"), otherButtonTitles: LocalizedString("check")).showInView(view)
-            tableView.deselectRowAtIndexPath(indexPath, animated: false) // 手动取消选中状态
+            UIActionSheet(title: "\(selected.name)\n\((selected as CBPeripheral).identifier.UUIDString)", delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect"), otherButtonTitles: LocalizedString("check")).showInView(view)
         } else { // 直接绑定
             BLEManager.sharedManager().bind(getItem(indexPath.row) as CBPeripheral)
         }

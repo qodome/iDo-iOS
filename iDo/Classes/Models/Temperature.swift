@@ -3,7 +3,7 @@
 //
 
 class Temperature: NSObject {
-    var timeStamp: Int = 0
+    var timeStamp = 0
     var open: Double?
     var high: Double?
     var low: Double?

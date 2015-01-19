@@ -246,6 +246,10 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
         }
         oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.DataReceived, eventData: characteristic, error: error)
     }
+
+    func peripheral(peripheral: CBPeripheral!, didReadRSSI RSSI: NSNumber!, error: NSError!) {
+        Log("RSSI \(RSSI)")
+    }
     
     ///////////////////////////////////////
     //           OAD support             //

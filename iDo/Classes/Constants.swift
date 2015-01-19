@@ -18,3 +18,7 @@ let API_VERSION = "api/v1"
 let DEFAULT_TOKEN = ""
 
 var token: String?
+
+var lowAlert = false
+var highAlert = true
+var isFahrenheit = false

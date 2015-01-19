@@ -10,6 +10,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         setTheme()
         window?.backgroundColor = UIColor.whiteColor()
+        // Settings
+        lowAlert = Settings.isLowTNotice()
+        highAlert = Settings.isHighTNotice()
+        isFahrenheit = Settings.isFahrenheit()
         if UIApplication.instancesRespondToSelector("registerUserNotificationSettings:") {
             application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
         }

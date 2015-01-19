@@ -59,16 +59,16 @@ class NumberView: UIView {
         let integerValue = abs(Int(a))
         let s = "\(integerValue)"
         var kerning: CGFloat = 0
-        if integerValue >= 100 || (integerValue >= 10 && integerValue < 20) { // 减小字间距
-            kerning = 10
-            let attributedString = NSMutableAttributedString(string: s)
-            attributedString.addAttribute(NSKernAttributeName as String, value: NSNumber(double: -10), range: NSMakeRange(0, countElements(s)))
-            integerLabel.attributedText = attributedString
-        } else {
+//        if integerValue >= 100 || (integerValue >= 10 && integerValue < 20) { // 减小字间距
+//            kerning = 10
+//            let attributedString = NSMutableAttributedString(string: s)
+//            attributedString.addAttribute(NSKernAttributeName as String, value: NSNumber(double: -10), range: NSMakeRange(0, countElements(s)))
+//            integerLabel.attributedText = attributedString
+//        } else {
             integerLabel.text = s
-        }
+//        }
         integerLabel.sizeToFit()
-        integerLabel.frame.size.width = integerLabel.frame.width + kerning // 宽度补10防止切边，不要用居中对齐，减小的时候会偏
+//        integerLabel.frame.size.width = integerLabel.frame.width + kerning // 宽度补10防止切边，不要用居中对齐，减小的时候会偏
         integerLabel.frame.origin.x = (frame.width - integerLabel.frame.width) / 2
         let x = integerLabel.frame.origin.x
         decimalLabel.text = ".\(decimalValue)"

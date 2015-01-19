@@ -8,36 +8,35 @@ class Settings: TableDetail {
     override func onPrepare() {
         super.onPrepare()
         title = LocalizedString("settings")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "back:")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "cancel")
     }
     
     override func getItemView<T : NSObject, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
-        cell.selectionStyle = .None
         switch indexPath.section {
         case 0:
             cell.imageView?.image = UIImage.imageWithColor(indexPath.row == 0 ? UIColor.colorWithHex(IDO_PURPLE) : UIColor.colorWithHex(IDO_RED), size: CGSizeMake(22, 22))
             cell.textLabel?.text = indexPath.row == 0 ? LocalizedString("low temperature alarm") : LocalizedString("high temperature alarm")
             let switchView = UISwitch()
             switchView.on = indexPath.row == 0 ? Settings.isLowTNotice() : Settings.isHighTNotice()
-            switchView.addTarget(self, action: indexPath.row == 0 ? "switchLowTNotice:" : "switchHighTNotice:", forControlEvents: .ValueChanged)
+            switchView.addTarget(self, action: indexPath.row == 0 ? "switchLowAlert:" : "switchHighAlert:", forControlEvents: .ValueChanged)
             cell.accessoryView = switchView
         case 1:
             let slider = UISlider(frame: CGRectMake(0, 0, 160, 20))
             slider.minimumValue = indexPath.row == 0 ? 26 : 36
             slider.maximumValue = indexPath.row == 0 ? 36 : 46
-            slider.value = Float(indexPath.row == 0 ? Settings.lowTemperature() : Settings.HighTemperature())
+            slider.value = Float(Settings.getTemperature(indexPath.row == 0 ? R.Pref.LowTemperature : R.Pref.HighTemperature))
             slider.tag = indexPath.row
             slider.addTarget(self, action: "changeTemperature:", forControlEvents: .ValueChanged)
             cell.accessoryView = slider
             let label = indexPath.row == 0 ? LocalizedString("low") : LocalizedString("high")
-            cell.textLabel?.text = "\(label) \(slider.value)"
+            cell.textLabel?.text = "\(label) \(transformTemperature(round(Double(slider.value) / 0.1) * 0.1, isFahrenheit))"
         case 2:
             cell.textLabel?.text = "℃ / ℉"
             let switchView = UISwitch()
-            switchView.on = false
+            switchView.on = Settings.isFahrenheit()
+            switchView.addTarget(self, action: "switchFahrenheit:", forControlEvents: .ValueChanged)
             cell.accessoryView = switchView
         case 3:
-            cell.selectionStyle = .Default
             cell.textLabel?.text = LocalizedString("review")
             cell.accessoryType = .DisclosureIndicator
         default: break
@@ -81,63 +80,60 @@ class Settings: TableDetail {
         return nil
     }
     
-    // MARK: - 💙 UITableViewDelegate
+    // MARK: 💙 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 3 {
             openAppReviews(APP_ID)
-            tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
     }
     
     // MARK: - 💛 Action
-    func back(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func switchLowAlert(sender: UISwitch) {
+        let value = sender.on
+        NSUserDefaults.standardUserDefaults().setBool(value, forKey: R.Pref.NotificationLow.rawValue)
+        lowAlert = value
     }
     
-    func switchLowTNotice(sender: UISwitch) {
-        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: R.Pref.NotificationLow.rawValue)
+    func switchHighAlert(sender: UISwitch) {
+        let value = sender.on
+        NSUserDefaults.standardUserDefaults().setBool(value, forKey: R.Pref.NotificationHigh.rawValue)
+        highAlert = value
     }
     
-    func switchHighTNotice(sender: UISwitch) {
-        NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: R.Pref.NotificationHigh.rawValue)
+    func switchFahrenheit(sender: UISwitch) {
+        let value = sender.on
+        NSUserDefaults.standardUserDefaults().setBool(value, forKey: R.Pref.Fahrenheit.rawValue)
+        isFahrenheit = value
+        tableView.reloadData()
     }
     
     func changeTemperature(sender: UISlider) {
         let temperature = round(Double(sender.value) / 0.1) * 0.1
-        sender.tag == 0 ? Settings.setLowTemperature(temperature) : Settings.setHighTemperature(temperature)        
-        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: sender.tag, inSection: 1))?.textLabel?.text = (sender.tag == 0 ? LocalizedString("low") : LocalizedString("high")) + " \(temperature)"
+        Settings.setTemperature(temperature, pref: sender.tag == 0 ? R.Pref.LowTemperature : R.Pref.HighTemperature)
+        tableView.cellForRowAtIndexPath(NSIndexPath(forRow: sender.tag, inSection: 1))?.textLabel?.text = (sender.tag == 0 ? LocalizedString("low") : LocalizedString("high")) + " \(transformTemperature(temperature, isFahrenheit))"
     }
     
     // MARK: - 💛 自定义方法 (Custom Method)
-    class func lowTemperature() -> Double {
-        if NSUserDefaults.standardUserDefaults().objectForKey(R.Pref.LowTemperature.rawValue) == nil {
-            setLowTemperature(36.0)
+    class func getTemperature(pref: R.Pref) -> Double {
+        if NSUserDefaults.standardUserDefaults().objectForKey(pref.rawValue) == nil {
+            setTemperature(pref == R.Pref.LowTemperature ? 35 : 37, pref: pref)
         }
-        return NSUserDefaults.standardUserDefaults().doubleForKey(R.Pref.LowTemperature.rawValue)
+        return NSUserDefaults.standardUserDefaults().doubleForKey(pref.rawValue)
+    }
+        
+    class func setTemperature(value: Double, pref: R.Pref) {
+        NSUserDefaults.standardUserDefaults().setDouble(value, forKey: pref.rawValue)
     }
     
-    class func setLowTemperature(value: Double) {
-        NSUserDefaults.standardUserDefaults().setDouble(value, forKey: R.Pref.LowTemperature.rawValue)
+    class func isFahrenheit() -> Bool { // 摄氏/华氏
+        return NSUserDefaults.standardUserDefaults().boolForKey(R.Pref.Fahrenheit.rawValue)
     }
     
-    class func HighTemperature() -> Double {
-        if NSUserDefaults.standardUserDefaults().objectForKey(R.Pref.HighTemperature.rawValue) == nil {
-            setHighTemperature(38.0)
-        }
-        return NSUserDefaults.standardUserDefaults().doubleForKey(R.Pref.HighTemperature.rawValue)
-    }
-    
-    class func setHighTemperature(value: Double) {
-        NSUserDefaults.standardUserDefaults().setDouble(value, forKey: R.Pref.HighTemperature.rawValue)
-    }
-    
-    // 低温报警
-    class func isLowTNotice() -> Bool {
+    class func isLowTNotice() -> Bool { // 低温报警
         return NSUserDefaults.standardUserDefaults().boolForKey(R.Pref.NotificationLow.rawValue)
     }
     
-    // 高温报警
-    class func isHighTNotice() -> Bool {
+    class func isHighTNotice() -> Bool { // 高温报警
         if NSUserDefaults.standardUserDefaults().objectForKey(R.Pref.NotificationHigh.rawValue) == nil {
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: R.Pref.NotificationHigh.rawValue)
         }

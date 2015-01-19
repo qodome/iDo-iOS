@@ -19,8 +19,8 @@ class DeviceDetail: TableDetail {
             cell.textLabel?.text = LocalizedString("name")
             cell.detailTextLabel?.text = data?.name
             cell.accessoryType = .DisclosureIndicator
+            cell.selectionStyle = .Default
         case 1:
-            cell.selectionStyle = .None
             cell.textLabel?.text = LocalizedString(menu[indexPath.row])
             switch indexPath.row {
             case 0:
@@ -49,5 +49,18 @@ class DeviceDetail: TableDetail {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section == 0 ? 1 : menu.count
+    }
+    
+    // MARK: 💙 UITableViewDelegate
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            performSegueWithIdentifier("segue.device_detail-name", sender: self)
+        }
+    }
+    
+    // MARK: - 💙 场景切换 (Segue)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
+//        segue.destinationViewController.setValue(data, forKey: "data")
     }
 }
