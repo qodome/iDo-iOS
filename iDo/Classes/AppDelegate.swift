@@ -10,6 +10,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         setTheme()
         window?.backgroundColor = UIColor.whiteColor()
+        RKObjectManager.setSharedManager(RKObjectManager(baseURL: NSURL(string: BASE_URL)))
+        RKObjectManager.sharedManager().HTTPClient.setDefaultHeader("Accept-Encoding", value: "gzip, deflate")
         // Settings
         lowAlert = Settings.isLowTNotice()
         highAlert = Settings.isHighTNotice()

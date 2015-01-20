@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E14DB001A6E6853004FC5CE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E14DAFF1A6E6853004FC5CE /* String+Extension.swift */; };
 		0E435F1D1A2AE233007951B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F1B1A2AE233007951B1 /* Main.storyboard */; };
 		0E435F1F1A2AE233007951B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F1E1A2AE233007951B1 /* Images.xcassets */; };
 		0E435F221A2AE233007951B1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F201A2AE233007951B1 /* LaunchScreen.xib */; };
@@ -14,6 +15,8 @@
 		0E5D10231A68E25400B5CED2 /* R.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5D10221A68E25400B5CED2 /* R.swift */; };
 		0E5D10271A68E3FD00B5CED2 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5D10251A68E3FD00B5CED2 /* AvatarView.swift */; };
 		0E5D10281A68E3FD00B5CED2 /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5D10261A68E3FD00B5CED2 /* TagsView.swift */; };
+		0E7A71B91A6E497D008816C6 /* Firmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A71B81A6E497D008816C6 /* Firmware.swift */; };
+		0E7A71BB1A6E4A4C008816C6 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A71BA1A6E4A4C008816C6 /* Product.swift */; };
 		0E9C9FAD1A3750BC00BB9DC6 /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9C9FAC1A3750BC00BB9DC6 /* NumberView.swift */; };
 		0E9F5AFE1A407828003BB8AD /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F5AEF1A407828003BB8AD /* Array+Extension.swift */; };
 		0E9F5AFF1A407828003BB8AD /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F5AF01A407828003BB8AD /* UIColor+Extension.swift */; };
@@ -35,6 +38,7 @@
 		0EABC3671A53D32A00F8A004 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC3641A53D32A00F8A004 /* ListModel.swift */; };
 		0EABC36E1A53D34D00F8A004 /* BaseLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC36C1A53D34D00F8A004 /* BaseLoader.swift */; };
 		0EABC36F1A53D34D00F8A004 /* HttpLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC36D1A53D34D00F8A004 /* HttpLoader.swift */; };
+		0EB84EBE1A6E434C0044D8C3 /* FirmwareDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */; };
 		0ED67E4B1A2AFA3400CA35BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E4D1A2AFA3400CA35BE /* Localizable.strings */; };
 		0ED67E8B1A2B0F5C00CA35BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E8D1A2B0F5C00CA35BE /* InfoPlist.strings */; };
 		0EDE483B1A6A65CC002CAE64 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */; };
@@ -70,6 +74,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E14DAFF1A6E6853004FC5CE /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		0E435F121A2AE233007951B1 /* iDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E435F161A2AE233007951B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E435F1C1A2AE233007951B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -81,6 +86,8 @@
 		0E5D10221A68E25400B5CED2 /* R.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = "<group>"; };
 		0E5D10251A68E3FD00B5CED2 /* AvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		0E5D10261A68E3FD00B5CED2 /* TagsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
+		0E7A71B81A6E497D008816C6 /* Firmware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firmware.swift; sourceTree = "<group>"; };
+		0E7A71BA1A6E4A4C008816C6 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		0E9C9FAC1A3750BC00BB9DC6 /* NumberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberView.swift; sourceTree = "<group>"; };
 		0E9F5AEF1A407828003BB8AD /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		0E9F5AF01A407828003BB8AD /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -102,6 +109,7 @@
 		0EABC3641A53D32A00F8A004 /* ListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 		0EABC36C1A53D34D00F8A004 /* BaseLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLoader.swift; sourceTree = "<group>"; };
 		0EABC36D1A53D34D00F8A004 /* HttpLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpLoader.swift; sourceTree = "<group>"; };
+		0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareDetail.swift; sourceTree = "<group>"; };
 		0ED67E4C1A2AFA3400CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0ED67E8A1A2B0CDA00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0ED67E8E1A2B0F9B00CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -275,6 +283,7 @@
 				0E9F5AF41A407828003BB8AD /* Utils.swift */,
 				0EABC3551A53D30600F8A004 /* RestKitUtils.swift */,
 				0EABC3561A53D30600F8A004 /* SocialUtils.swift */,
+				0E14DAFF1A6E6853004FC5CE /* String+Extension.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -332,6 +341,7 @@
 				0EE5653A1A2AE656003E9331 /* DeviceList.swift */,
 				0EE565391A2AE656003E9331 /* DeviceDetail.swift */,
 				0EA9A0A51A6CA389007E9875 /* DeviceNameDetail.swift */,
+				0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */,
 				0EE2ADF01A68F6090084DC24 /* OADDetail.swift */,
 			);
 			path = Controllers;
@@ -340,6 +350,8 @@
 		0EE5653F1A2AE656003E9331 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0E7A71B81A6E497D008816C6 /* Firmware.swift */,
+				0E7A71BA1A6E4A4C008816C6 /* Product.swift */,
 				0EE565401A2AE656003E9331 /* Temperature.swift */,
 			);
 			path = Models;
@@ -558,11 +570,13 @@
 				0E9F5B011A407828003BB8AD /* UILabel+Extension.swift in Sources */,
 				0EE565731A2AE6CD003E9331 /* BEMSimpleLineGraphView.m in Sources */,
 				0EE565491A2AE656003E9331 /* History.swift in Sources */,
+				0EB84EBE1A6E434C0044D8C3 /* FirmwareDetail.swift in Sources */,
 				0EABC3571A53D30600F8A004 /* RestKitUtils.swift in Sources */,
 				0EE565481A2AE656003E9331 /* DeviceList.swift in Sources */,
 				0EE5654C1A2AE656003E9331 /* Temperature.swift in Sources */,
 				0EE5654B1A2AE656003E9331 /* Settings.swift in Sources */,
 				0EABC3671A53D32A00F8A004 /* ListModel.swift in Sources */,
+				0E7A71B91A6E497D008816C6 /* Firmware.swift in Sources */,
 				0E9F5B001A407828003BB8AD /* UIImage+Extension.swift in Sources */,
 				0EA9A0A61A6CA389007E9875 /* DeviceNameDetail.swift in Sources */,
 				0EE2ADF11A68F6090084DC24 /* OADDetail.swift in Sources */,
@@ -588,9 +602,11 @@
 				0EE2ADEF1A68F5E10084DC24 /* OADHandler.swift in Sources */,
 				0EABC3581A53D30600F8A004 /* SocialUtils.swift in Sources */,
 				0EE2ADEE1A68F5E10084DC24 /* iDo1OADHandler.swift in Sources */,
+				0E7A71BB1A6E4A4C008816C6 /* Product.swift in Sources */,
 				0E9F5AFF1A407828003BB8AD /* UIColor+Extension.swift in Sources */,
 				0EE2ADEB1A68F5590084DC24 /* BLEUtils.swift in Sources */,
 				0EE565451A2AE656003E9331 /* BLEManager.swift in Sources */,
+				0E14DB001A6E6853004FC5CE /* String+Extension.swift in Sources */,
 				0EE5654A1A2AE656003E9331 /* Home.swift in Sources */,
 				0EE565461A2AE656003E9331 /* Constants.swift in Sources */,
 				0EABC36E1A53D34D00F8A004 /* BaseLoader.swift in Sources */,

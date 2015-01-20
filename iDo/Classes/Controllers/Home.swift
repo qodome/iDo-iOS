@@ -13,7 +13,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
+        view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: LocalizedString("history"), style: .Bordered, target: self, action: "history:")
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: LocalizedString("devices"), style: .Bordered, target: self, action: "devices:")
         navigationController?.setToolbarHidden(false, animated: false)
@@ -64,7 +64,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
             //            view.backgroundColor = UIColor.whiteColor()
             title = ("bluetooth closed")
         case .Idle:
-            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
+            view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
         case .Scan:
             title = LocalizedString("scan") // Scan不要加颜色，有广播信息的时候会乱
         case .Discovered:
@@ -74,7 +74,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         case .Connected:
             title = LocalizedString("connected")
         case .Disconnected:
-            view.backgroundColor = UIColor.colorWithHex(IDO_BLUE)
+            view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
             if BLEManager.sharedManager().defaultDevice() == nil {
                 title = LocalizedString("no_device")
             } else {
@@ -183,18 +183,18 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         let symbol = isFahrenheit ? "℉" : "℃"
         numberView.setValue(displayValue)
         if value <= Settings.getTemperature(R.Pref.LowTemperature) { // 温度过低
-            view.backgroundColor = UIColor.colorWithHex(IDO_PURPLE)
+            view.backgroundColor = UIColor.colorWithHex(R.Color.iDoPurple.rawValue)
             if lowAlert {
 //            if Settings.isLowTNotice() {
                 sendNotifition("💧温度过低 \(displayValue) \(symbol)")
             }
         } else if value >= Settings.getTemperature(R.Pref.HighTemperature) { // 温度过高
-            view.backgroundColor = UIColor.colorWithHex(IDO_RED)
+            view.backgroundColor = UIColor.colorWithHex(R.Color.iDoRed.rawValue)
             if highAlert {
                 sendNotifition("🔥温度过高 \(displayValue) \(symbol)")
             }
         } else {
-            view.backgroundColor = UIColor.colorWithHex(IDO_GREEN)
+            view.backgroundColor = UIColor.colorWithHex(R.Color.iDoGreen.rawValue)
         }
     }
     

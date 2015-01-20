@@ -16,7 +16,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        let color = UIColor.colorWithHex(IDO_BLUE)
+        let color = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
         view.backgroundColor = color
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: LocalizedString("today"), style: .Bordered, target: self, action: "today:")
         calendarMenuView = JTCalendarMenuView(frame: CGRectMake(0, 64, view.frame.width, 32))

@@ -1,28 +1,29 @@
 PODS:
   - AFNetworking (1.3.4)
   - EAIntroView (2.6.4)
-  - FormatterKit (1.7.5):
-    - FormatterKit/AddressFormatter (= 1.7.5)
-    - FormatterKit/ArrayFormatter (= 1.7.5)
-    - FormatterKit/ColorFormatter (= 1.7.5)
-    - FormatterKit/LocationFormatter (= 1.7.5)
-    - FormatterKit/NameFormatter (= 1.7.5)
-    - FormatterKit/OrdinalNumberFormatter (= 1.7.5)
-    - FormatterKit/TimeIntervalFormatter (= 1.7.5)
-    - FormatterKit/UnitOfInformationFormatter (= 1.7.5)
-    - FormatterKit/URLRequestFormatter (= 1.7.5)
-  - FormatterKit/AddressFormatter (1.7.5)
-  - FormatterKit/ArrayFormatter (1.7.5)
-  - FormatterKit/ColorFormatter (1.7.5)
-  - FormatterKit/LocationFormatter (1.7.5)
-  - FormatterKit/NameFormatter (1.7.5)
-  - FormatterKit/OrdinalNumberFormatter (1.7.5)
-  - FormatterKit/TimeIntervalFormatter (1.7.5)
-  - FormatterKit/UnitOfInformationFormatter (1.7.5)
-  - FormatterKit/URLRequestFormatter (1.7.5)
+  - FormatterKit (1.8.0):
+    - FormatterKit/AddressFormatter (= 1.8.0)
+    - FormatterKit/ArrayFormatter (= 1.8.0)
+    - FormatterKit/ColorFormatter (= 1.8.0)
+    - FormatterKit/LocationFormatter (= 1.8.0)
+    - FormatterKit/NameFormatter (= 1.8.0)
+    - FormatterKit/OrdinalNumberFormatter (= 1.8.0)
+    - FormatterKit/TimeIntervalFormatter (= 1.8.0)
+    - FormatterKit/UnitOfInformationFormatter (= 1.8.0)
+    - FormatterKit/URLRequestFormatter (= 1.8.0)
+  - FormatterKit/AddressFormatter (1.8.0)
+  - FormatterKit/ArrayFormatter (1.8.0)
+  - FormatterKit/ColorFormatter (1.8.0)
+  - FormatterKit/LocationFormatter (1.8.0)
+  - FormatterKit/NameFormatter (1.8.0)
+  - FormatterKit/OrdinalNumberFormatter (1.8.0)
+  - FormatterKit/TimeIntervalFormatter (1.8.0)
+  - FormatterKit/UnitOfInformationFormatter (1.8.0)
+  - FormatterKit/URLRequestFormatter (1.8.0)
   - ISO8601DateFormatterValueTransformer (0.6.0):
     - RKValueTransformers (~> 1.1.0)
   - JTCalendar (1.1.11)
+  - M13ProgressSuite (1.2.7)
   - RestKit (0.24.0):
     - RestKit/Core (= 0.24.0)
   - RestKit/Core (0.24.0):
@@ -54,6 +55,7 @@ DEPENDENCIES:
   - EAIntroView
   - FormatterKit
   - JTCalendar
+  - M13ProgressSuite
   - RestKit
   - SDWebImage
   - WeiboSDK
@@ -61,9 +63,10 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
   EAIntroView: 8f66dc6b79f2d52db26af8fc5476a05ffc549d4c
-  FormatterKit: 758bef4552d11454f0eb7e73669f81c225247904
+  FormatterKit: 547a808c41172136a3f3acb424ac9361d38bb32f
   ISO8601DateFormatterValueTransformer: a705384ea6531255258e25b6480ba1180db703a0
   JTCalendar: 0d4a11e8658ba947f1502a240778746f5777c1cc
+  M13ProgressSuite: 931cde7e91d474c04edb4b34517d75ca6d88ccf2
   RestKit: 8e301e50e1d25ce427215539f4fd72463f4a2a58
   RKValueTransformers: 67b4ea3eb6a1c1a0b8c3c37eb4e4c05e4febeba2
   SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d

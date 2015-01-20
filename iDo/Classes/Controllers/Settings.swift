@@ -14,7 +14,7 @@ class Settings: TableDetail {
     override func getItemView<T : NSObject, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            cell.imageView?.image = UIImage.imageWithColor(indexPath.row == 0 ? UIColor.colorWithHex(IDO_PURPLE) : UIColor.colorWithHex(IDO_RED), size: CGSizeMake(22, 22))
+            cell.imageView?.image = UIImage.imageWithColor(indexPath.row == 0 ? UIColor.colorWithHex(R.Color.iDoPurple.rawValue) : UIColor.colorWithHex(R.Color.iDoRed.rawValue), size: CGSizeMake(22, 22))
             cell.textLabel?.text = indexPath.row == 0 ? LocalizedString("low temperature alarm") : LocalizedString("high temperature alarm")
             let switchView = UISwitch()
             switchView.on = indexPath.row == 0 ? Settings.isLowTNotice() : Settings.isHighTNotice()

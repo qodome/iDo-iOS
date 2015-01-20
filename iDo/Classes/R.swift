@@ -10,4 +10,12 @@ class R {
         case NotificationHigh = "notification_high"
         case Fahrenheit = "fahrenheit"
     }
+    
+    enum Color: Int {
+        case iDoRed = 0xE24424
+        case iDoOranges = 0xFFBB1F
+        case iDoGreen = 0x17A865
+        case iDoBlue = 0x2897C3
+        case iDoPurple = 0xAA66CC
+    }
 }

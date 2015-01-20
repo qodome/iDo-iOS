@@ -88,7 +88,8 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
             }
             cell.accessoryType = .None
         }
-        if item.deviceInfo?.modelNumber != nil && contains(PRODUCTS.keys, item.deviceInfo!.modelNumber!) {
+        let modelNumber = item.deviceInfo?.modelNumber
+        if modelNumber != nil && contains(PRODUCTS.keys, modelNumber!) {
             cell.imageView?.image = UIImage(named: "ic_settings_ido")
         } else {
             cell.imageView?.image = UIImage.imageWithColor(UIColor.whiteColor(), size: CGSizeSettingsIcon)
@@ -130,7 +131,8 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         if buttonIndex == actionSheet.destructiveButtonIndex {
             BLEManager.sharedManager().unbind(selected as CBPeripheral)
         } else if buttonIndex == 2 {
-            performSegueWithIdentifier("segue.device_list-oad_detail", sender: self)
+            performSegueWithIdentifier("segue.quicktest", sender: self)
+//            performSegueWithIdentifier("segue.device_list-oad_detail", sender: self)
         }
     }
     
@@ -142,6 +144,8 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         } else if segue.identifier == "segue.device_list-oad_detail" {
             segue.destinationViewController.setValue(selected, forKey: "data")
             BLEManager.sharedManager().oadInit()
+        } else if segue.identifier == "segue.quicktest" {
+            
         }
     }
 }

@@ -82,6 +82,7 @@
                     </view>
                     <connections>
                         <segue destination="uwX-D2-m2D" kind="showDetail" identifier="segue.device_detail-name" id="To5-76-vHl"/>
+                        <segue destination="QBL-0A-k6f" kind="show" identifier="segue.device_list-firmware_detail" id="gJA-oE-3tK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CCD-jj-Irh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -160,6 +161,7 @@
                     <connections>
                         <segue destination="Ww4-Zl-46N" kind="show" identifier="segue.device_list-oad_detail" id="nRD-9L-wyf"/>
                         <segue destination="kXl-X6-9kB" kind="show" identifier="segue.device_list-detail" id="yJd-eo-3qN"/>
+                        <segue destination="QBL-0A-k6f" kind="show" identifier="segue.quicktest" id="wse-IG-yfK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R48-1c-hLl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -184,6 +186,24 @@
             </objects>
             <point key="canvasLocation" x="2399" y="-810"/>
         </scene>
+        <!--Firmware Detail-->
+        <scene sceneID="pb8-Ud-bfL">
+            <objects>
+                <viewController id="QBL-0A-k6f" customClass="FirmwareDetail" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="m56-2i-OHy"/>
+                        <viewControllerLayoutGuide type="bottom" id="1cq-Of-sPm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dFa-jw-m2Q">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tMK-Gz-NfR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4023" y="-2303"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Zfe-jR-tVI">
             <objects>
@@ -203,4 +223,7 @@
             <point key="canvasLocation" x="4023" y="-1564"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="wse-IG-yfK"/>
+    </inferredMetricsTieBreakers>
 </document>

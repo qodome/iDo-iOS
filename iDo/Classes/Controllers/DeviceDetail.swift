@@ -25,12 +25,33 @@ class DeviceDetail: TableDetail {
             switch indexPath.row {
             case 0:
                 cell.detailTextLabel?.text = data?.deviceInfo?.firmwareRevision
+                let modelNumber = data?.deviceInfo?.modelNumber
+                if modelNumber != nil && contains(PRODUCTS.keys, modelNumber!) {
+                    let button = UIButton()
+                    let color = UIColor.colorWithHex(SYSTEM_BLUE)
+                    button.setTitle(LocalizedString("update"), forState: .Normal)
+                    button.setTitleColor(color, forState: .Normal)
+                    button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
+//                    button.backgroundColor = color
+                    button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 13)
+                    button.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10)
+                    button.sizeToFit()
+                    button.layer.cornerRadius = 4
+                    button.layer.borderColor = color.CGColor
+                    button.layer.borderWidth = 1
+                    button.frame.size.height = 26
+                    cell.accessoryView = button
+                    
+                    
+                }
             case 1:
                 cell.detailTextLabel?.text = data?.deviceInfo?.modelNumber
             case 2:
                 cell.detailTextLabel?.text = data?.identifier.UUIDString
             case 3:
-                cell.detailTextLabel?.text = data?.deviceInfo?.serialNumber
+                //                var s: String! = data?.deviceInfo?.serialNumber
+                //                let a = s.componentsSeparatedByString(":")
+                cell.detailTextLabel?.text = data?.deviceInfo?.serialNumber?.uppercaseString
             case 4:
                 cell.detailTextLabel?.text = data?.deviceInfo?.softwareRevision
             case 5:
@@ -61,6 +82,7 @@ class DeviceDetail: TableDetail {
     // MARK: - 💙 场景切换 (Segue)
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         super.prepareForSegue(segue, sender: sender)
-//        segue.destinationViewController.setValue(data, forKey: "data")
+        let dest = segue.destinationViewController as UINavigationController
+        dest.childViewControllers[0].setValue(data, forKey: "data")
     }
 }
