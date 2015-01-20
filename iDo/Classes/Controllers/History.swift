@@ -77,9 +77,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     
     // MARK: - 💙 JTCalendarDataSource
     func calendarHaveEvent(calendar: JTCalendar!, date: NSDate!) -> Bool {
-        let path = History.getHistory(date)
-        let file = NSFileHandle(forUpdatingAtPath: path)
-        return file != nil // TODO 待优化
+        return NSFileHandle(forReadingAtPath: History.getHistory(date)) != nil
     }
     
     func calendarDidDateSelected(calendar: JTCalendar!, date: NSDate!) {
@@ -110,7 +108,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         return formatter.stringFromDate(date)
     }
     
-    // MARK:- 💙 BEMSimpleLineGraphDelegate
+    // MARK: 💙 BEMSimpleLineGraphDelegate
     //    func popUpSuffixForlineGraph(graph: BEMSimpleLineGraphView!) -> String! {
     //        return "°"
     //    }
@@ -131,12 +129,11 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     
     class func getData(date: NSDate) -> [Temperature] {
         var data: [Temperature] = []
+        var content: [AnyObject] = []
         let path = getHistory(date)
-        let file = NSFileHandle(forUpdatingAtPath: path)
-        var content: NSArray = []
-        if file != nil {
+        if NSFileHandle(forReadingAtPath: path) != nil {
             let json = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
-            let content = NSJSONSerialization.JSONObjectWithData(json.dataUsingEncoding(NSUTF8StringEncoding)!, options: .allZeros, error: nil) as NSArray
+            let content = NSJSONSerialization.JSONObjectWithData(json.dataUsingEncoding(NSUTF8StringEncoding)!, options: .allZeros, error: nil) as Array<AnyObject>
             for d in content {
                 let temperature = Temperature(timeStamp: Int(d[0] as NSNumber))
                 temperature.open = d[1].isEqual(NSNull()) ? nil : Double(d[1] as NSNumber)
@@ -151,8 +148,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     
     class func getJson(date: NSDate) -> String {
         let path = getHistory(date)
-        let file = NSFileHandle(forReadingAtPath: path)
-        if file != nil {
+        if NSFileHandle(forReadingAtPath: path) != nil {
             return String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
         }
         return ""
@@ -163,8 +159,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         formatter.dateFormat = "yyyy-MM-dd"
         let timeZone = formatter.timeZone.secondsFromGMT / 3600
         let timeZoneString = timeZone >= 0 ? String(format: "+%02d", timeZone) : String(format: "%02d", timeZone)
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        return paths[0].stringByAppendingPathComponent("temperature/\(formatter.stringFromDate(date))\(timeZoneString).json")
+        return PATH_DOCUMENT.stringByAppendingPathComponent("temperature/\(formatter.stringFromDate(date))\(timeZoneString).json")
     }
     
     class func getTimeStamp(date: NSDate, minute: Int) -> Int {

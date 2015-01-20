@@ -61,7 +61,6 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     func onStateChanged(state: BLEManagerState, peripheral: CBPeripheral?) {
         switch state {
         case .PowerOff:
-            //            view.backgroundColor = UIColor.whiteColor()
             title = ("bluetooth closed")
         case .Idle:
             view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
@@ -130,7 +129,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         let file = NSFileHandle(forUpdatingAtPath: path)
         if file == nil {
             json = "[\(json1)]"
-            NSFileManager.defaultManager().createDirectoryAtPath(path.stringByDeletingLastPathComponent, withIntermediateDirectories: false, attributes: nil, error: nil) // 创建目录
+            NSFileManager.defaultManager().createDirectoryAtPath(path.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil, error: nil) // 创建目录
             NSFileManager.defaultManager().createFileAtPath(path, contents: json.dataUsingEncoding(NSUTF8StringEncoding), attributes: nil) // 创建文件
             data.append(temp) // 重要，不然新安装last会一直为nil
         } else {
@@ -185,7 +184,6 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         if value <= Settings.getTemperature(R.Pref.LowTemperature) { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(R.Color.iDoPurple.rawValue)
             if lowAlert {
-//            if Settings.isLowTNotice() {
                 sendNotifition("💧温度过低 \(displayValue) \(symbol)")
             }
         } else if value >= Settings.getTemperature(R.Pref.HighTemperature) { // 温度过高

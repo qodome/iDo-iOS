@@ -11,8 +11,6 @@ let BASE_URL = "http://qodome.com"
 let API_VERSION = "api/v1"
 let DEFAULT_TOKEN = ""
 
-let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-
 var token: String?
 
 var lowAlert = false
