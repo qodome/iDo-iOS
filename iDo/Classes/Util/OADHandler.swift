@@ -17,5 +17,6 @@ enum OADStatus: Int {
 
 protocol OADHandler {
     func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerState, eventData: AnyObject!)
+    
     func oadDoUpdate(peripheral: CBPeripheral, path: String, progress: M13ProgressViewPie) -> OADStatus
 }

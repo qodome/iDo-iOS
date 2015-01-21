@@ -28,19 +28,19 @@ extension UInt {
 
 class iDo1OADHandler: NSObject, OADHandler {
     
-    var candImgBuf: NSData?
-    var switchToWrite: UInt?
-    var writeIdx: UInt16?
-    var threadLock: NSLock?
-    var liveImgType: IDO1_IMG_TYPE?
-    var newPeripheral: CBPeripheral?
-    var SLEEP_BREAKER: UInt8 = 1
-    var identifyCnt: UInt8 = 0
-    var lastPercent: UInt8 = 0
-    var oadStatus: OADStatus = .NotAvailable
-    var blockCntDown: UInt8 = 0
-    let totalBlockNumber: UInt16 = 0x1E80;
-    let bleQueryTimeout: Int64 = 30 * Int64(NSEC_PER_SEC)
+    private var candImgBuf: NSData?
+    private var switchToWrite: UInt?
+    private var writeIdx: UInt16?
+    private var threadLock: NSLock?
+    private var liveImgType: IDO1_IMG_TYPE?
+    private var newPeripheral: CBPeripheral?
+    private var SLEEP_BREAKER = 1
+    private var identifyCnt = 0
+    private var lastPercent: UInt8 = 0
+    private var oadStatus = OADStatus.NotAvailable
+    private var blockCntDown = 0
+    private let totalBlockNumber: UInt16 = 0x1E80;
+//    private let bleQueryTimeout: Int64 = 30 * Int64(NSEC_PER_SEC)
     
     class var sharedManager: OADHandler {
         struct Singleton {
@@ -52,35 +52,35 @@ class iDo1OADHandler: NSObject, OADHandler {
     // MARK: - 💖 生命周期 (Lifecycle)
     private override init() {
         super.init()
-        
         switchToWrite = 0
         threadLock = NSLock()
     }
     
     func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerState, eventData: AnyObject!) {
-        if event == BLEManagerState.ServiceDiscovered {
+        switch event {
+        case BLEManagerState.ServiceDiscovered:
             println("iDo1OADHandler got service discovered notify")
             if oadStatus == .Available {
                 for service in peripheral.services as [CBService] {
-                    switch service.UUID {
-                    case CBUUID(string: IDO1_OAD_SERVICE):
+                    switch service.UUID.UUIDString {
+                    case IDO1_OAD_SERVICE:
                         peripheral.discoverCharacteristics([CBUUID(string: IDO1_OAD_IDENTIFY), CBUUID(string: IDO1_OAD_BLOCK)], forService: service)
                     default:
                         continue
                     }
                 }
             }
-        } else if event == BLEManagerState.CharacteristicDiscovered {
+        case BLEManagerState.CharacteristicDiscovered:
             println("iDo1OADHandler got char discovered notify")
             if oadStatus == .Available {
                 switch eventData.UUID {
                 case CBUUID(string: IDO1_OAD_SERVICE):
                     for characteristic in eventData.characteristics as [CBCharacteristic] {
-                        switch characteristic.UUID {
-                        case CBUUID(string: IDO1_OAD_IDENTIFY):
+                        switch characteristic.UUID.UUIDString {
+                        case IDO1_OAD_IDENTIFY:
                             oadStatus = .Ready
                             break
-                        case CBUUID(string: IDO1_OAD_BLOCK):
+                        case IDO1_OAD_BLOCK:
                             oadStatus = .Ready
                             break
                         default:
@@ -91,7 +91,7 @@ class iDo1OADHandler: NSObject, OADHandler {
                     return
                 }
             }
-        } else if event == BLEManagerState.DataReceived {
+        case BLEManagerState.DataReceived:
             //println("iDo1OADHandler got incoming data")
             if oadStatus == .ProgressUpdate {
                 if eventData.UUID == CBUUID(string: IDO1_OAD_BLOCK) {
@@ -121,7 +121,7 @@ class iDo1OADHandler: NSObject, OADHandler {
                     ptr = UnsafePointer<UInt8>(candImgBuf!.bytes);
                     ptr = ptr! + 4
                     
-                    BLEUtils.writeCharacteristic(peripheral, sUUID: IDO1_OAD_SERVICE, cUUID: IDO1_OAD_IDENTIFY, data: NSData(bytes: ptr!, length: 8), type: CBCharacteristicWriteType.WithResponse)
+                    BLEUtils.writeCharacteristic(peripheral, sUUID: IDO1_OAD_SERVICE, cUUID: IDO1_OAD_IDENTIFY, data: NSData(bytes: ptr!, length: 8), type: .WithResponse)
                 }
             } else if oadStatus == .ConfirmResult {
                 if eventData.UUID == CBUUID(string: BLE_FIRMWARE_REVISION_STRING) {
@@ -145,22 +145,23 @@ class iDo1OADHandler: NSObject, OADHandler {
                     }
                 }
             }
-        } else if event == BLEManagerState.Disconnected {
+        case BLEManagerState.Disconnected:
             if writeIdx >= totalBlockNumber && oadStatus == .ProgressUpdate {
                 println("Device disconnected after OAD")
                 oadStatus = .Reconnect
             }
-        } else if event == BLEManagerState.Connected {
+        case BLEManagerState.Connected:
             if oadStatus == .Reconnect {
                 println("Confirm OAD result")
                 oadStatus = .ConfirmResult
                 newPeripheral = peripheral
             }
-        } else if event == BLEManagerState.Fail {
+        case BLEManagerState.Fail:
             if oadStatus == .Reconnect {
                 println("Confirm OAD result")
                 oadStatus = .Failed
             }
+        default: break
         }
     }
     
@@ -168,15 +169,15 @@ class iDo1OADHandler: NSObject, OADHandler {
         var ptr: UnsafePointer<UInt8>?
         var bytes = [UInt8](count: 18, repeatedValue: 0)
         var sleepPeriod: UInt32 = 18000
-        var sleepCnt: UInt32 = 0
+        var sleepCnt = 0
         
         progress.setProgress(0.0, animated: true)
         
         // Setup BLEManager handler to receive packets
         identifyCnt = 0
         oadStatus = .Available
-        BLEManager.sharedManager.oadHelper = self
         
+        BLEManager.sharedManager.oadHelper = self
         // Read file
         candImgBuf = NSData.dataWithContentsOfMappedFile(path) as? NSData
         if candImgBuf == nil {
@@ -192,17 +193,20 @@ class iDo1OADHandler: NSObject, OADHandler {
         } else {
             liveImgType = .A
         }
-        
         // Check OAD service
-        var oadCharCnt: UInt8 = 0
+        var oadCharCnt = 0
+        println("ccccc")
         for service in peripheral.services as [CBService] {
-            switch service.UUID {
-            case CBUUID(string: IDO1_OAD_SERVICE):
+            println("ccccc1")
+            switch service.UUID.UUIDString {
+            case IDO1_OAD_SERVICE:
+                println("ccccc2")
                 for char in service.characteristics as [CBCharacteristic] {
-                    switch char.UUID {
-                    case CBUUID(string: IDO1_OAD_IDENTIFY):
+                    println("ccccc3")
+                    switch char.UUID.UUIDString {
+                    case IDO1_OAD_IDENTIFY:
                         oadCharCnt++
-                    case CBUUID(string: IDO1_OAD_BLOCK):
+                    case IDO1_OAD_BLOCK:
                         oadCharCnt++
                     default:
                         continue
@@ -210,9 +214,9 @@ class iDo1OADHandler: NSObject, OADHandler {
                 }
             default:
                 continue
-                
             }
         }
+        println("ddddd")
         if oadCharCnt < 2 {
             // Discover OAD service
             println("iDo1OADHandler start service discovery")
@@ -222,12 +226,11 @@ class iDo1OADHandler: NSObject, OADHandler {
             while oadStatus == .Available  {
                 sleep(1)
                 sleepCnt++
-                if self.SLEEP_BREAKER == 1 && sleepCnt > 30 {
+                if SLEEP_BREAKER == 1 && sleepCnt > 30 {
                     break
                 }
             }
         }
-        
         if oadStatus != .Ready {
             println("OAD service discovery failed")
             BLEManager.sharedManager.oadHelper = nil
@@ -245,7 +248,7 @@ class iDo1OADHandler: NSObject, OADHandler {
         ptr = UnsafePointer<UInt8>(candImgBuf!.bytes);
         ptr = ptr! + 4
         
-        BLEUtils.writeCharacteristic(peripheral, sUUID: IDO1_OAD_SERVICE, cUUID: IDO1_OAD_IDENTIFY, data: NSData(bytes: ptr!, length: 8), type: CBCharacteristicWriteType.WithResponse)
+        BLEUtils.writeCharacteristic(peripheral, sUUID: IDO1_OAD_SERVICE, cUUID: IDO1_OAD_IDENTIFY, data: NSData(bytes: ptr!, length: 8), type: .WithResponse)
         
         // Waiting for UI to wakup us
         sleepCnt = 0
@@ -259,7 +262,7 @@ class iDo1OADHandler: NSObject, OADHandler {
             // TODO add disconnect check
             sleep(1)
             sleepCnt++
-            if self.SLEEP_BREAKER == 1 && sleepCnt > 60 {
+            if SLEEP_BREAKER == 1 && sleepCnt > 60 {
                 println("OAD timeout1")
                 BLEManager.sharedManager.oadHelper = nil
                 oadStatus = .NotSupported
@@ -305,7 +308,7 @@ class iDo1OADHandler: NSObject, OADHandler {
                 bytes[0] = UInt8(nextBlockIdx! & 0xFF)
                 bytes[1] = UInt8((nextBlockIdx! & 0xFF00) >> 8)
                 
-                BLEUtils.writeCharacteristic(peripheral, sUUID: IDO1_OAD_SERVICE, cUUID: IDO1_OAD_BLOCK, data: NSData(bytes: bytes, length: 18), type: CBCharacteristicWriteType.WithoutResponse)
+                BLEUtils.writeCharacteristic(peripheral, sUUID: IDO1_OAD_SERVICE, cUUID: IDO1_OAD_BLOCK, data: NSData(bytes: bytes, length: 18), type: .WithoutResponse)
                 
                 if nextBlockIdx! % 78 == 0 {
                     if UInt8(nextBlockIdx! / 78) > lastPercent {
@@ -323,7 +326,7 @@ class iDo1OADHandler: NSObject, OADHandler {
                 // TODO add disconnect check
                 sleep(1)
                 sleepCnt++
-                if self.SLEEP_BREAKER == 1 && sleepCnt > 60 {
+                if SLEEP_BREAKER == 1 && sleepCnt > 60 {
                     println("OAD timeout2")
                     BLEManager.sharedManager.oadHelper = nil
                     oadStatus = .NotSupported
@@ -338,7 +341,7 @@ class iDo1OADHandler: NSObject, OADHandler {
         while oadStatus == .Reconnect {
             sleep(1)
             sleepCnt++
-            if self.SLEEP_BREAKER == 1 && sleepCnt > 20 {
+            if SLEEP_BREAKER == 1 && sleepCnt > 20 {
                 println("Failed to reconnect to iDo after OAD")
                 BLEManager.sharedManager.oadHelper = nil
                 oadStatus = .NotSupported
@@ -358,13 +361,13 @@ class iDo1OADHandler: NSObject, OADHandler {
         // Wait for main thread to do the service discovery
         sleep(2)
         
-        BLEUtils.readCharacteristic(self.newPeripheral!, sUUID: BLE_DEVICE_INFORMATION, cUUID: BLE_FIRMWARE_REVISION_STRING)
+        BLEUtils.readCharacteristic(newPeripheral!, sUUID: BLE_DEVICE_INFORMATION, cUUID: BLE_FIRMWARE_REVISION_STRING)
         
         sleepCnt = 0
         while oadStatus == .ConfirmResult {
             sleep(1)
             sleepCnt++
-            if self.SLEEP_BREAKER == 1 && sleepCnt > 20 {
+            if SLEEP_BREAKER == 1 && sleepCnt > 20 {
                 println("Failed to check iDo version after OAD")
                 BLEManager.sharedManager.oadHelper = nil
                 oadStatus = .NotSupported

@@ -2,9 +2,10 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-let IDO1_OAD_SERVICE = "f000ffc0-0451-4000-b000-000000000000"
-let IDO1_OAD_IDENTIFY = "f000ffc1-0451-4000-b000-000000000000"
-let IDO1_OAD_BLOCK = "f000ffc2-0451-4000-b000-000000000000"
+// 以下必须全部大写, CBUUID之后会转成大写，小写必须要用CBUUID方式，没法简化代码比较UUIDString
+let IDO1_OAD_SERVICE = "F000FFC0-0451-4000-B000-000000000000"
+let IDO1_OAD_IDENTIFY = "F000FFC1-0451-4000-B000-000000000000"
+let IDO1_OAD_BLOCK = "F000FFC2-0451-4000-B000-000000000000"
 
 // https://developer.bluetooth.org/gatt/services/Pages/ServicesHome.aspx
 // https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicsHome.aspx

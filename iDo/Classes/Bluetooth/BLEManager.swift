@@ -53,7 +53,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             CBUUID(string: kServiceUUIDString),
             CBUUID(string: BLE_CURRENT_TIME_SERVICE),
             CBUUID(string: BLE_DEVICE_INFORMATION),
-//            CBUUID(string: IDO1_OAD_SERVICE)
+            CBUUID(string: IDO1_OAD_SERVICE)
         ]
     }
     
@@ -121,7 +121,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
         Log("💟 连上 设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onStateChanged(.Connected, peripheral: peripheral)
-        oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.Connected, eventData: nil)
+        oadHelper?.oadHandleEvent(peripheral, event: .Connected, eventData: nil)
 //        central.stopScan() // 停止搜寻
         peripheral.delegate = self
         peripheral.discoverServices(serviceUUIDs)
@@ -131,13 +131,13 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManager(central: CBCentralManager!, didFailToConnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
         Log("连接失败: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onStateChanged(.Fail, peripheral: peripheral)
-        oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.Fail, eventData: nil)
+        oadHelper?.oadHandleEvent(peripheral, event: .Fail, eventData: nil)
     }
     
     func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) { // 这里不是真的断开，会有延时
         Log("断开 设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onStateChanged(.Disconnected, peripheral: peripheral)
-        oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.Disconnected, eventData: nil)
+        oadHelper?.oadHandleEvent(peripheral, event: .Disconnected, eventData: nil)
         if peripheral.identifier.UUIDString == defaultDevice() { // 无限次自动重连
             reconnectCount++
             connect(peripheral)
@@ -157,10 +157,12 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                     peripheral.discoverCharacteristics([CBUUID(string: BLE_DATE_TIME)], forService: service)
                 case BLE_DEVICE_INFORMATION:
                     peripheral.discoverCharacteristics([CBUUID(string: BLE_MODEL_NUMBER_STRING), CBUUID(string: BLE_SERIAL_NUMBER_STRING), CBUUID(string: BLE_FIRMWARE_REVISION_STRING), CBUUID(string: BLE_SOFTWARE_REVISION_STRING), CBUUID(string: BLE_MANUFACTURER_NAME_STRING)], forService: service)
+                case IDO1_OAD_SERVICE:
+                    peripheral.discoverCharacteristics([CBUUID(string: IDO1_OAD_IDENTIFY), CBUUID(string: IDO1_OAD_BLOCK)], forService: service)
                 default: break
                 }
             }
-            oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.ServiceDiscovered, eventData: nil)
+            oadHelper?.oadHandleEvent(peripheral, event: .ServiceDiscovered, eventData: nil)
         } else {
             println("error in service discovery")
             central.cancelPeripheralConnection(peripheral)
@@ -198,7 +200,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             default:
                 Log("✴️ 未知服务 \(service.UUID) ⁉️ ")
             }
-            oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.CharacteristicDiscovered, eventData: service)
+            oadHelper?.oadHandleEvent(peripheral, event: .CharacteristicDiscovered, eventData: service)
         } else {
             println("error in char discovery")
             central.cancelPeripheralConnection(peripheral)
@@ -240,7 +242,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 peripheral.deviceInfo = info
             default: break
             }
-            oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.DataReceived, eventData: characteristic)
+            oadHelper?.oadHandleEvent(peripheral, event: .DataReceived, eventData: characteristic)
         } else {
             println("error in data")
             central.cancelPeripheralConnection(peripheral)
