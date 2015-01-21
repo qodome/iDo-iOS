@@ -15,13 +15,13 @@
 "reconnect" = "Reconnect";
 
 "temperature" = "Temperature";
-"high temperature alarm" = "High temperature alarm";
-"low temperature alarm" = "low temperature alarm";
+"notification_high" = "High temperature alarm";
+"notification_low" = "low temperature alarm";
 "min" = "Min";
 "max" = "Max";
 "high" = "high";
 "low" = "low";
-
+"temperature_unit" = "Temperature Unit";
 "review" = "Review";
 
 "name" = "Name";

@@ -13,9 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         RKObjectManager.setSharedManager(RKObjectManager(baseURL: NSURL(string: BASE_URL)))
         RKObjectManager.sharedManager().HTTPClient.setDefaultHeader("Accept-Encoding", value: "gzip, deflate")
         // Settings
-        lowAlert = Settings.isLowTNotice()
-        highAlert = Settings.isHighTNotice()
-        isFahrenheit = Settings.isFahrenheit()
+        initSettings()
         if UIApplication.instancesRespondToSelector("registerUserNotificationSettings:") {
             application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
         }
@@ -31,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         println("applicationWillTerminate")
         application.applicationIconBadgeNumber = 0
         application.cancelAllLocalNotifications()
-        let manager = BLEManager.sharedManager()
+        let manager = BLEManager.sharedManager
         for peripheral in manager.peripherals {
             manager.central.cancelPeripheralConnection(peripheral)
         }

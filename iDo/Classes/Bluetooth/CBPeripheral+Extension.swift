@@ -2,6 +2,8 @@
 //  Copyright (c) 2015年 NY. All rights reserved.
 //
 
+import CoreBluetooth
+
 private var info: DeviceInfo?
 
 extension CBPeripheral {

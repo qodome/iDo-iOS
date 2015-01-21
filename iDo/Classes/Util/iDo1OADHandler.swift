@@ -56,7 +56,7 @@ class iDo1OADHandler: NSObject, OADHandler {
     
     // MARK: - 💖 生命周期 (Lifecycle)
     class func sharedManager() -> OADHandler {
-        struct Singleton{
+        struct Singleton {
             static var predicate: dispatch_once_t = 0
             static var instance: OADHandler? = nil
         }

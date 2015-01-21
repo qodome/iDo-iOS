@@ -4,24 +4,25 @@
 
 class DeviceDetail: TableDetail {
     
-    let menu = ["version", "model", "UUID", "bluetooth", "software", "manufacturer"]
-    
     // MARK: - 🐤 继承 Taylor
     override func onPrepare() {
         super.onPrepare()
+        items = [
+            ["name"],
+            ["version", "model", "UUID", "bluetooth", "software", "manufacturer"]
+        ]
         title = (data as CBPeripheral).name
-        tableView.registerClass(RightDetailCell.self, forCellReuseIdentifier: cellId)
     }
     
-    override func getItemView<T : CBPeripheral, C : RightDetailCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
+    override func getItemView<T : CBPeripheral, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
+        let item = items[indexPath.section][indexPath.row]
+        cell.textLabel?.text = LocalizedString(item)
         switch indexPath.section {
         case 0:
-            cell.textLabel?.text = LocalizedString("name")
             cell.detailTextLabel?.text = data?.name
             cell.accessoryType = .DisclosureIndicator
             cell.selectionStyle = .Default
         case 1:
-            cell.textLabel?.text = LocalizedString(menu[indexPath.row])
             switch indexPath.row {
             case 0:
                 cell.detailTextLabel?.text = data?.deviceInfo?.firmwareRevision
@@ -41,8 +42,6 @@ class DeviceDetail: TableDetail {
                     button.layer.borderWidth = 1
                     button.frame.size.height = 26
                     cell.accessoryView = button
-                    
-                    
                 }
             case 1:
                 cell.detailTextLabel?.text = data?.deviceInfo?.modelNumber
@@ -61,15 +60,6 @@ class DeviceDetail: TableDetail {
         default: break
         }
         return cell
-    }
-    
-    // MARK: - 💙 UITableViewDataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : menu.count
     }
     
     // MARK: 💙 UITableViewDelegate

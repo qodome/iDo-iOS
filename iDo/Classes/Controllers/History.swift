@@ -95,7 +95,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     
     func lineGraph(graph: BEMSimpleLineGraphView!, valueForPointAtIndex index: Int) -> CGFloat {
         let value = data[index].high
-        return value == nil ? 0 : CGFloat(transformTemperature(value!, isFahrenheit))
+        return value != nil ? CGFloat(transformTemperature(value!, temperatureUnit)) : 0
     }
     
     func lineGraph(graph: BEMSimpleLineGraphView!, labelOnXAxisForIndex index: Int) -> String! {

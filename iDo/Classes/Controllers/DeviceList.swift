@@ -10,14 +10,14 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBarStyle(.Default)
-        BLEManager.sharedManager().delegate = self
+        BLEManager.sharedManager.delegate = self
         loadData()
     }
     
     func loadData() {
         listData.removeAll(keepCapacity: true)
         connected.removeAll(keepCapacity: true)
-        for peripheral in BLEManager.sharedManager().peripherals {
+        for peripheral in BLEManager.sharedManager.peripherals {
             if peripheral.state == .Connected {
                 connected.append(peripheral)
             } else {
@@ -54,7 +54,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         header?.addSubview(indicator)
         indicator.hidden = false
         indicator.startAnimating()
-        BLEManager.sharedManager().startScan() // 重新刷新界面时header会变成nil
+        BLEManager.sharedManager.startScan() // 重新刷新界面时header会变成nil
     }
     
     // MARK: - 💙 UITableViewDataSource
@@ -115,7 +115,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
 //            UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect")).showInView(view)
             UIActionSheet(title: "\(selected.name)\n\((selected as CBPeripheral).identifier.UUIDString)", delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect"), otherButtonTitles: LocalizedString("check")).showInView(view)
         } else { // 直接绑定
-            BLEManager.sharedManager().bind(getItem(indexPath.row) as CBPeripheral)
+            BLEManager.sharedManager.bind(getItem(indexPath.row) as CBPeripheral)
         }
     }
     
@@ -129,7 +129,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     // MARK: 💙 UIActionSheetDelegate
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == actionSheet.destructiveButtonIndex {
-            BLEManager.sharedManager().unbind(selected as CBPeripheral)
+            BLEManager.sharedManager.unbind(selected as CBPeripheral)
         } else if buttonIndex == 2 {
             performSegueWithIdentifier("segue.quicktest", sender: self)
 //            performSegueWithIdentifier("segue.device_list-oad_detail", sender: self)
@@ -143,7 +143,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
             segue.destinationViewController.setValue(selected, forKey: "data")
         } else if segue.identifier == "segue.device_list-oad_detail" {
             segue.destinationViewController.setValue(selected, forKey: "data")
-            BLEManager.sharedManager().oadInit()
+            BLEManager.sharedManager.oadInit()
         } else if segue.identifier == "segue.quicktest" {
             
         }

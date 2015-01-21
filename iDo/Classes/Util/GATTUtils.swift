@@ -44,9 +44,16 @@ func calculateTemperature(data: NSData) -> Double {
     return Double(mantissa) * pow(10, exponent)
 }
 
-func transformTemperature(value: Double, fahrenheit: Bool) -> Double {
+func transformTemperature(value: Double, unit: String) -> Double {
     // 这里进来的value需要是四舍五入并保留一位处理过的，也就是存入json的
-    return fahrenheit ? round(320 + value * 18) * 0.1 : value
+    switch unit {
+    case "℉":
+        return round(320 + value * 18) * 0.1
+    case "K":
+        return (value + 273.15 / 0.1) * 0.1 // 开尔文温度
+    default:
+        return value
+    }
 }
 
 func getInt8(byte: UInt8) -> Int8 {

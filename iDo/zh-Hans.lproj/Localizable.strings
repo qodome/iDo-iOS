@@ -16,13 +16,13 @@
 "reconnect" = "重连";
 
 "temperature" = "温度";
-"high temperature alarm" = "高温报警通知";
-"low temperature alarm" = "低温报警通知";
+"notification_high" = "高温报警通知";
+"notification_low" = "低温报警通知";
 "min" = "最小";
 "max" = "最大";
 "high" = "最高";
 "low" = "最低";
-
+"temperature_unit" = "温度单位";
 "review" = "评分";
 
 "name" = "名称";

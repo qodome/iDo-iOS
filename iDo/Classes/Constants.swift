@@ -13,6 +13,16 @@ let DEFAULT_TOKEN = ""
 
 var token: String?
 
+var low = 35.0
+var high = 37.0
 var lowAlert = false
 var highAlert = true
-var isFahrenheit = false
+var temperatureUnit = ""
+
+func initSettings() {
+    low = getDouble(R.Pref.LowTemperature.rawValue, defaultValue: 35)
+    high = getDouble(R.Pref.HighTemperature.rawValue, defaultValue: 37)
+    lowAlert = getBool(R.Pref.NotificationLow.rawValue)
+    highAlert = getBool(R.Pref.NotificationHigh.rawValue, defaultValue: true)
+    temperatureUnit = getPref(R.Pref.TemperatureUnit.rawValue, defaultValue: "℃")
+}

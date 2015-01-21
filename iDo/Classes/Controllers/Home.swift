@@ -28,7 +28,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         numberView.layer.cornerRadius = width / 2
         view.addSubview(numberView)
         // 蓝牙
-        BLEManager.sharedManager().dataSource = self
+        BLEManager.sharedManager.dataSource = self
         // 取当天的历史数据
         json = History.getJson(NSDate())
         data = History.getData(NSDate())
@@ -39,7 +39,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBarStyle(.Transparent)
-        BLEManager.sharedManager().delegate = self
+        BLEManager.sharedManager.delegate = self
         if data.last?.close != nil { // 从Settings回来重算背景色
             updateUI(data.last!.close!)
         }
@@ -48,7 +48,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if BLEManager.sharedManager().defaultDevice() == nil { // 无绑定设备
+        if BLEManager.sharedManager.defaultDevice() == nil { // 无绑定设备
             UIAlertView(title: "",
                 message: LocalizedString("choose_device"),
                 delegate: self,
@@ -67,14 +67,14 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         case .Scan:
             title = LocalizedString("scan") // Scan不要加颜色，有广播信息的时候会乱
         case .Discovered:
-            title = LocalizedString("discovered \(BLEManager.sharedManager().reconnectCount)")
+            title = LocalizedString("discovered \(BLEManager.sharedManager.reconnectCount)")
         case .Connecting:
             title = LocalizedString("connecting")
         case .Connected:
             title = LocalizedString("connected")
         case .Disconnected:
             view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
-            if BLEManager.sharedManager().defaultDevice() == nil {
+            if BLEManager.sharedManager.defaultDevice() == nil {
                 title = LocalizedString("no_device")
             } else {
                 title = LocalizedString("reconnecting")
@@ -158,7 +158,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     // MARK: - 💙 UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 { // 进入设备页
-            BLEManager.sharedManager().startScan() // TODO: 是否要放在这里做
+            BLEManager.sharedManager.startScan() // TODO: 是否要放在这里做
             performSegueWithIdentifier(segueId, sender: self)
         }
     }
@@ -178,18 +178,17 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     
     // MARK: - 💛 自定义方法 (Custom Method)
     func updateUI(var value: Double) {
-        let displayValue = transformTemperature(value, isFahrenheit)
-        let symbol = isFahrenheit ? "℉" : "℃"
+        let displayValue = transformTemperature(value, temperatureUnit)
         numberView.setValue(displayValue)
-        if value <= Settings.getTemperature(R.Pref.LowTemperature) { // 温度过低
+        if value <= low { // 温度过低
             view.backgroundColor = UIColor.colorWithHex(R.Color.iDoPurple.rawValue)
             if lowAlert {
-                sendNotifition("💧温度过低 \(displayValue) \(symbol)")
+                sendNotifition("💧温度过低 \(displayValue) \(temperatureUnit)")
             }
-        } else if value >= Settings.getTemperature(R.Pref.HighTemperature) { // 温度过高
+        } else if value >= high { // 温度过高
             view.backgroundColor = UIColor.colorWithHex(R.Color.iDoRed.rawValue)
             if highAlert {
-                sendNotifition("🔥温度过高 \(displayValue) \(symbol)")
+                sendNotifition("🔥温度过高 \(displayValue) \(temperatureUnit)")
             }
         } else {
             view.backgroundColor = UIColor.colorWithHex(R.Color.iDoGreen.rawValue)

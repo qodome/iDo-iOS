@@ -37,20 +37,16 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
     var serviceUUIDs: [CBUUID] = []
     var reconnectCount = 0
     
-    // MARK: - 💖 生命周期 (Lifecycle)
-    class func sharedManager() -> BLEManager {
-        struct Singleton{
-            static var predicate: dispatch_once_t = 0
-            static var instance: BLEManager? = nil
+    // SO: http://stackoverflow.com/questions/24024549/dispatch-once-singleton-model-in-swift
+    class var sharedManager: BLEManager {
+        struct Singleton {
+            static let instance = BLEManager()
         }
-        dispatch_once(&Singleton.predicate, {
-            Singleton.instance = BLEManager()
-            println("instance")
-        })
-        return Singleton.instance!
+        return Singleton.instance
     }
     
-    override init() {
+    // MARK: - 💖 生命周期 (Lifecycle)
+    private override init() {
         super.init()
         central = CBCentralManager(delegate: self, queue: nil)
 //        central = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey : NSNumber(bool: true)])
@@ -78,7 +74,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
         for peripheral in central.retrieveConnectedPeripheralsWithServices([CBUUID(string: kServiceUUIDString)]) as [CBPeripheral] {
             central.cancelPeripheralConnection(peripheral)
         }
-        NSUserDefaults.standardUserDefaults().setObject(peripheral.identifier.UUIDString, forKey: PREF_DEFAULT_DEVICE)
+        putString(PREF_DEFAULT_DEVICE, peripheral.identifier.UUIDString)
         connect(peripheral)
     }
     

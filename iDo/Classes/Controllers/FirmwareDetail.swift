@@ -12,7 +12,7 @@ class FirmwareDetail: TableDetail {
         title = LocalizedString("update")
         refreshMode = .WillAppear
         endpoint = getEndpoint("firmwares/ID14TB")
-        progress = M13ProgressViewPie(frame: CGRectMake(view.frame.width / 2 - 25, view.frame.height / 2 - 25, 50, 50))
+        progress = M13ProgressViewPie(frame: CGRectMake(view.frame.width / 2 - 13, view.frame.height / 2 - 13, 26, 26))
         progress.hidden = true
         view.addSubview(progress)
     }
