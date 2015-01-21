@@ -21,7 +21,7 @@ enum BLEManagerState: Int {
     case PowerOff, Idle, Scan, Discovered, Connecting, Connected, Disconnected, Fail,ServiceDiscovered, CharacteristicDiscovered, DataReceived
 }
 
-class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADHandlerDelegate {
+class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // MARK: - 🍀 变量
     let PREF_DEFAULT_DEVICE = "default_device"
     
@@ -30,7 +30,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
     var delegate: BLEManagerDelegate?
     var dataSource: BLEManagerDataSource?
     var oadHelper: OADHandler?
-    var oadSource: BLEManagerOADSource?
     
     var kServiceUUIDString = BLE_HEALTH_THERMOMETER
     var kCharacteristicUUIDString = BLE_INTERMEDIATE_TEMPERATURE
@@ -125,12 +124,14 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
 //        central.stopScan() // 停止搜寻
         peripheral.delegate = self
         peripheral.discoverServices(serviceUUIDs)
+        oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.Connected, eventData: nil, error: nil)
     }
     
     // MARK: -      处理异常
     func centralManager(central: CBCentralManager!, didFailToConnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
         Log("连接失败: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onStateChanged(.Fail, peripheral: peripheral)
+        oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.Fail, eventData: nil, error: nil)
     }
     
     func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) { // 这里不是真的断开，会有延时
@@ -245,27 +246,5 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, OADH
 
     func peripheral(peripheral: CBPeripheral!, didReadRSSI RSSI: NSNumber!, error: NSError!) {
         Log("RSSI \(RSSI)")
-    }
-    
-    ///////////////////////////////////////
-    //           OAD support             //
-    ///////////////////////////////////////
-    func oadStatusUpdate(status: OADStatus, info: String?, progress: UInt8, peripheral: CBPeripheral?) {
-        // FIXME: multiple OADHandlers support
-        oadSource?.onUpdateOADInfo(status, info: info, progress: progress)
-    }
-    
-    func oadInit() {
-        // FIXME: multiple OADHandlers support
-        oadHelper = iDo1OADHandler.sharedManager()
-        oadHelper?.delegate = self
-    }
-    
-    func oadPrepare(peripheral: CBPeripheral) {
-        oadHelper?.oadPrepare(peripheral)
-    }
-    
-    func oadDoUpdate(peripheral: CBPeripheral) {
-        oadHelper?.oadDoUpdate(peripheral)
     }
 }
