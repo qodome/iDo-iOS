@@ -7,12 +7,11 @@ class TemperatureUnitDetail: TableDetail {
     // MARK: - 🐤 继承 Taylor
     override func onPrepare() {
         super.onPrepare()
-        items = [["K", "℃", "℉"]]
+        items = [["℃", "℉", "K"]]
         title = LocalizedString(R.Pref.TemperatureUnit.rawValue)
     }
     
-    override func getItemView<T : NSObject, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
-        let item = items[indexPath.section][indexPath.row]
+    override func getItemView<T : NSObject, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
         cell.textLabel?.text = item
         if item == getPref(R.Pref.TemperatureUnit.rawValue) {
             cell.accessoryType = .Checkmark

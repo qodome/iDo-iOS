@@ -14,8 +14,7 @@ class DeviceDetail: TableDetail {
         title = (data as CBPeripheral).name
     }
     
-    override func getItemView<T : CBPeripheral, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
-        let item = items[indexPath.section][indexPath.row]
+    override func getItemView<T : CBPeripheral, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
         cell.textLabel?.text = LocalizedString(item)
         switch indexPath.section {
         case 0:
@@ -48,8 +47,6 @@ class DeviceDetail: TableDetail {
             case 2:
                 cell.detailTextLabel?.text = data?.identifier.UUIDString
             case 3:
-                //                var s: String! = data?.deviceInfo?.serialNumber
-                //                let a = s.componentsSeparatedByString(":")
                 cell.detailTextLabel?.text = data?.deviceInfo?.serialNumber?.uppercaseString
             case 4:
                 cell.detailTextLabel?.text = data?.deviceInfo?.softwareRevision

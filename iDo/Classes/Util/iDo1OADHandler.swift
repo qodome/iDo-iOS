@@ -58,47 +58,13 @@ class iDo1OADHandler: NSObject, OADHandler {
     
     func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerState, eventData: AnyObject!) {
         switch event {
-        case BLEManagerState.ServiceDiscovered:
-            println("iDo1OADHandler got service discovered notify")
-            if oadStatus == .Available {
-                for service in peripheral.services as [CBService] {
-                    switch service.UUID.UUIDString {
-                    case IDO1_OAD_SERVICE:
-                        peripheral.discoverCharacteristics([CBUUID(string: IDO1_OAD_IDENTIFY), CBUUID(string: IDO1_OAD_BLOCK)], forService: service)
-                    default:
-                        continue
-                    }
-                }
-            }
-        case BLEManagerState.CharacteristicDiscovered:
-            println("iDo1OADHandler got char discovered notify")
-            if oadStatus == .Available {
-                switch eventData.UUID {
-                case CBUUID(string: IDO1_OAD_SERVICE):
-                    for characteristic in eventData.characteristics as [CBCharacteristic] {
-                        switch characteristic.UUID.UUIDString {
-                        case IDO1_OAD_IDENTIFY:
-                            oadStatus = .Ready
-                            break
-                        case IDO1_OAD_BLOCK:
-                            oadStatus = .Ready
-                            break
-                        default:
-                            continue
-                        }
-                    }
-                default:
-                    return
-                }
-            }
         case BLEManagerState.DataReceived:
-            //println("iDo1OADHandler got incoming data")
             if oadStatus == .ProgressUpdate {
                 if eventData.UUID == CBUUID(string: IDO1_OAD_BLOCK) {
                     var bytes = UnsafeMutablePointer<UInt8>.alloc(2)
                     memcpy(bytes, eventData.value!.bytes, 2)
                     var idx: UInt16 = UInt16(bytes[1]) << 8 | UInt16(bytes[0])
-                    println("Got block notification " + String(idx))
+                    println("Got block notification \(idx)")
                     threadLock?.lock()
                     switchToWrite = 1
                     writeIdx = idx
@@ -193,51 +159,7 @@ class iDo1OADHandler: NSObject, OADHandler {
         } else {
             liveImgType = .A
         }
-        // Check OAD service
-        var oadCharCnt = 0
-        println("ccccc")
-        for service in peripheral.services as [CBService] {
-            println("ccccc1")
-            switch service.UUID.UUIDString {
-            case IDO1_OAD_SERVICE:
-                println("ccccc2")
-                for char in service.characteristics as [CBCharacteristic] {
-                    println("ccccc3")
-                    switch char.UUID.UUIDString {
-                    case IDO1_OAD_IDENTIFY:
-                        oadCharCnt++
-                    case IDO1_OAD_BLOCK:
-                        oadCharCnt++
-                    default:
-                        continue
-                    }
-                }
-            default:
-                continue
-            }
-        }
-        println("ddddd")
-        if oadCharCnt < 2 {
-            // Discover OAD service
-            println("iDo1OADHandler start service discovery")
-            peripheral.discoverServices([CBUUID(string: IDO1_OAD_SERVICE)])
-            
-            sleepCnt = 0
-            while oadStatus == .Available  {
-                sleep(1)
-                sleepCnt++
-                if SLEEP_BREAKER == 1 && sleepCnt > 30 {
-                    break
-                }
-            }
-        }
-        if oadStatus != .Ready {
-            println("OAD service discovery failed")
-            BLEManager.sharedManager.oadHelper = nil
-            oadStatus = .NotSupported
-            progress.performAction(M13ProgressViewActionFailure, animated: true)
-            return oadStatus
-        }
+
         
         println("OAD begin!")
         oadStatus = .ProgressUpdate
@@ -312,7 +234,7 @@ class iDo1OADHandler: NSObject, OADHandler {
                 
                 if nextBlockIdx! % 78 == 0 {
                     if UInt8(nextBlockIdx! / 78) > lastPercent {
-                        println("Update percent: " + String(UInt8(nextBlockIdx! / 78)))
+                        println("Update percent: \(UInt8(nextBlockIdx! / 78))%")
                         progress.setProgress(CGFloat(Float(nextBlockIdx! / 78) / 100.0), animated: true)
                         lastPercent = UInt8(nextBlockIdx! / 78)
                     }

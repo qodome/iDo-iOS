@@ -162,7 +162,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 default: break
                 }
             }
-            oadHelper?.oadHandleEvent(peripheral, event: .ServiceDiscovered, eventData: nil)
         } else {
             println("error in service discovery")
             central.cancelPeripheralConnection(peripheral)
@@ -200,7 +199,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             default:
                 Log("✴️ 未知服务 \(service.UUID) ⁉️ ")
             }
-            oadHelper?.oadHandleEvent(peripheral, event: .CharacteristicDiscovered, eventData: service)
         } else {
             println("error in char discovery")
             central.cancelPeripheralConnection(peripheral)

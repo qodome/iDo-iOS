@@ -6,7 +6,8 @@ class Settings: TableDetail {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData() // TODO: 临时，处理改变单位后回来的滚动条问题
+        initSettings()
+        tableView.reloadData() // TODO: 临时，处理改变单位后回来的最高最低温问题
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -27,8 +28,7 @@ class Settings: TableDetail {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "cancel")
     }
     
-    override func getItemView<T : NSObject, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
-        let item = items[indexPath.section][indexPath.row]
+    override func getItemView<T : NSObject, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
         switch indexPath.section {
         case 0:
             cell.imageView?.image = UIImage.imageWithColor(indexPath.row == 0 ? UIColor.colorWithHex(R.Color.iDoPurple.rawValue) : UIColor.colorWithHex(R.Color.iDoRed.rawValue), size: CGSizeMake(22, 22))

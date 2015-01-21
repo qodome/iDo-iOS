@@ -27,7 +27,7 @@ class FirmwareDetail: TableDetail {
     override func onLoadSuccess<E : Firmware>(entity: E) {
         super.onLoadSuccess(entity)
         let remote = String(entity.revision)
-        let local = "0.0.0(32A)"
+        let local = "0.0.0(32B)"
         if remote != local { // 如果版本号不同
             var url = String(entity.downloadUrl)
             // 以下基于服务器端永远只返回A.bin

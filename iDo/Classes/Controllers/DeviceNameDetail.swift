@@ -28,7 +28,7 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate {
         nameField.delegate = self
     }
     
-    override func getItemView<T : CBPeripheral, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
+    override func getItemView<T : CBPeripheral, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
         nameField.text = data?.name
         cell.addSubview(nameField)
         return cell
