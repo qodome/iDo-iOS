@@ -143,9 +143,8 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
             segue.destinationViewController.setValue(selected, forKey: "data")
         } else if segue.identifier == "segue.device_list-oad_detail" {
             segue.destinationViewController.setValue(selected, forKey: "data")
-            BLEManager.sharedManager().oadInit()
         } else if segue.identifier == "segue.quicktest" {
-            
+            segue.destinationViewController.setValue(selected, forKey: "peripheral")
         }
     }
 }

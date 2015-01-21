@@ -3,27 +3,19 @@
 //
 
 enum OADStatus: Int {
-    case OADAvailable
-    case OADNotAvailable
-    case OADNotSupported
-    case OADAlreadyLatest
-    case OADReady
-    case OADProgressUpdate
-    case OADConfirmResult
-    case OADSuccess
-    case OADFailed
-}
-
-protocol OADHandlerDelegate {
-    func oadStatusUpdate(status: OADStatus, info: String?, progress: UInt8, peripheral: CBPeripheral?)
+    case Available
+    case NotAvailable
+    case NotSupported
+    case AlreadyLatest
+    case Ready
+    case ProgressUpdate
+    case Reconnect
+    case ConfirmResult
+    case Success
+    case Failed
 }
 
 protocol OADHandler {
-    var delegate: OADHandlerDelegate? { get set }
-    
-    func oadPrepare(peripheral: CBPeripheral)
     func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerState, eventData: AnyObject!, error: NSError!)
-    func oadDoUpdate(peripheral: CBPeripheral)
+    func oadDoUpdate(peripheral: CBPeripheral, fn: String, progress: M13ProgressViewPie) -> OADStatus
 }
-
-
