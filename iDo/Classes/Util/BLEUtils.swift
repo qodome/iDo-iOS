@@ -19,7 +19,6 @@ class BLEUtils: NSObject {
                     }
                 default:
                     continue
-                    
                 }
             }
         }
@@ -40,7 +39,6 @@ class BLEUtils: NSObject {
                     }
                 default:
                     continue
-                    
                 }
             }
         }
@@ -61,7 +59,6 @@ class BLEUtils: NSObject {
                     }
                 default:
                     continue
-                    
                 }
             }
         }

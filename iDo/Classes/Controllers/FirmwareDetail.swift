@@ -6,8 +6,7 @@ class FirmwareDetail: TableDetail {
     
     var progress: M13ProgressViewPie!
     var peripheral: CBPeripheral!
-    var firmwareInfo: Firmware!
-    var fileName: String!
+    var path: String!
     var oadThread: NSThread!
     
     // MARK: - 🐤 继承 Taylor
@@ -29,7 +28,6 @@ class FirmwareDetail: TableDetail {
         super.onLoadSuccess(entity)
         let remote = String(entity.revision)
         let local = "0.0.0(32A)"
-        firmwareInfo = entity
         if remote != local { // 如果版本号不同
             var url = String(entity.downloadUrl)
             // 以下基于服务器端永远只返回A.bin
@@ -38,27 +36,14 @@ class FirmwareDetail: TableDetail {
                 if local.substringWithRange(Range(start: range!.startIndex, end: advance(range!.startIndex, 1))) == "A" { // 如果本地为A去找B，为B无需处理
                     url = url.stringByReplacingOccurrencesOfString("A.bin", withString: "B.bin")
                 }
-                let nameRange = url.rangeOfString("/", options: .BackwardsSearch)
-                fileName = url.substringWithRange(Range(start:advance(nameRange!.startIndex, 1), end:advance(nameRange!.startIndex, 8)))
             }
             download(url, directory: PATH_DOCUMENT.stringByAppendingPathComponent("\(entity.modelNumber)"), size: entity.size.integerValue)
         }
     }
     
-    func OADDownload() {
-        switch self.firmwareInfo.modelNumber {
-        case "ID14TB":
-            progress.performAction(M13ProgressViewActionNone, animated: false)
-            progress.hidden = false
-            iDo1OADHandler.sharedManager().oadDoUpdate(self.peripheral, fn: self.fileName, progress: progress)
-        default:
-            break
-        }
-    }
-    
     // MARK: - 💛 自定义方法 (Custom Method)
     func download(url: String, directory: String, size: NSNumber = 0) {
-        let path = directory.stringByAppendingPathComponent(url.lastPathComponent)
+        path = directory.stringByAppendingPathComponent(url.lastPathComponent)
         NSFileManager.defaultManager().removeItemAtPath(path, error: nil)
         if NSFileHandle(forUpdatingAtPath: path) != nil && size.integerValue > 0 {
             let attributes = NSFileManager.defaultManager().attributesOfItemAtPath(path, error: nil)
@@ -75,8 +60,6 @@ class FirmwareDetail: TableDetail {
             operation.outputStream = NSOutputStream(toFileAtPath: path, append: false)
             operation.setCompletionBlockWithSuccess({ (operation, responseObject) in
                 self.progress.performAction(M13ProgressViewActionSuccess, animated: true)
-                //            self.progress.hidden = true
-                // TODO
                 self.oadThread = NSThread(target: self, selector: "OADDownload", object: nil)
                 self.oadThread.start()
                 }, failure: { (operation, error) in
@@ -86,6 +69,16 @@ class FirmwareDetail: TableDetail {
                 self.progress.setProgress(CGFloat(totalBytesRead / totalBytesExpectedToRead), animated: true)
             })
             operation.start()
+        }
+    }
+    
+    func OADDownload() {
+        switch (data as Firmware).modelNumber {
+        case "ID14TB":
+            progress.performAction(M13ProgressViewActionNone, animated: false)
+            progress.hidden = false
+            iDo1OADHandler.sharedManager.oadDoUpdate(peripheral, path: path, progress: progress)
+        default: break
         }
     }
 }

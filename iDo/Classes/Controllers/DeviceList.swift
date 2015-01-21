@@ -132,7 +132,6 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
             BLEManager.sharedManager.unbind(selected as CBPeripheral)
         } else if buttonIndex == 2 {
             performSegueWithIdentifier("segue.quicktest", sender: self)
-//            performSegueWithIdentifier("segue.device_list-oad_detail", sender: self)
         }
     }
     
@@ -140,8 +139,6 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         super.prepareForSegue(segue, sender: sender)
         if segue.identifier == "segue.device_list-detail" {
-            segue.destinationViewController.setValue(selected, forKey: "data")
-        } else if segue.identifier == "segue.device_list-oad_detail" {
             segue.destinationViewController.setValue(selected, forKey: "data")
         } else if segue.identifier == "segue.quicktest" {
             segue.destinationViewController.setValue(selected, forKey: "peripheral")
