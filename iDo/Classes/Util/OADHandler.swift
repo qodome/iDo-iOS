@@ -2,7 +2,7 @@
 //  Copyright (c) 2015年 NY. All rights reserved.
 //
 
-enum OADStatus: Int {
+enum OADState: Int {
     case Available
     case NotAvailable
     case NotSupported
@@ -16,7 +16,7 @@ enum OADStatus: Int {
 }
 
 protocol OADHandler {
-    func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerState, eventData: AnyObject!)
+    func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerEvent, eventData: AnyObject!)
     
-    func oadDoUpdate(peripheral: CBPeripheral, path: String, progress: M13ProgressViewPie) -> OADStatus
+    func oadDoUpdate(peripheral: CBPeripheral, path: String, progress: M13ProgressViewPie) -> OADState
 }

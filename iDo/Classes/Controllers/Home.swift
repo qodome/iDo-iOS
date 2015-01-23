@@ -58,8 +58,8 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     }
     
     // MARK: - 🐤 BLEManagerDelegate
-    func onStateChanged(state: BLEManagerState, peripheral: CBPeripheral?) {
-        switch state {
+    func onChanged(peripheral: CBPeripheral?, event: BLEManagerEvent) {
+        switch event {
         case .PowerOff:
             title = ("bluetooth closed")
         case .Idle:
@@ -83,9 +83,11 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
             title = "Fail"
             view.backgroundColor = UIColor.blackColor()
         case .ServiceDiscovered:
-            title = LocalizedString("service discovered")
+            title = LocalizedString("service_discovered")
+        case .CharacteristicDiscovered:
+            title = LocalizedString("characteristic_discovered")
         default:
-            title = "Unknown State: \(state.rawValue)"
+            title = "Unknown State: \(event.rawValue)"
         }
     }
     

@@ -44,7 +44,6 @@
 		0ED67E8B1A2B0F5C00CA35BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E8D1A2B0F5C00CA35BE /* InfoPlist.strings */; };
 		0EDE483B1A6A65CC002CAE64 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */; };
 		0EDE483D1A6A662D002CAE64 /* CBPeripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE483C1A6A662D002CAE64 /* CBPeripheral+Extension.swift */; };
-		0EE2ADEB1A68F5590084DC24 /* BLEUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */; };
 		0EE2ADEE1A68F5E10084DC24 /* iDo1OADHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */; };
 		0EE2ADEF1A68F5E10084DC24 /* OADHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */; };
 		0EE565441A2AE656003E9331 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE565341A2AE656003E9331 /* AppDelegate.swift */; };
@@ -117,7 +116,6 @@
 		0ED67E8F1A2B0FBB00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
 		0EDE483C1A6A662D002CAE64 /* CBPeripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CBPeripheral+Extension.swift"; sourceTree = "<group>"; };
-		0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEUtils.swift; sourceTree = "<group>"; };
 		0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iDo1OADHandler.swift; sourceTree = "<group>"; };
 		0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OADHandler.swift; sourceTree = "<group>"; };
 		0EE565341A2AE656003E9331 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -362,7 +360,6 @@
 			children = (
 				0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */,
 				0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */,
-				0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */,
 				0EE565421A2AE656003E9331 /* GATTUtils.swift */,
 			);
 			path = Util;
@@ -604,7 +601,6 @@
 				0EE2ADEE1A68F5E10084DC24 /* iDo1OADHandler.swift in Sources */,
 				0E7A71BB1A6E4A4C008816C6 /* Product.swift in Sources */,
 				0E9F5AFF1A407828003BB8AD /* UIColor+Extension.swift in Sources */,
-				0EE2ADEB1A68F5590084DC24 /* BLEUtils.swift in Sources */,
 				0EE565451A2AE656003E9331 /* BLEManager.swift in Sources */,
 				0E14DB001A6E6853004FC5CE /* String+Extension.swift in Sources */,
 				0EE5654A1A2AE656003E9331 /* Home.swift in Sources */,

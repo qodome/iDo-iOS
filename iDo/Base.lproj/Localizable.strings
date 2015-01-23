@@ -15,19 +15,21 @@
 "reconnect" = "Reconnect";
 
 "temperature" = "Temperature";
-"notification_high" = "High temperature alarm";
-"notification_low" = "low temperature alarm";
+"notification_high" = "High Temperature Alarm";
+"notification_low" = "Low Temperature Alarm";
 "min" = "Min";
 "max" = "Max";
-"high" = "high";
-"low" = "low";
+"high" = "High";
+"low" = "Low";
 "temperature_unit" = "Temperature Unit";
 "review" = "Review";
 
 "name" = "Name";
 "version" = "Version";
 "model" = "Model";
+"serial_number" = "Serial Number";
 "bluetooth" = "Bluetooth";
+"software" = "Software";
 "manufacturer" = "Manufacturer";
 /* 日期 */
 "today" = "Today";

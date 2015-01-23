@@ -9,7 +9,7 @@ class DeviceDetail: TableDetail {
         super.onPrepare()
         items = [
             ["name"],
-            ["version", "model", "UUID", "bluetooth", "software", "manufacturer"]
+            ["version", "model", "serial_number", "UUID", "software", "manufacturer"]
         ]
         title = (data as CBPeripheral).name
     }
@@ -45,9 +45,9 @@ class DeviceDetail: TableDetail {
             case 1:
                 cell.detailTextLabel?.text = data?.deviceInfo?.modelNumber
             case 2:
-                cell.detailTextLabel?.text = data?.identifier.UUIDString
-            case 3:
                 cell.detailTextLabel?.text = data?.deviceInfo?.serialNumber?.uppercaseString
+            case 3:
+                cell.detailTextLabel?.text = data?.identifier.UUIDString
             case 4:
                 cell.detailTextLabel?.text = data?.deviceInfo?.softwareRevision
             case 5:

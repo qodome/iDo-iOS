@@ -159,7 +159,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         formatter.dateFormat = "yyyy-MM-dd"
         let timeZone = formatter.timeZone.secondsFromGMT / 3600
         let timeZoneString = timeZone >= 0 ? String(format: "+%02d", timeZone) : String(format: "%02d", timeZone)
-        return PATH_DOCUMENT.stringByAppendingPathComponent("temperature/\(formatter.stringFromDate(date))\(timeZoneString).json")
+        return PATH_DOCUMENTS.stringByAppendingPathComponent("temperature/\(formatter.stringFromDate(date))\(timeZoneString).json")
     }
     
     class func getTimeStamp(date: NSDate, minute: Int) -> Int {

@@ -7,7 +7,7 @@ class Settings: TableDetail {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         initSettings()
-        tableView.reloadData() // TODO: 临时，处理改变单位后回来的最高最低温问题
+        tableView.reloadData() // TODO: 临时，处理改变单位后回来的最高最低温问题，还有滚动位置问题
     }
     
     override func viewWillDisappear(animated: Bool) {

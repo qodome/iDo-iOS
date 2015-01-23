@@ -42,8 +42,8 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     }
     
     // MARK: - 🐤 BLEManagerDelegate
-    func onStateChanged(state: BLEManagerState, peripheral: CBPeripheral?) {
-        Log("设备列表界面状态更新: \(peripheral?.name) \(state.rawValue)")
+    func onChanged(peripheral: CBPeripheral?, event: BLEManagerEvent) {
+        Log("-- 设备列表界面状态更新: \(peripheral?.name) \(event.rawValue)")
         loadData()
     }
     

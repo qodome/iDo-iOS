@@ -6,7 +6,6 @@
 "notifications" = "通知";
 
 "update" = "更新";
-
 "devices" = "设备";
 "history" = "历史";
 
@@ -28,7 +27,9 @@
 "name" = "名称";
 "version" = "版本";
 "model" = "型号";
+"serial_number" = "序列号";
 "bluetooth" = "蓝牙";
+"software" = "软件";
 "manufacturer" = "制造商";
 /* 日期 */
 "today" = "今天";

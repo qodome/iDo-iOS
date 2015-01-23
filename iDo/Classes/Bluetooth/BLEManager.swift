@@ -5,7 +5,7 @@
 import CoreBluetooth
 
 protocol BLEManagerDelegate {
-    func onStateChanged(state: BLEManagerState, peripheral: CBPeripheral?)
+    func onChanged(peripheral: CBPeripheral?, event: BLEManagerEvent)
 }
 
 protocol BLEManagerDataSource {
@@ -14,10 +14,10 @@ protocol BLEManagerDataSource {
 }
 
 protocol BLEManagerOADSource {
-    func onUpdateOADInfo(status: OADStatus, info: String?, progress: UInt8)
+    func onUpdateOADInfo(state: OADState, info: String?, progress: UInt8)
 }
 
-enum BLEManagerState: Int {
+enum BLEManagerEvent: Int {
     case PowerOff, Idle, Scan, Discovered, Connecting, Connected, Disconnected, Fail,ServiceDiscovered, CharacteristicDiscovered, DataReceived
 }
 
@@ -36,6 +36,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var serviceUUIDs: [CBUUID] = []
     var reconnectCount = 0
     
+    var characteristicFirmware: CBCharacteristic? // 方便调用
+    
     // SO: http://stackoverflow.com/questions/24024549/dispatch-once-singleton-model-in-swift
     class var sharedManager: BLEManager {
         struct Singleton {
@@ -52,19 +54,18 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         serviceUUIDs = [
             CBUUID(string: kServiceUUIDString),
             CBUUID(string: BLE_CURRENT_TIME_SERVICE),
-            CBUUID(string: BLE_DEVICE_INFORMATION),
-            CBUUID(string: IDO1_OAD_SERVICE)
+            CBUUID(string: BLE_DEVICE_INFORMATION)
         ]
     }
     
     // MARK: - 💛 自定义方法 (Custom Method)
     func startScan() {
-        delegate?.onStateChanged(.Scan, peripheral: nil)
+        delegate?.onChanged(nil, event: .Scan)
         central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUIDString)], options: nil)
     }
     
     func connect(peripheral: CBPeripheral) { // 连接
-        delegate?.onStateChanged(.Connecting, peripheral: peripheral)
+        delegate?.onChanged(peripheral, event: .Connecting)
         central.connectPeripheral(peripheral, options: nil)
     }
     
@@ -79,7 +80,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     /** 解绑设备 */
     func unbind(peripheral: CBPeripheral) {
-        Log("解绑 设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
+        Log("解绑 设备 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         NSUserDefaults.standardUserDefaults().removeObjectForKey(PREF_DEFAULT_DEVICE)
         central.cancelPeripheralConnection(peripheral)
     }
@@ -90,20 +91,20 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     // MARK: - 💙 CBCentralManagerDelegate
     func centralManagerDidUpdateState(central: CBCentralManager!) {
-        Log("蓝牙状态更新: \(central.state.rawValue)")
-        var state = BLEManagerState.PowerOff
+        Log("蓝牙状态更新 \(central.state.rawValue)")
+        var event = BLEManagerEvent.PowerOff
         switch central.state {
         case .PoweredOn:
-            state = .Idle
+            event = .Idle
             central.scanForPeripheralsWithServices([CBUUID(string: kServiceUUIDString)], options: nil)
         default:
             peripherals.removeAll(keepCapacity: false)
         }
-        delegate?.onStateChanged(state, peripheral: nil)
+        delegate?.onChanged(nil, event: event)
     }
     
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
-        delegate?.onStateChanged(.Discovered, peripheral: peripheral)
+        delegate?.onChanged(peripheral, event: .Discovered)
         if !contains(peripherals, peripheral) { // 加入设备队列
             peripherals.append(peripheral)
         }
@@ -115,12 +116,12 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             central.stopScan() // 停止搜寻
         }
         let s = peripheral.identifier.UUIDString == defaultDevice() ? "" : "未"
-        Log("发现 \(s)绑定设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
+        Log("🆔 发现 \(s)绑定设备 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
     }
     
     func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
-        Log("💟 连上 设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
-        delegate?.onStateChanged(.Connected, peripheral: peripheral)
+        Log("🛂 连上 设备 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
+        delegate?.onChanged(peripheral, event: .Connected)
         oadHelper?.oadHandleEvent(peripheral, event: .Connected, eventData: nil)
 //        central.stopScan() // 停止搜寻
         peripheral.delegate = self
@@ -129,14 +130,14 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     // MARK: -      处理异常
     func centralManager(central: CBCentralManager!, didFailToConnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
-        Log("连接失败: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
-        delegate?.onStateChanged(.Fail, peripheral: peripheral)
+        Log("❌ 连接失败 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
+        delegate?.onChanged(peripheral, event: .Fail)
         oadHelper?.oadHandleEvent(peripheral, event: .Fail, eventData: nil)
     }
     
     func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) { // 这里不是真的断开，会有延时
-        Log("断开 设备: \(peripheral.name) (\(peripheral.identifier.UUIDString))")
-        delegate?.onStateChanged(.Disconnected, peripheral: peripheral)
+        Log("🅿️ 断开 设备 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
+        delegate?.onChanged(peripheral, event: .Disconnected)
         oadHelper?.oadHandleEvent(peripheral, event: .Disconnected, eventData: nil)
         if peripheral.identifier.UUIDString == defaultDevice() { // 无限次自动重连
             reconnectCount++
@@ -151,19 +152,18 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 Log("✴️ 发现 服务 \(service.UUID)")
                 switch service.UUID.UUIDString {
                 case kServiceUUIDString:
-                    delegate?.onStateChanged(.ServiceDiscovered, peripheral: peripheral)
+                    delegate?.onChanged(peripheral, event: .ServiceDiscovered)
                     peripheral.discoverCharacteristics([CBUUID(string: kCharacteristicUUIDString)], forService: service)
                 case BLE_CURRENT_TIME_SERVICE:
                     peripheral.discoverCharacteristics([CBUUID(string: BLE_DATE_TIME)], forService: service)
                 case BLE_DEVICE_INFORMATION:
                     peripheral.discoverCharacteristics([CBUUID(string: BLE_MODEL_NUMBER_STRING), CBUUID(string: BLE_SERIAL_NUMBER_STRING), CBUUID(string: BLE_FIRMWARE_REVISION_STRING), CBUUID(string: BLE_SOFTWARE_REVISION_STRING), CBUUID(string: BLE_MANUFACTURER_NAME_STRING)], forService: service)
-                case IDO1_OAD_SERVICE:
-                    peripheral.discoverCharacteristics([CBUUID(string: IDO1_OAD_IDENTIFY), CBUUID(string: IDO1_OAD_BLOCK)], forService: service)
                 default: break
                 }
             }
+            oadHelper?.oadHandleEvent(peripheral, event: .ServiceDiscovered, eventData: nil)
         } else {
-            println("error in service discovery")
+            Log("❌ error in service discovery")
             central.cancelPeripheralConnection(peripheral)
         }
     }
@@ -174,6 +174,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             case kServiceUUIDString:
                 for characteristic in service.characteristics as [CBCharacteristic] {
                     if kCharacteristicUUIDString == characteristic.UUID.UUIDString {
+                        delegate?.onChanged(peripheral, event: .CharacteristicDiscovered)
                         peripheral.setNotifyValue(true, forCharacteristic: characteristic)
                         break
                     }
@@ -185,7 +186,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                         let calendar = NSCalendar.autoupdatingCurrentCalendar() // TODO: 用这个日历是否总是对
                         calendar.timeZone = NSTimeZone(name: "UTC")!
                         let components = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay | .CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitSecond, fromDate: NSDate())
-                        let bytes: [UInt8] = [UInt8(components.year & 0xFF), UInt8((components.year & 0xFF00) >> 8), UInt8(components.month), UInt8(components.day), UInt8(components.hour), UInt8(components.minute), UInt8(components.second)]
+                        let bytes = [UInt8(components.year & 0xFF), UInt8((components.year & 0xFF00) >> 8), UInt8(components.month), UInt8(components.day), UInt8(components.hour), UInt8(components.minute), UInt8(components.second)]
 //                        println(bytes)
                         peripheral.writeValue(NSData(bytes: bytes, length: bytes.count), forCharacteristic: characteristic, type: .WithResponse)
                         peripheral.readValueForCharacteristic(characteristic)
@@ -194,13 +195,17 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             case BLE_DEVICE_INFORMATION:
                 for characteristic in service.characteristics as [CBCharacteristic] {
                     Log("✳️ 发现 特性 \(characteristic.UUID)")
+                    if characteristic.UUID.UUIDString == BLE_FIRMWARE_REVISION_STRING {
+                        characteristicFirmware = characteristic
+                    }
                     peripheral.readValueForCharacteristic(characteristic)
                 }
             default:
-                Log("✴️ 未知服务 \(service.UUID) ⁉️ ")
+                Log("✴️ 未知服务 ⁉️ \(service.UUID) ")
             }
+            oadHelper?.oadHandleEvent(peripheral, event: .CharacteristicDiscovered, eventData: service)
         } else {
-            println("error in char discovery")
+            Log("❌ error in char discovery")
             central.cancelPeripheralConnection(peripheral)
         }
     }
@@ -242,7 +247,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             }
             oadHelper?.oadHandleEvent(peripheral, event: .DataReceived, eventData: characteristic)
         } else {
-            println("error in data")
+            Log("❌ error in data")
             central.cancelPeripheralConnection(peripheral)
         }
     }

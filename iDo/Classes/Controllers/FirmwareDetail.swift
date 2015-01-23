@@ -37,7 +37,7 @@ class FirmwareDetail: TableDetail {
                     url = url.stringByReplacingOccurrencesOfString("A.bin", withString: "B.bin")
                 }
             }
-            download(url, directory: PATH_DOCUMENT.stringByAppendingPathComponent("\(entity.modelNumber)"), size: entity.size.integerValue)
+            download(url, directory: PATH_DOCUMENTS.stringByAppendingPathComponent("\(entity.modelNumber)"), size: entity.size.integerValue)
         }
     }
     
