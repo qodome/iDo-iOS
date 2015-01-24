@@ -18,7 +18,7 @@ protocol BLEManagerOADSource {
 }
 
 enum BLEManagerEvent: Int {
-    case PowerOff, Idle, Scan, Discovered, Connecting, Connected, Disconnected, Fail,ServiceDiscovered, CharacteristicDiscovered, DataReceived
+    case PowerOff, Idle, Scan, Discovered, Connecting, Connected, Disconnected, Fail,ServiceDiscovered, CharacteristicDiscovered
 }
 
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
@@ -122,7 +122,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
         Log("🛂 连上 设备 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onChanged(peripheral, event: .Connected)
-        oadHelper?.oadHandleEvent(peripheral, event: .Connected, eventData: nil)
+        oadHelper?.oadHandleEvent(peripheral, event: .Connected)
 //        central.stopScan() // 停止搜寻
         peripheral.delegate = self
         peripheral.discoverServices(serviceUUIDs)
@@ -132,13 +132,13 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManager(central: CBCentralManager!, didFailToConnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
         Log("❌ 连接失败 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onChanged(peripheral, event: .Fail)
-        oadHelper?.oadHandleEvent(peripheral, event: .Fail, eventData: nil)
+        oadHelper?.oadHandleEvent(peripheral, event: .Fail)
     }
     
     func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) { // 这里不是真的断开，会有延时
         Log("🅿️ 断开 设备 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onChanged(peripheral, event: .Disconnected)
-        oadHelper?.oadHandleEvent(peripheral, event: .Disconnected, eventData: nil)
+        oadHelper?.oadHandleEvent(peripheral, event: .Disconnected)
         if peripheral.identifier.UUIDString == defaultDevice() { // 无限次自动重连
             reconnectCount++
             connect(peripheral)
@@ -161,7 +161,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 default: break
                 }
             }
-            oadHelper?.oadHandleEvent(peripheral, event: .ServiceDiscovered, eventData: nil)
+            oadHelper?.oadHandleEvent(peripheral, event: .ServiceDiscovered)
         } else {
             Log("❌ error in service discovery")
             central.cancelPeripheralConnection(peripheral)
@@ -203,7 +203,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             default:
                 Log("✴️ 未知服务 ⁉️ \(service.UUID) ")
             }
-            oadHelper?.oadHandleEvent(peripheral, event: .CharacteristicDiscovered, eventData: service)
+            oadHelper?.onCharacteristicDiscovered(peripheral, service: service)
         } else {
             Log("❌ error in char discovery")
             central.cancelPeripheralConnection(peripheral)
@@ -245,7 +245,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 peripheral.deviceInfo = info
             default: break
             }
-            oadHelper?.oadHandleEvent(peripheral, event: .DataReceived, eventData: characteristic)
+            oadHelper?.onUpdateValue(peripheral, characteristic: characteristic)
         } else {
             Log("❌ error in data")
             central.cancelPeripheralConnection(peripheral)

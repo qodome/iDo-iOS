@@ -358,8 +358,8 @@
 		0EE565411A2AE656003E9331 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */,
 				0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */,
+				0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */,
 				0EE565421A2AE656003E9331 /* GATTUtils.swift */,
 			);
 			path = Util;

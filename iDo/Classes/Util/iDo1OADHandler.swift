@@ -2,29 +2,25 @@
 //  Copyright (c) 2015年 NY. All rights reserved.
 //
 
-enum IDO1_IMG_TYPE: Int {
-    case A
-    case B
-}
-
-class iDo1OADHandler: NSObject, OADHandler {
+class iDo1OADHandler: OADHandler {
     
-    let totalBlockNumber: UInt16 = 0x1E80
+    let IDO1_OAD_SERVICE = "F000FFC0-0451-4000-B000-000000000000"
+    let IDO1_OAD_IDENTIFY = "F000FFC1-0451-4000-B000-000000000000"
+    let IDO1_OAD_BLOCK = "F000FFC2-0451-4000-B000-000000000000"
+    
+    let totalBlockNumber = 0x1E80
     
     private var candImgBuf: NSData!
     private var switchToWrite = false
-    private var writeIdx: UInt16?
+    private var writeIdx = 0
     private var threadLock: NSLock?
-    private var liveImgType: IDO1_IMG_TYPE?
     private var newPeripheral: CBPeripheral!
     private var SLEEP_BREAKER = 1
     private var identifyCnt = 0
-    private var lastPercent: UInt8 = 0
+    private var lastPercent = 0
     private var state = OADState.NotAvailable
     private var blockCntDown = 0
     
-    
-    private var service: CBService?
     private var characteristicId: CBCharacteristic?
     private var characteristicBlock: CBCharacteristic?
     
@@ -41,7 +37,7 @@ class iDo1OADHandler: NSObject, OADHandler {
         threadLock = NSLock()
     }
     
-    func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerEvent, eventData: AnyObject!) {
+    override func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerEvent) {
         switch event {
         case BLEManagerEvent.ServiceDiscovered:
             println("iDo1OADHandler got service discovered notify")
@@ -49,76 +45,8 @@ class iDo1OADHandler: NSObject, OADHandler {
                 for service in peripheral.services as [CBService] {
                     println("haha \(service)")
                     if service.UUID.UUIDString == IDO1_OAD_SERVICE {
-                        self.service = service
                         peripheral.discoverCharacteristics([CBUUID(string: IDO1_OAD_IDENTIFY), CBUUID(string: IDO1_OAD_BLOCK)], forService: service)
                         break
-                    }
-                }
-            }
-        case BLEManagerEvent.CharacteristicDiscovered:
-            println("iDo1OADHandler got char discovered notify")
-            if state == .Available {
-                if (eventData as CBService).UUID.UUIDString == IDO1_OAD_SERVICE {
-                    for characteristic in eventData.characteristics as [CBCharacteristic] {
-                        if characteristic.UUID.UUIDString == IDO1_OAD_IDENTIFY {
-                            characteristicId = characteristic
-                            state = .Ready
-                        } else if characteristic.UUID.UUIDString == IDO1_OAD_BLOCK {
-                            characteristicBlock = characteristic
-                            state = .Ready
-                        }
-                    }
-                }
-            }
-        case BLEManagerEvent.DataReceived:
-            if state == .ProgressUpdate {
-                if eventData.UUID == CBUUID(string: IDO1_OAD_BLOCK) {
-//                    var bytes = [UInt8](count: 2, repeatedValue: 0)
-//                    eventData.value!.getBytes(&bytes, length: bytes.count)
-                    var bytes = UnsafeMutablePointer<UInt8>.alloc(2)
-                    memcpy(bytes, eventData.value!.bytes, 2)
-                    var idx: UInt16 = UInt16(bytes[1]) << 8 | UInt16(bytes[0])
-                    println("Got block notification \(idx)")
-                    threadLock?.lock()
-                    switchToWrite = true
-                    writeIdx = idx
-                    blockCntDown = 10
-                    threadLock?.unlock()
-                } else if eventData.UUID == CBUUID(string: IDO1_OAD_IDENTIFY) {
-                    var ptr: UnsafePointer<UInt8>?
-                    // Write Image Identify UUID
-                    println("Got identify notification")
-                    identifyCnt++
-                    if identifyCnt > 5 {
-                        // Tell update worker this firmware image does not match!
-                        state = .NotSupported
-                        threadLock?.lock()
-                        switchToWrite = true
-                        threadLock?.unlock()
-                    }
-                    ptr = UnsafePointer<UInt8>(candImgBuf.bytes)
-                    ptr = ptr! + 4
-                    peripheral.writeValue(NSData(bytes: ptr!, length: 8), forCharacteristic: characteristicId, type: .WithResponse)
-                }
-            } else if state == .ConfirmResult {
-                if eventData.UUID == CBUUID(string: BLE_FIRMWARE_REVISION_STRING) {
-                    var bytes = UnsafeMutablePointer<CChar>.alloc(4)
-                    memcpy(bytes, eventData.value!.bytes + 6, 4)
-                    bytes[3] = 0
-                    
-                    println("Image version: " + String.fromCString(bytes)!)
-                    
-                    memcpy(bytes, eventData.value!.bytes + 8, 2)
-                    bytes[1] = 0
-                    
-                    // Check the OAD result
-                    if (String.fromCString(bytes) == "A" && liveImgType == .B) ||
-                        (String.fromCString(bytes) == "B" && liveImgType == .A) {
-                            println("OAD success")
-                            state = .Success
-                    } else {
-                        println("OAD failed")
-                        state = .Failed
                     }
                 }
             }
@@ -142,38 +70,77 @@ class iDo1OADHandler: NSObject, OADHandler {
         }
     }
     
-    func oadDoUpdate(peripheral: CBPeripheral, path: String, progress: M13ProgressViewPie) -> OADState {
+    override func onCharacteristicDiscovered(peripheral: CBPeripheral, service: CBService) {
+        println("iDo1OADHandler got char discovered notify")
+        if state == .Available {
+            if service.UUID.UUIDString == IDO1_OAD_SERVICE {
+                for characteristic in service.characteristics as [CBCharacteristic] {
+                    if characteristic.UUID.UUIDString == IDO1_OAD_IDENTIFY {
+                        characteristicId = characteristic
+                        state = .Ready
+                    } else if characteristic.UUID.UUIDString == IDO1_OAD_BLOCK {
+                        characteristicBlock = characteristic
+                        state = .Ready
+                    }
+                }
+            }
+        }
+    }
+    
+    override func onUpdateValue(peripheral: CBPeripheral, characteristic: CBCharacteristic) {
+        if state == .ProgressUpdate {
+            if characteristic.UUID.UUIDString == IDO1_OAD_IDENTIFY {
+                var ptr: UnsafePointer<UInt8>?
+                // Write Image Identify UUID
+                println("Got identify notification")
+                identifyCnt++
+                if identifyCnt > 5 {
+                    // Tell update worker this firmware image does not match!
+                    state = .NotSupported
+                    threadLock?.lock()
+                    switchToWrite = true
+                    threadLock?.unlock()
+                }
+                ptr = UnsafePointer<UInt8>(candImgBuf.bytes)
+                ptr = ptr! + 4
+                peripheral.writeValue(NSData(bytes: ptr!, length: 8), forCharacteristic: characteristicId, type: .WithResponse)
+            } else if characteristic.UUID.UUIDString == IDO1_OAD_BLOCK {
+                var bytes = [UInt8](count: 2, repeatedValue: 0)
+                characteristic.value.getBytes(&bytes, length: bytes.count)
+                //                    var bytes = UnsafeMutablePointer<UInt8>.alloc(2)
+                //                    memcpy(bytes, eventData.value!.bytes, 2)
+                let idx = Int(getInt8(bytes[1])) << 8 | Int(getInt8(bytes[0]))
+                println("Got block notification \(idx)")
+                threadLock?.lock()
+                switchToWrite = true
+                writeIdx = idx
+                blockCntDown = 10
+                threadLock?.unlock()
+            }
+        } else if state == .ConfirmResult {
+            if characteristic.UUID.UUIDString == BLE_FIRMWARE_REVISION_STRING {
+                let revision = getString(characteristic.value)
+                if getString(characteristic.value) == revision {
+                    state = .Success
+                } else {
+                    state = .Failed
+                }
+            }
+        }
+    }
+    
+    override func update(peripheral: CBPeripheral, data: NSData, progress: M13ProgressView) -> OADState {
         var ptr: UnsafePointer<UInt8>?
-        var bytes = [UInt8](count: 18, repeatedValue: 0)
         var sleepPeriod: UInt32 = 18000
         var sleepCnt = 0
-        
-        progress.setProgress(0.0, animated: true)
-        
+        progress.setProgress(0.0, animated: true) // 进度条从0开始
         // Setup BLEManager handler to receive packets
         identifyCnt = 0
         state = .Available
-        
         BLEManager.sharedManager.oadHelper = self
-        // Read file
-        let data = NSData.dataWithContentsOfMappedFile(path) as? NSData
-        if data == nil {
-            println("Error: cannot get " + path)
-            BLEManager.sharedManager.oadHelper = nil
-            state = .NotAvailable
-            progress.performAction(M13ProgressViewActionFailure, animated: true)
-            return state
-        } else {
-            candImgBuf = data!
-        }
-        if path.lastPathComponent.rangeOfString("A.bin", options: .BackwardsSearch) != nil {
-            liveImgType = .B
-        } else {
-            liveImgType = .A
-        }
-        // Discover OAD service
+        candImgBuf = data
         Log("⭕️ iDo1OADHandler start service discovery")
-        peripheral.discoverServices([CBUUID(string: IDO1_OAD_SERVICE)])
+        peripheral.discoverServices([CBUUID(string: IDO1_OAD_SERVICE)]) // 发现服务
         
         sleepCnt = 0
         while state == .Available {
@@ -194,11 +161,9 @@ class iDo1OADHandler: NSObject, OADHandler {
         state = .ProgressUpdate
         peripheral.setNotifyValue(true, forCharacteristic: characteristicId)
         peripheral.setNotifyValue(true, forCharacteristic: characteristicBlock)
-        
         ptr = UnsafePointer<UInt8>(candImgBuf.bytes)
         ptr = ptr! + 4
-        peripheral.writeValue(NSData(bytes: ptr!, length: 8), forCharacteristic: characteristicId, type: .WithResponse)
-        
+        peripheral.writeValue(NSData(bytes: ptr!, length: 8), forCharacteristic: characteristicId, type: .WithResponse) // 先写8位
         // Waiting for UI to wakup us
         sleepCnt = 0
         while true {
@@ -230,12 +195,12 @@ class iDo1OADHandler: NSObject, OADHandler {
         // The main OAD loop
         sleepCnt = 0
         while true {
-            var nextBlockIdx: UInt16?
+            var nextBlockIdx = 0
             
             threadLock?.lock()
             nextBlockIdx = writeIdx
             if nextBlockIdx < totalBlockNumber {
-                writeIdx? += 1
+                writeIdx++
             }
             if blockCntDown > 0 {
                 blockCntDown--
@@ -248,25 +213,23 @@ class iDo1OADHandler: NSObject, OADHandler {
             if nextBlockIdx < totalBlockNumber {
                 sleepCnt = 0
                 ptr = UnsafePointer<UInt8>(candImgBuf.bytes)
-                let offset = Int(16) * Int(nextBlockIdx!)
+                let offset = 16 * nextBlockIdx
                 ptr = ptr! + offset
-                
-                for idx in 0..<16 {
-                    // for var idx = 0; idx < 16; idx++ {
-                    bytes[idx + 2] = ptr![idx]
+                var bytes = [UInt8](count: 18, repeatedValue: 0) // 18位数据
+                bytes[0] = UInt8(nextBlockIdx & 0xFF)
+                bytes[1] = UInt8((nextBlockIdx & 0xFF00) >> 8)
+                for i in 2..<18 {
+                    bytes[i] = ptr![i - 2]
                 }
-                bytes[0] = UInt8(nextBlockIdx! & 0xFF)
-                bytes[1] = UInt8((nextBlockIdx! & 0xFF00) >> 8)
-                peripheral.writeValue(NSData(bytes: bytes, length: 18), forCharacteristic: characteristicBlock, type: .WithoutResponse)
-                
-                if nextBlockIdx! % 78 == 0 {
-                    if UInt8(nextBlockIdx! / 78) > lastPercent {
-                        println("Update percent: \(UInt8(nextBlockIdx! / 78))%")
-                        progress.setProgress(CGFloat(Float(nextBlockIdx! / 78) / 100.0), animated: true)
-                        lastPercent = UInt8(nextBlockIdx! / 78)
+                peripheral.writeValue(NSData(bytes: bytes, length: bytes.count), forCharacteristic: characteristicBlock, type: .WithoutResponse)
+                if nextBlockIdx % 78 == 0 {
+                    let percent = nextBlockIdx / 78
+                    if percent > lastPercent {
+                        println("Update percent: \(percent)%")
+                        progress.setProgress(CGFloat(percent) / 100, animated: true)
+                        lastPercent = percent
                     }
                 }
-                
                 usleep(sleepPeriod)
             } else {
                 if state == .Reconnect || state == .ConfirmResult {

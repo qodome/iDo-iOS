@@ -15,8 +15,17 @@ enum OADState: Int {
     case Failed
 }
 
-protocol OADHandler {
-    func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerEvent, eventData: AnyObject!)
+class OADHandler: NSObject {
     
-    func oadDoUpdate(peripheral: CBPeripheral, path: String, progress: M13ProgressViewPie) -> OADState
+    var revision = "" // 目标版本
+    
+    func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerEvent) {}
+    
+    func onCharacteristicDiscovered(peripheral: CBPeripheral, service: CBService) {}
+    
+    func onUpdateValue(peripheral: CBPeripheral, characteristic: CBCharacteristic) {}
+    
+    func update(peripheral: CBPeripheral, data: NSData, progress: M13ProgressView) -> OADState {
+        return .NotAvailable
+    }
 }

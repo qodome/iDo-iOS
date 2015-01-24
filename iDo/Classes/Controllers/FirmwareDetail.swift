@@ -25,20 +25,22 @@ class FirmwareDetail: TableDetail {
     }
     
     override func onLoadSuccess<E : Firmware>(entity: E) {
-        super.onLoadSuccess(entity)
-        let remote = String(entity.revision)
-        let local = "0.0.0(32B)"
+        let remote: String = entity.revision
+        let local = peripheral.deviceInfo?.firmwareRevision != nil ? peripheral.deviceInfo!.firmwareRevision : ""
+        println("aaaaa\(local)")
         if remote != local { // 如果版本号不同
-            var url = String(entity.downloadUrl)
-            // 以下基于服务器端永远只返回A.bin
-            let range = remote.rangeOfString("A)", options: .BackwardsSearch)
-            if entity.modelNumber == "ID14TB" && remote.substringToIndex(range!.startIndex) != local.substringToIndex(range!.startIndex) { // 比较去掉A)之后的版本号
-                if local.substringWithRange(Range(start: range!.startIndex, end: advance(range!.startIndex, 1))) == "A" { // 如果本地为A去找B，为B无需处理
-                    url = url.stringByReplacingOccurrencesOfString("A.bin", withString: "B.bin")
+            if entity.modelNumber == "ID14TB" { // 注意: 以下基于服务器端永远只返回A.bin
+                let range = remote.rangeOfString("A)", options: .BackwardsSearch)
+                if remote.substringToIndex(range!.startIndex) != local.substringToIndex(range!.startIndex) { // 比较去掉A)之后的版本号
+                    if local.rangeOfString("A)") != nil { // 如果本地为A去找B，为B无需处理
+                        entity.downloadUrl = entity.downloadUrl.stringByReplacingOccurrencesOfString("A.bin", withString: "B.bin")
+                        entity.revision = entity.revision.stringByReplacingOccurrencesOfString("A)", withString: "B)") // 为传递到OAD用
+                    }
                 }
             }
-            download(url, directory: PATH_DOCUMENTS.stringByAppendingPathComponent("\(entity.modelNumber)"), size: entity.size.integerValue)
+            download(entity.downloadUrl, directory: PATH_DOCUMENTS.stringByAppendingPathComponent("\(entity.modelNumber)"), size: entity.size.integerValue)
         }
+        super.onLoadSuccess(entity)
     }
     
     // MARK: - 💛 自定义方法 (Custom Method)
@@ -75,9 +77,10 @@ class FirmwareDetail: TableDetail {
     func OADDownload() {
         switch (data as Firmware).modelNumber {
         case "ID14TB":
-            progress.performAction(M13ProgressViewActionNone, animated: false)
+            progress.performAction(M13ProgressViewActionNone, animated: true)
             progress.hidden = false
-            iDo1OADHandler.sharedManager.oadDoUpdate(peripheral, path: path, progress: progress)
+            iDo1OADHandler.sharedManager.revision = (data as Firmware).revision
+            iDo1OADHandler.sharedManager.update(peripheral, data: NSData.dataWithContentsOfMappedFile(path) as NSData, progress: progress)
         default: break
         }
     }

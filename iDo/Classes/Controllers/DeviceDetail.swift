@@ -45,7 +45,7 @@ class DeviceDetail: TableDetail {
             case 1:
                 cell.detailTextLabel?.text = data?.deviceInfo?.modelNumber
             case 2:
-                cell.detailTextLabel?.text = data?.deviceInfo?.serialNumber?.uppercaseString
+                cell.detailTextLabel?.text = data?.deviceInfo?.serialNumber.uppercaseString
             case 3:
                 cell.detailTextLabel?.text = data?.identifier.UUIDString
             case 4:
