@@ -35,7 +35,6 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     override func onPrepare() {
         super.onPrepare()
         title = LocalizedString("devices")
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -64), forBarMetrics: .Default)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
         (listView as UITableView).registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
         refreshControl.removeFromSuperview()

@@ -18,7 +18,7 @@ protocol BLEManagerOADSource {
 }
 
 enum BLEManagerEvent: Int {
-    case PowerOff, Idle, Scan, Discovered, Connecting, Connected, Disconnected, Fail,ServiceDiscovered, CharacteristicDiscovered
+    case PowerOff, Idle, Scan, Discovered, Connecting, Connected, Disconnected, Fail,ServiceDiscovered
 }
 
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
@@ -173,7 +173,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             case kServiceUUIDString:
                 for characteristic in service.characteristics as [CBCharacteristic] {
                     if kCharacteristicUUIDString == characteristic.UUID.UUIDString {
-                        delegate?.onChanged(peripheral, event: .CharacteristicDiscovered)
                         peripheral.setNotifyValue(true, forCharacteristic: characteristic)
                         break
                     }

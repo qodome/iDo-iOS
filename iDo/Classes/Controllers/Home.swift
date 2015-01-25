@@ -38,6 +38,9 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if !developer {
+            title = ""
+        }
         setNavigationBarStyle(.Transparent)
         BLEManager.sharedManager.delegate = self
         if data.last?.close != nil { // 从Settings回来重算背景色
@@ -59,35 +62,35 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     
     // MARK: - 🐤 BLEManagerDelegate
     func onChanged(peripheral: CBPeripheral?, event: BLEManagerEvent) {
-        switch event {
-        case .PowerOff:
-            title = ("bluetooth closed")
-        case .Idle:
-            view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
-        case .Scan:
-            title = LocalizedString("scan") // Scan不要加颜色，有广播信息的时候会乱
-        case .Discovered:
-            title = LocalizedString("discovered \(BLEManager.sharedManager.reconnectCount)")
-        case .Connecting:
-            title = LocalizedString("connecting")
-        case .Connected:
-            title = LocalizedString("connected")
-        case .Disconnected:
-            view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
-            if BLEManager.sharedManager.defaultDevice() == nil {
-                title = LocalizedString("no_device")
-            } else {
-                title = LocalizedString("reconnecting")
+        if developer {
+            switch event {
+            case .PowerOff:
+                title = ("bluetooth closed")
+            case .Idle:
+                view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
+            case .Scan:
+                title = LocalizedString("scan") // Scan不要加颜色，有广播信息的时候会乱
+            case .Discovered:
+                title = LocalizedString("discovered \(BLEManager.sharedManager.reconnectCount)")
+            case .Connecting:
+                title = LocalizedString("connecting")
+            case .Connected:
+                title = LocalizedString("connected")
+            case .Disconnected:
+                view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
+                if BLEManager.sharedManager.defaultDevice() == nil {
+                    title = LocalizedString("no_device")
+                } else {
+                    title = LocalizedString("reconnecting")
+                }
+            case .Fail:
+                title = "Fail"
+                view.backgroundColor = UIColor.blackColor()
+            case .ServiceDiscovered:
+                title = LocalizedString("service_discovered")
+            default:
+                title = "Unknown State: \(event.rawValue)"
             }
-        case .Fail:
-            title = "Fail"
-            view.backgroundColor = UIColor.blackColor()
-        case .ServiceDiscovered:
-            title = LocalizedString("service_discovered")
-        case .CharacteristicDiscovered:
-            title = LocalizedString("characteristic_discovered")
-        default:
-            title = "Unknown State: \(event.rawValue)"
         }
     }
     
@@ -95,7 +98,9 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     func onUpdateTemperature(var value: Double, peripheral: CBPeripheral?) {
         value = round(value / 0.1) * 0.1 // 四舍五入保留一位小数
         updateUI(value)
-        title = peripheral?.name
+        if developer {
+            title = peripheral?.name
+        }
         // 初始化一个温度对象，当前时间最接近的5分钟频率
         let date = NSDate()
         let temp = Temperature(timeStamp: History.getTimeStamp(date, minute: 5), value: value)

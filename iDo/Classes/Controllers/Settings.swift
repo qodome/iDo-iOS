@@ -22,7 +22,8 @@ class Settings: TableDetail {
             [R.Pref.NotificationLow.rawValue, R.Pref.NotificationHigh.rawValue],
             [R.Pref.LowTemperature.rawValue, R.Pref.HighTemperature.rawValue],
             [R.Pref.TemperatureUnit.rawValue],
-            [R.Pref.Review.rawValue]
+            [R.Pref.Review.rawValue],
+            [R.Pref.Developer.rawValue]
         ]
         title = LocalizedString("settings")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "cancel")
@@ -52,6 +53,11 @@ class Settings: TableDetail {
             cell.selectionStyle = .Default
         case 3:
             cell.accessoryType = .DisclosureIndicator
+        case 4:
+            let switchView = UISwitch()
+            switchView.on = getBool(item)
+            switchView.addTarget(self, action: "developer:", forControlEvents: .ValueChanged)
+            cell.accessoryView = switchView
         default: break
         }
         return cell
@@ -104,5 +110,10 @@ class Settings: TableDetail {
         let value = round(Double(sender.value) / 0.1) * 0.1
         putDouble(sender.tag == 0 ? R.Pref.LowTemperature.rawValue : R.Pref.HighTemperature.rawValue, value)
         tableView.cellForRowAtIndexPath(NSIndexPath(forRow: sender.tag, inSection: 1))?.textLabel?.text = (sender.tag == 0 ? LocalizedString("low") : LocalizedString("high")) + " \(transformTemperature(value, temperatureUnit))"
+    }
+    
+    func developer(sender: UISwitch) {
+        let value = sender.on
+        putBool(R.Pref.Developer.rawValue, value)
     }
 }

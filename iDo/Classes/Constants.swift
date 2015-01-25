@@ -19,6 +19,7 @@ var high = 37.0
 var lowAlert = false
 var highAlert = true
 var temperatureUnit = ""
+var developer = false
 
 func initSettings() {
     low = getDouble(R.Pref.LowTemperature.rawValue, defaultValue: 35)
@@ -26,4 +27,5 @@ func initSettings() {
     lowAlert = getBool(R.Pref.NotificationLow.rawValue)
     highAlert = getBool(R.Pref.NotificationHigh.rawValue, defaultValue: true)
     temperatureUnit = getPref(R.Pref.TemperatureUnit.rawValue, defaultValue: "℃")
+    developer = getBool(R.Pref.Developer.rawValue)
 }

@@ -24,6 +24,7 @@
 "low" = "Low";
 "temperature_unit" = "Temperature Unit";
 "review" = "Review";
+"developer" = "Developer";
 
 "name" = "Name";
 "version" = "Version";

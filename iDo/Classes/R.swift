@@ -10,6 +10,7 @@ class R {
         case NotificationHigh = "notification_high"
         case TemperatureUnit = "temperature_unit"
         case Review = "review"
+        case Developer = "developer"
     }
     
     enum Color: Int {

@@ -24,6 +24,7 @@
 "low" = "最低";
 "temperature_unit" = "温度单位";
 "review" = "评分";
+"developer" = "开发者";
 
 "name" = "名称";
 "version" = "版本";
