@@ -121,10 +121,9 @@ class iDo1OADHandler: OADHandler {
         }
     }
     
-    override func update(peripheral: CBPeripheral, data: NSData, progress: M13ProgressView) -> OADState {
+    override func update(peripheral: CBPeripheral, data: NSData, progress: M13ProgressHUD) -> OADState {
         var sleepPeriod: UInt32 = 18000
         var sleepCnt = 0
-        progress.setProgress(0.0, animated: true) // 进度条从0开始
         // Setup BLEManager handler to receive packets
         identifyCnt = 0
         state = .Available
@@ -194,7 +193,6 @@ class iDo1OADHandler: OADHandler {
                 peripheral.writeValue(NSData(bytes: [UInt8(next & 0xFF), UInt8((next & 0xFF00) >> 8)] + buffer, length: 18), forCharacteristic: characteristicBlock, type: .WithoutResponse)
                 if next % 78 == 0 {
                     let percent = next / 78
-                    println("Update percent: \(percent)%")
                     progress.setProgress(CGFloat(percent) / 100, animated: true)
                 }
                 usleep(sleepPeriod)
@@ -240,12 +238,18 @@ class iDo1OADHandler: OADHandler {
         return getState(state, progress: progress)
     }
     
-    private func getState(state: OADState, progress: M13ProgressView) -> OADState {
+    private func getState(state: OADState, progress: M13ProgressHUD) -> OADState {
         self.state = state
         if state == .NotSupported {
             BLEManager.sharedManager.oadHelper = nil
         }
-        progress.performAction(state == .Success ? M13ProgressViewActionSuccess : M13ProgressViewActionFailure, animated: true)
+        delay(0.5 + Double(progress.animationDuration)) {
+            progress.performAction(state == .Success ? M13ProgressViewActionSuccess : M13ProgressViewActionFailure, animated: true)
+            delay(1 + Double(progress.animationDuration)) {
+                progress.hide(true)
+                progress.performAction(M13ProgressViewActionNone, animated: false)
+            }
+        }
         return state
     }
 }

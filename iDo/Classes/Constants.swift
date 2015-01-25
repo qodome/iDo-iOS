@@ -3,7 +3,8 @@
 //
 
 let APP_ID = "923307110" // "https://itunes.apple.com/cn/app/id923307110"
-let APP_COLOR = 0xFF5A5F
+//let APP_COLOR = 0xFF5A5F
+let APP_COLOR = 0x7AFF
 
 let PRODUCTS = ["ID14TB" : "iDo"]
 

@@ -28,23 +28,23 @@ class DeviceDetail: TableDetail {
             let modelNumber = data?.deviceInfo?.modelNumber
             if modelNumber != nil && contains(PRODUCTS.keys, modelNumber!) {
                 if items[0] == ["name"] {
-                    items[0] += ["update"]
+                    items[0] += ["update"] // Check for Update
                     tableView.reloadData()
                 }
-                let button = UIButton()
-                let color = UIColor.defaultColor()
-                button.setTitle(LocalizedString("update"), forState: .Normal)
-                button.setTitleColor(color, forState: .Normal)
-                button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
-                //                    button.backgroundColor = color
-                button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 13)
-                button.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10)
-                button.sizeToFit()
-                button.layer.cornerRadius = 4
-                button.layer.borderColor = color.CGColor
-                button.layer.borderWidth = 1
-                button.frame.size.height = 26
-                cell.accessoryView = button
+//                let button = UIButton()
+//                let color = UIColor.defaultColor()
+//                button.setTitle(LocalizedString("update"), forState: .Normal)
+//                button.setTitleColor(color, forState: .Normal)
+//                button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
+//                //                    button.backgroundColor = color
+//                button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 13)
+//                button.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10)
+//                button.sizeToFit()
+//                button.layer.cornerRadius = 4
+//                button.layer.borderColor = color.CGColor
+//                button.layer.borderWidth = 1
+//                button.frame.size.height = 26 // AppStore更新按钮和进度圈都是26高
+//                cell.accessoryView = button
             }
         case "model":
             cell.detailTextLabel?.text = data?.deviceInfo?.modelNumber

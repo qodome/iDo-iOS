@@ -5,10 +5,11 @@
 class FirmwareDetail: TableDetail {
     let UPDATE_ITEM = "download_and_install"
     
-    var progress: M13ProgressViewPie!
     var peripheral: CBPeripheral!
     var path: String!
     var oadThread: NSThread!
+    
+    var HUD: M13ProgressHUD!
     
     // MARK: - 🐤 继承 Taylor
     override func onPrepare() {
@@ -16,9 +17,12 @@ class FirmwareDetail: TableDetail {
         title = LocalizedString("update")
         refreshMode = .WillAppear
         endpoint = getEndpoint("firmwares/ID14TB")
-        progress = M13ProgressViewPie(frame: CGRectMake(view.frame.width / 2 - 13, view.frame.height / 2 - 13, 26, 26))
-        progress.hidden = true
-        view.addSubview(progress)
+        HUD = M13ProgressHUD(progressView: M13ProgressViewRing())
+        HUD.progressViewSize = CGSizeMake(60, 60)
+        HUD.animationPoint = CGPointMake(view.frame.width / 2, view.frame.height / 2)
+        HUD.hudBackgroundColor = UIColor.colorWithHex(0xFFFFFF, alpha: 0.7)
+        HUD.statusColor = UIColor.defaultColor()
+        UIApplication.sharedApplication().delegate?.window!!.addSubview(HUD)
     }
     
     override func onCreateLoader() -> BaseLoader? {
@@ -51,8 +55,7 @@ class FirmwareDetail: TableDetail {
     override func getItemView<T : Firmware, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
         if indexPath.section == 0 {
             cell.detailTextLabel?.text = NSByteCountFormatter.stringFromByteCount(data!.size.longLongValue, countStyle: .Binary)
-        }
-        if getItem(indexPath) == UPDATE_ITEM {
+        } else if getItem(indexPath) == UPDATE_ITEM {
             cell.textLabel?.textColor = UIColor.defaultColor()
         }
         return cell
@@ -78,32 +81,39 @@ class FirmwareDetail: TableDetail {
             }
         } else {
             NSFileManager.defaultManager().createDirectoryAtPath(path.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil, error: nil) // 创建目录
-            progress.performAction(M13ProgressViewActionNone, animated: false)
-            progress.hidden = false
+            HUD.show(true)
+            HUD.status = LocalizedString("download")
             let request = NSURLRequest(URL: NSURL(string: url)!)
             let operation = AFHTTPRequestOperation(request: request)
             operation.outputStream = NSOutputStream(toFileAtPath: path, append: false)
             operation.setCompletionBlockWithSuccess({ (operation, responseObject) in
-                self.progress.performAction(M13ProgressViewActionSuccess, animated: true)
-                self.oadThread = NSThread(target: self, selector: "OADDownload", object: nil)
-                self.oadThread.start()
+                delay(0.5 + Double(self.HUD.animationDuration)) {
+                    self.HUD.status = LocalizedString("update")
+                    self.HUD.setProgress(0, animated: false)
+                    self.oadThread = NSThread(target: self, selector: "OADDownload", object: nil)
+                    self.oadThread.start()
+                }
                 }, failure: { (operation, error) in
-                    self.progress.performAction(M13ProgressViewActionFailure, animated: true)
+                    delay(0.5 + Double(self.HUD.animationDuration)) {
+                        self.HUD.performAction(M13ProgressViewActionFailure, animated: true)
+                        delay(1 + Double(self.HUD.animationDuration)) {
+                            self.HUD.hide(true)
+                            self.HUD.performAction(M13ProgressViewActionNone, animated: false)
+                        }
+                    }
             })
             operation.setDownloadProgressBlock({ (bytesRead, totalBytesRead, totalBytesExpectedToRead) in
-                self.progress.setProgress(CGFloat(totalBytesRead / totalBytesExpectedToRead), animated: true)
+                self.HUD.setProgress(CGFloat(totalBytesRead / totalBytesExpectedToRead), animated: true)
             })
             operation.start()
         }
     }
     
-    func OADDownload() {
+    func OADDownload() { // TODO: 更新成功刷新或退出这个界面
         switch (data as Firmware).modelNumber {
         case "ID14TB":
-            progress.performAction(M13ProgressViewActionNone, animated: true)
-            progress.hidden = false
             iDo1OADHandler.sharedManager.revision = (data as Firmware).revision
-            iDo1OADHandler.sharedManager.update(peripheral, data: NSData.dataWithContentsOfMappedFile(path) as NSData, progress: progress)
+            iDo1OADHandler.sharedManager.update(peripheral, data: NSData.dataWithContentsOfMappedFile(path) as NSData, progress: HUD)
         default: break
         }
     }

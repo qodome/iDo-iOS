@@ -123,7 +123,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         Log("🛂 连上 设备 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onChanged(peripheral, event: .Connected)
         oadHelper?.oadHandleEvent(peripheral, event: .Connected)
-//        central.stopScan() // 停止搜寻
         peripheral.delegate = self
         peripheral.discoverServices(serviceUUIDs)
     }

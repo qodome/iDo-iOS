@@ -26,7 +26,7 @@ class OADHandler: NSObject {
     
     func onUpdateValue(peripheral: CBPeripheral, characteristic: CBCharacteristic) {}
     
-    func update(peripheral: CBPeripheral, data: NSData, progress: M13ProgressView) -> OADState {
+    func update(peripheral: CBPeripheral, data: NSData, progress: M13ProgressHUD) -> OADState {
         return .NotAvailable
     }
 }
