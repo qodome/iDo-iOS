@@ -16,7 +16,7 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate {
     // MARK: - 🐤 继承 Taylor
     override func onPrepare() {
         super.onPrepare()
-        items = [["name"]]
+        items = [[""]] // 占位
         title = LocalizedString("name")
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancel")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "update:")

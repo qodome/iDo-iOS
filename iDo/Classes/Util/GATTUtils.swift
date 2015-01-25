@@ -33,11 +33,11 @@ let BLE_ALERT_LEVEL = "2A06" // Alert Level 必须 (Mandatory)
 
 /** 处理蓝牙传来的data */
 func calculateTemperature(data: NSData) -> Double {
-    var bytes = [UInt8](count: data.length, repeatedValue: 0)
-    data.getBytes(&bytes, length: bytes.count)
+    var buffer = [UInt8](count: data.length, repeatedValue: 0)
+    data.getBytes(&buffer, length: buffer.count)
     // TODO: 目前只处理长度为5的, 未来需要支持第三方设备可能不为5
-    let exponent = Double(getInt8(bytes[4])) // 永远小于0
-    let mantissa = Int(getInt8(bytes[3])) << 16 | Int(bytes[2]) << 8 | Int(bytes[1])
+    let exponent = Double(getInt8(buffer[4])) // 永远小于0
+    let mantissa = Int(getInt8(buffer[3])) << 16 | Int(buffer[2]) << 8 | Int(buffer[1])
     return Double(mantissa) * pow(10, exponent)
 }
 

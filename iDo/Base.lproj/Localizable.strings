@@ -31,6 +31,9 @@
 "bluetooth" = "Bluetooth";
 "software" = "Software";
 "manufacturer" = "Manufacturer";
+
+"download_and_install" = "DownLoad and Install";
+"up_to_date" = "Up to date"; // 待优化更准确
 /* 日期 */
 "today" = "Today";
 "yesterday" = "Yesterday";

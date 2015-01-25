@@ -31,6 +31,9 @@
 "bluetooth" = "蓝牙";
 "software" = "软件";
 "manufacturer" = "制造商";
+
+"download_and_install" = "下载并安装";
+"up_to_date" = "最新";
 /* 日期 */
 "today" = "今天";
 "yesterday" = "昨天";

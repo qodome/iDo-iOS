@@ -18,6 +18,7 @@ enum OADState: Int {
 class OADHandler: NSObject {
     
     var revision = "" // 目标版本
+    var blockCount = 0
     
     func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerEvent) {}
     

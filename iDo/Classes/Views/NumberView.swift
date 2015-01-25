@@ -27,7 +27,7 @@ class NumberView: UIView {
         integerLabel.font = UIFont(name: "HelveticaNeue-UltraLight", size: 100)
         integerLabel.text = "--"
         integerLabel.sizeToFit()
-        integerLabel.frame.origin = CGPointMake((frame.width - integerLabel.frame.width) / 2, (frame.height - integerLabel.frame.height) / 2) // 居中
+        integerLabel.frame.origin = CGPointMake((frame.width - integerLabel.frame.width) / 2, (frame.height - integerLabel.frame.height) / 2 - 4) // 居中, sizeToFit上下边距不一致，补偿4
         addSubview(integerLabel) // 整数
         let x = integerLabel.frame.origin.x
         let y = integerLabel.frame.origin.y

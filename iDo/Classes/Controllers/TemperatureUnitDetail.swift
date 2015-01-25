@@ -12,7 +12,6 @@ class TemperatureUnitDetail: TableDetail {
     }
     
     override func getItemView<T : NSObject, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
-        cell.textLabel?.text = item
         if item == getPref(R.Pref.TemperatureUnit.rawValue) {
             cell.accessoryType = .Checkmark
         } else {
@@ -24,7 +23,7 @@ class TemperatureUnitDetail: TableDetail {
     
     // MARK: 💙 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        putString(R.Pref.TemperatureUnit.rawValue, items[indexPath.section][indexPath.row])
+        putString(R.Pref.TemperatureUnit.rawValue, getItem(indexPath))
         tableView.reloadData() // TODO: 动画效果不好，消失的太快
     }
 }

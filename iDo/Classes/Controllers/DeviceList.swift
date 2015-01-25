@@ -108,15 +108,28 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         return section == 0 ? nil : LocalizedString("devices")
     }
     
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return indexPath.section == 0 // 已绑定设备可滑动解绑
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            BLEManager.sharedManager.unbind(connected[indexPath.row])
+        }
+    }
+    
     // MARK: 💙 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0 { // 询问是否断开
-            tableView.deselectRowAtIndexPath(indexPath, animated: false) // 手动取消选中状态
+        if indexPath.section == 0 { // 进入详情页
             selected = connected[indexPath.row]
-//            UIActionSheet(title: nil, delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect")).showInView(view)
-            UIActionSheet(title: "\(selected.name)\n\((selected as CBPeripheral).identifier.UUIDString)", delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("disconnect"), otherButtonTitles: LocalizedString("check")).showInView(view)
-        } else { // 直接绑定
-            BLEManager.sharedManager.bind(getItem(indexPath.row) as CBPeripheral)
+            performSegueWithIdentifier("segue.device_list-detail", sender: self)
+        } else {
+            let item = getItem(indexPath.row) as CBPeripheral
+            if BLEManager.sharedManager.defaultDevice() != nil {
+                UIActionSheet(title: "Bind \(item.name)?\n\(item.identifier.UUIDString)", delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("ok")).showInView(view)
+            } else { // 直接绑定
+                BLEManager.sharedManager.bind(getItem(indexPath.row) as CBPeripheral)
+            }
         }
     }
     
@@ -129,20 +142,19 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     
     // MARK: 💙 UIActionSheetDelegate
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-        if buttonIndex == actionSheet.destructiveButtonIndex {
-            BLEManager.sharedManager.unbind(selected as CBPeripheral)
-        } else if buttonIndex == 2 {
-            performSegueWithIdentifier("segue.quicktest", sender: self)
+        let indexPath = (listView as UITableView).indexPathForSelectedRow()
+        if indexPath != nil {
+            if buttonIndex == actionSheet.destructiveButtonIndex {
+                BLEManager.sharedManager.bind(getItem(indexPath!.row) as CBPeripheral)
+            } else {
+                (listView as UITableView).deselectRowAtIndexPath(indexPath!, animated: true)
+            }
         }
     }
     
     // MARK: - 💙 场景切换 (Segue)
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         super.prepareForSegue(segue, sender: sender)
-        if segue.identifier == "segue.device_list-detail" {
-            segue.destinationViewController.setValue(selected, forKey: "data")
-        } else if segue.identifier == "segue.quicktest" {
-            segue.destinationViewController.setValue(selected, forKey: "peripheral")
-        }
+        segue.destinationViewController.setValue(selected, forKey: "data")
     }
 }

@@ -32,7 +32,6 @@ class Settings: TableDetail {
         switch indexPath.section {
         case 0:
             cell.imageView?.image = UIImage.imageWithColor(indexPath.row == 0 ? UIColor.colorWithHex(R.Color.iDoPurple.rawValue) : UIColor.colorWithHex(R.Color.iDoRed.rawValue), size: CGSizeMake(22, 22))
-            cell.textLabel?.text = LocalizedString(item)
             let switchView = UISwitch()
             switchView.on = getBool(item)
             switchView.addTarget(self, action: indexPath.row == 0 ? "switchLowAlert:" : "switchHighAlert:", forControlEvents: .ValueChanged)
@@ -48,12 +47,10 @@ class Settings: TableDetail {
             let label = LocalizedString((indexPath.row == 0 ? "low" : "high"))
             cell.textLabel?.text = "\(label) \(transformTemperature(round(Double(slider.value) / 0.1) * 0.1, temperatureUnit))"
         case 2:
-            cell.textLabel?.text = LocalizedString(item)
             cell.detailTextLabel?.text = getPref(item)
             cell.accessoryType = .DisclosureIndicator
             cell.selectionStyle = .Default
         case 3:
-            cell.textLabel?.text = LocalizedString(item)
             cell.accessoryType = .DisclosureIndicator
         default: break
         }

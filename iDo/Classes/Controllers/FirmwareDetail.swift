@@ -3,6 +3,7 @@
 //
 
 class FirmwareDetail: TableDetail {
+    let UPDATE_ITEM = "download_and_install"
     
     var progress: M13ProgressViewPie!
     var peripheral: CBPeripheral!
@@ -25,22 +26,44 @@ class FirmwareDetail: TableDetail {
     }
     
     override func onLoadSuccess<E : Firmware>(entity: E) {
-        let remote: String = entity.revision
         let local = peripheral.deviceInfo?.firmwareRevision != nil ? peripheral.deviceInfo!.firmwareRevision : ""
-        println("aaaaa\(local)")
-        if remote != local { // 如果版本号不同
-            if entity.modelNumber == "ID14TB" { // 注意: 以下基于服务器端永远只返回A.bin
-                let range = remote.rangeOfString("A)", options: .BackwardsSearch)
-                if remote.substringToIndex(range!.startIndex) != local.substringToIndex(range!.startIndex) { // 比较去掉A)之后的版本号
-                    if local.rangeOfString("A)") != nil { // 如果本地为A去找B，为B无需处理
-                        entity.downloadUrl = entity.downloadUrl.stringByReplacingOccurrencesOfString("A.bin", withString: "B.bin")
-                        entity.revision = entity.revision.stringByReplacingOccurrencesOfString("A)", withString: "B)") // 为传递到OAD用
-                    }
+//        let local = "1.0.0(33B)"
+        if entity.modelNumber == "ID14TB" { // 注意: 以下基于服务器端永远只返回A.bin
+            let remote: String = entity.revision
+            let range = remote.rangeOfString("A)", options: .BackwardsSearch)
+            if remote.substringToIndex(range!.startIndex) != local.substringToIndex(range!.startIndex) { // 比较去掉A)之后的版本号
+                if local.rangeOfString("A)") != nil { // 如果本地为A去找B，为B无需处理
+                    entity.downloadUrl = entity.downloadUrl.stringByReplacingOccurrencesOfString("A.bin", withString: "B.bin")
+                    entity.revision = entity.revision.stringByReplacingOccurrencesOfString("A)", withString: "B)")
                 }
+            } else { // 这里如果不处理本地B版会一直发现更新
+                entity.revision = local
             }
-            download(entity.downloadUrl, directory: PATH_DOCUMENTS.stringByAppendingPathComponent("\(entity.modelNumber)"), size: entity.size.integerValue)
+        }
+        if entity.revision != local { // 如果版本号不同
+            items = [[entity.revision], [UPDATE_ITEM]]
+        } else {
+            UIAlertView(title: "", message: LocalizedString("up_to_date"), delegate: nil, cancelButtonTitle: LocalizedString("ok")).show()
         }
         super.onLoadSuccess(entity)
+    }
+    
+    override func getItemView<T : Firmware, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
+        if indexPath.section == 0 {
+            cell.detailTextLabel?.text = NSByteCountFormatter.stringFromByteCount(data!.size.longLongValue, countStyle: .Binary)
+        }
+        if getItem(indexPath) == UPDATE_ITEM {
+            cell.textLabel?.textColor = UIColor.defaultColor()
+        }
+        return cell
+    }
+    
+    // MARK: - 💙 UITableViewDelegate
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if getItem(indexPath) == UPDATE_ITEM {
+            let entity = data as Firmware
+            download(entity.downloadUrl, directory: PATH_DOCUMENTS.stringByAppendingPathComponent("\(entity.modelNumber)"), size: entity.size.integerValue)
+        }
     }
     
     // MARK: - 💛 自定义方法 (Custom Method)
@@ -49,7 +72,7 @@ class FirmwareDetail: TableDetail {
         NSFileManager.defaultManager().removeItemAtPath(path, error: nil)
         if NSFileHandle(forUpdatingAtPath: path) != nil && size.integerValue > 0 {
             let attributes = NSFileManager.defaultManager().attributesOfItemAtPath(path, error: nil)
-            if attributes != nil && size != attributes![NSFileSize] as NSNumber {
+            if attributes != nil && size != attributes![NSFileSize] as NSNumber { // 大小不一样
                 NSFileManager.defaultManager().removeItemAtPath(path, error: nil) // 删除文件
                 download(url, directory: directory, size: size)
             }

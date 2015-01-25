@@ -186,9 +186,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                         let calendar = NSCalendar.autoupdatingCurrentCalendar() // TODO: 用这个日历是否总是对
                         calendar.timeZone = NSTimeZone(name: "UTC")!
                         let components = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay | .CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitSecond, fromDate: NSDate())
-                        let bytes = [UInt8(components.year & 0xFF), UInt8((components.year & 0xFF00) >> 8), UInt8(components.month), UInt8(components.day), UInt8(components.hour), UInt8(components.minute), UInt8(components.second)]
-//                        println(bytes)
-                        peripheral.writeValue(NSData(bytes: bytes, length: bytes.count), forCharacteristic: characteristic, type: .WithResponse)
+                        let buffer = [UInt8(components.year & 0xFF), UInt8((components.year & 0xFF00) >> 8), UInt8(components.month), UInt8(components.day), UInt8(components.hour), UInt8(components.minute), UInt8(components.second)]
+                        peripheral.writeValue(NSData(bytes: buffer, length: buffer.count), forCharacteristic: characteristic, type: .WithResponse)
                         peripheral.readValueForCharacteristic(characteristic)
                     }
                 }
