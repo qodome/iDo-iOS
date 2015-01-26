@@ -39,11 +39,11 @@
 		0EABC36E1A53D34D00F8A004 /* BaseLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC36C1A53D34D00F8A004 /* BaseLoader.swift */; };
 		0EABC36F1A53D34D00F8A004 /* HttpLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC36D1A53D34D00F8A004 /* HttpLoader.swift */; };
 		0EB84EBE1A6E434C0044D8C3 /* FirmwareDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */; };
+		0ECD403A1A6F9ACF00568B18 /* TemperatureUnitDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD40391A6F9ACF00568B18 /* TemperatureUnitDetail.swift */; };
 		0ED67E4B1A2AFA3400CA35BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E4D1A2AFA3400CA35BE /* Localizable.strings */; };
 		0ED67E8B1A2B0F5C00CA35BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E8D1A2B0F5C00CA35BE /* InfoPlist.strings */; };
 		0EDE483B1A6A65CC002CAE64 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */; };
 		0EDE483D1A6A662D002CAE64 /* CBPeripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE483C1A6A662D002CAE64 /* CBPeripheral+Extension.swift */; };
-		0EE2ADEB1A68F5590084DC24 /* BLEUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */; };
 		0EE2ADEE1A68F5E10084DC24 /* iDo1OADHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */; };
 		0EE2ADEF1A68F5E10084DC24 /* OADHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */; };
 		0EE565441A2AE656003E9331 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE565341A2AE656003E9331 /* AppDelegate.swift */; };
@@ -109,13 +109,13 @@
 		0EABC36C1A53D34D00F8A004 /* BaseLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLoader.swift; sourceTree = "<group>"; };
 		0EABC36D1A53D34D00F8A004 /* HttpLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpLoader.swift; sourceTree = "<group>"; };
 		0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareDetail.swift; sourceTree = "<group>"; };
+		0ECD40391A6F9ACF00568B18 /* TemperatureUnitDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureUnitDetail.swift; sourceTree = "<group>"; };
 		0ED67E4C1A2AFA3400CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0ED67E8A1A2B0CDA00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0ED67E8E1A2B0F9B00CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0ED67E8F1A2B0FBB00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
 		0EDE483C1A6A662D002CAE64 /* CBPeripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CBPeripheral+Extension.swift"; sourceTree = "<group>"; };
-		0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEUtils.swift; sourceTree = "<group>"; };
 		0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iDo1OADHandler.swift; sourceTree = "<group>"; };
 		0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OADHandler.swift; sourceTree = "<group>"; };
 		0EE565341A2AE656003E9331 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -336,6 +336,7 @@
 				0EE5653C1A2AE656003E9331 /* Home.swift */,
 				0EE5653B1A2AE656003E9331 /* History.swift */,
 				0EE5653D1A2AE656003E9331 /* Settings.swift */,
+				0ECD40391A6F9ACF00568B18 /* TemperatureUnitDetail.swift */,
 				0EE5653A1A2AE656003E9331 /* DeviceList.swift */,
 				0EE565391A2AE656003E9331 /* DeviceDetail.swift */,
 				0EA9A0A51A6CA389007E9875 /* DeviceNameDetail.swift */,
@@ -357,9 +358,8 @@
 		0EE565411A2AE656003E9331 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */,
 				0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */,
-				0EE2ADEA1A68F5590084DC24 /* BLEUtils.swift */,
+				0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */,
 				0EE565421A2AE656003E9331 /* GATTUtils.swift */,
 			);
 			path = Util;
@@ -572,6 +572,7 @@
 				0EABC3571A53D30600F8A004 /* RestKitUtils.swift in Sources */,
 				0EE565481A2AE656003E9331 /* DeviceList.swift in Sources */,
 				0EE5654C1A2AE656003E9331 /* Temperature.swift in Sources */,
+				0ECD403A1A6F9ACF00568B18 /* TemperatureUnitDetail.swift in Sources */,
 				0EE5654B1A2AE656003E9331 /* Settings.swift in Sources */,
 				0EABC3671A53D32A00F8A004 /* ListModel.swift in Sources */,
 				0E7A71B91A6E497D008816C6 /* Firmware.swift in Sources */,
@@ -601,7 +602,6 @@
 				0EE2ADEE1A68F5E10084DC24 /* iDo1OADHandler.swift in Sources */,
 				0E7A71BB1A6E4A4C008816C6 /* Product.swift in Sources */,
 				0E9F5AFF1A407828003BB8AD /* UIColor+Extension.swift in Sources */,
-				0EE2ADEB1A68F5590084DC24 /* BLEUtils.swift in Sources */,
 				0EE565451A2AE656003E9331 /* BLEManager.swift in Sources */,
 				0E14DB001A6E6853004FC5CE /* String+Extension.swift in Sources */,
 				0EE5654A1A2AE656003E9331 /* Home.swift in Sources */,

@@ -16,6 +16,7 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate {
     // MARK: - 🐤 继承 Taylor
     override func onPrepare() {
         super.onPrepare()
+        items = [[""]] // 占位
         title = LocalizedString("name")
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancel")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "update:")
@@ -27,7 +28,7 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate {
         nameField.delegate = self
     }
     
-    override func getItemView<T : CBPeripheral, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, cell: C) -> UITableViewCell {
+    override func getItemView<T : CBPeripheral, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
         nameField.text = data?.name
         cell.addSubview(nameField)
         return cell

@@ -2,7 +2,7 @@
 //  Copyright (c) 2015年 NY. All rights reserved.
 //
 
-enum OADStatus: Int {
+enum OADState: Int {
     case Available
     case NotAvailable
     case NotSupported
@@ -15,7 +15,18 @@ enum OADStatus: Int {
     case Failed
 }
 
-protocol OADHandler {
-    func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerState, eventData: AnyObject!, error: NSError!)
-    func oadDoUpdate(peripheral: CBPeripheral, fn: String, progress: M13ProgressViewPie) -> OADStatus
+class OADHandler: NSObject {
+    
+    var revision = "" // 目标版本
+    var blockCount = 0
+    
+    func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerEvent) {}
+    
+    func onCharacteristicDiscovered(peripheral: CBPeripheral, service: CBService) {}
+    
+    func onUpdateValue(peripheral: CBPeripheral, characteristic: CBCharacteristic) {}
+    
+    func update(peripheral: CBPeripheral, data: NSData, progress: M13ProgressHUD) -> OADState {
+        return .NotAvailable
+    }
 }

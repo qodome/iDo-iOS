@@ -2,14 +2,11 @@
 //  Copyright (c) 2014年 NY. All rights reserved.
 //
 
-let IDO1_OAD_SERVICE = "f000ffc0-0451-4000-b000-000000000000"
-let IDO1_OAD_IDENTIFY = "f000ffc1-0451-4000-b000-000000000000"
-let IDO1_OAD_BLOCK = "f000ffc2-0451-4000-b000-000000000000"
-
 // https://developer.bluetooth.org/gatt/services/Pages/ServicesHome.aspx
 // https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicsHome.aspx
 // https://developer.bluetooth.org/gatt/profiles/Pages/ProfilesHome.aspx // 定义了产品必须实现的规范
 // http://developer.bluetooth.cn/libs/Cn/Specifi/GATT/2014/0117/54.html 中文
+// 以下必须全部大写, CBUUID之后会转成大写，小写必须要用CBUUID方式，没法简化代码比较UUIDString
 let BLE_BATTERY_SERVICE = "180F" // Battery Service
 let BLE_BATTERY_LEVEL = "2A19" // Battery Level 必须 (Mandatory)
 
@@ -36,17 +33,24 @@ let BLE_ALERT_LEVEL = "2A06" // Alert Level 必须 (Mandatory)
 
 /** 处理蓝牙传来的data */
 func calculateTemperature(data: NSData) -> Double {
-    var bytes = [UInt8](count: data.length, repeatedValue: 0)
-    data.getBytes(&bytes, length: bytes.count)
+    var buffer = [UInt8](count: data.length, repeatedValue: 0)
+    data.getBytes(&buffer, length: buffer.count)
     // TODO: 目前只处理长度为5的, 未来需要支持第三方设备可能不为5
-    let exponent = Double(getInt8(bytes[4])) // 永远小于0
-    let mantissa = Int32(getInt8(bytes[3])) << 16 | Int32(bytes[2]) << 8 | Int32(bytes[1])
+    let exponent = Double(getInt8(buffer[4])) // 永远小于0
+    let mantissa = Int(getInt8(buffer[3])) << 16 | Int(buffer[2]) << 8 | Int(buffer[1])
     return Double(mantissa) * pow(10, exponent)
 }
 
-func transformTemperature(value: Double, fahrenheit: Bool) -> Double {
+func transformTemperature(value: Double, unit: String) -> Double {
     // 这里进来的value需要是四舍五入并保留一位处理过的，也就是存入json的
-    return fahrenheit ? round(320 + value * 18) * 0.1 : value
+    switch unit {
+    case "℉":
+        return round(320 + value * 18) * 0.1
+    case "K":
+        return (value + 273.15 / 0.1) * 0.1 // 开尔文温度
+    default:
+        return value
+    }
 }
 
 func getInt8(byte: UInt8) -> Int8 {
