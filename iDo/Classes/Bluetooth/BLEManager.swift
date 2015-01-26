@@ -157,6 +157,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                     peripheral.discoverCharacteristics([CBUUID(string: BLE_DATE_TIME)], forService: service)
                 case BLE_DEVICE_INFORMATION:
                     peripheral.discoverCharacteristics([CBUUID(string: BLE_MODEL_NUMBER_STRING), CBUUID(string: BLE_SERIAL_NUMBER_STRING), CBUUID(string: BLE_FIRMWARE_REVISION_STRING), CBUUID(string: BLE_SOFTWARE_REVISION_STRING), CBUUID(string: BLE_MANUFACTURER_NAME_STRING)], forService: service)
+                case BLE_QODOME_SERVICE:
+                    peripheral.discoverCharacteristics([CBUUID(string: BLE_QODOME_SET_NAME)], forService: service)
                 default: break
                 }
             }
