@@ -20,7 +20,7 @@ class FirmwareDetail: TableDetail {
         HUD = M13ProgressHUD(progressView: M13ProgressViewRing())
         HUD.progressViewSize = CGSizeMake(60, 60)
         HUD.animationPoint = CGPointMake(view.frame.width / 2, view.frame.height / 2)
-        HUD.hudBackgroundColor = UIColor.colorWithHex(0xFFFFFF, alpha: 0.7)
+        HUD.hudBackgroundColor = UIColor.colorWithHex(0xFFFFFF, alpha: 0.8)
         HUD.statusColor = UIColor.defaultColor()
         UIApplication.sharedApplication().delegate?.window!!.addSubview(HUD)
     }
@@ -88,7 +88,8 @@ class FirmwareDetail: TableDetail {
             operation.outputStream = NSOutputStream(toFileAtPath: path, append: false)
             operation.setCompletionBlockWithSuccess({ (operation, responseObject) in
                 delay(0.5 + Double(self.HUD.animationDuration)) {
-                    self.HUD.status = LocalizedString("update")
+                    self.HUD.status = LocalizedString("install")
+                    self.HUD.progressView.indeterminate = true
                     self.HUD.setProgress(0, animated: false)
                     self.oadThread = NSThread(target: self, selector: "OADDownload", object: nil)
                     self.oadThread.start()

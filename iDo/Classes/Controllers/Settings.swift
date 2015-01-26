@@ -39,7 +39,7 @@ class Settings: TableDetail {
             cell.accessoryView = switchView
         case 1:
             let slider = UISlider(frame: CGRectMake(0, 0, 160, 20))
-            slider.minimumValue = indexPath.row == 0 ? 26 : 36
+            slider.minimumValue = indexPath.row == 0 ? 10 : 36
             slider.maximumValue = indexPath.row == 0 ? 36 : 46
             slider.value = Float(getDouble(item))
             slider.tag = indexPath.row

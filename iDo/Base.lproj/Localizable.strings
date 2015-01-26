@@ -6,6 +6,7 @@
 "notifications" = "Notifications";
 
 "download" = "Download";
+"install" = "Install";
 "update" = "Update";
 "devices" = "Devices";
 "history" = "History";

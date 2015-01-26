@@ -173,6 +173,7 @@ class iDo1OADHandler: OADHandler {
         }
         // The main OAD loop
         sleepCnt = 0
+        progress.progressView.indeterminate = false
         while true {
             threadLock?.lock()
             var next = writeIdx
