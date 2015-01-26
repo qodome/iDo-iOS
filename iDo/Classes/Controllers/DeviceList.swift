@@ -35,6 +35,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     override func onPrepare() {
         super.onPrepare()
         title = LocalizedString("devices")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_action_close"), style: .Bordered, target: self, action: "cancel")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
         (listView as UITableView).registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
         refreshControl.removeFromSuperview()

@@ -15,12 +15,12 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         super.viewDidLoad()
         view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: LocalizedString("history"), style: .Bordered, target: self, action: "history:")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: LocalizedString("devices"), style: .Bordered, target: self, action: "devices:")
         navigationController?.setToolbarHidden(false, animated: false)
         setToolbarStyle(.Transparent)
         let settings = UIBarButtonItem(image: UIImage(named: "ic_action_settings"), style: .Bordered, target: self, action: "settings:")
+        let devices = UIBarButtonItem(image: UIImage(named: "ic_action_devices"), style: .Bordered, target: self, action: "devices:")
         let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        setToolbarItems([space, settings, space], animated: false)
+        setToolbarItems([space, settings, space, devices, space], animated: false)
         // 温度值
         let width = SCREEN_WIDTH - 30
         numberView = NumberView(frame: CGRectMake((SCREEN_WIDTH - width) / 2, (SCREEN_HEIGHT - width) / 2, width, width))

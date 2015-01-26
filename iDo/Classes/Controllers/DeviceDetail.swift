@@ -24,9 +24,9 @@ class DeviceDetail: TableDetail {
             cell.accessoryType = .DisclosureIndicator
             cell.selectionStyle = .Default
         case "version":
-            cell.detailTextLabel?.text = data?.deviceInfo?.firmwareRevision
+            let firmwareRevision = data?.deviceInfo?.firmwareRevision
             let modelNumber = data?.deviceInfo?.modelNumber
-            if modelNumber != nil && contains(PRODUCTS.keys, modelNumber!) {
+            if firmwareRevision != nil && modelNumber != nil && contains(PRODUCTS.keys, modelNumber!) {
                 if items[0] == ["name"] {
                     items[0] += ["update"] // Check for Update
                     tableView.reloadData()
@@ -46,10 +46,11 @@ class DeviceDetail: TableDetail {
 //                button.frame.size.height = 26 // AppStore更新按钮和进度圈都是26高
 //                cell.accessoryView = button
             }
+            cell.detailTextLabel?.text = firmwareRevision
         case "model":
             cell.detailTextLabel?.text = data?.deviceInfo?.modelNumber
         case "serial_number":
-            cell.detailTextLabel?.text = data?.deviceInfo?.serialNumber.uppercaseString
+            cell.detailTextLabel?.text = data?.deviceInfo?.serialNumber?.uppercaseString
         case "UUID":
             cell.detailTextLabel?.text = data?.identifier.UUIDString
         case "software":

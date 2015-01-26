@@ -50,7 +50,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     private override init() {
         super.init()
         central = CBCentralManager(delegate: self, queue: nil)
-//        central = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey : NSNumber(bool: true)])
+        //        central = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey : NSNumber(bool: true)])
         serviceUUIDs = [
             CBUUID(string: kServiceUUIDString),
             CBUUID(string: BLE_CURRENT_TIME_SERVICE),
@@ -156,7 +156,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 case BLE_CURRENT_TIME_SERVICE:
                     peripheral.discoverCharacteristics([CBUUID(string: BLE_DATE_TIME)], forService: service)
                 case BLE_DEVICE_INFORMATION:
-                    peripheral.discoverCharacteristics([CBUUID(string: BLE_MODEL_NUMBER_STRING), CBUUID(string: BLE_SERIAL_NUMBER_STRING), CBUUID(string: BLE_FIRMWARE_REVISION_STRING), CBUUID(string: BLE_SOFTWARE_REVISION_STRING), CBUUID(string: BLE_MANUFACTURER_NAME_STRING)], forService: service)
+                    peripheral.discoverCharacteristics([CBUUID(string: BLE_MODEL_NUMBER_STRING), CBUUID(string: BLE_FIRMWARE_REVISION_STRING), CBUUID(string: BLE_SERIAL_NUMBER_STRING), CBUUID(string: BLE_SOFTWARE_REVISION_STRING), CBUUID(string: BLE_MANUFACTURER_NAME_STRING)], forService: service)
                 default: break
                 }
             }
@@ -190,6 +190,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                     }
                 }
             case BLE_DEVICE_INFORMATION:
+                peripheral.deviceInfo = DeviceInfo()
                 for characteristic in service.characteristics as [CBCharacteristic] {
                     Log("✳️ 发现 特性 \(characteristic.UUID)")
                     if characteristic.UUID.UUIDString == BLE_FIRMWARE_REVISION_STRING {
@@ -221,25 +222,15 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             case BLE_DATE_TIME:
                 break
             case BLE_MODEL_NUMBER_STRING:
-                let info = peripheral.deviceInfo == nil ? DeviceInfo() : peripheral.deviceInfo
-                info?.modelNumber = getString(characteristic.value)
-                peripheral.deviceInfo = info
+                peripheral.deviceInfo?.modelNumber = getString(characteristic.value)
             case BLE_SERIAL_NUMBER_STRING:
-                let info = peripheral.deviceInfo == nil ? DeviceInfo() : peripheral.deviceInfo
-                info?.serialNumber = getString(characteristic.value)
-                peripheral.deviceInfo = info
+                peripheral.deviceInfo?.serialNumber = getString(characteristic.value)
             case BLE_FIRMWARE_REVISION_STRING:
-                let info = peripheral.deviceInfo == nil ? DeviceInfo() : peripheral.deviceInfo
-                info?.firmwareRevision = getString(characteristic.value)
-                peripheral.deviceInfo = info
+                peripheral.deviceInfo?.firmwareRevision = getString(characteristic.value)
             case BLE_SOFTWARE_REVISION_STRING:
-                let info = peripheral.deviceInfo == nil ? DeviceInfo() : peripheral.deviceInfo
-                info?.softwareRevision = getString(characteristic.value)
-                peripheral.deviceInfo = info
+                peripheral.deviceInfo?.softwareRevision = getString(characteristic.value)
             case BLE_MANUFACTURER_NAME_STRING:
-                let info = peripheral.deviceInfo == nil ? DeviceInfo() : peripheral.deviceInfo
-                info?.manufacturerName = getString(characteristic.value)
-                peripheral.deviceInfo = info
+                peripheral.deviceInfo?.manufacturerName = getString(characteristic.value)
             default: break
             }
             oadHelper?.onUpdateValue(peripheral, characteristic: characteristic)

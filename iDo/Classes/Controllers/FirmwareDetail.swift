@@ -30,7 +30,7 @@ class FirmwareDetail: TableDetail {
     }
     
     override func onLoadSuccess<E : Firmware>(entity: E) {
-        let local = peripheral.deviceInfo?.firmwareRevision != nil ? peripheral.deviceInfo!.firmwareRevision : ""
+        let local = peripheral.deviceInfo!.firmwareRevision! // 如果数据格式不对下面会闪退
 //        let local = "1.0.0(33B)"
         if entity.modelNumber == "ID14TB" { // 注意: 以下基于服务器端永远只返回A.bin
             let remote: String = entity.revision
