@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C99d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VJS-jd-511">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C106a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VJS-jd-511">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -49,24 +49,6 @@
             </objects>
             <point key="canvasLocation" x="2399" y="-2303"/>
         </scene>
-        <!--Detail-->
-        <scene sceneID="1GU-gb-oAP">
-            <objects>
-                <viewController id="Ww4-Zl-46N" customClass="OADDetail" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jqJ-lx-E11"/>
-                        <viewControllerLayoutGuide type="bottom" id="8LO-t3-0oJ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="0F1-cS-KxE">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SNI-Tm-KfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3211" y="-2303"/>
-        </scene>
         <!--Device Detail-->
         <scene sceneID="YeP-MX-6yU">
             <objects>
@@ -82,7 +64,7 @@
                     </view>
                     <connections>
                         <segue destination="uwX-D2-m2D" kind="showDetail" identifier="segue.device_detail-name" id="To5-76-vHl"/>
-                        <segue destination="QBL-0A-k6f" kind="show" identifier="segue.device_list-firmware_detail" id="gJA-oE-3tK"/>
+                        <segue destination="QBL-0A-k6f" kind="show" identifier="segue.device_detail-firmware_detail" id="gJA-oE-3tK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CCD-jj-Irh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -122,10 +104,31 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="0mF-6V-MB4"/>
+                    <connections>
+                        <segue destination="l8U-ED-6Ci" kind="show" identifier="segue.settings-temperature_unit_detail" id="gPR-4J-V2X"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oDL-Ca-ITG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3211" y="-810"/>
+        </scene>
+        <!--Temperature Unit Detail-->
+        <scene sceneID="ccI-lB-6sl">
+            <objects>
+                <viewController id="l8U-ED-6Ci" customClass="TemperatureUnitDetail" customModule="iDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hHw-gB-yfh"/>
+                        <viewControllerLayoutGuide type="bottom" id="P96-65-eyd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PhR-0h-Bxe">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0D0-Hn-TKh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4023" y="-810"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lkG-R4-6md">
@@ -159,9 +162,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="Ww4-Zl-46N" kind="show" identifier="segue.device_list-oad_detail" id="nRD-9L-wyf"/>
                         <segue destination="kXl-X6-9kB" kind="show" identifier="segue.device_list-detail" id="yJd-eo-3qN"/>
-                        <segue destination="QBL-0A-k6f" kind="show" identifier="segue.quicktest" id="wse-IG-yfK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R48-1c-hLl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -202,7 +203,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tMK-Gz-NfR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4023" y="-2303"/>
+            <point key="canvasLocation" x="3211" y="-2303"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Zfe-jR-tVI">
@@ -223,7 +224,4 @@
             <point key="canvasLocation" x="4023" y="-1564"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="wse-IG-yfK"/>
-    </inferredMetricsTieBreakers>
 </document>

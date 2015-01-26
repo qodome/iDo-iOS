@@ -8,7 +8,9 @@ class R {
         case HighTemperature = "high_temperature"
         case NotificationLow = "notification_low"
         case NotificationHigh = "notification_high"
-        case Fahrenheit = "fahrenheit"
+        case TemperatureUnit = "temperature_unit"
+        case Review = "review"
+        case Developer = "developer"
     }
     
     enum Color: Int {

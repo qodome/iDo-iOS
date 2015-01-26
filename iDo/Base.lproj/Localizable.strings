@@ -5,6 +5,8 @@
 "settings" = "Settings";
 "notifications" = "Notifications";
 
+"download" = "Download";
+"install" = "Install";
 "update" = "Update";
 "devices" = "Devices";
 "history" = "History";
@@ -15,20 +17,26 @@
 "reconnect" = "Reconnect";
 
 "temperature" = "Temperature";
-"high temperature alarm" = "High temperature alarm";
-"low temperature alarm" = "low temperature alarm";
+"notification_high" = "High Temperature Alarm";
+"notification_low" = "Low Temperature Alarm";
 "min" = "Min";
 "max" = "Max";
-"high" = "high";
-"low" = "low";
-
+"high" = "High";
+"low" = "Low";
+"temperature_unit" = "Temperature Unit";
 "review" = "Review";
+"developer" = "Developer";
 
 "name" = "Name";
 "version" = "Version";
 "model" = "Model";
+"serial_number" = "Serial Number";
 "bluetooth" = "Bluetooth";
+"software" = "Software";
 "manufacturer" = "Manufacturer";
+
+"download_and_install" = "DownLoad and Install";
+"up_to_date" = "Up to date"; // 待优化更准确
 /* 日期 */
 "today" = "Today";
 "yesterday" = "Yesterday";

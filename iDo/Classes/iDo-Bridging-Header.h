@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+//#import <HealthKit/HealthKit.h>
 
 // BEMSimpleLineGraphView
 #import "BEMSimpleLineGraphView.h"
@@ -11,8 +12,10 @@
 #import "JTCalendar.h"
 
 // M13ProgressSuite
+#import <M13ProgressSuite/M13ProgressHUD.h>
 #import <M13ProgressSuite/M13ProgressViewRing.h>
 #import <M13ProgressSuite/M13ProgressViewPie.h>
+#import <M13ProgressSuite/UINavigationController+M13ProgressViewBar.h>
 
 // RestKit
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
