@@ -48,5 +48,17 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate {
     
     // MARK: - 💛 Action
     func update(sender: AnyObject) {
+        for service in (data as CBPeripheral).services as [CBService] {
+            if service.UUID.UUIDString == BLE_QODOME_SERVICE {
+                if service.characteristics != nil {
+                    for characteristic in service.characteristics as [CBCharacteristic] {
+                        if characteristic.UUID.UUIDString == BLE_QODOME_SET_NAME {
+                            println("Set device name: " + nameField.text)
+                            (data as CBPeripheral).writeValue(nameField.text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false), forCharacteristic: characteristic, type: .WithResponse)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
