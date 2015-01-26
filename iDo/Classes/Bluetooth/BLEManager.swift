@@ -125,7 +125,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         oadHelper?.oadHandleEvent(peripheral, event: .Connected)
         peripheral.delegate = self
         peripheral.discoverServices(serviceUUIDs)
-        oadHelper?.oadHandleEvent(peripheral, event: BLEManagerState.Connected, eventData: nil, error: nil)
     }
     
     // MARK: -      处理异常
