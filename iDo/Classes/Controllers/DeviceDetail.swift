@@ -77,6 +77,7 @@ class DeviceDetail: TableDetail {
         super.prepareForSegue(segue, sender: sender)
         let dest = segue.destinationViewController as UIViewController
         if segue.identifier == "segue.device_detail-name" {
+            (data as CBPeripheral).discoverServices([CBUUID(string: BLE_QODOME_SERVICE)])
             (dest as UINavigationController).childViewControllers[0].setValue(data, forKey: "data")
         } else if segue.identifier == "segue.device_detail-firmware_detail" {
             dest.setValue(data, forKey: "peripheral")
