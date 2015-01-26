@@ -69,17 +69,6 @@ class FirmwareDetail: TableDetail {
         }
     }
     
-    func OADDownload() {
-        switch self.firmwareInfo.modelNumber {
-        case "ID14TB":
-            progress.performAction(M13ProgressViewActionNone, animated: false)
-            progress.hidden = false
-            iDo1OADHandler.sharedManager().oadDoUpdate(self.peripheral, fn: self.fileName, progress: progress)
-        default:
-            break
-        }
-    }
-    
     // MARK: - 💛 自定义方法 (Custom Method)
     func download(url: String, directory: String, size: NSNumber = 0) {
         path = directory.stringByAppendingPathComponent(url.lastPathComponent)

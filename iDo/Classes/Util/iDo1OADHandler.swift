@@ -65,23 +65,6 @@ class iDo1OADHandler: OADHandler {
         default: break
         }
     }
-}
-
-class iDo1OADHandler: NSObject, OADHandler {
-    
-    var candImgBuf: NSData?
-    var switchToWrite: UInt?
-    var writeIdx: UInt16?
-    var threadLock: NSLock?
-    var liveImgType: IDO1_IMG_TYPE?
-    var newPeripheral: CBPeripheral?
-    var SLEEP_BREAKER: UInt8 = 1
-    var identifyCnt: UInt8 = 0
-    var lastPercent: UInt8 = 0
-    var oadStatus: OADStatus = .NotAvailable
-    var blockCntDown: UInt8 = 0
-    let totalBlockNumber: UInt16 = 0x1E80;
-    let bleQueryTimeout: Int64 = 30 * Int64(NSEC_PER_SEC)
     
     override func onCharacteristicDiscovered(peripheral: CBPeripheral, service: CBService) {
         println("iDo1OADHandler got char discovered notify")
@@ -100,7 +83,6 @@ class iDo1OADHandler: NSObject, OADHandler {
         }
     }
     
-
     override func onUpdateValue(peripheral: CBPeripheral, characteristic: CBCharacteristic) {
         if state == .ProgressUpdate {
             if characteristic.UUID.UUIDString == IDO1_OAD_IDENTIFY {
