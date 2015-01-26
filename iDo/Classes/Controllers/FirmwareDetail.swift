@@ -16,7 +16,7 @@ class FirmwareDetail: TableDetail {
         super.onPrepare()
         title = LocalizedString("update")
         refreshMode = .WillAppear
-        endpoint = getEndpoint("firmwares/ID14TB")
+        endpoint = getEndpoint("firmwares/\(peripheral.deviceInfo!.modelNumber!)")
         HUD = M13ProgressHUD(progressView: M13ProgressViewRing())
         HUD.progressViewSize = CGSizeMake(60, 60)
         HUD.animationPoint = CGPointMake(view.frame.width / 2, view.frame.height / 2)

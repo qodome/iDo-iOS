@@ -4,6 +4,11 @@
 
 class DeviceDetail: TableDetail {
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        title = BLEManager.sharedManager.peripheralName
+    }
+    
     // MARK: - 🐤 继承 Taylor
     override func onPrepare() {
         super.onPrepare()
@@ -11,23 +16,18 @@ class DeviceDetail: TableDetail {
             ["name"],
             ["version", "model", "serial_number", "UUID", "software", "manufacturer"]
         ]
-        title = (data as CBPeripheral).name
     }
     
     override func getItemView<T : CBPeripheral, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
         switch item {
         case "name":
-            cell.detailTextLabel?.text = data?.name
-            cell.accessoryType = .DisclosureIndicator
-            cell.selectionStyle = .Default
-        case "update":
-            cell.accessoryType = .DisclosureIndicator
-            cell.selectionStyle = .Default
-        case "version":
+            cell.detailTextLabel?.text = BLEManager.sharedManager.peripheralName
             let firmwareRevision = data?.deviceInfo?.firmwareRevision
             let modelNumber = data?.deviceInfo?.modelNumber
-            if firmwareRevision != nil && modelNumber != nil && contains(PRODUCTS.keys, modelNumber!) {
-                if items[0] == ["name"] {
+            if  modelNumber != nil && contains(PRODUCTS.keys, modelNumber!) { // 如果是我们的设备
+                cell.accessoryType = .DisclosureIndicator
+                cell.selectionStyle = .Default
+                if firmwareRevision != nil && items[0] == ["name"] {
                     items[0] += ["update"] // Check for Update
                     tableView.reloadData()
                 }
@@ -46,7 +46,11 @@ class DeviceDetail: TableDetail {
 //                button.frame.size.height = 26 // AppStore更新按钮和进度圈都是26高
 //                cell.accessoryView = button
             }
-            cell.detailTextLabel?.text = firmwareRevision
+        case "update":
+            cell.accessoryType = .DisclosureIndicator
+            cell.selectionStyle = .Default
+        case "version":
+            cell.detailTextLabel?.text = data?.deviceInfo?.firmwareRevision
         case "model":
             cell.detailTextLabel?.text = data?.deviceInfo?.modelNumber
         case "serial_number":
@@ -64,11 +68,13 @@ class DeviceDetail: TableDetail {
     
     // MARK: 💙 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let item = getItem(indexPath)
-        if item == "name" {
-            performSegueWithIdentifier("segue.device_detail-name", sender: self)
-        } else if item == "update" {
-            performSegueWithIdentifier("segue.device_detail-firmware_detail", sender: self)
+        if tableView.cellForRowAtIndexPath(indexPath)!.accessoryType == .DisclosureIndicator {
+            let item = getItem(indexPath)
+            if item == "name" {
+                performSegueWithIdentifier("segue.device_detail-name", sender: self)
+            } else if item == "update" {
+                performSegueWithIdentifier("segue.device_detail-firmware_detail", sender: self)
+            }
         }
     }
     
@@ -77,8 +83,7 @@ class DeviceDetail: TableDetail {
         super.prepareForSegue(segue, sender: sender)
         let dest = segue.destinationViewController as UIViewController
         if segue.identifier == "segue.device_detail-name" {
-            (data as CBPeripheral).discoverServices([CBUUID(string: BLE_QODOME_SERVICE)])
-            (dest as UINavigationController).childViewControllers[0].setValue(data, forKey: "data")
+            dest.setValue(data, forKey: "data")
         } else if segue.identifier == "segue.device_detail-firmware_detail" {
             dest.setValue(data, forKey: "peripheral")
         }

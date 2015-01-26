@@ -38,6 +38,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     var characteristicFirmware: CBCharacteristic? // 方便调用
     
+    var peripheralName = "" // 改名用
+    
     // SO: http://stackoverflow.com/questions/24024549/dispatch-once-singleton-model-in-swift
     class var sharedManager: BLEManager {
         struct Singleton {
@@ -124,6 +126,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         delegate?.onChanged(peripheral, event: .Connected)
         oadHelper?.oadHandleEvent(peripheral, event: .Connected)
         peripheral.delegate = self
+        peripheralName = peripheral.name
         peripheral.discoverServices(serviceUUIDs)
     }
     
@@ -192,13 +195,24 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                     }
                 }
             case BLE_DEVICE_INFORMATION:
-                peripheral.deviceInfo = DeviceInfo()
+                if peripheral.deviceInfo == nil { // 不判断的话Discover服务就会反复重置
+                    peripheral.deviceInfo = DeviceInfo()
+                }
                 for characteristic in service.characteristics as [CBCharacteristic] {
                     Log("✳️ 发现 特性 \(characteristic.UUID)")
                     if characteristic.UUID.UUIDString == BLE_FIRMWARE_REVISION_STRING {
                         characteristicFirmware = characteristic
                     }
                     peripheral.readValueForCharacteristic(characteristic)
+                }
+            case BLE_QODOME_SERVICE:
+                if peripheralName != peripheral.name {
+                    for characteristic in service.characteristics as [CBCharacteristic] {
+                        Log("✳️ 发现 特性 \(characteristic.UUID)")
+                        if characteristic.UUID.UUIDString == BLE_QODOME_SET_NAME {
+                            peripheral.writeValue(peripheralName.dataUsingEncoding(NSUTF8StringEncoding), forCharacteristic: characteristic, type: .WithResponse)
+                        }
+                    }
                 }
             default:
                 Log("✴️ 未知服务 ⁉️ \(service.UUID) ")

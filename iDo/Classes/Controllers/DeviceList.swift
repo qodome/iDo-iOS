@@ -72,10 +72,12 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         var item: CBPeripheral
         if indexPath.section == 0 {
             item = connected[indexPath.row]
+            cell.textLabel?.text = BLEManager.sharedManager.peripheralName
             cell.imageView?.hidden = false
             cell.accessoryType = .DetailButton
         } else {
             item = getItem(indexPath.row) as CBPeripheral
+            cell.textLabel?.text = item.name
             switch item.state {
             case .Connecting:
                 cell.imageView?.hidden = true
@@ -99,7 +101,6 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         cell.imageView?.layer.cornerRadius = 6
         cell.imageView?.layer.borderColor = UIColor.blackColor().CGColor
         cell.imageView?.layer.borderWidth = 0.5
-        cell.textLabel?.text = item.name
         cell.detailTextLabel?.text = item.identifier.UUIDString
         return cell
     }
@@ -126,7 +127,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         } else {
             let item = getItem(indexPath.row) as CBPeripheral
             if BLEManager.sharedManager.defaultDevice() != nil {
-                UIActionSheet(title: "Bind \(item.name)?\n\(item.identifier.UUIDString)", delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("ok")).showInView(view)
+                UIActionSheet(title: LocalizedString("bind") + " \(item.name)?", delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("ok")).showInView(view)
             } else { // 直接绑定
                 BLEManager.sharedManager.bind(getItem(indexPath.row) as CBPeripheral)
             }
