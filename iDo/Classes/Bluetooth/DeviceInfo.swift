@@ -3,9 +3,9 @@
 //
 
 class DeviceInfo: NSObject {
-    var modelNumber = ""
-    var serialNumber = ""
-    var firmwareRevision = ""
-    var softwareRevision = ""
-    var manufacturerName = ""
+    var modelNumber: String?
+    var serialNumber: String?
+    var firmwareRevision: String?
+    var softwareRevision: String?
+    var manufacturerName: String?
 }

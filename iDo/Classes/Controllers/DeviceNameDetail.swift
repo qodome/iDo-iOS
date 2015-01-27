@@ -18,8 +18,7 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate {
         super.onPrepare()
         items = [[""]] // 占位
         title = LocalizedString("name")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancel")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "update:")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "update:")
         nameField = UITextField()
         nameField.autocapitalizationType = .None
         nameField.autocorrectionType = .No
@@ -29,7 +28,7 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate {
     }
     
     override func getItemView<T : CBPeripheral, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
-        nameField.text = data?.name
+        nameField.text = BLEManager.sharedManager.peripheralName
         cell.addSubview(nameField)
         return cell
     }
@@ -43,22 +42,17 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate {
     // MARK: 💙 UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        update(self)
         return false
     }
     
     // MARK: - 💛 Action
     func update(sender: AnyObject) {
-        for service in (data as CBPeripheral).services as [CBService] {
-            if service.UUID.UUIDString == BLE_QODOME_SERVICE {
-                if service.characteristics != nil {
-                    for characteristic in service.characteristics as [CBCharacteristic] {
-                        if characteristic.UUID.UUIDString == BLE_QODOME_SET_NAME {
-                            println("Set device name: " + nameField.text)
-                            (data as CBPeripheral).writeValue(nameField.text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false), forCharacteristic: characteristic, type: .WithResponse)
-                        }
-                    }
-                }
-            }
+        nameField.resignFirstResponder()
+        BLEManager.sharedManager.peripheralName = nameField.text
+        if BLEManager.sharedManager.peripheralName != (data as CBPeripheral).name {
+            (data as CBPeripheral).discoverServices([CBUUID(string: BLE_QODOME_SERVICE)])
         }
+        cancel()
     }
 }

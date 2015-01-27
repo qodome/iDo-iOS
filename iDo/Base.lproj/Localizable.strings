@@ -41,4 +41,5 @@
 "today" = "Today";
 "yesterday" = "Yesterday";
 
-"choose_device"= "Choose an iDo";
+"choose_device" = "Choose an iDo";
+"bind" = "Bind";

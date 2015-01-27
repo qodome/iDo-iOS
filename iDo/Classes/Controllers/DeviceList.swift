@@ -35,6 +35,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     override func onPrepare() {
         super.onPrepare()
         title = LocalizedString("devices")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_action_close"), style: .Bordered, target: self, action: "cancel")
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
         (listView as UITableView).registerClass(SubtitleCell.self, forCellReuseIdentifier: cellId)
         refreshControl.removeFromSuperview()
@@ -71,14 +72,16 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         var item: CBPeripheral
         if indexPath.section == 0 {
             item = connected[indexPath.row]
+            cell.textLabel?.text = BLEManager.sharedManager.peripheralName
             cell.imageView?.hidden = false
             cell.accessoryType = .DetailButton
         } else {
             item = getItem(indexPath.row) as CBPeripheral
+            cell.textLabel?.text = item.name
             switch item.state {
             case .Connecting:
                 cell.imageView?.hidden = true
-                let indicator = UIActivityIndicatorView(frame: CGRectMake(20.5, cell.frame.height / 2 - 10, 20, 20))
+                let indicator = UIActivityIndicatorView(frame: CGRectMake(19.5, cell.frame.height / 2 - 10, 20, 20))
                 indicator.activityIndicatorViewStyle = .Gray
                 indicator.startAnimating()
                 cell.addSubview(indicator)
@@ -98,7 +101,6 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         cell.imageView?.layer.cornerRadius = 6
         cell.imageView?.layer.borderColor = UIColor.blackColor().CGColor
         cell.imageView?.layer.borderWidth = 0.5
-        cell.textLabel?.text = item.name
         cell.detailTextLabel?.text = item.identifier.UUIDString
         return cell
     }
@@ -125,7 +127,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         } else {
             let item = getItem(indexPath.row) as CBPeripheral
             if BLEManager.sharedManager.defaultDevice() != nil {
-                UIActionSheet(title: "Bind \(item.name)?\n\(item.identifier.UUIDString)", delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("ok")).showInView(view)
+                UIActionSheet(title: LocalizedString("bind") + " \(item.name)?", delegate: self, cancelButtonTitle: LocalizedString("cancel"), destructiveButtonTitle: LocalizedString("ok")).showInView(view)
             } else { // 直接绑定
                 BLEManager.sharedManager.bind(getItem(indexPath.row) as CBPeripheral)
             }

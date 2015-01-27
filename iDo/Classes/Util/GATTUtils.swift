@@ -7,23 +7,26 @@
 // https://developer.bluetooth.org/gatt/profiles/Pages/ProfilesHome.aspx // 定义了产品必须实现的规范
 // http://developer.bluetooth.cn/libs/Cn/Specifi/GATT/2014/0117/54.html 中文
 // 以下必须全部大写, CBUUID之后会转成大写，小写必须要用CBUUID方式，没法简化代码比较UUIDString
-let BLE_BATTERY_SERVICE = "180F" // Battery Service
-let BLE_BATTERY_LEVEL = "2A19" // Battery Level 必须 (Mandatory)
+let BLE_BATTERY_SERVICE = "180F"            // Battery Service
+let BLE_BATTERY_LEVEL = "2A19"              // Battery Level 必须 (Mandatory)
 
-let BLE_CURRENT_TIME_SERVICE = "1805" // Current Time Service
-let BLE_CURRENT_TIME = "2A2B" // Current Time 必须 (Mandatory)
-let BLE_DATE_TIME = "2A08" // Date Time
+let BLE_CURRENT_TIME_SERVICE = "1805"       // Current Time Service
+let BLE_CURRENT_TIME = "2A2B"               // Current Time 必须 (Mandatory)
+let BLE_DATE_TIME = "2A08"                  // Date Time
 
-let BLE_DEVICE_INFORMATION = "180A" // Device Information
-let BLE_MODEL_NUMBER_STRING = "2A24" // Model Number String
-let BLE_SERIAL_NUMBER_STRING = "2A25" // Serial Number
-let BLE_FIRMWARE_REVISION_STRING = "2A26" // Firmware Revision String
-let BLE_SOFTWARE_REVISION_STRING = "2A28" // Software Revision String
-let BLE_MANUFACTURER_NAME_STRING = "2A29" // Manufacturer Name String
+let BLE_DEVICE_INFORMATION = "180A"         // Device Information
+let BLE_MODEL_NUMBER_STRING = "2A24"        // Model Number String
+let BLE_SERIAL_NUMBER_STRING = "2A25"       // Serial Number
+let BLE_FIRMWARE_REVISION_STRING = "2A26"   // Firmware Revision String
+let BLE_SOFTWARE_REVISION_STRING = "2A28"   // Software Revision String
+let BLE_MANUFACTURER_NAME_STRING = "2A29"   // Manufacturer Name String
 
-let BLE_HEALTH_THERMOMETER = "1809" // Health Thermometer
-let BLE_TEMPERATURE_MEASUREMENT = "2A1C" // Temperature Measurement 必须 (Mandatory)
-let BLE_INTERMEDIATE_TEMPERATURE = "2A1E" // Intermediate Temperature
+let BLE_HEALTH_THERMOMETER = "1809"         // Health Thermometer
+let BLE_TEMPERATURE_MEASUREMENT = "2A1C"    // Temperature Measurement 必须 (Mandatory)
+let BLE_INTERMEDIATE_TEMPERATURE = "2A1E"   // Intermediate Temperature
+
+let BLE_QODOME_SERVICE = "90D0"             // Qodome Private Service
+let BLE_QODOME_SET_NAME = "9001"            // Set Device Name
 
 let BLE_QODOME_SERVICE = "BEEF"     // Qodome Private Service
 let BLE_QODOME_SET_NAME = "BE01"    // Set Device Name
