@@ -28,9 +28,6 @@ let BLE_INTERMEDIATE_TEMPERATURE = "2A1E"   // Intermediate Temperature
 let BLE_QODOME_SERVICE = "90D0"             // Qodome Private Service
 let BLE_QODOME_SET_NAME = "9001"            // Set Device Name
 
-let BLE_QODOME_SERVICE = "BEEF"     // Qodome Private Service
-let BLE_QODOME_SET_NAME = "BE01"    // Set Device Name
-
 // https://developer.bluetooth.org/gatt/profiles/Pages/ProfileViewer.aspx?u=org.bluetooth.profile.find_me.xml 防丢器的话必须要有的Service
 let BLE_IMMEDIATE_ALERT = "1802" // Immediate Alert
 let BLE_ALERT_LEVEL = "2A06" // Alert Level 必须 (Mandatory)
