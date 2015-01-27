@@ -81,7 +81,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
             switch item.state {
             case .Connecting:
                 cell.imageView?.hidden = true
-                let indicator = UIActivityIndicatorView(frame: CGRectMake(20.5, cell.frame.height / 2 - 10, 20, 20))
+                let indicator = UIActivityIndicatorView(frame: CGRectMake(19.5, cell.frame.height / 2 - 10, 20, 20))
                 indicator.activityIndicatorViewStyle = .Gray
                 indicator.startAnimating()
                 cell.addSubview(indicator)
