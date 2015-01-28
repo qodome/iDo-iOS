@@ -9,7 +9,6 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate {
     // MARK: - 💖 生命周期 (Lifecycle)
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        // Modal模式下键盘应该在界面之后出来。根据设置中iCloud改名返回时键盘在界面消失后消失无所谓
         nameField.becomeFirstResponder()
     }
     

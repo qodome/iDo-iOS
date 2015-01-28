@@ -52,6 +52,11 @@ class Settings: TableDetail {
             cell.accessoryType = .DisclosureIndicator
             cell.selectionStyle = .Default
         case 3:
+            let star = NSMutableAttributedString(string: " ☆☆☆☆☆")
+            star.addAttributes([NSForegroundColorAttributeName : UIColor.defaultColor()], range: NSMakeRange(1, star.length - 1))
+            let s = NSMutableAttributedString(string: LocalizedString(getItem(indexPath)))
+            s.appendAttributedString(star)
+            cell.textLabel?.attributedText = s
             cell.accessoryType = .DisclosureIndicator
         case 4:
             let switchView = UISwitch()

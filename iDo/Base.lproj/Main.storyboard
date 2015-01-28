@@ -22,7 +22,7 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
-                        <segue destination="QQI-Gr-IGG" kind="showDetail" identifier="segue.home-settings" id="HyH-qo-jeO"/>
+                        <segue destination="QQI-Gr-IGG" kind="presentation" identifier="segue.home-settings" id="HyH-qo-jeO"/>
                         <segue destination="yht-9O-HIa" kind="show" identifier="segue.home-history" id="8Ud-c0-lnF"/>
                         <segue destination="oiu-Nr-cxQ" kind="presentation" identifier="segue.home-device_list" id="Njo-r3-wJe"/>
                     </connections>

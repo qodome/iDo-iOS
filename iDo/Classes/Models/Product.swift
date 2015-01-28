@@ -11,7 +11,7 @@ class Product: BaseModel {
     var name: NSString = ""
     var color: NSString = ""
     
-    override class func getMapping() -> Dictionary<String, String> {
+    override class func getMapping() -> [String : String] {
         return [
             "id" : "id",
             "created" : "created",

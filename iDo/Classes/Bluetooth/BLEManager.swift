@@ -159,7 +159,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 case BLE_CURRENT_TIME_SERVICE:
                     peripheral.discoverCharacteristics([CBUUID(string: BLE_DATE_TIME)], forService: service)
                 case BLE_DEVICE_INFORMATION:
-                    peripheral.discoverCharacteristics([CBUUID(string: BLE_MODEL_NUMBER_STRING), CBUUID(string: BLE_FIRMWARE_REVISION_STRING), CBUUID(string: BLE_SERIAL_NUMBER_STRING), CBUUID(string: BLE_SOFTWARE_REVISION_STRING), CBUUID(string: BLE_MANUFACTURER_NAME_STRING)], forService: service)
+                    peripheral.discoverCharacteristics([CBUUID(string: BLE_MODEL_NUMBER_STRING), CBUUID(string: BLE_FIRMWARE_REVISION_STRING), CBUUID(string: BLE_SERIAL_NUMBER_STRING), CBUUID(string: BLE_MANUFACTURER_NAME_STRING)], forService: service)
                 case BLE_QODOME_SERVICE:
                     peripheral.discoverCharacteristics([CBUUID(string: BLE_QODOME_SET_NAME)], forService: service)
                 default: break
@@ -243,8 +243,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 peripheral.deviceInfo?.serialNumber = getString(characteristic.value)
             case BLE_FIRMWARE_REVISION_STRING:
                 peripheral.deviceInfo?.firmwareRevision = getString(characteristic.value)
-            case BLE_SOFTWARE_REVISION_STRING:
-                peripheral.deviceInfo?.softwareRevision = getString(characteristic.value)
             case BLE_MANUFACTURER_NAME_STRING:
                 peripheral.deviceInfo?.manufacturerName = getString(characteristic.value)
             default: break

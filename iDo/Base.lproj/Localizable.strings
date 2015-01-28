@@ -1,4 +1,5 @@
 /* 通用 */
+"qodome_co_ltd" = "Qodome Co., Ltd.";
 "ok" = "OK";
 "cancel" = "Cancel";
 "unknown" = "Unknown";
@@ -32,7 +33,6 @@
 "model" = "Model";
 "serial_number" = "Serial Number";
 "bluetooth" = "Bluetooth";
-"software" = "Software";
 "manufacturer" = "Manufacturer";
 
 "download_and_install" = "DownLoad and Install";

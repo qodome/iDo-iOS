@@ -14,7 +14,7 @@ class DeviceDetail: TableDetail {
         super.onPrepare()
         items = [
             ["name"],
-            ["version", "model", "serial_number", "UUID", "software", "manufacturer"]
+            ["version", "model", "serial_number", "UUID", "manufacturer"]
         ]
     }
     
@@ -31,20 +31,20 @@ class DeviceDetail: TableDetail {
                     items[0] += ["update"] // Check for Update
                     tableView.reloadData()
                 }
-//                let button = UIButton()
-//                let color = UIColor.defaultColor()
-//                button.setTitle(LocalizedString("update"), forState: .Normal)
-//                button.setTitleColor(color, forState: .Normal)
-//                button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
-//                //                    button.backgroundColor = color
-//                button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 13)
-//                button.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10)
-//                button.sizeToFit()
-//                button.layer.cornerRadius = 4
-//                button.layer.borderColor = color.CGColor
-//                button.layer.borderWidth = 1
-//                button.frame.size.height = 26 // AppStore更新按钮和进度圈都是26高
-//                cell.accessoryView = button
+                //                let button = UIButton()
+                //                let color = UIColor.defaultColor()
+                //                button.setTitle(LocalizedString("update"), forState: .Normal)
+                //                button.setTitleColor(color, forState: .Normal)
+                //                button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
+                //                //                    button.backgroundColor = color
+                //                button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 13)
+                //                button.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10)
+                //                button.sizeToFit()
+                //                button.layer.cornerRadius = 4
+                //                button.layer.borderColor = color.CGColor
+                //                button.layer.borderWidth = 1
+                //                button.frame.size.height = 26 // AppStore更新按钮和进度圈都是26高
+                //                cell.accessoryView = button
             }
         case "update":
             cell.accessoryType = .DisclosureIndicator
@@ -57,10 +57,14 @@ class DeviceDetail: TableDetail {
             cell.detailTextLabel?.text = data?.deviceInfo?.serialNumber?.uppercaseString
         case "UUID":
             cell.detailTextLabel?.text = data?.identifier.UUIDString
-        case "software":
-            cell.detailTextLabel?.text = data?.deviceInfo?.softwareRevision
         case "manufacturer":
-            cell.detailTextLabel?.text = data?.deviceInfo?.manufacturerName
+            let modelNumber = data?.deviceInfo?.modelNumber
+            if  modelNumber != nil && contains(PRODUCTS.keys, modelNumber!) {
+                cell.detailTextLabel?.text = LocalizedString("qodome_co_ltd")
+            }
+            if data?.deviceInfo?.manufacturerName != nil {
+                cell.detailTextLabel?.text = data?.deviceInfo?.manufacturerName
+            }
         default: break
         }
         return cell

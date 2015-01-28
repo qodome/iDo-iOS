@@ -10,7 +10,7 @@ class Firmware: BaseModel {
     var size: NSNumber!
     var product: Product?
     
-    override class func getMapping() -> Dictionary<String, String> {
+    override class func getMapping() -> [String : String] {
         return [
             "model_number" : "modelNumber",
             "download_url" : "downloadUrl",

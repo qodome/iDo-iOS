@@ -11,7 +11,6 @@ class iDo1OADHandler: OADHandler {
     private var data: NSData!
     private var switchToWrite = false
     private var writeIdx = 0
-    private var threadLock: NSLock?
     private var newPeripheral: CBPeripheral!
     private var SLEEP_BREAKER = 1
     private var identifyCnt = 0
@@ -32,7 +31,6 @@ class iDo1OADHandler: OADHandler {
     private override init() {
         super.init()
         blockCount = 7808 // 0x1E80
-        threadLock = NSLock()
     }
     
     override func oadHandleEvent(peripheral: CBPeripheral, event: BLEManagerEvent) {
@@ -92,21 +90,18 @@ class iDo1OADHandler: OADHandler {
                 if identifyCnt > 5 {
                     // Tell update worker this firmware image does not match!
                     state = .NotSupported
-                    threadLock?.lock()
                     switchToWrite = true
-                    threadLock?.unlock()
+                } else {
+                    var buffer = [UInt8](count: 8, repeatedValue: 0)
+                    data.getBytes(&buffer, range: NSMakeRange(4, 8))
+                    peripheral.writeValue(NSData(bytes: buffer, length: 8), forCharacteristic: characteristicId, type: .WithResponse)
                 }
-                var buffer = [UInt8](count: 8, repeatedValue: 0)
-                data.getBytes(&buffer, range: NSMakeRange(4, 8))
-                peripheral.writeValue(NSData(bytes: buffer, length: 8), forCharacteristic: characteristicId, type: .WithResponse)
             } else if characteristic.UUID.UUIDString == IDO1_OAD_BLOCK {
                 var buffer = [UInt8](count: 2, repeatedValue: 0)
                 characteristic.value.getBytes(&buffer, length: 2)
-                threadLock?.lock()
                 switchToWrite = true
                 writeIdx = Int(getInt8(buffer[1])) << 8 | Int(getInt8(buffer[0]))
                 blockCntDown = 10
-                threadLock?.unlock()
                 println("Got block notification \(writeIdx)")
             }
         } else if state == .ConfirmResult {
@@ -153,12 +148,9 @@ class iDo1OADHandler: OADHandler {
         // Waiting for UI to wakup us
         sleepCnt = 0
         while true {
-            threadLock?.lock()
             if switchToWrite {
-                threadLock?.unlock()
                 break
             }
-            threadLock?.unlock()
             // TODO add disconnect check
             sleep(1)
             sleepCnt++
@@ -175,7 +167,6 @@ class iDo1OADHandler: OADHandler {
         sleepCnt = 0
         progress.progressView.indeterminate = false
         while true {
-            threadLock?.lock()
             var next = writeIdx
             if next < blockCount {
                 writeIdx++
@@ -186,7 +177,6 @@ class iDo1OADHandler: OADHandler {
             } else {
                 sleepPeriod = 18000
             }
-            threadLock?.unlock()
             if next < blockCount {
                 sleepCnt = 0
                 var buffer = [UInt8](count: 16, repeatedValue: 0) // 每次16位数据

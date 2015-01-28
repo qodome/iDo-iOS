@@ -20,8 +20,9 @@ class FirmwareDetail: TableDetail {
         HUD = M13ProgressHUD(progressView: M13ProgressViewRing())
         HUD.progressViewSize = CGSizeMake(60, 60)
         HUD.animationPoint = CGPointMake(view.frame.width / 2, view.frame.height / 2)
-        HUD.hudBackgroundColor = UIColor.colorWithHex(0xFFFFFF, alpha: 0.8)
+        HUD.hudBackgroundColor = UIColor.colorWithHex(0xFFFFFF, alpha: 0.7)
         HUD.statusColor = UIColor.defaultColor()
+        HUD.maskType = M13ProgressHUDMaskTypeSolidColor // MaskTypeIOS7Blur参数无效
         UIApplication.sharedApplication().delegate?.window!!.addSubview(HUD)
     }
     
@@ -31,7 +32,7 @@ class FirmwareDetail: TableDetail {
     
     override func onLoadSuccess<E : Firmware>(entity: E) {
         let local = peripheral.deviceInfo!.firmwareRevision! // 如果数据格式不对下面会闪退
-//        let local = "1.0.0(33B)"
+        //        let local = "0.0.0(35B)"
         if entity.modelNumber == "ID14TB" { // 注意: 以下基于服务器端永远只返回A.bin
             let remote: String = entity.revision
             let range = remote.rangeOfString("A)", options: .BackwardsSearch)
