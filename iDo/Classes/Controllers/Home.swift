@@ -60,6 +60,12 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         }
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigationBarStyle(.Default) // 恢复原样
+        setToolbarStyle(.Default)
+    }
+    
     // MARK: - 🐤 BLEManagerDelegate
     func onChanged(peripheral: CBPeripheral?, event: BLEManagerEvent) {
         if developer {

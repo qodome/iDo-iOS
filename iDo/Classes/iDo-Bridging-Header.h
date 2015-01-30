@@ -1,23 +1,23 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-//#import <HealthKit/HealthKit.h>
+#import <HealthKit/HealthKit.h>
 
-// BEMSimpleLineGraphView
+// BEMSimpleLineGraphView https://github.com/Boris-Em/BEMSimpleLineGraph
 #import "BEMSimpleLineGraphView.h"
 
-// FormatterKit
+// FormatterKit https://github.com/mattt/FormatterKit
 #import <FormatterKit/TTTTimeIntervalFormatter.h>
 
-// JTCalendar
+// JTCalendar https://github.com/jonathantribouharet/JTCalendar
 #import "JTCalendar.h"
 
-// M13ProgressSuite
+// M13ProgressSuite https://github.com/Marxon13/M13ProgressSuite
 #import <M13ProgressSuite/M13ProgressHUD.h>
 #import <M13ProgressSuite/M13ProgressViewRing.h>
 #import <M13ProgressSuite/M13ProgressViewPie.h>
 #import <M13ProgressSuite/UINavigationController+M13ProgressViewBar.h>
 
-// RestKit
+// RestKit https://github.com/RestKit/RestKit
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -28,8 +28,11 @@
 
 #import <RestKit/RestKit.h>
 
-// SDWebImage
+// SDWebImage https://github.com/rs/SDWebImage
 #import <SDWebImage/UIImageView+WebCache.h>
+
+// TLYShyNavBar https://github.com/telly/TLYShyNavBar
+#import <TLYShyNavBar/TLYShyNavBarManager.h>
 
 #ifndef __OPTIMIZE__
 #define NSLog(...) NSLog(__VA_ARGS__)

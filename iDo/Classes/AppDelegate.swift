@@ -17,6 +17,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UIApplication.instancesRespondToSelector("registerUserNotificationSettings:") {
             application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
         }
+        // HealthKit
+        if iOS8() {
+            if HKHealthStore.isHealthDataAvailable() {
+                let store = HKHealthStore()
+                // 1. Set the types you want to read from HK Store
+                let readTypes = NSSet(array: [
+                    HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierDateOfBirth), // 生日
+                    HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBiologicalSex) //性别
+                    HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBloodType), // 血型
+                    HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeight), // 身高
+                    HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass), // 体重
+                    ])
+                // 2. Set the types you want to write to HK Store
+                let shareTypes = NSSet(array:[
+                    HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyTemperature),
+                    ])
+                // 4.  Request HealthKit authorization
+                store.requestAuthorizationToShareTypes(shareTypes, readTypes: readTypes, completion: {(succeeded: Bool, error: NSError!) in
+                    if succeeded && error == nil {
+                        println("Successfully received authorization")
+                    } else {
+                        println(error)
+                    }
+                })
+            }
+        }
         return true
     }
     

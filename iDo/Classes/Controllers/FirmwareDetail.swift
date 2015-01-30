@@ -20,7 +20,7 @@ class FirmwareDetail: TableDetail {
         HUD = M13ProgressHUD(progressView: M13ProgressViewRing())
         HUD.progressViewSize = CGSizeMake(60, 60)
         HUD.animationPoint = CGPointMake(view.frame.width / 2, view.frame.height / 2)
-        HUD.hudBackgroundColor = UIColor.colorWithHex(0xFFFFFF, alpha: 0.7)
+        HUD.hudBackgroundColor = UIColor.colorWithHex(0xFFFFFF)
         HUD.statusColor = UIColor.defaultColor()
         HUD.maskType = M13ProgressHUDMaskTypeSolidColor // MaskTypeIOS7Blur参数无效
         UIApplication.sharedApplication().delegate?.window!!.addSubview(HUD)

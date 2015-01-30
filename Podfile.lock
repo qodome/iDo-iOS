@@ -48,6 +48,7 @@ PODS:
     - SDWebImage/Core (= 3.7.1)
   - SDWebImage/Core (3.7.1)
   - SOCKit (1.1)
+  - TLYShyNavBar (0.9.8)
   - TransitionKit (2.1.0)
   - WeiboSDK (3.0.1)
 
@@ -58,6 +59,7 @@ DEPENDENCIES:
   - M13ProgressSuite
   - RestKit
   - SDWebImage
+  - TLYShyNavBar
   - WeiboSDK
 
 SPEC CHECKSUMS:
@@ -71,6 +73,7 @@ SPEC CHECKSUMS:
   RKValueTransformers: 67b4ea3eb6a1c1a0b8c3c37eb4e4c05e4febeba2
   SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
   SOCKit: d8d0dd3688ae1026c12367570da8fa8e1a6980fb
+  TLYShyNavBar: cf15a919cf7f6e79080ac5b95b56580a752cf64d
   TransitionKit: 6a6f3ddda38ae758778aa889dcb930e4f8d64edc
   WeiboSDK: e40a302dc603a20c8ec7fc15ebec49fa4e93d7ba
 

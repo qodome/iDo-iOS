@@ -9,7 +9,6 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
     // MARK: - 💖 生命周期 (Lifecyle)
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        setNavigationBarStyle(.Default)
         BLEManager.sharedManager.delegate = self
         loadData()
     }

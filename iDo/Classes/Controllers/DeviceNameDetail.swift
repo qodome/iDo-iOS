@@ -48,7 +48,8 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate {
     // MARK: - 💛 Action
     func update(sender: AnyObject) {
         nameField.resignFirstResponder()
-        BLEManager.sharedManager.peripheralName = nameField.text
+        BLEManager.sharedManager.peripheralName = nameField.text.stringByTrimmingCharactersInSet(NSCharacterSet
+            .whitespaceCharacterSet())
         if BLEManager.sharedManager.peripheralName != (data as CBPeripheral).name {
             (data as CBPeripheral).discoverServices([CBUUID(string: BLE_QODOME_SERVICE)])
         }
