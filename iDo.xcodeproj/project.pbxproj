@@ -18,6 +18,7 @@
 		0E674F481A7B7A7600FF423E /* BaseCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E674F471A7B7A7600FF423E /* BaseCreate.swift */; };
 		0E7A71B91A6E497D008816C6 /* Firmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A71B81A6E497D008816C6 /* Firmware.swift */; };
 		0E7A71BB1A6E4A4C008816C6 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A71BA1A6E4A4C008816C6 /* Product.swift */; };
+		0E7F67291A7BA234008CC949 /* HKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7F67281A7BA234008CC949 /* HKManager.swift */; };
 		0E9C9FAD1A3750BC00BB9DC6 /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9C9FAC1A3750BC00BB9DC6 /* NumberView.swift */; };
 		0E9F5AFE1A407828003BB8AD /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F5AEF1A407828003BB8AD /* Array+Extension.swift */; };
 		0E9F5AFF1A407828003BB8AD /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F5AF01A407828003BB8AD /* UIColor+Extension.swift */; };
@@ -90,6 +91,7 @@
 		0E674F471A7B7A7600FF423E /* BaseCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCreate.swift; sourceTree = "<group>"; };
 		0E7A71B81A6E497D008816C6 /* Firmware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firmware.swift; sourceTree = "<group>"; };
 		0E7A71BA1A6E4A4C008816C6 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		0E7F67281A7BA234008CC949 /* HKManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKManager.swift; sourceTree = "<group>"; };
 		0E9C9FAC1A3750BC00BB9DC6 /* NumberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberView.swift; sourceTree = "<group>"; };
 		0E9F5AEF1A407828003BB8AD /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		0E9F5AF01A407828003BB8AD /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -235,6 +237,14 @@
 			path = Widget;
 			sourceTree = "<group>";
 		};
+		0E7F67271A7BA1E6008CC949 /* HealthKit */ = {
+			isa = PBXGroup;
+			children = (
+				0E7F67281A7BA234008CC949 /* HKManager.swift */,
+			);
+			path = HealthKit;
+			sourceTree = "<group>";
+		};
 		0E9C9FAB1A37509E00BB9DC6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +256,7 @@
 		0E9F5AE51A407828003BB8AD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0E7F67271A7BA1E6008CC949 /* HealthKit */,
 				0E9F5AEE1A407828003BB8AD /* Util */,
 				0EABC36B1A53D34D00F8A004 /* Content */,
 				0E9F5AE71A407828003BB8AD /* Controllers */,
@@ -607,6 +618,7 @@
 				0E5D10271A68E3FD00B5CED2 /* AvatarView.swift in Sources */,
 				0EABC3661A53D32A00F8A004 /* BaseModel.swift in Sources */,
 				0EE565711A2AE6CD003E9331 /* BEMCircle.m in Sources */,
+				0E7F67291A7BA234008CC949 /* HKManager.swift in Sources */,
 				0EABC35E1A53D31900F8A004 /* BaseController.swift in Sources */,
 				0EE2ADEF1A68F5E10084DC24 /* OADHandler.swift in Sources */,
 				0EABC3581A53D30600F8A004 /* SocialUtils.swift in Sources */,

@@ -12,14 +12,14 @@ let BASE_URL = "http://qodome.com"
 let API_VERSION = "api/v1"
 let DEFAULT_TOKEN = ""
 
-var token: String?
-
 var low = 35.0
 var high = 37.0
 var lowAlert = false
 var highAlert = true
 var temperatureUnit = ""
+
 var developer = false
+var canHealthKit = false
 
 func initSettings() {
     low = getDouble(R.Pref.LowTemperature.rawValue, defaultValue: 35)

@@ -20,28 +20,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // HealthKit
         if iOS8() {
             if HKHealthStore.isHealthDataAvailable() {
-                let store = HKHealthStore()
-                // 1. Set the types you want to read from HK Store
-                let readTypes = NSSet(array: [
+                canHealthKit = true
+                let readTypes = NSSet(array: [ // HK读权限
                     HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierDateOfBirth), // 生日
-                    HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBiologicalSex) //性别
-                    HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBloodType), // 血型
+                    HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBiologicalSex), //性别
                     HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeight), // 身高
                     HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass), // 体重
+                    HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBloodType) // 血型
                     ])
-                // 2. Set the types you want to write to HK Store
-                let shareTypes = NSSet(array:[
-                    HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyTemperature),
+                let shareTypes = NSSet(array: [ // HK写权限
+                    HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyTemperature)
                     ])
-                // 4.  Request HealthKit authorization
-                store.requestAuthorizationToShareTypes(shareTypes, readTypes: readTypes, completion: {(succeeded: Bool, error: NSError!) in
-                    if succeeded && error == nil {
-                        println("Successfully received authorization")
-                    } else {
-                        println(error)
+                let store = HKHealthStore()
+                store.requestAuthorizationToShareTypes(shareTypes, readTypes: readTypes, completion: { (success, error) in
+                    if !success {
+                        Log(error.localizedDescription)
                     }
                 })
             }
+            let store = HKHealthStore()
+            var error: NSError?
+            let birthDay = store.dateOfBirthWithError(&error) // 生日
+            let biologicalSex = store.biologicalSexWithError(&error) //性别
+            let bloodType = store.bloodTypeWithError(&error) // 血型
         }
         return true
     }

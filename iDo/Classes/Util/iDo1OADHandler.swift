@@ -160,7 +160,7 @@ class iDo1OADHandler: OADHandler {
             }
         }
         if state == .NotSupported {
-            println("🆎 OAD image does not match")
+            Log("🆎 OAD image does not match")
             return getState(.NotSupported, progress: progress)
         }
         // The main OAD loop

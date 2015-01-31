@@ -152,6 +152,9 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
                 json = "\(json.substringToIndex(range!.startIndex))\(json1)]"
             } else { // 超过5分钟，新增
                 json = "\(json.substringToIndex(advance(json.startIndex, countElements(json) - 1))),\(json1)]"
+                if canHealthKit { // 每5分钟写HealthKit
+                    HKManager.sharedManager.writeTemperature(date, value: value)
+                }
             }
             json.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
         }
