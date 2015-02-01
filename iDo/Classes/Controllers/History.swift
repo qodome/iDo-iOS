@@ -69,6 +69,11 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         setChartSize() // 要放在加载数据之后
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigationBarStyle(.Transparent)
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         calendar.reloadData()

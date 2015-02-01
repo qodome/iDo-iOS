@@ -19,8 +19,8 @@ class FirmwareDetail: TableDetail {
         endpoint = getEndpoint("firmwares/\(peripheral.deviceInfo!.modelNumber!)")
         HUD = M13ProgressHUD(progressView: M13ProgressViewRing())
         HUD.progressViewSize = CGSizeMake(60, 60)
-        HUD.animationPoint = CGPointMake(view.frame.width / 2, view.frame.height / 2)
-        HUD.hudBackgroundColor = UIColor.colorWithHex(0xFFFFFF)
+        HUD.animationPoint = CGPointMake(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        HUD.hudBackgroundColor = UIColor.whiteColor()
         HUD.statusColor = UIColor.defaultColor()
         HUD.maskType = M13ProgressHUDMaskTypeSolidColor // MaskTypeIOS7Blur参数无效
         UIApplication.sharedApplication().delegate?.window!!.addSubview(HUD)

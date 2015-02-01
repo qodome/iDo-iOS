@@ -18,6 +18,7 @@
 		0E674F481A7B7A7600FF423E /* BaseCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E674F471A7B7A7600FF423E /* BaseCreate.swift */; };
 		0E7A71B91A6E497D008816C6 /* Firmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A71B81A6E497D008816C6 /* Firmware.swift */; };
 		0E7A71BB1A6E4A4C008816C6 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A71BA1A6E4A4C008816C6 /* Product.swift */; };
+		0E7D55CF1A7E5BC200988274 /* GATTUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7D55CE1A7E5BC200988274 /* GATTUtils.swift */; };
 		0E7F67291A7BA234008CC949 /* HKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7F67281A7BA234008CC949 /* HKManager.swift */; };
 		0E9C9FAD1A3750BC00BB9DC6 /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9C9FAC1A3750BC00BB9DC6 /* NumberView.swift */; };
 		0E9F5AFE1A407828003BB8AD /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F5AEF1A407828003BB8AD /* Array+Extension.swift */; };
@@ -58,7 +59,6 @@
 		0EE5654A1A2AE656003E9331 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5653C1A2AE656003E9331 /* Home.swift */; };
 		0EE5654B1A2AE656003E9331 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5653D1A2AE656003E9331 /* Settings.swift */; };
 		0EE5654C1A2AE656003E9331 /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE565401A2AE656003E9331 /* Temperature.swift */; };
-		0EE5654D1A2AE656003E9331 /* GATTUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE565421A2AE656003E9331 /* GATTUtils.swift */; };
 		0EE565711A2AE6CD003E9331 /* BEMCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5656C1A2AE6CD003E9331 /* BEMCircle.m */; };
 		0EE565721A2AE6CD003E9331 /* BEMLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5656E1A2AE6CD003E9331 /* BEMLine.m */; };
 		0EE565731A2AE6CD003E9331 /* BEMSimpleLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE565701A2AE6CD003E9331 /* BEMSimpleLineGraphView.m */; };
@@ -91,6 +91,7 @@
 		0E674F471A7B7A7600FF423E /* BaseCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCreate.swift; sourceTree = "<group>"; };
 		0E7A71B81A6E497D008816C6 /* Firmware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firmware.swift; sourceTree = "<group>"; };
 		0E7A71BA1A6E4A4C008816C6 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		0E7D55CE1A7E5BC200988274 /* GATTUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATTUtils.swift; sourceTree = "<group>"; };
 		0E7F67281A7BA234008CC949 /* HKManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKManager.swift; sourceTree = "<group>"; };
 		0E9C9FAC1A3750BC00BB9DC6 /* NumberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberView.swift; sourceTree = "<group>"; };
 		0E9F5AEF1A407828003BB8AD /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
@@ -134,7 +135,6 @@
 		0EE5653C1A2AE656003E9331 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		0EE5653D1A2AE656003E9331 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0EE565401A2AE656003E9331 /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
-		0EE565421A2AE656003E9331 /* GATTUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATTUtils.swift; sourceTree = "<group>"; };
 		0EE5654F1A2AE68E003E9331 /* iDo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iDo-Bridging-Header.h"; sourceTree = "<group>"; };
 		0EE5656B1A2AE6CD003E9331 /* BEMCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMCircle.h; sourceTree = "<group>"; };
 		0EE5656C1A2AE6CD003E9331 /* BEMCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMCircle.m; sourceTree = "<group>"; };
@@ -345,6 +345,7 @@
 				0EE565361A2AE656003E9331 /* BLEManager.swift */,
 				0EDE483C1A6A662D002CAE64 /* CBPeripheral+Extension.swift */,
 				0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */,
+				0E7D55CE1A7E5BC200988274 /* GATTUtils.swift */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -379,7 +380,6 @@
 			children = (
 				0EE2ADED1A68F5E10084DC24 /* OADHandler.swift */,
 				0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */,
-				0EE565421A2AE656003E9331 /* GATTUtils.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -607,7 +607,6 @@
 				0EDE483D1A6A662D002CAE64 /* CBPeripheral+Extension.swift in Sources */,
 				0EABC3611A53D31900F8A004 /* TableDetail.swift in Sources */,
 				0EE565471A2AE656003E9331 /* DeviceDetail.swift in Sources */,
-				0EE5654D1A2AE656003E9331 /* GATTUtils.swift in Sources */,
 				0EABC3601A53D31900F8A004 /* ListController.swift in Sources */,
 				0EABC35F1A53D31900F8A004 /* CollectionList.swift in Sources */,
 				0EABC3621A53D31900F8A004 /* TableList.swift in Sources */,
@@ -615,6 +614,7 @@
 				0EE565721A2AE6CD003E9331 /* BEMLine.m in Sources */,
 				0EE565441A2AE656003E9331 /* AppDelegate.swift in Sources */,
 				0E9F5B041A407828003BB8AD /* RightDetailCell.swift in Sources */,
+				0E7D55CF1A7E5BC200988274 /* GATTUtils.swift in Sources */,
 				0E5D10271A68E3FD00B5CED2 /* AvatarView.swift in Sources */,
 				0EABC3661A53D32A00F8A004 /* BaseModel.swift in Sources */,
 				0EE565711A2AE6CD003E9331 /* BEMCircle.m in Sources */,

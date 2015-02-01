@@ -4,9 +4,18 @@
 
 class DeviceDetail: TableDetail {
     
+    // MARK: - 💖 生命周期 (Lifecycle)
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        title = BLEManager.sharedManager.peripheralName
+        title = (data as CBPeripheral).name
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if !BLEManager.sharedManager.peripheralName.isEmpty {
+            title = BLEManager.sharedManager.peripheralName
+            tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))?.detailTextLabel?.text = title
+        }
     }
     
     // MARK: - 🐤 继承 Taylor
@@ -21,7 +30,7 @@ class DeviceDetail: TableDetail {
     override func getItemView<T : CBPeripheral, C : UITableViewCell>(tableView: UITableView, indexPath: NSIndexPath, data: T?, item: String, cell: C) -> UITableViewCell {
         switch item {
         case "name":
-            cell.detailTextLabel?.text = BLEManager.sharedManager.peripheralName
+            cell.detailTextLabel?.text = data?.name
             let firmwareRevision = data?.deviceInfo?.firmwareRevision
             let modelNumber = data?.deviceInfo?.modelNumber
             if  modelNumber != nil && contains(PRODUCTS.keys, modelNumber!) { // 如果是我们的设备

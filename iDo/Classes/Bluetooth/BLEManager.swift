@@ -10,7 +10,9 @@ protocol BLEManagerDelegate {
 
 protocol BLEManagerDataSource {
     /** 更新温度值 */
-    func onUpdateTemperature(value: Double, peripheral: CBPeripheral?)
+    func onUpdateTemperature(peripheral: CBPeripheral, value: Double)
+    
+    func onUpdateRSSI(peripheral: CBPeripheral, RSSI: NSNumber)
 }
 
 protocol BLEManagerOADSource {
@@ -18,7 +20,7 @@ protocol BLEManagerOADSource {
 }
 
 enum BLEManagerEvent: Int {
-    case PowerOff, Idle, Scan, Discovered, Connecting, Connected, Disconnected, Fail,ServiceDiscovered
+    case PowerOff, Idle, Scan, Discovered, Connecting, Connected, Disconnected, Fail, ServiceDiscovered, Renamed
 }
 
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
@@ -39,6 +41,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var characteristicFirmware: CBCharacteristic? // 方便调用
     
     var peripheralName = "" // 改名用
+    
+    var rename = false
     
     // SO: http://stackoverflow.com/questions/24024549/dispatch-once-singleton-model-in-swift
     class var sharedManager: BLEManager {
@@ -114,8 +118,10 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             if reconnectCount > 0 { // 信号不好
                 println("信号不好")
             }
-            connect(peripheral) // 连接
-            central.stopScan() // 停止搜寻
+            if peripheral.state == CBPeripheralState.Disconnected {
+                connect(peripheral) // 未连接状态下才连接
+            }
+            // central.stopScan() // 停止搜寻
         }
         let s = peripheral.identifier.UUIDString == defaultDevice() ? "" : "未"
         Log("🆔 发现 \(s)绑定设备 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
@@ -126,7 +132,6 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         delegate?.onChanged(peripheral, event: .Connected)
         oadHelper?.oadHandleEvent(peripheral, event: .Connected)
         peripheral.delegate = self
-        peripheralName = peripheral.name
         peripheral.discoverServices(serviceUUIDs)
     }
     
@@ -141,8 +146,13 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         Log("🅿️ 断开 设备 \(peripheral.name) (\(peripheral.identifier.UUIDString))")
         delegate?.onChanged(peripheral, event: .Disconnected)
         oadHelper?.oadHandleEvent(peripheral, event: .Disconnected)
-        if peripheral.identifier.UUIDString == defaultDevice() { // 无限次自动重连
-            reconnectCount++
+        if peripheral.identifier.UUIDString == defaultDevice() { // 断开后无限次自动重连
+            if rename {
+                delegate?.onChanged(peripheral, event: .Renamed)
+                rename = false
+            } else {
+                reconnectCount++
+            }
             connect(peripheral)
         }
     }
@@ -234,7 +244,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                     return
                 }
                 reconnectCount = 0 // 取到数据才算一次完整的重连成功
-                dataSource?.onUpdateTemperature(calculateTemperature(characteristic.value), peripheral: peripheral)
+                peripheral.readRSSI()
+                dataSource?.onUpdateTemperature(peripheral, value: calculateTemperature(characteristic.value))
             case BLE_DATE_TIME:
                 break
             case BLE_MODEL_NUMBER_STRING:
@@ -255,6 +266,14 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     func peripheral(peripheral: CBPeripheral!, didReadRSSI RSSI: NSNumber!, error: NSError!) {
-        Log("RSSI \(RSSI)")
+        dataSource?.onUpdateRSSI(peripheral, RSSI: RSSI)
+    }
+    
+    func peripheral(peripheral: CBPeripheral!, didWriteValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
+        Log("❇️ 写入 特性 \(characteristic.UUID)")
+        if characteristic.UUID.UUIDString == BLE_QODOME_SET_NAME {
+            rename = true
+            central.cancelPeripheralConnection(peripheral) // 必须断开,改名或重新扫描或直接重连,名字都不会变
+        }
     }
 }

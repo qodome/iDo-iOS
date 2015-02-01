@@ -71,7 +71,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         var item: CBPeripheral
         if indexPath.section == 0 {
             item = connected[indexPath.row]
-            cell.textLabel?.text = BLEManager.sharedManager.peripheralName
+            cell.textLabel?.text = item.name
             cell.imageView?.hidden = false
             cell.accessoryType = .DetailButton
         } else {

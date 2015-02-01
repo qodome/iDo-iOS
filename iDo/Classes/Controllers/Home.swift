@@ -101,11 +101,11 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
     }
     
     // MARK: - 🐤 BLEManagerDataSource
-    func onUpdateTemperature(var value: Double, peripheral: CBPeripheral?) {
+    func onUpdateTemperature(peripheral: CBPeripheral, var value: Double) {
         value = round(value / 0.1) * 0.1 // 四舍五入保留一位小数
         updateUI(value)
         if developer {
-            title = peripheral?.name
+            title = peripheral.name
         }
         // 初始化一个温度对象，当前时间最接近的5分钟频率
         let date = NSDate()
@@ -153,10 +153,16 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
             } else { // 超过5分钟，新增
                 json = "\(json.substringToIndex(advance(json.startIndex, countElements(json) - 1))),\(json1)]"
                 if canHealthKit { // 每5分钟写HealthKit
-                    HKManager.sharedManager.writeTemperature(date, value: value)
+                    HKManager.sharedManager.storeTemperature(date, value: value)
                 }
             }
             json.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+        }
+    }
+    
+    func onUpdateRSSI(peripheral: CBPeripheral, RSSI: NSNumber) {
+        if developer {
+            title = "\(RSSI)"
         }
     }
     
