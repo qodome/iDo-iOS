@@ -16,7 +16,7 @@ class FirmwareDetail: TableDetail {
         super.onPrepare()
         title = LocalizedString("update")
         refreshMode = .WillAppear
-        endpoint = getEndpoint("firmwares/ID14TB")
+        endpoint = getEndpoint("firmwares/\(peripheral.deviceInfo!.modelNumber!)")
         HUD = M13ProgressHUD(progressView: M13ProgressViewRing())
         HUD.progressViewSize = CGSizeMake(60, 60)
         HUD.animationPoint = CGPointMake(view.frame.width / 2, view.frame.height / 2)
@@ -30,7 +30,7 @@ class FirmwareDetail: TableDetail {
     }
     
     override func onLoadSuccess<E : Firmware>(entity: E) {
-        let local = peripheral.deviceInfo?.firmwareRevision != nil ? peripheral.deviceInfo!.firmwareRevision : ""
+        let local = peripheral.deviceInfo!.firmwareRevision! // 如果数据格式不对下面会闪退
 //        let local = "1.0.0(33B)"
         if entity.modelNumber == "ID14TB" { // 注意: 以下基于服务器端永远只返回A.bin
             let remote: String = entity.revision
