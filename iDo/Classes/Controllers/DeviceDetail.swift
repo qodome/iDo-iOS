@@ -15,6 +15,7 @@ class DeviceDetail: TableDetail {
         if !BLEManager.sharedManager.peripheralName.isEmpty {
             title = BLEManager.sharedManager.peripheralName
             tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))?.detailTextLabel?.text = title
+            BLEManager.sharedManager.peripheralName = ""
         }
     }
     

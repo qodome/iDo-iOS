@@ -70,12 +70,14 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate, BLEManagerDelegate {
     // MARK: - 🐤 BLEManagerDelegate
     func onChanged(peripheral: CBPeripheral?, event: BLEManagerEvent) {
         if event == .Renamed {
-            HUD.performAction(M13ProgressViewActionSuccess, animated: true)
-            HUD.progressView.indeterminate = false
             delay(1 + Double(self.HUD.animationDuration)) {
-                self.HUD.hide(true)
-                self.HUD.performAction(M13ProgressViewActionNone, animated: false)
-                self.cancel()
+                self.HUD.performAction(M13ProgressViewActionSuccess, animated: true)
+                self.HUD.progressView.indeterminate = false
+                delay(1 + Double(self.HUD.animationDuration)) {
+                    self.HUD.hide(true)
+                    self.HUD.performAction(M13ProgressViewActionNone, animated: false)
+                    self.cancel()
+                }
             }
         }
     }

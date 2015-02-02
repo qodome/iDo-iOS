@@ -3,17 +3,13 @@
 //
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: SocialAppDelegate {
     
-    var window: UIWindow?
-    
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        setTheme()
-        window?.backgroundColor = UIColor.whiteColor()
-        RKObjectManager.setSharedManager(RKObjectManager(baseURL: NSURL(string: BASE_URL)))
-        RKObjectManager.sharedManager().HTTPClient.setDefaultHeader("Accept-Encoding", value: "gzip, deflate")
+    // MARK: - 🐤 继承 Taylor
+    override func onFinishLaunching(application: UIApplication, options: [NSObject : AnyObject]?) {
         // Settings
         initSettings()
+        // 注册通知
         if UIApplication.instancesRespondToSelector("registerUserNotificationSettings:") {
             application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
         }
@@ -44,9 +40,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let biologicalSex = store.biologicalSexWithError(&error) //性别
             let bloodType = store.bloodTypeWithError(&error) // 血型
         }
-        return true
     }
     
+    // MARK: - 💖 生命周期 (Lifecyle)
     func applicationDidBecomeActive(application: UIApplication) {
         application.applicationIconBadgeNumber = 0
         application.cancelAllLocalNotifications()

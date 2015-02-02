@@ -34,6 +34,12 @@
 // TLYShyNavBar https://github.com/telly/TLYShyNavBar
 #import <TLYShyNavBar/TLYShyNavBarManager.h>
 
+// WeiboSDK https://github.com/sinaweibosdk/weibo_ios_sdk/
+#import <WeiboSDK/WeiboSDK.h>
+
+// Weixin https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list
+#import <Weixin/WXApi.h>
+
 #ifndef __OPTIMIZE__
 #define NSLog(...) NSLog(__VA_ARGS__)
 #else

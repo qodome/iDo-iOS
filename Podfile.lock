@@ -51,6 +51,7 @@ PODS:
   - TLYShyNavBar (0.9.8)
   - TransitionKit (2.1.0)
   - WeiboSDK (3.0.1)
+  - Weixin (1.5)
 
 DEPENDENCIES:
   - EAIntroView
@@ -61,6 +62,7 @@ DEPENDENCIES:
   - SDWebImage
   - TLYShyNavBar
   - WeiboSDK
+  - Weixin
 
 SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
@@ -76,5 +78,6 @@ SPEC CHECKSUMS:
   TLYShyNavBar: cf15a919cf7f6e79080ac5b95b56580a752cf64d
   TransitionKit: 6a6f3ddda38ae758778aa889dcb930e4f8d64edc
   WeiboSDK: e40a302dc603a20c8ec7fc15ebec49fa4e93d7ba
+  Weixin: a8ec14d7b9b814ec5997dd0f995a4be91f81f163
 
 COCOAPODS: 0.36.0.beta.2

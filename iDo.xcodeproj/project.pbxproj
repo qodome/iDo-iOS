@@ -42,6 +42,22 @@
 		0EABC36E1A53D34D00F8A004 /* BaseLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC36C1A53D34D00F8A004 /* BaseLoader.swift */; };
 		0EABC36F1A53D34D00F8A004 /* HttpLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC36D1A53D34D00F8A004 /* HttpLoader.swift */; };
 		0EB84EBE1A6E434C0044D8C3 /* FirmwareDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */; };
+		0EC0D6661A7F731600D2B539 /* SocialAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6651A7F731600D2B539 /* SocialAppDelegate.swift */; };
+		0EC0D66B1A7F732E00D2B539 /* BaseIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6671A7F732E00D2B539 /* BaseIntro.swift */; };
+		0EC0D66C1A7F732E00D2B539 /* BaseSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6681A7F732E00D2B539 /* BaseSign.swift */; };
+		0EC0D66D1A7F732E00D2B539 /* BaseSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6691A7F732E00D2B539 /* BaseSignIn.swift */; };
+		0EC0D66E1A7F732E00D2B539 /* BaseSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D66A1A7F732E00D2B539 /* BaseSignUp.swift */; };
+		0EC0D6721A7F771500D2B539 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6711A7F771500D2B539 /* User.swift */; };
+		0EC0D6751A7F774600D2B539 /* BaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6731A7F774600D2B539 /* BaseUser.swift */; };
+		0EC0D6761A7F774600D2B539 /* WXToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6741A7F774600D2B539 /* WXToken.swift */; };
+		0EC0D67E1A7F7C0A00D2B539 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D67D1A7F7C0A00D2B539 /* Config.swift */; };
+		0EC0D6821A7F7F7300D2B539 /* TaylorR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6811A7F7F7300D2B539 /* TaylorR.swift */; };
+		0EC0D6841A7F7F9000D2B539 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC0D6831A7F7F9000D2B539 /* libz.dylib */; };
+		0EC0D6861A7F7F9800D2B539 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC0D6851A7F7F9800D2B539 /* libc++.dylib */; };
+		0EC0D6881A7F7FA200D2B539 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC0D6871A7F7FA200D2B539 /* libsqlite3.0.dylib */; };
+		0EC0D68A1A7F881400D2B539 /* Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6891A7F881400D2B539 /* Intro.swift */; };
+		0EC0D68C1A7F882300D2B539 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D68B1A7F882300D2B539 /* SignUp.swift */; };
+		0EC0D68E1A7F883200D2B539 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D68D1A7F883200D2B539 /* SignIn.swift */; };
 		0ECD403A1A6F9ACF00568B18 /* TemperatureUnitDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD40391A6F9ACF00568B18 /* TemperatureUnitDetail.swift */; };
 		0ED67E4B1A2AFA3400CA35BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E4D1A2AFA3400CA35BE /* Localizable.strings */; };
 		0ED67E8B1A2B0F5C00CA35BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E8D1A2B0F5C00CA35BE /* InfoPlist.strings */; };
@@ -115,6 +131,22 @@
 		0EABC36C1A53D34D00F8A004 /* BaseLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLoader.swift; sourceTree = "<group>"; };
 		0EABC36D1A53D34D00F8A004 /* HttpLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpLoader.swift; sourceTree = "<group>"; };
 		0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareDetail.swift; sourceTree = "<group>"; };
+		0EC0D6651A7F731600D2B539 /* SocialAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialAppDelegate.swift; sourceTree = "<group>"; };
+		0EC0D6671A7F732E00D2B539 /* BaseIntro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseIntro.swift; sourceTree = "<group>"; };
+		0EC0D6681A7F732E00D2B539 /* BaseSign.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseSign.swift; sourceTree = "<group>"; };
+		0EC0D6691A7F732E00D2B539 /* BaseSignIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseSignIn.swift; sourceTree = "<group>"; };
+		0EC0D66A1A7F732E00D2B539 /* BaseSignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseSignUp.swift; sourceTree = "<group>"; };
+		0EC0D6711A7F771500D2B539 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0EC0D6731A7F774600D2B539 /* BaseUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUser.swift; sourceTree = "<group>"; };
+		0EC0D6741A7F774600D2B539 /* WXToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WXToken.swift; sourceTree = "<group>"; };
+		0EC0D67D1A7F7C0A00D2B539 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		0EC0D6811A7F7F7300D2B539 /* TaylorR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaylorR.swift; sourceTree = "<group>"; };
+		0EC0D6831A7F7F9000D2B539 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		0EC0D6851A7F7F9800D2B539 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		0EC0D6871A7F7FA200D2B539 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		0EC0D6891A7F881400D2B539 /* Intro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intro.swift; sourceTree = "<group>"; };
+		0EC0D68B1A7F882300D2B539 /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
+		0EC0D68D1A7F883200D2B539 /* SignIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		0ECD40391A6F9ACF00568B18 /* TemperatureUnitDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureUnitDetail.swift; sourceTree = "<group>"; };
 		0ED67E4C1A2AFA3400CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0ED67E8A1A2B0CDA00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -152,6 +184,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EC0D6861A7F7F9800D2B539 /* libc++.dylib in Frameworks */,
+				0EC0D6881A7F7FA200D2B539 /* libsqlite3.0.dylib in Frameworks */,
+				0EC0D6841A7F7F9000D2B539 /* libz.dylib in Frameworks */,
 				7D9EF8057408D96D93B33395 /* libPods.a in Frameworks */,
 				0EDC36CF1A7764A400ECCDBE /* HealthKit.framework in Frameworks */,
 			);
@@ -231,6 +266,10 @@
 		0E5D10241A68E3FD00B5CED2 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
+				0EC0D6671A7F732E00D2B539 /* BaseIntro.swift */,
+				0EC0D6681A7F732E00D2B539 /* BaseSign.swift */,
+				0EC0D66A1A7F732E00D2B539 /* BaseSignUp.swift */,
+				0EC0D6691A7F732E00D2B539 /* BaseSignIn.swift */,
 				0E5D10251A68E3FD00B5CED2 /* AvatarView.swift */,
 				0E5D10261A68E3FD00B5CED2 /* TagsView.swift */,
 			);
@@ -256,6 +295,8 @@
 		0E9F5AE51A407828003BB8AD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0EC0D6811A7F7F7300D2B539 /* TaylorR.swift */,
+				0EC0D6641A7F731600D2B539 /* Main */,
 				0E7F67271A7BA1E6008CC949 /* HealthKit */,
 				0E9F5AEE1A407828003BB8AD /* Util */,
 				0EABC36B1A53D34D00F8A004 /* Content */,
@@ -283,8 +324,10 @@
 		0E9F5AEB1A407828003BB8AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0EC0D6731A7F774600D2B539 /* BaseUser.swift */,
 				0EABC3631A53D32A00F8A004 /* BaseModel.swift */,
 				0EABC3641A53D32A00F8A004 /* ListModel.swift */,
+				0EC0D6741A7F774600D2B539 /* WXToken.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -323,11 +366,20 @@
 			path = Content;
 			sourceTree = "<group>";
 		};
+		0EC0D6641A7F731600D2B539 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				0EC0D6651A7F731600D2B539 /* SocialAppDelegate.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		0EE565331A2AE656003E9331 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				0EE565341A2AE656003E9331 /* AppDelegate.swift */,
 				0EE565371A2AE656003E9331 /* Constants.swift */,
+				0EC0D67D1A7F7C0A00D2B539 /* Config.swift */,
 				0E5D10221A68E25400B5CED2 /* R.swift */,
 				0EE565411A2AE656003E9331 /* Util */,
 				0EE565351A2AE656003E9331 /* Bluetooth */,
@@ -353,6 +405,9 @@
 		0EE565381A2AE656003E9331 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0EC0D6891A7F881400D2B539 /* Intro.swift */,
+				0EC0D68B1A7F882300D2B539 /* SignUp.swift */,
+				0EC0D68D1A7F883200D2B539 /* SignIn.swift */,
 				0EE5653C1A2AE656003E9331 /* Home.swift */,
 				0EE5653B1A2AE656003E9331 /* History.swift */,
 				0EE5653D1A2AE656003E9331 /* Settings.swift */,
@@ -371,6 +426,7 @@
 				0E7A71B81A6E497D008816C6 /* Firmware.swift */,
 				0E7A71BA1A6E4A4C008816C6 /* Product.swift */,
 				0EE565401A2AE656003E9331 /* Temperature.swift */,
+				0EC0D6711A7F771500D2B539 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -435,6 +491,9 @@
 		9DC1F549138FCE02183AF6CB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0EC0D6871A7F7FA200D2B539 /* libsqlite3.0.dylib */,
+				0EC0D6851A7F7F9800D2B539 /* libc++.dylib */,
+				0EC0D6831A7F7F9000D2B539 /* libz.dylib */,
 				0EDC36CE1A7764A400ECCDBE /* HealthKit.framework */,
 				DE64FC9FA675092DA1278AB3 /* libPods.a */,
 			);
@@ -587,15 +646,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EC0D6761A7F774600D2B539 /* WXToken.swift in Sources */,
 				0E9F5B011A407828003BB8AD /* UILabel+Extension.swift in Sources */,
 				0EE565731A2AE6CD003E9331 /* BEMSimpleLineGraphView.m in Sources */,
 				0EE565491A2AE656003E9331 /* History.swift in Sources */,
 				0EB84EBE1A6E434C0044D8C3 /* FirmwareDetail.swift in Sources */,
 				0EABC3571A53D30600F8A004 /* RestKitUtils.swift in Sources */,
+				0EC0D6661A7F731600D2B539 /* SocialAppDelegate.swift in Sources */,
 				0EE565481A2AE656003E9331 /* DeviceList.swift in Sources */,
 				0EE5654C1A2AE656003E9331 /* Temperature.swift in Sources */,
 				0ECD403A1A6F9ACF00568B18 /* TemperatureUnitDetail.swift in Sources */,
 				0EE5654B1A2AE656003E9331 /* Settings.swift in Sources */,
+				0EC0D68A1A7F881400D2B539 /* Intro.swift in Sources */,
 				0EABC3671A53D32A00F8A004 /* ListModel.swift in Sources */,
 				0E7A71B91A6E497D008816C6 /* Firmware.swift in Sources */,
 				0E9F5B001A407828003BB8AD /* UIImage+Extension.swift in Sources */,
@@ -608,7 +670,9 @@
 				0EABC3611A53D31900F8A004 /* TableDetail.swift in Sources */,
 				0EE565471A2AE656003E9331 /* DeviceDetail.swift in Sources */,
 				0EABC3601A53D31900F8A004 /* ListController.swift in Sources */,
+				0EC0D67E1A7F7C0A00D2B539 /* Config.swift in Sources */,
 				0EABC35F1A53D31900F8A004 /* CollectionList.swift in Sources */,
+				0EC0D66B1A7F732E00D2B539 /* BaseIntro.swift in Sources */,
 				0EABC3621A53D31900F8A004 /* TableList.swift in Sources */,
 				0E9F5B021A407828003BB8AD /* UIViewController+Extension.swift in Sources */,
 				0EE565721A2AE6CD003E9331 /* BEMLine.m in Sources */,
@@ -617,7 +681,11 @@
 				0E7D55CF1A7E5BC200988274 /* GATTUtils.swift in Sources */,
 				0E5D10271A68E3FD00B5CED2 /* AvatarView.swift in Sources */,
 				0EABC3661A53D32A00F8A004 /* BaseModel.swift in Sources */,
+				0EC0D6721A7F771500D2B539 /* User.swift in Sources */,
 				0EE565711A2AE6CD003E9331 /* BEMCircle.m in Sources */,
+				0EC0D66E1A7F732E00D2B539 /* BaseSignUp.swift in Sources */,
+				0EC0D66C1A7F732E00D2B539 /* BaseSign.swift in Sources */,
+				0EC0D66D1A7F732E00D2B539 /* BaseSignIn.swift in Sources */,
 				0E7F67291A7BA234008CC949 /* HKManager.swift in Sources */,
 				0EABC35E1A53D31900F8A004 /* BaseController.swift in Sources */,
 				0EE2ADEF1A68F5E10084DC24 /* OADHandler.swift in Sources */,
@@ -627,14 +695,18 @@
 				0E9F5AFF1A407828003BB8AD /* UIColor+Extension.swift in Sources */,
 				0EE565451A2AE656003E9331 /* BLEManager.swift in Sources */,
 				0E14DB001A6E6853004FC5CE /* String+Extension.swift in Sources */,
+				0EC0D68C1A7F882300D2B539 /* SignUp.swift in Sources */,
 				0EE5654A1A2AE656003E9331 /* Home.swift in Sources */,
 				0EE565461A2AE656003E9331 /* Constants.swift in Sources */,
 				0EABC36E1A53D34D00F8A004 /* BaseLoader.swift in Sources */,
+				0EC0D6821A7F7F7300D2B539 /* TaylorR.swift in Sources */,
+				0EC0D6751A7F774600D2B539 /* BaseUser.swift in Sources */,
 				0E9C9FAD1A3750BC00BB9DC6 /* NumberView.swift in Sources */,
 				0E9F5B051A407828003BB8AD /* SubtitleCell.swift in Sources */,
 				0EDE483B1A6A65CC002CAE64 /* DeviceInfo.swift in Sources */,
 				0E5D10281A68E3FD00B5CED2 /* TagsView.swift in Sources */,
 				0E674F481A7B7A7600FF423E /* BaseCreate.swift in Sources */,
+				0EC0D68E1A7F883200D2B539 /* SignIn.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
