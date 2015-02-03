@@ -8,7 +8,8 @@ let APP_COLOR = 0x7AFF
 
 let PRODUCTS = ["ID14TB" : "iDo"]
 
-let BASE_URL = "http://qodome.com"
+//let BASE_URL = "http://qodome.com"
+let BASE_URL = "http://test.guadou.tv:8000"
 let API_VERSION = "api/v1"
 let DEFAULT_TOKEN = ""
 

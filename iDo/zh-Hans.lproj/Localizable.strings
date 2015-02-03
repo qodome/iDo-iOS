@@ -1,46 +1,72 @@
 /* 通用 */
-"qodome_co_ltd" = "Qodome Co., Ltd.";
+qodome_co_ltd = "Qodome Co., Ltd.";
 
-"ok" = "好";
-"cancel" = "取消";
-"unknown" = "未知";
-"settings" = "设置";
-"notifications" = "通知";
+home = "主页";
+discover = "发现";
+questions = "问答";
+me = "我";
+settings = "设置";
+about = "关于";
 
-"download" = "下载";
-"install" = "安装";
-"update" = "更新";
-"devices" = "设备";
-"history" = "历史";
+comment = "评论";
+comments = "评论";
+like = "喜欢";
+likes = "喜欢";
 
-"no_device" = "没有设备";
-"connected" = "已连接";
-"disconnect" = "断开";
-"reconnect" = "重连";
+sign_up = "注册";
+sign_in = "登录";
+sign_out = "登出";
 
-"temperature" = "温度";
-"notification_high" = "高温报警通知";
-"notification_low" = "低温报警通知";
-"min" = "最小";
-"max" = "最大";
-"high" = "最高";
-"low" = "最低";
-"temperature_unit" = "温度单位";
-"review" = "评分";
-"developer" = "开发者";
+username = "用户名";
+password = "密码";
+email = "邮件";
+optional = "选填";
+// 社会化
+facebook = "Facebook";
+twitter = "Twitter";
+weibo = "微博";
+weixin = "微信";
 
-"name" = "名称";
-"version" = "版本";
-"model" = "型号";
-"serial_number" = "序列号";
-"bluetooth" = "蓝牙";
-"manufacturer" = "制造商";
+ok = "好";
+cancel = "取消";
+unknown = "未知";
+settings = "设置";
+notifications = "通知";
 
-"download_and_install" = "下载并安装";
-"up_to_date" = "最新";
+download = "下载";
+install = "安装";
+update = "更新";
+devices = "设备";
+history = "历史";
+
+no_device = "没有设备";
+connected = "已连接";
+disconnect = "断开";
+reconnect = "重连";
+
+temperature = "温度";
+notification_high = "高温报警通知";
+notification_low = "低温报警通知";
+min = "最小";
+max = "最大";
+high = "最高";
+low = "最低";
+temperature_unit = "温度单位";
+review = "评分";
+developer = "开发者";
+
+name = "名称";
+version = "版本";
+model = "型号";
+serial_number = "序列号";
+bluetooth = "蓝牙";
+manufacturer = "制造商";
+
+download_and_install = "下载并安装";
+up_to_date = "最新";
 /* 日期 */
-"today" = "今天";
-"yesterday" = "昨天";
+today = "今天";
+yesterday = "昨天";
 
-"choose_device" = "选择一个 iDo";
-"bind" = "绑定";
+choose_device = "选择一个 iDo";
+bind = "绑定";

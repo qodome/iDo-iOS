@@ -1,45 +1,72 @@
 /* 通用 */
-"qodome_co_ltd" = "Qodome Co., Ltd.";
-"ok" = "OK";
-"cancel" = "Cancel";
-"unknown" = "Unknown";
-"settings" = "Settings";
-"notifications" = "Notifications";
+qodome_co_ltd = "Qodome Co., Ltd.";
 
-"download" = "Download";
-"install" = "Install";
-"update" = "Update";
-"devices" = "Devices";
-"history" = "History";
+home = "Home";
+discover = "Discover";
+questions = "Questions";
+me = "Me";
+settings = "Settings";
+about = "About";
 
-"no_device" = "No device";
-"connected" = "Connected";
-"disconnect" = "Disconnect";
-"reconnect" = "Reconnect";
+comment = "Comment";
+comments = "Comments";
+like = "Like";
+likes = "Likes";
 
-"temperature" = "Temperature";
-"notification_high" = "High Temperature Alarm";
-"notification_low" = "Low Temperature Alarm";
-"min" = "Min";
-"max" = "Max";
-"high" = "High";
-"low" = "Low";
-"temperature_unit" = "Temperature Unit";
-"review" = "Review";
-"developer" = "Developer";
+sign_up = "Sign Up";
+sign_in = "Sign In";
+sign_out = "Sign Out";
 
-"name" = "Name";
-"version" = "Version";
-"model" = "Model";
-"serial_number" = "Serial Number";
-"bluetooth" = "Bluetooth";
-"manufacturer" = "Manufacturer";
+username = "Username";
+password = "Password";
+email = "Email";
+optional = "Optional";
+// 社会化
+facebook = "Facebook";
+twitter = "Twitter";
+weibo = "Weibo";
+weixin = "WeChat";
 
-"download_and_install" = "DownLoad and Install";
-"up_to_date" = "Up to date"; // 待优化更准确
+ok = "OK";
+cancel = "Cancel";
+unknown = "Unknown";
+settings = "Settings";
+notifications = "Notifications";
+
+download = "Download";
+install = "Install";
+update = "Update";
+devices = "Devices";
+history = "History";
+
+no_device = "No device";
+connected = "Connected";
+disconnect = "Disconnect";
+reconnect = "Reconnect";
+
+temperature = "Temperature";
+notification_high = "High Temperature Alarm";
+notification_low = "Low Temperature Alarm";
+min = "Min";
+max = "Max";
+high = "High";
+low = "Low";
+temperature_unit = "Temperature Unit";
+review = "Review";
+developer = "Developer";
+
+name = "Name";
+version = "Version";
+model = "Model";
+serial_number = "Serial Number";
+bluetooth = "Bluetooth";
+manufacturer = "Manufacturer";
+
+download_and_install = "DownLoad and Install";
+up_to_date = "Up to date"; // 待优化更准确
 /* 日期 */
-"today" = "Today";
-"yesterday" = "Yesterday";
+today = "Today";
+yesterday = "Yesterday";
 
-"choose_device" = "Choose an iDo";
-"bind" = "Bind";
+choose_device = "Choose an iDo";
+bind = "Bind";
