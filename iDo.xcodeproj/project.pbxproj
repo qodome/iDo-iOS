@@ -40,6 +40,9 @@
 		0EABC3671A53D32A00F8A004 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC3641A53D32A00F8A004 /* ListModel.swift */; };
 		0EABC36E1A53D34D00F8A004 /* BaseLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC36C1A53D34D00F8A004 /* BaseLoader.swift */; };
 		0EABC36F1A53D34D00F8A004 /* HttpLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC36D1A53D34D00F8A004 /* HttpLoader.swift */; };
+		0EB2536F1A82242C00F6CB9D /* PregnancyHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB2536E1A82242C00F6CB9D /* PregnancyHistory.swift */; };
+		0EB253711A8268EB00F6CB9D /* KLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB253701A8268EB00F6CB9D /* KLineView.swift */; };
+		0EB253751A827F5500F6CB9D /* NSDate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB253741A827F5500F6CB9D /* NSDate+Extension.swift */; };
 		0EB84EBE1A6E434C0044D8C3 /* FirmwareDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */; };
 		0EC0D6661A7F731600D2B539 /* SocialAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6651A7F731600D2B539 /* SocialAppDelegate.swift */; };
 		0EC0D66B1A7F732E00D2B539 /* BaseIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6671A7F732E00D2B539 /* BaseIntro.swift */; };
@@ -128,6 +131,9 @@
 		0EABC3641A53D32A00F8A004 /* ListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 		0EABC36C1A53D34D00F8A004 /* BaseLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLoader.swift; sourceTree = "<group>"; };
 		0EABC36D1A53D34D00F8A004 /* HttpLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpLoader.swift; sourceTree = "<group>"; };
+		0EB2536E1A82242C00F6CB9D /* PregnancyHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PregnancyHistory.swift; sourceTree = "<group>"; };
+		0EB253701A8268EB00F6CB9D /* KLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KLineView.swift; sourceTree = "<group>"; };
+		0EB253741A827F5500F6CB9D /* NSDate+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+Extension.swift"; sourceTree = "<group>"; };
 		0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareDetail.swift; sourceTree = "<group>"; };
 		0EC0D6651A7F731600D2B539 /* SocialAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialAppDelegate.swift; sourceTree = "<group>"; };
 		0EC0D6671A7F732E00D2B539 /* BaseIntro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseIntro.swift; sourceTree = "<group>"; };
@@ -335,6 +341,7 @@
 			children = (
 				0E9F5AEF1A407828003BB8AD /* Array+Extension.swift */,
 				0E9F5AF01A407828003BB8AD /* UIColor+Extension.swift */,
+				0EB253741A827F5500F6CB9D /* NSDate+Extension.swift */,
 				0E9F5AF11A407828003BB8AD /* UIImage+Extension.swift */,
 				0E9F5AF21A407828003BB8AD /* UILabel+Extension.swift */,
 				0E9F5AF31A407828003BB8AD /* UIViewController+Extension.swift */,
@@ -350,6 +357,7 @@
 			children = (
 				0E9F5AF61A407828003BB8AD /* RightDetailCell.swift */,
 				0E9F5AF71A407828003BB8AD /* SubtitleCell.swift */,
+				0EB253701A8268EB00F6CB9D /* KLineView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -407,6 +415,7 @@
 				0EC0D68D1A7F883200D2B539 /* SignIn.swift */,
 				0EE5653C1A2AE656003E9331 /* Home.swift */,
 				0EE5653B1A2AE656003E9331 /* History.swift */,
+				0EB2536E1A82242C00F6CB9D /* PregnancyHistory.swift */,
 				0EE5653D1A2AE656003E9331 /* Settings.swift */,
 				0ECD40391A6F9ACF00568B18 /* TemperatureUnitDetail.swift */,
 				0EE5653A1A2AE656003E9331 /* DeviceList.swift */,
@@ -653,12 +662,14 @@
 				0EE565481A2AE656003E9331 /* DeviceList.swift in Sources */,
 				0EE5654C1A2AE656003E9331 /* Temperature.swift in Sources */,
 				0ECD403A1A6F9ACF00568B18 /* TemperatureUnitDetail.swift in Sources */,
+				0EB253711A8268EB00F6CB9D /* KLineView.swift in Sources */,
 				0EE5654B1A2AE656003E9331 /* Settings.swift in Sources */,
 				0EC0D68A1A7F881400D2B539 /* Intro.swift in Sources */,
 				0EABC3671A53D32A00F8A004 /* ListModel.swift in Sources */,
 				0E7A71B91A6E497D008816C6 /* Firmware.swift in Sources */,
 				0E9F5B001A407828003BB8AD /* UIImage+Extension.swift in Sources */,
 				0EA9A0A61A6CA389007E9875 /* DeviceNameDetail.swift in Sources */,
+				0EB2536F1A82242C00F6CB9D /* PregnancyHistory.swift in Sources */,
 				0EABC36F1A53D34D00F8A004 /* HttpLoader.swift in Sources */,
 				0E5D10231A68E25400B5CED2 /* R.swift in Sources */,
 				0E9F5B031A407828003BB8AD /* Utils.swift in Sources */,
@@ -689,6 +700,7 @@
 				0EE2ADEE1A68F5E10084DC24 /* iDo1OADHandler.swift in Sources */,
 				0E7A71BB1A6E4A4C008816C6 /* Product.swift in Sources */,
 				0E9F5AFF1A407828003BB8AD /* UIColor+Extension.swift in Sources */,
+				0EB253751A827F5500F6CB9D /* NSDate+Extension.swift in Sources */,
 				0EE565451A2AE656003E9331 /* BLEManager.swift in Sources */,
 				0E14DB001A6E6853004FC5CE /* String+Extension.swift in Sources */,
 				0EC0D68C1A7F882300D2B539 /* SignUp.swift in Sources */,

@@ -11,6 +11,9 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     var scrollView: UIScrollView!
     var chart: BEMSimpleLineGraphView!
     
+    var segment: UISegmentedControl!
+    var timeLabel: UILabel!
+    
     var json = "" // 历史数据json
     
     // MARK: - 💖 生命周期 (Lifecyle)
@@ -19,6 +22,21 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         let color = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
         view.backgroundColor = color
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: LocalizedString("today"), style: .Bordered, target: self, action: "today:")
+        segment = UISegmentedControl()
+        segment.insertSegmentWithTitle(LocalizedString("general"), atIndex: 0, animated: false)
+        segment.insertSegmentWithTitle(LocalizedString("advanced"), atIndex: 1, animated: false)
+        segment.sizeToFit()
+        segment.selectedSegmentIndex = 0
+        segment.addTarget(self, action: "change:", forControlEvents: .ValueChanged)
+        navigationItem.titleView = segment
+        timeLabel = UILabel(frame: CGRectMake(0, 64, view.frame.width, 32))
+        timeLabel.textColor = UIColor.whiteColor()
+        timeLabel.text = "04:00 AM - 07:00 AM"
+        timeLabel.sizeToFit()
+        timeLabel.frame.origin.x = (view.frame.width - timeLabel.frame.width) / 2
+        view.addSubview(timeLabel)
+        timeLabel.hidden = true
+        // 日历
         calendarMenuView = JTCalendarMenuView(frame: CGRectMake(0, 64, view.frame.width, 32))
         calendarContentView = JTCalendarContentView(frame: CGRectMake(0, 96, view.frame.width, 88))
         view.addSubview(calendarMenuView)
@@ -86,7 +104,7 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     }
     
     func calendarDidDateSelected(calendar: JTCalendar!, date: NSDate!) {
-        println("hahhahahhahahha")
+        //        println("hahhahahhahahha")
         data.removeAll(keepCapacity: true)
         data += History.getData(date)
         setChartSize() // 要放在加载数据之后
@@ -106,10 +124,16 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     func lineGraph(graph: BEMSimpleLineGraphView!, labelOnXAxisForIndex index: Int) -> String! {
         let date = NSDate(timeIntervalSince1970: Double(data[index].timeStamp))
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "HH:mm" // "hh:mm a"
+        var components: NSDateComponents!
         // TODO: 用这个日历是否总是对
-        let components = NSCalendar.autoupdatingCurrentCalendar().components(.CalendarUnitMinute, fromDate: date)
-        //        return components.minute == 0 ? format.stringFromDate(date) : ""
+        if segment.selectedSegmentIndex == 0 {
+            formatter.dateFormat = "HH:mm" // "hh:mm a"
+            components = NSCalendar.autoupdatingCurrentCalendar().components(.CalendarUnitMinute, fromDate: date)
+            //        return components.minute == 0 ? format.stringFromDate(date) : ""
+        } else {
+            formatter.dateFormat = "yyyy-MM-dd"
+            components = NSCalendar.autoupdatingCurrentCalendar().components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: date)
+        }
         return formatter.stringFromDate(date)
     }
     
@@ -119,7 +143,30 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     //    }
     
     // MARK: - 💛 Action
+    func change(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            today(sender)
+        case 1:
+            let date = NSDate()
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            let from = date.dateByAddingDay(-30)
+            data = History.getHistoryData(formatter.stringFromDate(from), endDate: formatter.stringFromDate(date), startTime: "04:00", endTime: "07:00")
+            calendarContentView.hidden = true
+            calendarMenuView.hidden = true
+            timeLabel.hidden = false
+            chart.frame.size.width = view.frame.width - 20
+            scrollView.contentSize.width = chart.frame.width
+            chart.reloadGraph()
+        default: break
+        }
+    }
+    
     func today(sender: AnyObject) {
+        calendarContentView.hidden = false
+        calendarMenuView.hidden = false
+        timeLabel.hidden = true
         let date = NSDate()
         calendar.currentDateSelected = date // 这句必须放在前面，否则同屏会不选中
         calendar.currentDate = date
@@ -173,5 +220,49 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         components.minute = components.minute / minute * minute
         //        println(calendar.dateFromComponents(components))
         return Int(calendar.dateFromComponents(components)!.timeIntervalSince1970)
+    }
+    
+    // MARK: -    
+    class func getHistoryData(startDate: NSString, endDate: NSString, startTime: NSString, endTime: NSString) -> [Temperature] {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        var current = formatter.dateFromString(startDate)!
+        let end = formatter.dateFromString(endDate)
+        var dataArray: [Temperature] = []
+        while true {
+            let currentDay = formatter.stringFromDate(current)
+            let beginTime = "\(currentDay) \(startTime):00"
+            let endTime = "\(currentDay) \(endTime):00"
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let startInt = dateFormatter.dateFromString(beginTime)?.timeIntervalSince1970
+            let endInt = dateFormatter.dateFromString(endTime)?.timeIntervalSince1970
+            if current.timeIntervalSince1970 > end!.timeIntervalSince1970 {
+                break
+            } else {
+                if NSFileHandle(forUpdatingAtPath: getHistory(current)) == nil {
+                    dataArray.append(Temperature(timeStamp: Int(startInt!)))
+                } else {
+                    let data = getData(current)
+                    var temperature = Temperature(timeStamp: Int(current.timeIntervalSince1970))
+                    for item in data {
+                        if item.timeStamp >= Int(startInt!) && item.timeStamp <= Int(endInt!) {
+                            if temperature.open == nil {
+                                temperature = item
+                            }
+                            if item.high > temperature.high {
+                                temperature.high = item.high
+                            } else if item.low != nil && item.low < temperature.low {
+                                temperature.low = item.low
+                            }
+                            temperature.close = item.close
+                        }
+                    }
+                    dataArray.append(temperature)
+                }
+            }
+            current = current.dateByAddingDay(1)
+        }
+        return dataArray
     }
 }

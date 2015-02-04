@@ -29,7 +29,6 @@ weixin = "WeChat";
 
 ok = "OK";
 cancel = "Cancel";
-unknown = "Unknown";
 settings = "Settings";
 notifications = "Notifications";
 
@@ -38,6 +37,8 @@ install = "Install";
 update = "Update";
 devices = "Devices";
 history = "History";
+general = "General";
+advanced = "Advanced";
 
 no_device = "No device";
 connected = "Connected";
