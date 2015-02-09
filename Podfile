@@ -1,6 +1,7 @@
 platform :ios, '7.0'
 
 pod 'EAIntroView'
+pod 'Facebook-iOS-SDK'
 pod 'FormatterKit'
 pod 'JTCalendar'
 pod 'M13ProgressSuite'

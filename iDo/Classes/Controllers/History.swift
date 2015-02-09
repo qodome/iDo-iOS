@@ -4,7 +4,7 @@
 
 class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource {
     
-    var data: [Temperature] = []
+    var data: [BaseData] = []
     var calendarMenuView: JTCalendarMenuView!
     var calendarContentView: JTCalendarContentView!
     var calendar: JTCalendar!
@@ -179,15 +179,15 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
         scrollView.contentSize.width = max(chart.frame.width, scrollView.frame.width)
     }
     
-    class func getData(date: NSDate) -> [Temperature] {
-        var data: [Temperature] = []
+    class func getData(date: NSDate) -> [BaseData] {
+        var data: [BaseData] = []
         var content: [AnyObject] = []
         let path = getHistory(date)
         if NSFileHandle(forReadingAtPath: path) != nil {
             let json = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
             let content = NSJSONSerialization.JSONObjectWithData(json.dataUsingEncoding(NSUTF8StringEncoding)!, options: .allZeros, error: nil) as Array<AnyObject>
             for d in content {
-                let temperature = Temperature(timeStamp: Int(d[0] as NSNumber))
+                let temperature = BaseData(timeStamp: Int(d[0] as NSNumber))
                 temperature.open = d[1].isEqual(NSNull()) ? nil : Double(d[1] as NSNumber)
                 temperature.high = d[2].isEqual(NSNull()) ? nil : Double(d[2] as NSNumber)
                 temperature.low = d[3].isEqual(NSNull()) ? nil : Double(d[3] as NSNumber)
@@ -223,12 +223,12 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
     }
     
     // MARK: -    
-    class func getHistoryData(startDate: NSString, endDate: NSString, startTime: NSString, endTime: NSString) -> [Temperature] {
+    class func getHistoryData(startDate: NSString, endDate: NSString, startTime: NSString, endTime: NSString) -> [BaseData] {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         var current = formatter.dateFromString(startDate)!
         let end = formatter.dateFromString(endDate)
-        var dataArray: [Temperature] = []
+        var dataArray: [BaseData] = []
         while true {
             let currentDay = formatter.stringFromDate(current)
             let beginTime = "\(currentDay) \(startTime):00"
@@ -241,10 +241,10 @@ class History: UIViewController, JTCalendarDataSource, BEMSimpleLineGraphDelegat
                 break
             } else {
                 if NSFileHandle(forUpdatingAtPath: getHistory(current)) == nil {
-                    dataArray.append(Temperature(timeStamp: Int(startInt!)))
+                    dataArray.append(BaseData(timeStamp: Int(startInt!)))
                 } else {
                     let data = getData(current)
-                    var temperature = Temperature(timeStamp: Int(current.timeIntervalSince1970))
+                    var temperature = BaseData(timeStamp: Int(current.timeIntervalSince1970))
                     for item in data {
                         if item.timeStamp >= Int(startInt!) && item.timeStamp <= Int(endInt!) {
                             if temperature.open == nil {

@@ -5,7 +5,7 @@
 class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertViewDelegate {
     // MARK: - 🍀 变量
     let segueId = "segue.home-device_list"
-    var data: [Temperature] = []
+    var data: [BaseData] = []
     var numberView: NumberView!
     
     var json = "" // 历史数据json
@@ -72,6 +72,8 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
             switch event {
             case .PowerOff:
                 title = ("bluetooth closed")
+                view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
+                numberView.integerLabel.text = ""
             case .Idle:
                 view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
             case .Scan:
@@ -82,6 +84,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
                 title = LocalizedString("connecting")
             case .Connected:
                 title = LocalizedString("connected")
+                numberView.integerLabel.text = "--"
             case .Disconnected:
                 view.backgroundColor = UIColor.colorWithHex(R.Color.iDoBlue.rawValue)
                 if BLEManager.sharedManager.defaultDevice() == nil {
@@ -109,7 +112,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         }
         // 初始化一个温度对象，当前时间最接近的5分钟频率
         let date = NSDate()
-        let temp = Temperature(timeStamp: History.getTimeStamp(date, minute: 5), value: value)
+        let temp = BaseData(timeStamp: History.getTimeStamp(date, minute: 5), value: value)
         // 比对历史数据
         let path = History.getHistory(date) // 当前应该写入的文件路径
         var json1 = ""
@@ -130,7 +133,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
                 } else {
                     for i in 1..<cycle { // 补空
                         let t = last!.timeStamp + 300 * i
-                        data.append(Temperature(timeStamp: t))
+                        data.append(BaseData(timeStamp: t))
                         json1 += getJsonData(t, nil, nil, nil, nil) + ","
                     }
                     data.append(temp)

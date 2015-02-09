@@ -61,6 +61,7 @@
 		0EC0D68C1A7F882300D2B539 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D68B1A7F882300D2B539 /* SignUp.swift */; };
 		0EC0D68E1A7F883200D2B539 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D68D1A7F883200D2B539 /* SignIn.swift */; };
 		0ECD403A1A6F9ACF00568B18 /* TemperatureUnitDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD40391A6F9ACF00568B18 /* TemperatureUnitDetail.swift */; };
+		0ED526661A836C130059EB3F /* BaseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED526651A836C130059EB3F /* BaseData.swift */; };
 		0ED67E4B1A2AFA3400CA35BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E4D1A2AFA3400CA35BE /* Localizable.strings */; };
 		0ED67E8B1A2B0F5C00CA35BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E8D1A2B0F5C00CA35BE /* InfoPlist.strings */; };
 		0EDC36CF1A7764A400ECCDBE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EDC36CE1A7764A400ECCDBE /* HealthKit.framework */; };
@@ -152,6 +153,7 @@
 		0EC0D68B1A7F882300D2B539 /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		0EC0D68D1A7F883200D2B539 /* SignIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		0ECD40391A6F9ACF00568B18 /* TemperatureUnitDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureUnitDetail.swift; sourceTree = "<group>"; };
+		0ED526651A836C130059EB3F /* BaseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseData.swift; sourceTree = "<group>"; };
 		0ED67E4C1A2AFA3400CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0ED67E8A1A2B0CDA00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0ED67E8E1A2B0F9B00CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				0EABC3631A53D32A00F8A004 /* BaseModel.swift */,
 				0EABC3641A53D32A00F8A004 /* ListModel.swift */,
 				0EC0D6741A7F774600D2B539 /* WXToken.swift */,
+				0ED526651A836C130059EB3F /* BaseData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				0EABC35F1A53D31900F8A004 /* CollectionList.swift in Sources */,
 				0EC0D66B1A7F732E00D2B539 /* BaseIntro.swift in Sources */,
 				0EABC3621A53D31900F8A004 /* TableList.swift in Sources */,
+				0ED526661A836C130059EB3F /* BaseData.swift in Sources */,
 				0E9F5B021A407828003BB8AD /* UIViewController+Extension.swift in Sources */,
 				0EE565721A2AE6CD003E9331 /* BEMLine.m in Sources */,
 				0EE565441A2AE656003E9331 /* AppDelegate.swift in Sources */,

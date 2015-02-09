@@ -1,6 +1,9 @@
 PODS:
   - AFNetworking (1.3.4)
+  - Bolts (1.1.3)
   - EAIntroView (2.6.4)
+  - Facebook-iOS-SDK (3.23.0):
+    - Bolts (~> 1.0)
   - FormatterKit (1.8.0):
     - FormatterKit/AddressFormatter (= 1.8.0)
     - FormatterKit/ArrayFormatter (= 1.8.0)
@@ -55,6 +58,7 @@ PODS:
 
 DEPENDENCIES:
   - EAIntroView
+  - Facebook-iOS-SDK
   - FormatterKit
   - JTCalendar
   - M13ProgressSuite
@@ -66,7 +70,9 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
+  Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   EAIntroView: 8f66dc6b79f2d52db26af8fc5476a05ffc549d4c
+  Facebook-iOS-SDK: 3d65f685348b789e46a9aacf92bfa85b60b63755
   FormatterKit: 547a808c41172136a3f3acb424ac9361d38bb32f
   ISO8601DateFormatterValueTransformer: a705384ea6531255258e25b6480ba1180db703a0
   JTCalendar: 0d4a11e8658ba947f1502a240778746f5777c1cc
