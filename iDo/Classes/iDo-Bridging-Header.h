@@ -5,13 +5,14 @@
 // BEMSimpleLineGraphView https://github.com/Boris-Em/BEMSimpleLineGraph
 #import "BEMSimpleLineGraphView.h"
 
-// Facebook https://developers.facebook.com/docs/ios/
+// Facebook https://developers.facebook.com/quickstarts
+#import <FacebookSDK/FacebookSDK.h>
 
 // FormatterKit https://github.com/mattt/FormatterKit
 #import <FormatterKit/TTTTimeIntervalFormatter.h>
 
 // JTCalendar https://github.com/jonathantribouharet/JTCalendar
-#import "JTCalendar.h"
+#import <JTCalendar/JTCalendar.h>
 
 // M13ProgressSuite https://github.com/Marxon13/M13ProgressSuite
 #import <M13ProgressSuite/M13ProgressHUD.h>

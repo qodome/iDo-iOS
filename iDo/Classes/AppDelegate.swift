@@ -43,7 +43,8 @@ class AppDelegate: SocialAppDelegate {
     }
     
     // MARK: - 💖 生命周期 (Lifecyle)
-    func applicationDidBecomeActive(application: UIApplication) {
+    override func applicationDidBecomeActive(application: UIApplication) {
+        super.applicationDidBecomeActive(application)
         application.applicationIconBadgeNumber = 0
         application.cancelAllLocalNotifications()
     }

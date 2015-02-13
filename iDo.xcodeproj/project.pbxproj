@@ -29,6 +29,7 @@
 		0E9F5B031A407828003BB8AD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F5AF41A407828003BB8AD /* Utils.swift */; };
 		0E9F5B041A407828003BB8AD /* RightDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F5AF61A407828003BB8AD /* RightDetailCell.swift */; };
 		0E9F5B051A407828003BB8AD /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F5AF71A407828003BB8AD /* SubtitleCell.swift */; };
+		0EA4E1E81A8AFCD2008564F2 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EA4E1E71A8AFCD2008564F2 /* HealthKit.framework */; };
 		0EA9A0A61A6CA389007E9875 /* DeviceNameDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA9A0A51A6CA389007E9875 /* DeviceNameDetail.swift */; };
 		0EABC3571A53D30600F8A004 /* RestKitUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC3551A53D30600F8A004 /* RestKitUtils.swift */; };
 		0EABC35E1A53D31900F8A004 /* BaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EABC3591A53D31900F8A004 /* BaseController.swift */; };
@@ -64,7 +65,6 @@
 		0ED526661A836C130059EB3F /* BaseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED526651A836C130059EB3F /* BaseData.swift */; };
 		0ED67E4B1A2AFA3400CA35BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E4D1A2AFA3400CA35BE /* Localizable.strings */; };
 		0ED67E8B1A2B0F5C00CA35BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67E8D1A2B0F5C00CA35BE /* InfoPlist.strings */; };
-		0EDC36CF1A7764A400ECCDBE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EDC36CE1A7764A400ECCDBE /* HealthKit.framework */; };
 		0EDE483B1A6A65CC002CAE64 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */; };
 		0EDE483D1A6A662D002CAE64 /* CBPeripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE483C1A6A662D002CAE64 /* CBPeripheral+Extension.swift */; };
 		0EE2ADEE1A68F5E10084DC24 /* iDo1OADHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE2ADEC1A68F5E10084DC24 /* iDo1OADHandler.swift */; };
@@ -121,6 +121,7 @@
 		0E9F5AF41A407828003BB8AD /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		0E9F5AF61A407828003BB8AD /* RightDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightDetailCell.swift; sourceTree = "<group>"; };
 		0E9F5AF71A407828003BB8AD /* SubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
+		0EA4E1E71A8AFCD2008564F2 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		0EA9A0A51A6CA389007E9875 /* DeviceNameDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceNameDetail.swift; sourceTree = "<group>"; };
 		0EABC3551A53D30600F8A004 /* RestKitUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestKitUtils.swift; sourceTree = "<group>"; };
 		0EABC3591A53D31900F8A004 /* BaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseController.swift; sourceTree = "<group>"; };
@@ -158,7 +159,6 @@
 		0ED67E8A1A2B0CDA00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0ED67E8E1A2B0F9B00CA35BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0ED67E8F1A2B0FBB00CA35BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		0EDC36CE1A7764A400ECCDBE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		0EDC36D01A7764A500ECCDBE /* iDo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = iDo.entitlements; sourceTree = "<group>"; };
 		0EDE483A1A6A65CC002CAE64 /* DeviceInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
 		0EDE483C1A6A662D002CAE64 /* CBPeripheral+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CBPeripheral+Extension.swift"; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 				0EC0D6881A7F7FA200D2B539 /* libsqlite3.0.dylib in Frameworks */,
 				0EC0D6841A7F7F9000D2B539 /* libz.dylib in Frameworks */,
 				7D9EF8057408D96D93B33395 /* libPods.a in Frameworks */,
-				0EDC36CF1A7764A400ECCDBE /* HealthKit.framework in Frameworks */,
+				0EA4E1E81A8AFCD2008564F2 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,10 +500,10 @@
 		9DC1F549138FCE02183AF6CB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0EA4E1E71A8AFCD2008564F2 /* HealthKit.framework */,
 				0EC0D6871A7F7FA200D2B539 /* libsqlite3.0.dylib */,
 				0EC0D6851A7F7F9800D2B539 /* libc++.dylib */,
 				0EC0D6831A7F7F9000D2B539 /* libz.dylib */,
-				0EDC36CE1A7764A400ECCDBE /* HealthKit.framework */,
 				DE64FC9FA675092DA1278AB3 /* libPods.a */,
 			);
 			name = Frameworks;
