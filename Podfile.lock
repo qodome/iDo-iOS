@@ -1,8 +1,10 @@
 PODS:
   - AFNetworking (1.3.4)
-  - Bolts (1.1.3)
-  - EAIntroView (2.6.4)
-  - Facebook-iOS-SDK (3.23.0):
+  - Bolts (1.1.4)
+  - EAIntroView (2.7.0):
+    - EARestrictedScrollView (~> 0.1.0)
+  - EARestrictedScrollView (0.1.0)
+  - Facebook-iOS-SDK (3.23.1):
     - Bolts (~> 1.0)
   - FormatterKit (1.8.0):
     - FormatterKit/AddressFormatter (= 1.8.0)
@@ -25,7 +27,7 @@ PODS:
   - FormatterKit/URLRequestFormatter (1.8.0)
   - ISO8601DateFormatterValueTransformer (0.6.0):
     - RKValueTransformers (~> 1.1.0)
-  - JTCalendar (1.1.14)
+  - JTCalendar (1.2.1)
   - M13ProgressSuite (1.2.7)
   - RestKit (0.24.0):
     - RestKit/Core (= 0.24.0)
@@ -47,11 +49,11 @@ PODS:
   - RestKit/Support (0.24.0):
     - TransitionKit (= 2.1.0)
   - RKValueTransformers (1.1.1)
-  - SDWebImage (3.7.1):
-    - SDWebImage/Core (= 3.7.1)
-  - SDWebImage/Core (3.7.1)
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
   - SOCKit (1.1)
-  - TLYShyNavBar (0.9.8)
+  - TLYShyNavBar (0.9.9)
   - TransitionKit (2.1.0)
   - WeiboSDK (3.0.1)
   - Weixin (1.5)
@@ -70,20 +72,21 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
-  Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
-  EAIntroView: 8f66dc6b79f2d52db26af8fc5476a05ffc549d4c
-  Facebook-iOS-SDK: 3d65f685348b789e46a9aacf92bfa85b60b63755
+  Bolts: dd9fb8433d67f5acc3b6b4d1379bbc5513d716c1
+  EAIntroView: 2284bb6d9105035cb09f8952933e83591f0a81ca
+  EARestrictedScrollView: 6023847998f13e2d80dff2d575181c2598349507
+  Facebook-iOS-SDK: 89dae50e975ebab95a01b0962d27277fc9cf08fd
   FormatterKit: 547a808c41172136a3f3acb424ac9361d38bb32f
   ISO8601DateFormatterValueTransformer: a705384ea6531255258e25b6480ba1180db703a0
-  JTCalendar: 38b56c5885e50322e3b6896599882792985f1bc5
+  JTCalendar: e382bbf6a8d99d3e8c3d8744091664f083831cc2
   M13ProgressSuite: 931cde7e91d474c04edb4b34517d75ca6d88ccf2
   RestKit: 8e301e50e1d25ce427215539f4fd72463f4a2a58
   RKValueTransformers: 67b4ea3eb6a1c1a0b8c3c37eb4e4c05e4febeba2
-  SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   SOCKit: d8d0dd3688ae1026c12367570da8fa8e1a6980fb
-  TLYShyNavBar: cf15a919cf7f6e79080ac5b95b56580a752cf64d
+  TLYShyNavBar: e81b3a5f4b7734dda57b1f9e089362844f37e423
   TransitionKit: 6a6f3ddda38ae758778aa889dcb930e4f8d64edc
   WeiboSDK: e40a302dc603a20c8ec7fc15ebec49fa4e93d7ba
   Weixin: a8ec14d7b9b814ec5997dd0f995a4be91f81f163
 
-COCOAPODS: 0.36.0.beta.2
+COCOAPODS: 0.36.0
