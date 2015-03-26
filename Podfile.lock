@@ -4,8 +4,22 @@ PODS:
   - EAIntroView (2.7.0):
     - EARestrictedScrollView (~> 0.1.0)
   - EARestrictedScrollView (0.1.0)
-  - Facebook-iOS-SDK (3.23.1):
+  - Facebook-iOS-SDK (4.0):
     - Bolts (~> 1.0)
+    - Facebook-iOS-SDK/CoreKit (= 4.0)
+    - Facebook-iOS-SDK/LoginKit (= 4.0)
+    - Facebook-iOS-SDK/ShareKit (= 4.0)
+  - Facebook-iOS-SDK/CoreKit (4.0):
+    - Bolts (~> 1.0)
+    - Facebook-iOS-SDK/CoreKit/no-arc (= 4.0)
+  - Facebook-iOS-SDK/CoreKit/no-arc (4.0):
+    - Bolts (~> 1.0)
+  - Facebook-iOS-SDK/LoginKit (4.0):
+    - Bolts (~> 1.0)
+    - Facebook-iOS-SDK/CoreKit
+  - Facebook-iOS-SDK/ShareKit (4.0):
+    - Bolts (~> 1.0)
+    - Facebook-iOS-SDK/CoreKit
   - FormatterKit (1.8.0):
     - FormatterKit/AddressFormatter (= 1.8.0)
     - FormatterKit/ArrayFormatter (= 1.8.0)
@@ -27,7 +41,7 @@ PODS:
   - FormatterKit/URLRequestFormatter (1.8.0)
   - ISO8601DateFormatterValueTransformer (0.6.0):
     - RKValueTransformers (~> 1.1.0)
-  - JTCalendar (1.2.1)
+  - JTCalendar (1.2.2)
   - M13ProgressSuite (1.2.7)
   - RestKit (0.24.0):
     - RestKit/Core (= 0.24.0)
@@ -75,10 +89,10 @@ SPEC CHECKSUMS:
   Bolts: dd9fb8433d67f5acc3b6b4d1379bbc5513d716c1
   EAIntroView: 2284bb6d9105035cb09f8952933e83591f0a81ca
   EARestrictedScrollView: 6023847998f13e2d80dff2d575181c2598349507
-  Facebook-iOS-SDK: 89dae50e975ebab95a01b0962d27277fc9cf08fd
+  Facebook-iOS-SDK: 523ee69fdd3c37cdca6578c79912f47943035806
   FormatterKit: 547a808c41172136a3f3acb424ac9361d38bb32f
   ISO8601DateFormatterValueTransformer: a705384ea6531255258e25b6480ba1180db703a0
-  JTCalendar: e382bbf6a8d99d3e8c3d8744091664f083831cc2
+  JTCalendar: 35f2fcc3513cdc31e68818f27c3faa8388cfa04a
   M13ProgressSuite: 931cde7e91d474c04edb4b34517d75ca6d88ccf2
   RestKit: 8e301e50e1d25ce427215539f4fd72463f4a2a58
   RKValueTransformers: 67b4ea3eb6a1c1a0b8c3c37eb4e4c05e4febeba2

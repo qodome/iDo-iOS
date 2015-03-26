@@ -1,37 +1,4 @@
-/* 通用 */
-qodome_co_ltd = "Qodome Co., Ltd.";
-
-home = "主页";
-discover = "发现";
-questions = "问答";
-me = "我";
-settings = "设置";
-about = "关于";
-
-comment = "评论";
-comments = "评论";
-like = "喜欢";
-likes = "喜欢";
-
-sign_up = "注册";
-sign_in = "登录";
-sign_out = "登出";
-
-username = "用户名";
-password = "密码";
-email = "邮件";
-optional = "选填";
-// 社会化
-facebook = "Facebook";
-twitter = "Twitter";
-weibo = "微博";
-weixin = "微信";
-
-ok = "好";
-cancel = "取消";
-settings = "设置";
-notifications = "通知";
-
+/* UI */
 download = "下载";
 install = "安装";
 update = "更新";

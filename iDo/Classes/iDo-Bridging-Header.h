@@ -6,7 +6,8 @@
 #import "BEMSimpleLineGraphView.h"
 
 // Facebook https://developers.facebook.com/quickstarts
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 // FormatterKit https://github.com/mattt/FormatterKit
 #import <FormatterKit/TTTTimeIntervalFormatter.h>

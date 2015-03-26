@@ -1,37 +1,4 @@
-/* 通用 */
-qodome_co_ltd = "Qodome Co., Ltd.";
-
-home = "Home";
-discover = "Discover";
-questions = "Questions";
-me = "Me";
-settings = "Settings";
-about = "About";
-
-comment = "Comment";
-comments = "Comments";
-like = "Like";
-likes = "Likes";
-
-sign_up = "Sign Up";
-sign_in = "Sign In";
-sign_out = "Sign Out";
-
-username = "Username";
-password = "Password";
-email = "Email";
-optional = "Optional";
-// 社会化
-facebook = "Facebook";
-twitter = "Twitter";
-weibo = "Weibo";
-weixin = "WeChat";
-
-ok = "OK";
-cancel = "Cancel";
-settings = "Settings";
-notifications = "Notifications";
-
+/* UI */
 download = "Download";
 install = "Install";
 update = "Update";

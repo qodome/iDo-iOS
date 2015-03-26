@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E2C66AB1AC3B9CA00675459 /* Default.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0E2C66A71AC3B9CA00675459 /* Default.strings */; };
+		0E2C66AD1AC3BCDC00675459 /* BaseAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C66AC1AC3BCDC00675459 /* BaseAppDelegate.swift */; };
 		0E435F1D1A2AE233007951B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F1B1A2AE233007951B1 /* Main.storyboard */; };
 		0E435F1F1A2AE233007951B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F1E1A2AE233007951B1 /* Images.xcassets */; };
 		0E435F221A2AE233007951B1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F201A2AE233007951B1 /* LaunchScreen.xib */; };
@@ -99,6 +101,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E2C66A81AC3B9CA00675459 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Default.strings; sourceTree = "<group>"; };
+		0E2C66A91AC3B9CA00675459 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Default.strings; sourceTree = "<group>"; };
+		0E2C66AA1AC3B9CA00675459 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Default.strings"; sourceTree = "<group>"; };
+		0E2C66AC1AC3BCDC00675459 /* BaseAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAppDelegate.swift; sourceTree = "<group>"; };
 		0E435F121A2AE233007951B1 /* iDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E435F161A2AE233007951B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E435F1C1A2AE233007951B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -216,6 +222,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E2C66A61AC3B9CA00675459 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0E2C66A71AC3B9CA00675459 /* Default.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		0E435F091A2AE233007951B1 = {
 			isa = PBXGroup;
 			children = (
@@ -289,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				0EDFBB711AB0AD34002AA11F /* Classes */,
+				0E2C66A61AC3B9CA00675459 /* Resources */,
 			);
 			name = Taylor;
 			path = ../../Taylor/Taylor;
@@ -359,6 +374,7 @@
 		0EDFBB871AB0AD34002AA11F /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				0E2C66AC1AC3BCDC00675459 /* BaseAppDelegate.swift */,
 				0EDFBB881AB0AD34002AA11F /* SocialAppDelegate.swift */,
 			);
 			path = Main;
@@ -603,6 +619,7 @@
 			knownRegions = (
 				Base,
 				"zh-Hans",
+				en,
 			);
 			mainGroup = 0E435F091A2AE233007951B1;
 			productRefGroup = 0E435F131A2AE233007951B1 /* Products */;
@@ -625,6 +642,7 @@
 				0E435F221A2AE233007951B1 /* LaunchScreen.xib in Resources */,
 				0E435F1F1A2AE233007951B1 /* Images.xcassets in Resources */,
 				0ED67E8B1A2B0F5C00CA35BE /* InfoPlist.strings in Resources */,
+				0E2C66AB1AC3B9CA00675459 /* Default.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,6 +761,7 @@
 				0EC0D68E1A7F883200D2B539 /* SignIn.swift in Sources */,
 				0EDFBBBB1AB0AD34002AA11F /* RestKitUtils.swift in Sources */,
 				0EDFBBA51AB0AD34002AA11F /* CollectionList.swift in Sources */,
+				0E2C66AD1AC3BCDC00675459 /* BaseAppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +784,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		0E2C66A71AC3B9CA00675459 /* Default.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0E2C66A81AC3B9CA00675459 /* Base */,
+				0E2C66A91AC3B9CA00675459 /* en */,
+				0E2C66AA1AC3B9CA00675459 /* zh-Hans */,
+			);
+			name = Default.strings;
+			sourceTree = "<group>";
+		};
 		0E435F1B1A2AE233007951B1 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -892,7 +921,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iDo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -912,7 +941,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iDo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

@@ -7,6 +7,7 @@ class AppDelegate: SocialAppDelegate {
     
     // MARK: - 🐤 继承 Taylor
     override func onFinishLaunching(application: UIApplication, options: [NSObject : AnyObject]?) {
+        super.onFinishLaunching(application, options: options)
         // Settings
         initSettings()
         // 注册通知
