@@ -68,7 +68,7 @@ class Settings: TableDetail {
         return cell
     }
     
-    // MARK: - 💙 UITableViewDataSource
+    // MARK: - 💜 UITableViewDataSource
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
@@ -91,7 +91,7 @@ class Settings: TableDetail {
         return nil
     }
     
-    // MARK: 💙 UITableViewDelegate
+    // MARK: 💜 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 2 {
             performSegueWithIdentifier("segue.settings-temperature_unit_detail", sender: self)

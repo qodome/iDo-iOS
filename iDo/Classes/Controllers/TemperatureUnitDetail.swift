@@ -21,7 +21,7 @@ class TemperatureUnitDetail: TableDetail {
         return cell
     }
     
-    // MARK: 💙 UITableViewDelegate
+    // MARK: 💜 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         putString(R.Pref.TemperatureUnit.rawValue, getItem(indexPath))
         tableView.reloadData() // TODO: 动画效果不好，消失的太快

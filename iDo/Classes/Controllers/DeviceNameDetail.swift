@@ -42,13 +42,12 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate, BLEManagerDelegate {
         return cell
     }
     
-    // MARK: -
-    // MARK: 💙 UITableViewDelegate
+    // MARK: - 💜 UITableViewDelegate
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         setField(nameField, cell: cell)
     }
     
-    // MARK: 💙 UITextFieldDelegate
+    // MARK: 💜 UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         update(self)
@@ -82,7 +81,7 @@ class DeviceNameDetail: TableDetail, UITextFieldDelegate, BLEManagerDelegate {
         }
     }
     
-    // MARK: - 💙 场景切换 (Segue)
+    // MARK: - 💜 场景切换 (Segue)
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         super.prepareForSegue(segue, sender: sender)
         println(segue.identifier)

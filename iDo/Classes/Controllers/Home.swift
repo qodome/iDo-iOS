@@ -180,7 +180,7 @@ class Home: UIViewController, BLEManagerDelegate, BLEManagerDataSource, UIAlertV
         return json
     }
     
-    // MARK: - 💙 UIAlertViewDelegate
+    // MARK: - 💜 UIAlertViewDelegate
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 { // 进入设备页
             BLEManager.sharedManager.startScan() // TODO: 是否要放在这里做

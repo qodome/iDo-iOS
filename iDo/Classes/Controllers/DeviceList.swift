@@ -57,7 +57,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         BLEManager.sharedManager.startScan() // 重新刷新界面时header会变成nil
     }
     
-    // MARK: - 💙 UITableViewDataSource
+    // MARK: - 💜 UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
@@ -118,7 +118,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         }
     }
     
-    // MARK: 💙 UITableViewDelegate
+    // MARK: 💜 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 { // 进入详情页
             selected = connected[indexPath.row]
@@ -140,7 +140,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         }
     }
     
-    // MARK: 💙 UIActionSheetDelegate
+    // MARK: 💜 UIActionSheetDelegate
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         let indexPath = (listView as UITableView).indexPathForSelectedRow()
         if indexPath != nil {
@@ -152,7 +152,7 @@ class DeviceList: TableList, BLEManagerDelegate, UIActionSheetDelegate {
         }
     }
     
-    // MARK: - 💙 场景切换 (Segue)
+    // MARK: - 💜 场景切换 (Segue)
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         super.prepareForSegue(segue, sender: sender)
         segue.destinationViewController.setValue(selected, forKey: "data")

@@ -80,7 +80,7 @@ class DeviceDetail: TableDetail {
         return cell
     }
     
-    // MARK: 💙 UITableViewDelegate
+    // MARK: 💜 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if tableView.cellForRowAtIndexPath(indexPath)!.accessoryType == .DisclosureIndicator {
             let item = getItem(indexPath)
@@ -92,7 +92,7 @@ class DeviceDetail: TableDetail {
         }
     }
     
-    // MARK: - 💙 场景切换 (Segue)
+    // MARK: - 💜 场景切换 (Segue)
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         super.prepareForSegue(segue, sender: sender)
         let dest = segue.destinationViewController as UIViewController

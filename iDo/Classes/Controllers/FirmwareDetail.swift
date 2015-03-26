@@ -62,7 +62,7 @@ class FirmwareDetail: TableDetail {
         return cell
     }
     
-    // MARK: - 💙 UITableViewDelegate
+    // MARK: - 💜 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if getItem(indexPath) == UPDATE_ITEM {
             let entity = data as Firmware

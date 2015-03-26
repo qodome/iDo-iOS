@@ -95,7 +95,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         return NSUserDefaults.standardUserDefaults().stringForKey(PREF_DEFAULT_DEVICE)
     }
     
-    // MARK: - 💙 CBCentralManagerDelegate
+    // MARK: - 💜 CBCentralManagerDelegate
     func centralManagerDidUpdateState(central: CBCentralManager!) {
         Log("蓝牙状态更新 \(central.state.rawValue)")
         var event = BLEManagerEvent.PowerOff
@@ -157,7 +157,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
     }
     
-    // MARK: - 💙 CBPeripheralDelegate
+    // MARK: - 💜 CBPeripheralDelegate
     func peripheral(peripheral: CBPeripheral!, didDiscoverServices error: NSError!) {
         if error == nil {
             for service in peripheral.services as [CBService] {
