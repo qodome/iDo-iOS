@@ -13,6 +13,7 @@
 		0E435F1F1A2AE233007951B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F1E1A2AE233007951B1 /* Images.xcassets */; };
 		0E435F221A2AE233007951B1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E435F201A2AE233007951B1 /* LaunchScreen.xib */; };
 		0E435F2E1A2AE233007951B1 /* iDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E435F2D1A2AE233007951B1 /* iDoTests.swift */; };
+		0E583D031ACBA51A0043C53D /* BaseFieldEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E583D021ACBA51A0043C53D /* BaseFieldEdit.swift */; };
 		0E5D10231A68E25400B5CED2 /* R.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5D10221A68E25400B5CED2 /* R.swift */; };
 		0E7A71B91A6E497D008816C6 /* Firmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A71B81A6E497D008816C6 /* Firmware.swift */; };
 		0E7A71BB1A6E4A4C008816C6 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A71BA1A6E4A4C008816C6 /* Product.swift */; };
@@ -20,7 +21,7 @@
 		0E84BCC91AC6926F00E7D60F /* HKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E84BCC81AC6926F00E7D60F /* HKManager.swift */; };
 		0E9C9FAD1A3750BC00BB9DC6 /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9C9FAC1A3750BC00BB9DC6 /* NumberView.swift */; };
 		0EA4E1E81A8AFCD2008564F2 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EA4E1E71A8AFCD2008564F2 /* HealthKit.framework */; };
-		0EA9A0A61A6CA389007E9875 /* DeviceNameDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA9A0A51A6CA389007E9875 /* DeviceNameDetail.swift */; };
+		0EA9A0A61A6CA389007E9875 /* DeviceNameEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA9A0A51A6CA389007E9875 /* DeviceNameEdit.swift */; };
 		0EB2536F1A82242C00F6CB9D /* PregnancyHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB2536E1A82242C00F6CB9D /* PregnancyHistory.swift */; };
 		0EB84EBE1A6E434C0044D8C3 /* FirmwareDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */; };
 		0EC0D6721A7F771500D2B539 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC0D6711A7F771500D2B539 /* User.swift */; };
@@ -113,6 +114,7 @@
 		0E435F271A2AE233007951B1 /* iDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E435F2C1A2AE233007951B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E435F2D1A2AE233007951B1 /* iDoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iDoTests.swift; sourceTree = "<group>"; };
+		0E583D021ACBA51A0043C53D /* BaseFieldEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseFieldEdit.swift; sourceTree = "<group>"; };
 		0E5D10221A68E25400B5CED2 /* R.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = "<group>"; };
 		0E7A71B81A6E497D008816C6 /* Firmware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firmware.swift; sourceTree = "<group>"; };
 		0E7A71BA1A6E4A4C008816C6 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
@@ -120,7 +122,7 @@
 		0E84BCC81AC6926F00E7D60F /* HKManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKManager.swift; sourceTree = "<group>"; };
 		0E9C9FAC1A3750BC00BB9DC6 /* NumberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberView.swift; sourceTree = "<group>"; };
 		0EA4E1E71A8AFCD2008564F2 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
-		0EA9A0A51A6CA389007E9875 /* DeviceNameDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceNameDetail.swift; sourceTree = "<group>"; };
+		0EA9A0A51A6CA389007E9875 /* DeviceNameEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceNameEdit.swift; sourceTree = "<group>"; };
 		0EB2536E1A82242C00F6CB9D /* PregnancyHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PregnancyHistory.swift; sourceTree = "<group>"; };
 		0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirmwareDetail.swift; sourceTree = "<group>"; };
 		0EC0D6711A7F771500D2B539 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				0EDFBB791AB0AD34002AA11F /* ListController.swift */,
 				0EDFBB7A1AB0AD34002AA11F /* TableDetail.swift */,
 				0EDFBB7B1AB0AD34002AA11F /* TableList.swift */,
+				0E583D021ACBA51A0043C53D /* BaseFieldEdit.swift */,
 				0EDFBB7C1AB0AD34002AA11F /* WebDetail.swift */,
 			);
 			path = Controllers;
@@ -468,7 +471,7 @@
 				0ECD40391A6F9ACF00568B18 /* TemperatureUnitDetail.swift */,
 				0EE5653A1A2AE656003E9331 /* DeviceList.swift */,
 				0EE565391A2AE656003E9331 /* DeviceDetail.swift */,
-				0EA9A0A51A6CA389007E9875 /* DeviceNameDetail.swift */,
+				0EA9A0A51A6CA389007E9875 /* DeviceNameEdit.swift */,
 				0EB84EBD1A6E434C0044D8C3 /* FirmwareDetail.swift */,
 			);
 			path = Controllers;
@@ -710,12 +713,13 @@
 				0EDFBBA91AB0AD34002AA11F /* WebDetail.swift in Sources */,
 				0EE5654B1A2AE656003E9331 /* Settings.swift in Sources */,
 				0EC0D68A1A7F881400D2B539 /* Intro.swift in Sources */,
+				0E583D031ACBA51A0043C53D /* BaseFieldEdit.swift in Sources */,
 				0E7A71B91A6E497D008816C6 /* Firmware.swift in Sources */,
 				0EDFBBBF1AB0AD34002AA11F /* RightDetailCell.swift in Sources */,
 				0EDFBBC11AB0AD34002AA11F /* AvatarView.swift in Sources */,
 				0EDFBBA61AB0AD34002AA11F /* ListController.swift in Sources */,
 				0EDFBBA11AB0AD34002AA11F /* BaseLoader.swift in Sources */,
-				0EA9A0A61A6CA389007E9875 /* DeviceNameDetail.swift in Sources */,
+				0EA9A0A61A6CA389007E9875 /* DeviceNameEdit.swift in Sources */,
 				0EDFBBC61AB0AD34002AA11F /* TagsView.swift in Sources */,
 				0EB2536F1A82242C00F6CB9D /* PregnancyHistory.swift in Sources */,
 				0EDFBBBA1AB0AD34002AA11F /* FileUtils.swift in Sources */,

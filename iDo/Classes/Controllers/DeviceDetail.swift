@@ -80,7 +80,7 @@ class DeviceDetail: TableDetail {
         return cell
     }
     
-    // MARK: 💜 UITableViewDelegate
+    // MARK: - 💜 UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if tableView.cellForRowAtIndexPath(indexPath)!.accessoryType == .DisclosureIndicator {
             let item = getItem(indexPath)

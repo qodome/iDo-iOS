@@ -3,7 +3,7 @@
 //
 
 @UIApplicationMain
-class AppDelegate: SocialAppDelegate {
+class AppDelegate: BaseAppDelegate {
     
     // MARK: - 🐤 继承 Taylor
     override func onFinishLaunching(application: UIApplication, options: [NSObject : AnyObject]?) {
@@ -44,8 +44,7 @@ class AppDelegate: SocialAppDelegate {
     }
     
     // MARK: - 💖 生命周期 (Lifecyle)
-    override func applicationDidBecomeActive(application: UIApplication) {
-        super.applicationDidBecomeActive(application)
+    func applicationDidBecomeActive(application: UIApplication) {
         application.applicationIconBadgeNumber = 0
         application.cancelAllLocalNotifications()
     }
